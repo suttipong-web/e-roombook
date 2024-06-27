@@ -10,13 +10,15 @@ class AdminAuth
 
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check()) {
-            if (!auth()->user()->is_admin) {
-                return redirect()->route('getLogin')->with('error', 'You have to be admin user to access this page');
+        if ($request->session()->has('user')) {
+            $user = $request->session()->get('user');
+            if (now()->diffInMinutes($user['last_activity']) > 120) {
+                $request->session()->forget('user');
+                return redirect('login')->with('message', 'Session หมดอายุ กรุณาเข้าสู่ระบบใหม่');
             }
-        } else {
-            return redirect()->route('getLogin')->with('error', 'You have to be logged in to access this page');
+            $request->session()->put('user.last_activity', now());
         }
+
         return $next($request);
     }
 }

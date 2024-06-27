@@ -7,12 +7,19 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $data = [
-            'title' => 'Dashboard'
-        ];
-        return view('admin.dashboard', $data);
+
+        $user = "";
+        if ($request->session()->has('user')) {
+            $user = $request->session()->get('user');
+        }
+
+
+        return view('admin.dashboard')->with([
+            'title' => 'Dashboard',
+            'sessionUser' => $user
+        ]);
     }
 
     public function logout()

@@ -13,6 +13,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
 //Route  ระบบจัดการห้อง
 Route::prefix('/room')->group(
     function () {
@@ -43,13 +46,18 @@ Route::prefix('/admin')->group(
     }
 );
 
-Route::group(['middleware' => ['admin_auth']], function () {
+//callback form cmuoauth
+Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 
+
+
+Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
-
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
 });
+
+
 
 
 //Route  ระบบ Signin  With  Cmu OAuth

@@ -14,6 +14,9 @@ php artisan migrate
 // update migrate
 php artisan migrate:fresh
 
+one table
+ php  artisan migrate:refresh --path="database/migrations/2014_10_12_000000_create_users_table.php" 
+
 Step 5: Creating Routes 
 Route:: get,post,delete 
 

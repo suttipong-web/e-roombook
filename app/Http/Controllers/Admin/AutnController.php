@@ -4,14 +4,124 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cookie;
+use App\Models\User;
+use Carbon\Carbon;
 
 class AutnController extends Controller
 {
     //
     public function getlogin()
     {
-        return view('admin.auth.login');
+        // get CMU APIKEY clientID,clientSecret
+        $cmuKey  = DB::table('tbl_apikey')
+            ->select('clientID', 'clientSecret', 'redirect_uri')
+            ->where('apiweb', '=', 'cmuoauth')
+            ->first();
+        $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=eroommbok';
+
+        return view('admin.auth.login')->with(
+            [
+                'urlCMUOauth' => $signwithCmu,
+
+
+            ]
+        );
     }
+
+    // POST API CMU OAUTH  REQEUST authorization_code FORM  https://oauth.cmu.ac.th/v1/GetToken.aspx?code
+    public  function  authorization_code(Request $request)
+    {
+        $code = request()->query('code');
+        $cmuKey  = DB::table('tbl_apikey')
+            ->select('clientID', 'clientSecret', 'redirect_uri')
+            ->where('apiweb', '=', 'cmuoauth')
+            ->first();
+
+        //ร้องขอ  authorization_code  เพื่อนำไป login เพื่อ ขอข้อมูลพนักงาน   
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://oauth.cmu.ac.th/v1/GetToken.aspx?code',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'code=' . $code . '&redirect_uri=' . $cmuKey->redirect_uri . '&client_id=' . $cmuKey->clientID . '&client_secret=' . $cmuKey->clientSecret . '&grant_type=authorization_code',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded'
+            ),
+        ));
+        $responseAuthCode = curl_exec($curl);
+        curl_close($curl);
+        $callback_dataAuthCode = json_decode($responseAuthCode, true);
+        if (empty($callback_dataAuthCode['access_token'])) {
+            return view('admin.auth.error')->with([
+                'displayError' => true
+            ]);
+        }
+        $access_token =  $callback_dataAuthCode['access_token'];
+
+        // เมื่อได้  access_token ก็  CURLOPT_CUSTOMREQUEST   ไปขอ basicinfo ด้วย access_token ที่ได้ 
+        // return   basicinfo 
+        $curlStep2 = curl_init();
+        curl_setopt_array($curlStep2, array(
+            CURLOPT_URL => "https://misapi.cmu.ac.th/cmuitaccount/v1/api/cmuitaccount/basicinfo?access_token=" . $access_token,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache"
+            ),
+        ));
+        $responseInfo = curl_exec($curlStep2);
+        // รับ response และ แปลงข้อมูลเป็น json
+        $cmuitaccount = json_decode($responseInfo, true);
+        curl_close($curlStep2);
+        if (!empty($cmuitaccount["cmuitaccount"])) {
+
+            // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
+            $email = $cmuitaccount["cmuitaccount"];
+            $users  = User::where('email', $email)->first();
+            if ($users["isAdmin"]) {
+
+                // UPDATE  ข้อมูลในตาราง Table  user 
+                $setData = [
+                    'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
+                    'prename_TH' => $cmuitaccount["prename_TH"],
+                    'firstname_TH' => $cmuitaccount["firstname_TH"],
+                    'lastname_TH' => $cmuitaccount["lastname_TH"],
+                    'itaccounttype_id' => $cmuitaccount["itaccounttype_id"],
+                    'itaccounttype_TH' => $cmuitaccount["itaccounttype_TH"],
+                    'updated_at' =>  Carbon::now(),
+                    'last_activity' =>  Carbon::now()
+                ];
+                $users->update($setData);
+                // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
+                $request->session()->put('user', $users, 120);
+                return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
+            }
+            //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
+            return view('admin.auth.error')->with([
+                'displayError' => true
+            ]);
+        }
+        return view('admin.auth.error')->with([
+            'displayError' => ' '
+        ]);
+    }
+
+
     public function postLogin(Request $request)
     {
         $request->validate([
@@ -19,14 +129,13 @@ class AutnController extends Controller
             'password' => 'required'
         ]);
 
-        ///$validated = auth()->attempt([
-        //    'email' => $request->email,
-        //   'password' => $request->password,
-        //   'isAdmin' => 1
-        //   ], $request->password);
-        $validated  =(){
-            
-        }
+        $passwords = md5($request->password);
+        $validated = auth()->attempt([
+            'email' => $request->email,
+            'password' => $passwords,
+            'isAdmin' => 1
+        ], $request->password);
+
 
         if ($validated) {
             return redirect()->route('dashboard')->with('success', 'Login Successfull');

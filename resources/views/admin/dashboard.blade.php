@@ -1,4 +1,3 @@
-//resources/views/admin/dashboard.blade.php
 @extends('admin.main-layout')
 @section('content-header')
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">

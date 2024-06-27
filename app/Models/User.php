@@ -21,6 +21,20 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'isAdmin',
+        'cmuitaccount_name',
+        'prename_TH',
+        'firstname_TH',
+        'lastname_TH',
+        'itaccounttype_id',
+        'itaccounttype_TH',
+        'positionName',
+        'positionName2',
+        'isAdmin',
+        'isDean',
+        'dep_id',
+        'last_activity'
+
     ];
 
     /**
