@@ -1,8 +1,7 @@
 @php
     $current_route = request()->route()->getName();
 @endphp
-<!-- Main Sidebar Container -->
-<!-- Sidebar -->
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -11,6 +10,11 @@
             <i class="fas fa-laugh-wink"></i>
         </div>
         <div class="sidebar-brand-text mx-3">
+            <!-- auth()->user()->name  -->
+            welcome To <br />
+            @if (Session::has('cmuitaccount'))
+                {{ Session::get('userfullname') }}
+            @endif
 
         </div>
     </a>

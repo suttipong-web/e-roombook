@@ -10,13 +10,15 @@ class AdminAuth
 
     public function handle(Request $request, Closure $next)
     {
-        if ($request->session()->has('user')) {
-            $user = $request->session()->get('user');
-            if (now()->diffInMinutes($user['last_activity']) > 120) {
-                $request->session()->forget('user');
-                return redirect('login')->with('message', 'Session หมดอายุ กรุณาเข้าสู่ระบบใหม่');
+        if ($request->session()->has('cmuitaccount')) {
+            $userFullname = $request->session()->get('cmuitaccount');
+            $last_activity = $request->session()->get('last_activity');
+            if (now()->diffInMinutes($last_activity) > 120) {
+                $request->session()->forget('cmuitaccount');
+                return redirect('admin/login')->with('message', 'Session หมดอายุ กรุณาเข้าสู่ระบบใหม่');
             }
-            $request->session()->put('user.last_activity', now());
+        } else {
+            return redirect('admin/login')->with('message', 'Session หมดอายุ กรุณาเข้าสู่ระบบใหม่');
         }
 
         return $next($request);

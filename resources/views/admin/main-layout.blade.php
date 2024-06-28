@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Admin Panel {{ isset($title) ? '| ' . $title : '' }}</title>
+    <title>Admin : {{ isset($title) ? '| ' . $title : '' }} @yield('ytitle') </title>
     <!-- Custom fonts for this template-->
     <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
@@ -18,45 +18,38 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         @include('admin.partials.left-sidebar')
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 @yield('content-header')
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
                     @yield('body')
+
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
-
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2021</span>
+                        <span>
+                            Copyright © Your Website 2021
+                        </span>
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -85,7 +78,6 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
@@ -93,7 +85,7 @@
     <script src="{{ asset('admin_asset/js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ asset('admin_asset/vendor/chart.js/Chart.min.js') }}"></script>
+    <!--<script src="{{ asset('admin_asset/vendor/chart.js/Chart.min.js') }}"></script>-->
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('admin_asset/js/demo/chart-area-demo.js') }}"></script>

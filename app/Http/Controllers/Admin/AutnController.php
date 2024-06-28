@@ -108,7 +108,19 @@ class AutnController extends Controller
                 ];
                 $users->update($setData);
                 // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
-                $request->session()->put('user', $users, 120);
+                //$request->session()->put('user', $users, 120);
+                $fullname =  $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
+
+                $request->session()->put('cmuitaccount', $email);
+                $request->session()->put('userfullname',  $fullname);
+                $request->session()->put('dep_id', $users["dep_id"]);
+                $request->session()->put('isAdmin', 1);
+                $request->session()->put('isDean', $users["isDean"]);
+                $request->session()->put('last_activity', Carbon::now());
+                $request->session()->put('positionName', $users["positionName"]);
+                $request->session()->put('positionName2', $users["positionName2"]);
+
+
                 return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
             }
             //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
