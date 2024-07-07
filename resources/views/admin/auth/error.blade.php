@@ -18,7 +18,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="/admin_asset/css/sb-admin-2.min.css" rel="stylesheet">
     <style type="text/css">
         .imgLogo {
             width: 100%;

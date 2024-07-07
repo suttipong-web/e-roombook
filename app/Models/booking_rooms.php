@@ -27,16 +27,22 @@ class booking_rooms extends Model
         'booking_status',
         'booking_type',
         'booking_status',
-        'booking_AdminApprove',
-        'booking_DeanApprove',
+        'booking_AdminAction',
+        'booking_DeanAction',
         'booking_cancel',
         'description',
         'booking_at',
         'booker_cmuaccount',
         'booking_food',
         'booking_camera',
-        'booking_cancel',
-        'booking_computer'
+        'booking_computer',
+        'booking_email',
+        'booking_phone',
+        'admin_action_date',
+        'dean_action_date',
+        'admin_action_acount',
+        'dean_action_acount'
+            
 
     ];
 }

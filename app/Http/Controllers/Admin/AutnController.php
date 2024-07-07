@@ -24,8 +24,6 @@ class AutnController extends Controller
         return view('admin.auth.login')->with(
             [
                 'urlCMUOauth' => $signwithCmu,
-
-
             ]
         );
     }
@@ -41,6 +39,7 @@ class AutnController extends Controller
 
         //ร้องขอ  authorization_code  เพื่อนำไป login เพื่อ ขอข้อมูลพนักงาน   
         $curl = curl_init();
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://oauth.cmu.ac.th/v1/GetToken.aspx?code',
             CURLOPT_RETURNTRANSFER => true,
@@ -57,9 +56,11 @@ class AutnController extends Controller
                 'Content-Type: application/x-www-form-urlencoded'
             ),
         ));
+
         $responseAuthCode = curl_exec($curl);
         curl_close($curl);
         $callback_dataAuthCode = json_decode($responseAuthCode, true);
+
         if (empty($callback_dataAuthCode['access_token'])) {
             return view('admin.auth.error')->with([
                 'displayError' => true

@@ -30,6 +30,7 @@ class booking extends Model
         'booking_DeanApprove',
         'booking_cancel',
         'description',
+        'booking_email',
         'booking_at'
     ];
 }

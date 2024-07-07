@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -10,7 +9,6 @@ class ProfileController extends Controller
 {
     public function dashboard(Request $request)
     {
-
         $user = "";
         if ($request->session()->has('user')) {
             $user = $request->session()->get('user');
@@ -21,15 +19,13 @@ class ProfileController extends Controller
             ->where('booking_AdminApprove', 0)
             ->get();
 
-
-
         return view('admin.dashboard')->with([
             'title' => 'Dashboard',
             'sessionUser' => $user,
             'getBookingList' => $ResultBookingNew
         ]);
-    }
 
+    }
     public function logout()
     {
         auth()->logout();

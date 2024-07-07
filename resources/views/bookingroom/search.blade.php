@@ -4,13 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Example Page</title>
+    <title>ตรวจสอบการใช้ห้อง</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="{{ asset('js/bootstrap-datepicker-thai/css/datepicker.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -26,17 +26,11 @@
                     <div class="formSlc  text-start w-90 mt-4">
 
                         <h4>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-calendar-plus" viewBox="0 0 16 16">
-                                <path
-                                    d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7" />
-                                <path
-                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                            </svg>
+                            <i class="bi bi-calendar2-plus-fill"></i>
                             ทำรายการจองห้อง
                         </h4>
                         <hr />
-                        <form id="serachBookingDate" method="post" action="{{ url('/booking/search') }}">
+                        <form id="serachBookingDate" method="post" action="/booking/search">
                             @csrf
                             <div class="mb-3">
                                 <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
@@ -97,14 +91,8 @@
                                                 <td colspan="4">
                                                     <div class="p-2 mt-2 text-center">
                                                         <div class="alert alert-success" role="alert">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="36"
-                                                                height="16" fill="currentColor"
-                                                                class="bi bi-check2-circle" viewBox="0 0 16 16">
-                                                                <path
-                                                                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
-                                                                <path
-                                                                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
-                                                            </svg>
+                                                            <i class="bi bi-check2-circle"></i>
+
                                                             <br /> ไม่พบรายการจองห้องวันนี้
                                                             <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม " ทำรายจองห้อง "
                                                                 และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
@@ -121,11 +109,7 @@
                                 <div class="text-center d-flex justify-content-center">
                                     <button type="button" id="btnBooking" class="btn btn-success"
                                         data-bs-toggle="modal" data-bs-target="#addModal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-calendar2-plus-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 3.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5H2.545c-.3 0-.545.224-.545.5m6.5 5a.5.5 0 0 0-1 0V10H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V11H10a.5.5 0 0 0 0-1H8.5z" />
-                                        </svg> ทำรายจองห้อง
+                                        <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
                                     </button>
 
                                 </div>
@@ -241,7 +225,7 @@
 
                         <div class="col-12">
                             <div>
-                                ระบุอุปกรณ์ที่ต้องการขอใช้ :
+                                รายการขอใช้เพิ่มเติม :
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="checkbox" id="booking_computer"
                                         name="booking_computer" value="1">
@@ -286,11 +270,9 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 
-    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}">
-    </script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}">
-    </script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
@@ -305,7 +287,7 @@
                 const fd = new FormData(this);
                 $("#add_btn").text('Adding...');
                 $.ajax({
-                    url: "{{ url('/booking/insertBooking') }}",
+                    url: "/booking/insertBooking",
                     method: 'post',
                     data: fd,
                     cache: false,

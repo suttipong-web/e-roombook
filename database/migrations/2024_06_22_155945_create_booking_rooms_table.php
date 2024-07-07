@@ -33,15 +33,22 @@ return new class extends Migration
             $table->string('bookingToken')->nullable();
             $table->tinyInteger('booking_status')->default(0);
             $table->tinyInteger('booking_type')->default(0);
-            $table->boolean('booking_AdminApprove')->default(false);
-            $table->boolean('booking_DeanApprove')->default(false);
+            $table->string('booking_AdminAction', 20)->nullable();
+            $table->string('booking_DeanAction', 20)->nullable();
             $table->string('description')->nullable();
-            $table->timestamp('booking_at')->nullable();
+            $table->dateTime('booking_at')->nullable();
             $table->boolean('booking_cancel')->default(false);
             $table->boolean('booking_food')->default(false);
             $table->boolean('booking_camera')->default(false);
             $table->string('booker_cmuaccount')->nullable();
             $table->boolean('booking_AdminApprove')->default(false);
+            $table->string('booking_email')->nullable();
+            $table->string('booking_phone')->nullable();
+            $table->dateTime('admin_action_date')->nullable();
+            $table->dateTime('dean_action_date')->nullable();
+            $table->string('admin_action_acount')->nullable();
+            $table->string('dean_action_acount')->nullable();
+
             $table->timestamps();
         });
     }

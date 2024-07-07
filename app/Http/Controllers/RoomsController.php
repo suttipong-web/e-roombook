@@ -20,7 +20,7 @@ class RoomsController extends Controller
             ->select('id', 'placeName')
             ->get();
 
-        return view("/room/index")->with([
+        return view("/admin/room/index")->with([
             'getroomType' => $roomType,
             'getroomPlace' => $roomPlace
         ]);
@@ -28,18 +28,7 @@ class RoomsController extends Controller
     // handle fetch all  ajax request
     public function fetchAll()
     {
-        //$rowsRoom = Rooms::all();
-        // select join table
-        /*SELECT
-        rooms.roomToken,
-        rooms.roomTitle,
-        room_type.roomtypeName,
-        place.placeName
-        FROM
-        rooms
-        INNER JOIN room_type ON rooms.roomTypeId = room_type.id
-        INNER JOIN place ON rooms.placeId = place.id
-        */
+        
         $rowsRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
             ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
@@ -47,7 +36,9 @@ class RoomsController extends Controller
 
         $output = '';
         if ($rowsRoom->count() > 0) {
-            $output .= '<table class="table table-striped table-sm text-left align-middle">
+            $output .= '
+            <div class="table-responsive">
+        <table class="table table-striped table-sm text-left align-middle w-100" id="tableListRoomALl">
         <thead>
           <tr>
             <th>#</th>
@@ -71,7 +62,7 @@ class RoomsController extends Controller
                 }
 
 
-                $isOpen =  ($rows->is_open)  ? '<span class="badge text-bg-success">เปิดปกติ</span>' : '<span class="badge text-bg-danger">ปิดการใช้</span>';
+                $isOpen =  ($rows->is_open)  ? '<span class="badge text-bg-success  badge-success">เปิดปกติ</span>' : '<span class="badge text-bg-danger  badge-danger">ปิดการใช้</span>';
                 $output .= '<tr class="text-start">
             <td>' . $rows->id . '</td>
             <td  class="text-left"><img src="' .   $img . '"  class="img-thumbnail "  width="100" ></td>
@@ -81,14 +72,14 @@ class RoomsController extends Controller
             <td>' . $rows->roomDetail . '</td>
            
             <td>' . $isOpen . '</td>
-            <td>
+            <td  width="80" >
               <a href="#" id="' . $rows->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi-pencil-square h4"></i></a>
 
               <a href="#" id="' . $rows->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
             </td>
           </tr>';
             }
-            $output .= '</tbody></table>';
+            $output .= '</tbody></table></div>';
             echo $output;
         } else {
             echo '<h1 class="text-center text-secondary my-5">No record present in the database!</h1>';

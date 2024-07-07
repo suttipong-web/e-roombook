@@ -1,34 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\admin\AutnController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
-
-
+use App\Http\Controllers\Admin\ScheduleDepController;
+use App\Http\Controllers\Admin\ScheduleController;
 use Illuminate\Support\Facades\Route;
+
 // Route Home Page
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-
-
-//Route  ระบบจัดการห้อง
-Route::prefix('/room')->group(
-    function () {
-        Route::get('/', [RoomsController::class, 'index']);
-        Route::post('/store', [RoomsController::class, 'store'])->name('store');
-        Route::get('/fetchall', [RoomsController::class, 'fetchAll'])->name('fetchAll');
-        Route::delete('/delete', [RoomsController::class, 'delete'])->name('delete');
-        Route::get('/edit', [RoomsController::class, 'edit'])->name('edit');
-        Route::post('/update', [RoomsController::class, 'update'])->name('update');
-    }
-);
-
-// Route  ระบบจองห้อง.
+// Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
 Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
@@ -52,9 +41,37 @@ Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])-
 
 
 Route::group(['middleware' => ['admin_auth']], function () {
-    Route::get('/admin/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/admin/bookingDetail', [DashboardController::class, 'bookingDetail'])->name('bookingDetail');
+
+    Route::get('/admin/viewstatus/{getStatus}', [DashboardController::class, 'viewStatus'])->name('viewStatus');
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
+    Route::post('/admin/approveBooking', [DashboardController::class, 'approveBooking'])->name('approveBooking');
+
+    //Route  ระบบจัดการห้อง RoomsController
+    Route::get('/admin', [DashboardController::class, 'adminindex'])->name('้adminindex');
+    Route::get('/admin/room/', [RoomsController::class, 'index']);
+    Route::post('/admin/room/store', [RoomsController::class, 'store'])->name('store');
+    Route::get('/admin/room/fetchall', [RoomsController::class, 'fetchAll'])->name('fetchAll');
+    Route::delete('/admin/room/delete', [RoomsController::class, 'delete'])->name('delete');
+    Route::get('/admin/room/edit', [RoomsController::class, 'edit'])->name('edit');
+    Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
+
+    Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
+    Route::get('/admin/report', [ReportController::class, 'index'])->name('index');
+    Route::get('/admin/report/bookingtable', [ReportController::class, 'bookingtable'])->name('bookingtable');
+
+    Route::get('/admin/schedules', [ScheduleDepController::class, 'index'])->name('index');
+    Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSchedule'])->name('insertSchedule');
+    Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
+    Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');
+    Route::get('/admin/schedules/view', [ScheduleDepController::class, 'views'])->name('views');
+    Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
+    Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
+    Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
+    
 });
 
 

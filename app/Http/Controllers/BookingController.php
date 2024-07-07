@@ -25,6 +25,7 @@ class BookingController extends Controller
             ->join('place', 'place.id', '=', 'rooms.placeId')
             ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
             ->where('roomTypeId', '1')
+            ->where('is_open', '1')
             ->get();
 
         //ประเภทห้อง 
@@ -49,6 +50,7 @@ class BookingController extends Controller
             ->join('place', 'place.id', '=', 'rooms.placeId')
             ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
             ->where('roomTypeId', $request->typeID)
+            ->where('is_open', '1')
             ->get();
 
 

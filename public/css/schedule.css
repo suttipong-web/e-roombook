@@ -1,0 +1,86 @@
+div.table-responsive::-webkit-scrollbar,
+div.table-responsive::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CACACA;
+    border: 0px none #CACACA;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #000000;
+}
+
+.wrap_schedule_control {
+    margin: auto;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.wrap_schedule {
+    cursor: pointer;
+    margin: 0 auto;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.time_schedule {
+    font-size: 12px;
+}
+
+.day_schedule {
+    font-size: 12px;
+}
+
+.time_schedule_text {}
+
+.day_schedule_text {
+    width: 85px;
+    font-size: 13px;
+    padding: 10px 5px;
+}
+
+.day-head-label {
+    position: relative;
+    right: 10px;
+    top: 0;
+}
+
+.time-head-label {
+    position: relative;
+    left: 10px;
+    bottom: 0;
+}
+
+.diagonal-cross {
+    border-bottom: 2px solid #dee2e6;
+   
+    position: relative;
+    top: -20px;
+    left: 0;
+    transform: translateY(20px) translateX(5px) rotate(20deg);
+}
+
+.sc-detail {
+    font-size: 12px;
+    background-color: #2b3a5b;
+    color: #FFFFFF;
+}
+
+.sc-detail a {
+    color: #f88d5b;
+    font-size: 14px;
+}

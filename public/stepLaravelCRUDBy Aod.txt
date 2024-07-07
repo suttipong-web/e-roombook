@@ -30,6 +30,11 @@ creted function  search save edit delect show
 Step 8: Working in View
 ceates *.blade.php ,   <script>
 
+imgae 
+php artisan storage:link
+
+
+
 Example 
 
 Select join  and where SQL 

@@ -33,7 +33,8 @@ class User extends Authenticatable
         'isAdmin',
         'isDean',
         'dep_id',
-        'last_activity'
+        'last_activity',
+        'user_type_id'
 
     ];
 

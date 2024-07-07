@@ -9,15 +9,17 @@
     <meta name="author" content="">
     <title>Admin : {{ isset($title) ? '| ' . $title : '' }} @yield('ytitle') </title>
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="/admin_asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template-->
-    <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/bs4/dt-2.0.8/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="/admin_asset/css/sb-admin-2.min.css" rel="stylesheet">
+    @yield('content-css')
 </head>
 
 <body id="page-top">
+
     <!-- Page Wrapper -->
     <div id="wrapper">
         @include('admin.partials.left-sidebar')
@@ -25,6 +27,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
+                @include('admin.partials.navbar')
                 @yield('content-header')
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -76,20 +79,31 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="/admin_asset/vendor/jquery/jquery.min.js"></script>
+    <script src="/admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="/admin_asset/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ asset('admin_asset/js/sb-admin-2.min.js') }}"></script>
+    <script src="/admin_asset/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <!--<script src="{{ asset('admin_asset/vendor/chart.js/Chart.min.js') }}"></script>-->
+    <!--<script src="/admin_asset/vendor/chart.js/Chart.min.js"></script>-->
 
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('admin_asset/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('admin_asset/js/demo/chart-pie-demo.js') }}"></script>
+    <!-- Page level custom scripts
+    <script src="/admin_asset/js/demo/chart-area-demo.js"></script>
+    <script src="/admin_asset/js/demo/chart-pie-demo.js"></script>
+ -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/v/bs4/dt-2.0.8/datatables.min.js"></script>
+    <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+
+    @yield('corescript')
 </body>
 
 </html>

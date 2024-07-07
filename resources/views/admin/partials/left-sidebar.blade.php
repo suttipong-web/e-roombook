@@ -5,11 +5,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
+        <!-- <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">
+        </div>-->
+        <div class="sidebar-brand-text ">
             <!-- auth()->user()->name  -->
             welcome To <br />
             @if (Session::has('cmuitaccount'))
@@ -29,20 +29,47 @@
             <span>Dashboard</span></a>
     </li>
 
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        User Management
+        <h5> ระบบจัดการ </h5>
+
     </div>
+
+    <li class="nav-item ">
+        <a href="/admin/room" class="nav-link {{ $current_route == 'room' ? 'active' : '' }}">
+            <i class="bi bi-hospital"></i>
+            <span>จัดการข้อมูลห้อง</span></a>
+    </li>
+
+    <li class="nav-item ">
+        <a href="/admin/dashboard" class="nav-link {{ $current_route == 'dashboard' ? 'active' : '' }}">
+            <i class="bi bi-hospital"></i>
+            <span>ข้อมูลการจองห้อง</span></a>
+    </li>
+
+    <li class="nav-item ">
+        <a href="/admin/schedules" class="nav-link {{ $current_route == 'admin.schedule' ? 'active' : '' }}">
+            <i class="bi bi-hospital"></i>
+            <span>จัดการตารางเรียน</span></a>
+    </li>
 
     <li class="nav-item">
         <a href="{{ route('users.index') }}" class="nav-link {{ $current_route == 'users.index' ? 'active' : '' }}">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Users</span></a>
+            <i class="bi bi-person-fill-gear"></i>
+            <span>จัดการผู้ใช้งาน</span></a>
     </li>
 
-
+    <div class="sidebar-heading">
+        Report
+    </div>
+    <li class="nav-item active">
+        <a href="{{ url('/admin/report/') }}" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
+            <i class="bi bi-list-check"></i>
+            <span>รายงาน </span></a>
+    </li>
 </ul>
 <!-- End of Sidebar -->

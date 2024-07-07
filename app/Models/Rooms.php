@@ -18,5 +18,8 @@ class Rooms extends Model
         'thumbnail',
         'roomDetail',
         'is_open',
-        'is_status'   ];  
+        'is_status',
+        'room_admin_email',
+        'room_price'
+    ];
 }
