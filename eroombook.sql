@@ -10,10 +10,68 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2024-06-25 02:08:48
+Date: 2024-07-07 13:54:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for action_status
+-- ----------------------------
+DROP TABLE IF EXISTS `action_status`;
+CREATE TABLE `action_status` (
+  `id` smallint(4) NOT NULL AUTO_INCREMENT,
+  `action_en` varchar(20) DEFAULT NULL,
+  `action_th` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of action_status
+-- ----------------------------
+INSERT INTO `action_status` VALUES ('1', 'approved', 'อนุมัติ');
+INSERT INTO `action_status` VALUES ('2', 'canceled', 'ไม่อนุมัติ');
+INSERT INTO `action_status` VALUES ('3', 'ForwardDean', 'ส่งต่อผู้บริหาร');
+
+-- ----------------------------
+-- Table structure for booking_assign2
+-- ----------------------------
+DROP TABLE IF EXISTS `booking_assign2`;
+CREATE TABLE `booking_assign2` (
+  `id` int(11) NOT NULL,
+  `cmuitaccount` varchar(120) DEFAULT NULL,
+  `bookingID` bigint(20) DEFAULT NULL,
+  `is_read` tinyint(1) DEFAULT 0,
+  `is_send_email` tinyint(1) DEFAULT 0,
+  `is_send_line` tinyint(1) DEFAULT 0,
+  `is_confirm` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of booking_assign2
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for booking_assigns
+-- ----------------------------
+DROP TABLE IF EXISTS `booking_assigns`;
+CREATE TABLE `booking_assigns` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `cmuitaccount` varchar(255) NOT NULL,
+  `bookingID` bigint(20) NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `is_send_email` tinyint(1) NOT NULL DEFAULT 0,
+  `is_send_line` tinyint(1) NOT NULL DEFAULT 0,
+  `is_confirm` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of booking_assigns
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for booking_rooms
@@ -39,23 +97,35 @@ CREATE TABLE `booking_rooms` (
   `bookingToken` varchar(255) DEFAULT NULL,
   `booking_status` tinyint(4) NOT NULL DEFAULT 0,
   `booking_type` tinyint(4) NOT NULL DEFAULT 0,
-  `booking_AdminApprove` tinyint(1) NOT NULL DEFAULT 0,
-  `booking_DeanApprove` tinyint(1) NOT NULL DEFAULT 0,
+  `booking_AdminAction` varchar(20) DEFAULT '0',
+  `booking_DeanAction` varchar(10) DEFAULT '0',
   `description` varchar(255) DEFAULT NULL,
   `booking_at` timestamp NULL DEFAULT NULL,
   `booking_cancel` tinyint(1) NOT NULL DEFAULT 0,
   `booker_cmuaccount` varchar(255) DEFAULT NULL,
   `booking_food` tinyint(1) DEFAULT 0,
   `booking_camera` tinyint(1) DEFAULT 0,
+  `booking_email` varchar(255) DEFAULT NULL,
+  `booking_phone` varchar(100) DEFAULT NULL,
+  `admin_action_date` datetime DEFAULT NULL,
+  `dean_action_date` datetime DEFAULT NULL,
+  `admin_action_acount` varchar(255) DEFAULT '',
+  `dean_action_acount` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of booking_rooms
 -- ----------------------------
-INSERT INTO `booking_rooms` VALUES ('1', '1234', '2', '24/06/2024', '0900', '1030', 'ประชุมงาน IT ', null, null, 'สุทธิพงค์ ริโปนยอง', '10', 'งานIT', '0', '0', '0', null, '543564564', '0', '0', '0', '0', 'ทดสอบระบบ', '2024-06-24 22:18:02', '0', 'suttipong.r@cmu.ac.th', '0', '0', '2024-06-24 22:18:21', '2024-06-24 22:18:26');
+INSERT INTO `booking_rooms` VALUES ('2', '1719283893', '2', '24/06/2024', '0830', '0900', null, null, null, '1323', '1', '1', '0', '0', '0', '1', 'fcf7fbd86be9f3b326c2b3f74582ed95', '1', '0', 'canceled', '0', '12123', '2024-06-25 02:51:33', '1', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 07:29:02', '0000-00-00 00:00:00', 'suttipong.r@cmu.ac.th', null, '2024-06-25 02:51:33', '2024-06-25 02:51:33');
+INSERT INTO `booking_rooms` VALUES ('9', '1719285260', '2', '25/06/2024', '0900', '1030', 'ประชุม', null, null, 'AOd', '10', '10', '0', '0', '1', '1', 'd95d6df6524fa7b190046bc55e91ba9c', '1', '0', 'approved', '0', 'test', '2024-06-25 03:14:20', '0', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 07:26:10', '0000-00-00 00:00:00', 'suttipong.r@cmu.ac.th', null, '2024-06-25 03:14:20', '2024-06-25 03:14:20');
+INSERT INTO `booking_rooms` VALUES ('10', '1719286608', '3', '25/06/2024', '0900', '0900', '1111321', null, null, 'AOd', '11', '5525', '0', '0', '1', '1', 'e6fe6cb86c6347047138039ea75ac5c9', '1', '0', 'canceled', '0', 'test ssend', '2024-06-25 03:36:48', '1', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 07:35:28', null, 'suttipong.r@cmu.ac.th', null, '2024-06-25 03:36:48', '2024-06-25 03:36:48');
+INSERT INTO `booking_rooms` VALUES ('11', '1719287560', '3', '25/06/2024', '0900', '0900', '1111321', null, null, 'AOd', '11', '5525', '0', '0', '1', '1', 'b3b60f3e56c0e6ae279e9bfe00b11915', '2', '0', 'ForwardDean', '0', 'test ssend', '2024-06-25 03:52:40', '0', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 07:38:34', null, 'suttipong.r@cmu.ac.th', null, '2024-06-25 03:52:40', '2024-06-25 03:52:40');
+INSERT INTO `booking_rooms` VALUES ('12', '1719288310', '2', '25/06/2024', '1100', '1200', 'ประชุม999', null, null, 'AOd', '1', '12', '0', '0', '1', '1', '545f314f6d62f98f30c8ba8867c8dae7', '0', '0', '0', '0', 'test', '2024-06-25 04:05:10', '0', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', null, null, null, null, '2024-06-25 04:05:10', '2024-06-25 04:05:10');
+INSERT INTO `booking_rooms` VALUES ('13', '1719288738', '2', '25/06/2024', '1300', '1430', '123', null, null, 'AOd333', '12', null, '0', '0', '1', '1', '087a0f18cd3890a01807b71cfa9a3722', '1', '0', 'canceled', '0', '23858282828', '2024-06-25 04:12:18', '1', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 13:53:09', null, 'suttipong.r@cmu.ac.th', null, '2024-06-25 04:12:18', '2024-06-25 04:12:18');
+INSERT INTO `booking_rooms` VALUES ('14', '1719298867', '2', '25/06/2024', '1600', '1700', 'ประชุม88844', null, null, 'AOd', '123', '123', '0', '0', '1', '1', '3116c765babee8bee2198b2ca7032f6b', '1', '0', 'approved', '0', '313213', '2024-06-25 07:01:07', '0', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 12:40:44', null, 'suttipong.r@cmu.ac.th', null, '2024-06-25 07:01:07', '2024-06-25 07:01:07');
 
 -- ----------------------------
 -- Table structure for cmu_oauth
@@ -71,6 +141,7 @@ CREATE TABLE `cmu_oauth` (
   `positionName2` varchar(254) DEFAULT NULL,
   `isAdmin` tinyint(4) NOT NULL DEFAULT 0,
   `isDean` tinyint(4) NOT NULL DEFAULT 0,
+  `password` varchar(254) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -203,12 +274,11 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of migrations
 -- ----------------------------
-INSERT INTO `migrations` VALUES ('1', '2014_10_12_000000_create_users_table', '1');
 INSERT INTO `migrations` VALUES ('2', '2014_10_12_100000_create_password_resets_table', '1');
 INSERT INTO `migrations` VALUES ('3', '2019_08_19_000000_create_failed_jobs_table', '1');
 INSERT INTO `migrations` VALUES ('4', '2019_12_14_000001_create_personal_access_tokens_table', '1');
@@ -218,6 +288,10 @@ INSERT INTO `migrations` VALUES ('7', '2024_06_22_155805_create_place_table', '1
 INSERT INTO `migrations` VALUES ('8', '2024_06_22_155841_create_customer_payment_table', '1');
 INSERT INTO `migrations` VALUES ('9', '2024_06_22_155916_create_cmu_oauth_table', '1');
 INSERT INTO `migrations` VALUES ('11', '2024_06_22_155945_create_booking_rooms_table', '2');
+INSERT INTO `migrations` VALUES ('13', '2014_10_12_000000_create_users_table', '3');
+INSERT INTO `migrations` VALUES ('14', '2024_07_01_063309_create_booking_assigns_table', '4');
+INSERT INTO `migrations` VALUES ('15', '2024_07_02_063122_create_schedule_table', '5');
+INSERT INTO `migrations` VALUES ('16', '2024_07_02_075802_create_room_schedules_table', '6');
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -292,22 +366,69 @@ CREATE TABLE `rooms` (
   `roomDetail` varchar(255) DEFAULT NULL,
   `is_open` tinyint(1) NOT NULL DEFAULT 1,
   `is_status` tinyint(1) NOT NULL DEFAULT 0,
+  `room_admin_email` varchar(255) DEFAULT NULL,
+  `room_price` int(10) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of rooms
 -- ----------------------------
-INSERT INTO `rooms` VALUES ('1', '', 'ห้องประชุมสำนักงานคณบดี (ห้องกระจก)', null, '7', '1', '1', '1719204526.jpg', 'สำนักงานคณบดี ชั้น 6 อาคาร 30 ปี', '0', '0', null, '2024-06-24 04:50:41');
-INSERT INTO `rooms` VALUES ('2', '', 'ห้องประชุมตียาภรณ์', null, '15', '1', '1', '1719204497.jpg', 'สำนักงานเลขานุการ ชั้น 6 อาคาร 30 ปี', '1', '0', null, '2024-06-24 04:48:18');
-INSERT INTO `rooms` VALUES ('3', '', 'ห้องประชุม 2', null, '80', '1', '1', '1719204467.jpg', 'สำนักงานเลขานุการ ชั้น 7 อาคาร 30 ปี', '1', '0', null, '2024-06-24 04:47:47');
-INSERT INTO `rooms` VALUES ('4', '', 'ห้องประชุม 3', null, '20', '1', '1', '1719204439.jpg', 'สำนักงานเลขานุการ ชั้น 7 อาคาร 30 ปี', '1', '0', null, '2024-06-24 04:47:19');
-INSERT INTO `rooms` VALUES ('5', '', 'ห้องประชุม 4', null, '80', '1', '1', '1719204424.jpg', 'สำนักงานเลขานุการ ชั้น 7 อาคาร 30 ปี (สามารถใช้เป็นห้องรับประทานอาหารได้)', '1', '0', null, '2024-06-24 04:47:04');
-INSERT INTO `rooms` VALUES ('6', '', 'ห้องประชุมสำนักงานคณะ (ข้างห้อง วสท.1)', null, '10', '1', '1', '1719204404.jpg', 'ห้องประชุมสำนักงานคณะ ชั้น 6 อาคาร 30 ปี', '1', '0', null, '2024-06-24 04:46:44');
-INSERT INTO `rooms` VALUES ('7', '', 'หอเกียรติยศ', null, '15', '1', '1', '1719204384.jpg', 'หอเกียรติยศ ชั้น 6 อาคาร 30 ปี', '1', '0', null, '2024-06-24 04:46:24');
-INSERT INTO `rooms` VALUES ('8', '', 'ห้องคอมพิวเตอร์ 314', 'Lab 314', '50', '2', '1', '1719222208.jpg', 'ชั้น 3 อาคาร 30 ปี  21', '0', '0', null, '2024-06-24 09:43:28');
+INSERT INTO `rooms` VALUES ('1', '', 'ห้องประชุมสำนักงานคณบดี (ห้องกระจก)', null, '7', '1', '1', '1719204526.jpg', 'สำนักงานคณบดี ชั้น 6 อาคาร 30 ปี', '0', '0', null, '0', null, '2024-06-24 04:50:41');
+INSERT INTO `rooms` VALUES ('2', '', 'ห้องประชุมตียาภรณ์', null, '15', '1', '1', '1719204497.jpg', 'สำนักงานเลขานุการ ชั้น 6 อาคาร 30 ปี', '1', '0', null, '0', null, '2024-06-24 04:48:18');
+INSERT INTO `rooms` VALUES ('3', '', 'ห้องประชุม 2', null, '80', '1', '1', '1719204467.jpg', 'สำนักงานเลขานุการ ชั้น 7 อาคาร 30 ปี', '1', '0', null, '0', null, '2024-06-24 04:47:47');
+INSERT INTO `rooms` VALUES ('4', '', 'ห้องประชุม 3', null, '20', '1', '1', '1719204439.jpg', 'สำนักงานเลขานุการ ชั้น 7 อาคาร 30 ปี', '1', '0', null, '0', null, '2024-06-24 04:47:19');
+INSERT INTO `rooms` VALUES ('5', '', 'ห้องประชุม 4', null, '80', '1', '1', '1719204424.jpg', 'สำนักงานเลขานุการ ชั้น 7 อาคาร 30 ปี (สามารถใช้เป็นห้องรับประทานอาหารได้)', '1', '0', null, '0', null, '2024-06-24 04:47:04');
+INSERT INTO `rooms` VALUES ('6', '', 'ห้องประชุมสำนักงานคณะ (ข้างห้อง วสท.1)', null, '10', '1', '1', '1719204404.jpg', 'ห้องประชุมสำนักงานคณะ ชั้น 6 อาคาร 30 ปี', '1', '0', null, '0', null, '2024-06-24 04:46:44');
+INSERT INTO `rooms` VALUES ('7', '', 'หอเกียรติยศ', null, '15', '1', '1', '1719204384.jpg', 'หอเกียรติยศ ชั้น 6 อาคาร 30 ปี', '1', '0', null, '0', null, '2024-06-24 04:46:24');
+INSERT INTO `rooms` VALUES ('8', '', 'ห้องคอมพิวเตอร์ 314', 'Lab314', '50', '2', '1', '1719222208.jpg', 'ชั้น 3 อาคาร 30 ปี', '1', '0', null, '0', null, '2024-06-30 05:34:16');
+INSERT INTO `rooms` VALUES ('9', 'c0c04d3ac5d0184fc44530ae51824e2f', 'Lab303', '303', '12', '2', '1', '1719898298.jpg', '123456', '1', '0', null, '0', '2024-06-25 05:21:42', '2024-07-02 05:31:38');
+INSERT INTO `rooms` VALUES ('10', '7158d436dd44018bfd3ed1a7ffeb0c22', 'ห้องเรียน 2-404', '2-404', '10', '2', '1', '1719898272.jpg', null, '0', '0', null, '0', '2024-06-30 07:32:55', '2024-07-02 05:31:12');
+INSERT INTO `rooms` VALUES ('11', '369b2c11ca3249180d4e9b22c016f697', 'ห้องเรียน 3-312', '3-312', null, '3', '1', '1719898240.jpg', 'ห้องคอมพิวเตอร์', '1', '0', null, '0', '2024-07-02 05:30:40', '2024-07-02 05:30:40');
+
+-- ----------------------------
+-- Table structure for room_schedules
+-- ----------------------------
+DROP TABLE IF EXISTS `room_schedules`;
+CREATE TABLE `room_schedules` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `courseNO` varchar(255) DEFAULT NULL,
+  `courseTitle` varchar(255) DEFAULT NULL,
+  `courseSec` varchar(255) DEFAULT NULL,
+  `Stdamount` int(11) DEFAULT 0,
+  `schedule_startdate` date DEFAULT NULL,
+  `schedule_enddate` date DEFAULT NULL,
+  `booking_time_start` time DEFAULT NULL,
+  `booking_time_finish` time DEFAULT NULL,
+  `roomNo` varchar(255) DEFAULT NULL,
+  `roomID` int(11) DEFAULT 0,
+  `lecturer` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `is_confirm` tinyint(1) DEFAULT 0,
+  `admin_confirm` tinyint(1) DEFAULT 0,
+  `is_confirm_date` datetime DEFAULT NULL,
+  `admin_confirm_date` datetime DEFAULT NULL,
+  `staffupdated` datetime DEFAULT NULL,
+  `straff_account` varchar(255) DEFAULT NULL,
+  `schedule_repeatday` varchar(20) DEFAULT NULL,
+  `courseofyear` char(4) DEFAULT NULL,
+  `terms` tinyint(1) DEFAULT 0,
+  `is_import_excel` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of room_schedules
+-- ----------------------------
+INSERT INTO `room_schedules` VALUES ('2', 'MAth01', 'COMAWE01', '1', '55', '2024-07-03', '2024-07-27', '08:30:00', '10:00:00', null, '9', 'TESC2', '213', '0', '0', null, null, null, 'suttipong.r@cmu.ac.th', 'Wed', '2567', '1', '0', '2024-07-02 09:57:52', '2024-07-03 09:19:24');
+INSERT INTO `room_schedules` VALUES ('4', 'C3055', 'HTML5', '1', '100', '2024-07-05', '2024-09-30', '13:00:00', '14:00:00', null, '8', 'TESCA', 'test', '0', '0', null, null, null, 'suttipong.r@cmu.ac.th', 'Fri', '2567', '1', '0', '2024-07-03 09:15:22', '2024-07-03 09:15:22');
+INSERT INTO `room_schedules` VALUES ('58', '254182', 'Introdution to Engergy', '001', '10', '2024-07-01', '2024-10-31', '13:00:00', '14:30:00', '2-404', '10', 'ผ.ศ.ดร.เก่งกมล วิรัตน์เกษม', null, '0', '0', null, null, null, 'suttipong.r@cmu.ac.th', 'Tue', '2567', '1', '1', '2024-07-07 03:51:43', '2024-07-07 03:51:43');
+INSERT INTO `room_schedules` VALUES ('59', '254182', 'Introdution to Engergy', '801', '14', '2024-07-01', '2024-10-31', '13:00:00', '14:30:00', '2-404', '10', 'ผ.ศ.ดร.เก่งกมล วิรัตน์เกษม', null, '0', '0', null, null, null, 'suttipong.r@cmu.ac.th', 'Sat', '2567', '1', '1', '2024-07-07 03:51:43', '2024-07-07 03:51:43');
+INSERT INTO `room_schedules` VALUES ('60', '254184', 'Prot tech For inddes', '001', '34', '2024-07-01', '2024-10-31', '09:30:00', '11:30:00', 'lab314', '8', 'ผ.ศ.ดร.เวชยันต์ รางศรี', 'ขอห้อง', '0', '0', null, null, null, 'suttipong.r@cmu.ac.th', 'Mon', '2567', '1', '1', '2024-07-07 03:51:43', '2024-07-07 03:51:43');
 
 -- ----------------------------
 -- Table structure for room_type
@@ -331,22 +452,83 @@ INSERT INTO `room_type` VALUES ('3', 'ห้องคอมพิวเตอร
 INSERT INTO `room_type` VALUES ('4', 'ห้องสโลบ', null, null, null);
 
 -- ----------------------------
+-- Table structure for schedule
+-- ----------------------------
+DROP TABLE IF EXISTS `schedule`;
+CREATE TABLE `schedule` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `courseNO` varchar(255) NOT NULL,
+  `courseTitle` varchar(255) DEFAULT NULL,
+  `courseSec` varchar(255) DEFAULT NULL,
+  `Stdamount` int(11) NOT NULL DEFAULT 0,
+  `onDays` varchar(255) NOT NULL,
+  `onTimes` varchar(255) NOT NULL,
+  `roomNo` varchar(255) NOT NULL,
+  `roomID` bigint(20) DEFAULT NULL,
+  `lecturer` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `is_confirm` tinyint(1) NOT NULL DEFAULT 0,
+  `admin_confirm` tinyint(1) NOT NULL DEFAULT 0,
+  `is_confirm_date` datetime DEFAULT NULL,
+  `admin_confirm_date` datetime DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of schedule
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tbl_apikey
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_apikey`;
+CREATE TABLE `tbl_apikey` (
+  `id` smallint(4) NOT NULL AUTO_INCREMENT,
+  `apiweb` varchar(10) DEFAULT NULL,
+  `clientID` varchar(50) DEFAULT NULL,
+  `clientSecret` varchar(50) DEFAULT NULL,
+  `description` varchar(254) DEFAULT NULL,
+  `redirect_uri` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of tbl_apikey
+-- ----------------------------
+INSERT INTO `tbl_apikey` VALUES ('1', 'cmuoauth', 'nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM', 'U6bZTJ81TZnnUgPUgqTW9skTSKg5wNjreH6RCT4u', 'oauth.cmu.ac.th', 'http://127.0.0.1:8000/callback_cmuoauth');
+
+-- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `isDean` tinyint(1) NOT NULL DEFAULT 0,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `cmuitaccount_name` varchar(255) DEFAULT NULL,
+  `prename_TH` varchar(255) DEFAULT NULL,
+  `firstname_TH` varchar(255) NOT NULL DEFAULT '',
+  `lastname_TH` varchar(255) DEFAULT NULL,
+  `itaccounttype_id` varchar(10) NOT NULL DEFAULT '0',
+  `itaccounttype_TH` varchar(255) DEFAULT NULL,
+  `positionName` varchar(255) DEFAULT NULL,
+  `positionName2` varchar(255) DEFAULT NULL,
+  `last_activity` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `user_type_id` smallint(4) DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
+INSERT INTO `users` VALUES ('1', null, 'suttipong.r@cmu.ac.th', null, 'b986700c627db479a4d9460b75de7222', '1', '1', null, null, '2024-07-07 06:25:20', 'suttipong.r', 'นาย', 'สุทธิพงค์', 'ริโปนยอง', 'MISEmpAcc', 'บุคลากร', null, null, '2024-07-07 06:25:20', '0');
