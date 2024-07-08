@@ -58,9 +58,6 @@ class HelperService
             
         return   $time_day_arr;
     }
-
-
-
     public  function getFullNameCmuAcount($email)
     {
         $result =  User::where('email', $email)->first();

@@ -1,3 +1,4 @@
+@inject('getService', 'App\class\HelperService')
 <!doctype html>
 <html lang="en">
 
@@ -132,8 +133,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4 bg-light">
-                    <form id="add_booking_form" class="row g-3 w-90 m-10-auto" method="post" action="#"
-                        enctype="multipart/form-data">
+                    <form id="add_booking_form" class="row g-3 w-90 m-10-auto" enctype="multipart/form-data"
+                        action="/booking/insertBooking" method="post">
                         @csrf
                         <input type="hidden" name="roomID" value="{{ $searchRoomID }}">
                         <input type="hidden" name="dateStart" value="{{ $searchDates }}">
@@ -143,51 +144,15 @@
                             <br />
                             <select name="booking_time_start" class="form-control-2" required>
                                 <option value=""> เริ่ม </option>
-                                <option value="0800">08:00</option>
-                                <option value="0830">08:30</option>
-                                <option value="0900">09:00</option>
-                                <option value="0930">09:30</option>
-                                <option value="1000">10:00</option>
-                                <option value="1030">10:30</option>
-                                <option value="1100">11:00</option>
-                                <option value="1130">11:30</option>
-                                <option value="1200">12:00</option>
-                                <option value="1230">12:30</option>
-                                <option value="1300">13:00</option>
-                                <option value="1330">13:30</option>
-                                <option value="1400">14:00</option>
-                                <option value="1430">14:30</option>
-                                <option value="1500">15:00</option>
-                                <option value="1530">15:30</option>
-                                <option value="1600">16:00</option>
-                                <option value="1630">16:30</option>
-                                <option value="1700">17:00</option>
-                                <option value="1730">17:30</option>
-                                <option value="1800">18:00</option>
+                                @foreach ($getService->getALlTimes() as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endforeach
                             </select> :
                             <select name="booking_time_finish" class="form-control-2" required>
                                 <option value="">สิ้นสุด</option>
-                                <option value="0800">08:00</option>
-                                <option value="0830">08:30</option>
-                                <option value="0900">09:00</option>
-                                <option value="0930">09:30</option>
-                                <option value="1000">10:00</option>
-                                <option value="1030">10:30</option>
-                                <option value="1100">11:00</option>
-                                <option value="1130">11:30</option>
-                                <option value="1200">12:00</option>
-                                <option value="1230">12:30</option>
-                                <option value="1300">13:00</option>
-                                <option value="1330">13:30</option>
-                                <option value="1400">14:00</option>
-                                <option value="1430">14:30</option>
-                                <option value="1500">15:00</option>
-                                <option value="1530">15:30</option>
-                                <option value="1600">16:00</option>
-                                <option value="1630">16:30</option>
-                                <option value="1700">17:00</option>
-                                <option value="1730">17:30</option>
-                                <option value="1800">18:00</option>
+                                @foreach ($getService->getALlTimes() as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-6 p-2">
@@ -201,28 +166,22 @@
                             <input type="text" class="form-control" id="booking_subject" name="booking_subject"
                                 required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าร่วมประชุม</label>
                             <input type="number" class="form-control" id="booking_ofPeople" name="booking_ofPeople"
                                 placeholder=" จำนวนที่เข้าใช้งาน " />
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="booking_department" class="form-label">หน่วยงาน</label>
                             <input type="text" class="form-control" id="booking_department"
                                 name="booking_department" placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="booking_department" class="form-label">เบอร์โทรติดต่อ</label>
                             <input type="text" class="form-control" id="booking_contact" name="booking_contact"
                                 placeholder=" 05394xxxx" />
                         </div>
-                        <div class="col-3">
-                            <label for="booking_cancel" class="form-label"> รหัสยกเลิกการจอง </label>
-                            <input type="password" class="form-control" id="booking_cancel" name="booking_cancel"
-                                placeholder=" รหัสยกเลิกการจอง " />
-                        </div>
-
                         <div class="col-12">
                             <div>
                                 รายการขอใช้เพิ่มเติม :
@@ -269,7 +228,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
@@ -286,6 +244,7 @@
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#add_btn").text('Adding...');
+
                 $.ajax({
                     url: "/booking/insertBooking",
                     method: 'post',
@@ -319,12 +278,10 @@
                                 $("#addModal").modal('hide');
                                 NewfetchData();
                             });
-
                         }
-
                     }
                 });
-                return false;
+
             });
 
             function NewfetchData() {

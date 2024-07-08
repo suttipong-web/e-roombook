@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Imports\ScheduleImport;
 use App\Models\Rooms;
@@ -11,12 +12,13 @@ use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\FuncCall;
 use Excel;
 use Session;
+
 class ScheduleDepController extends Controller
 {
     // 
     public function index(Request $request)
     {
-        
+
         $nowYear = (date('Y')) + 543;
         $Byuser =  Session::get('cmuitaccount');
         //ข้อมูลห้อง ทั้งหมด join
@@ -27,23 +29,24 @@ class ScheduleDepController extends Controller
             ->where('is_open', '1')
             ->get();
 
-            //ข้อมูลห้องจองห่้องเรียน
+        //ข้อมูลห้องจองห่้องเรียน
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
             ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('room_schedules.is_confirm', 0)
-            ->where('room_schedules.straff_account',$Byuser)
+            ->where('room_schedules.straff_account', $Byuser)
             ->get();
-            return view('admin.schedule.index')->with([
+        return view('admin.schedule.index')->with([
             'getBookingList' => $getBookingList,
             'getListRoom' => $getListRoom,
-            'nowYear' => $nowYear            
+            'nowYear' => $nowYear
         ]);
     }
 
-    public function saveImportfile(Request $request) {
-        $cmuitaccount = $request->session()->get('cmuitaccount');    
-        Excel::import(new ScheduleImport  , $request->file('fileupload'));
-        return  redirect()->back()->with('success',true);
+    public function saveImportfile(Request $request)
+    {
+        $cmuitaccount = $request->session()->get('cmuitaccount');
+        Excel::import(new ScheduleImport, $request->file('fileupload'));
+        return  redirect()->back()->with('success', true);
     }
 
     //แสดงตารางเรียน
@@ -81,13 +84,19 @@ class ScheduleDepController extends Controller
             SELECT room_schedules.roomID , rooms.roomFullName,rooms.roomTitle ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id
-            WHERE (room_schedules.straff_account = '" . $Byuser . "') ";
+            WHERE (room_schedules.straff_account = '" . $Byuser . "')   ";
         if ($roomId > 0) {
             $sql .= " AND ( room_schedules.roomID ='{$roomId}' ) ";
         }
-        $sql .= "ORDER BY  room_schedules.courseofyear DESC,room_schedules.terms    ASC ";
+        $sql .= "   ORDER BY  roomID  ASC ";
         $getRoom = DB::select(DB::raw($sql));
-        
+
+        //$getRoom = roomSchedule::Join('rooms', 'rooms.id', '=', 'room_schedules.roomID')
+        // ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+        //  ->where('room_schedules.is_confirm', 0)
+        // ->where('room_schedules.straff_account', $Byuser)
+        //  ->get();
+        $roomIdDisplay = 0;
         if ($getRoom) {
             //loop ตารางห้องเรียน  
             foreach ($getRoom as $tableRoom) {
@@ -151,7 +160,7 @@ class ScheduleDepController extends Controller
                 $data_schedule = array();
                 if ($resultBooking) {
                     foreach ($resultBooking as $row) {
-                        $repeat_day = ($row->schedule_repeatday != "") ? $row->schedule_repeatday : '';                        
+                        $repeat_day = ($row->schedule_repeatday != "") ? $row->schedule_repeatday : '';
                         $data_schedule[] = array(
                             "id" => $row->id,
                             "start_date" => $row->schedule_startdate,
@@ -160,7 +169,7 @@ class ScheduleDepController extends Controller
                             "end_time" => $row->booking_time_finish,
                             "repeat_day" => $repeat_day,
                             "title" => $row->courseNO,
-                            "sec"=>  $row->courseSec,
+                            "sec" =>  $row->courseSec,
                             "room" => $row->roomFullName,
                             "isroomID" => $row->roomID,
                             "building" => $row->roomTitle
@@ -217,7 +226,6 @@ class ScheduleDepController extends Controller
                                         "sec" => $row['sec'],
                                         'UserChkDay' => $row['repeat_day']
                                     ];
-
                                 }
                             }
                         }
@@ -226,34 +234,38 @@ class ScheduleDepController extends Controller
 
                 ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
 
-                $output .= '
+                if ($roomIdDisplay  <> $tableRoom->roomID) {
+                    $roomIdDisplay = $tableRoom->roomID;
+                    $output .= '
+
                         <div class="wrap_schedule_control mt-5">
                             <div class="d-flex">
                                 <div class="text-left d-flex align-items-center">';
-                $num_dayShow_in_schedule = $num_dayShow - 1;
-                $output .= 'ตารางเรียนห้อง &nbsp&nbsp&nbsp<span class="badge badge-info"><h5>'. $tableRoom->roomFullName .'</h5> </span> &nbsp&nbsp&nbsp ช่วงวันที่ ' . $this->thai_date_short(strtotime($start_weekDay)) . ' ถึง ' . $this->thai_date_short(strtotime($start_weekDay . $num_dayShow_in_schedule . ' day')) . '</div>';
-                $output .= '  <div class="col-auto text-right ml-auto">' ;  
-                            $slc ='<div class="input-group mb-3">
+                    $num_dayShow_in_schedule = $num_dayShow - 1;
+                    $output .= 'ตารางเรียนห้อง &nbsp&nbsp&nbsp<span class="badge badge-info"><h5>' . $tableRoom->roomFullName . '</h5> </span> &nbsp&nbsp&nbsp ช่วงวันที่ ' . $this->thai_date_short(strtotime($start_weekDay)) . ' ถึง ' . $this->thai_date_short(strtotime($start_weekDay . $num_dayShow_in_schedule . ' day')) . '</div>';
+                    $output .= '  <div class="col-auto text-right ml-auto">';
+                    $slc = '<div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text" for="inputGroupSelect01"> ปีการศึกษา </label>
                                             </div>
                                         <select class="custom-select" id="sclcourseofyear">';
-                                        $cyear = ''; $terms='';
-                                        //  รูปการศึกษา 
-                                            foreach ($getRoom as $item) {
-                                                if($item->courseofyear != $cyear) {
-                                                    $cyear = $item->courseofyear ;
-                                                    $terms = $item->terms ;
-                                                    $vals= $terms."/".$cyear;
-                                                    $slc .='<option value="'. $vals.'"> '.$vals.'</option>';
-                                                } 
-                                            }
-                            $slc .='   </select> ';
-                                            
-                  $output .= $slc.'  </div> 
+                    $cyear = '';
+                    $terms = '';
+                    //  รูปการศึกษา 
+                    foreach ($getRoom as $item) {
+                        if ($item->courseofyear != $cyear) {
+                            $cyear = $item->courseofyear;
+                            $terms = $item->terms;
+                            $vals = $terms . "/" . $cyear;
+                            $slc .= '<option value="' . $vals . '"> ' . $vals . '</option>';
+                        }
+                    }
+                    $slc .= '   </select> ';
+
+                    $output .= $slc . '  </div> 
                                     </div> 
                                 <div class="col-auto text-right"> ';
-                $output .= '
+                    $output .= '
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS mR-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
                                     <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" >Home </button>        
@@ -275,25 +287,25 @@ class ScheduleDepController extends Controller
                                                 วัน
                                             </div>
                                         </th> ';
-                $timeHeardbar = "";
-                for ($i_time = 0; $i_time < $sc_numCol - 1; $i_time++) {
-                    $timeHeardbar .= '<th class="px-0 text-nowrap th-time">
+                    $timeHeardbar = "";
+                    for ($i_time = 0; $i_time < $sc_numCol - 1; $i_time++) {
+                        $timeHeardbar .= '<th class="px-0 text-nowrap th-time">
                                         <div class="time_schedule_text text-center" style="width:' . $hour_block_width . 'px;">
                                             ' . $sc_timeStep[$i_time] . ' - ' . $sc_timeStep[$i_time + 1] . '
                                         </div>   
                                     </th>';
-                }
-                $output .= $timeHeardbar . '</tr>
+                    }
+                    $output .= $timeHeardbar . '</tr>
                                     </thead>
                                 <tbody> ';
-                $outputBody = "";
-                // วนลูปแสดงจำนวนวันตามที่กำหนด
-                for ($i_day = 0; $i_day < $num_dayShow; $i_day++) {
-                    $dayInSchedule_chk = date("Y-m-d", strtotime($start_weekDay . " +" . $i_day . " day"));
-                    $dayKeyChk = date("D", strtotime($start_weekDay . " +" . $i_day . " day"));
-                    //$dayInSchedule_show = date("d-m-Y", strtotime($start_weekDay . " +" . $i_day . " day"));
-                    $dayInSchedule_show = $this->thai_date_short(strtotime($start_weekDay . " +" . $i_day . " day"));
-                    $outputBody .= '<tr>
+                    $outputBody = "";
+                    // วนลูปแสดงจำนวนวันตามที่กำหนด
+                    for ($i_day = 0; $i_day < $num_dayShow; $i_day++) {
+                        $dayInSchedule_chk = date("Y-m-d", strtotime($start_weekDay . " +" . $i_day . " day"));
+                        $dayKeyChk = date("D", strtotime($start_weekDay . " +" . $i_day . " day"));
+                        //$dayInSchedule_show = date("d-m-Y", strtotime($start_weekDay . " +" . $i_day . " day"));
+                        $dayInSchedule_show = $this->thai_date_short(strtotime($start_weekDay . " +" . $i_day . " day"));
+                        $outputBody .= '<tr>
                                     <td class="p-0 text-center table-active">
                                         <div class="day_schedule_text text-nowrap" style="min-height: 60px;">
                                                 ' . $dayTH[$i_day] . '<br>' . $dayInSchedule_show . '
@@ -302,36 +314,37 @@ class ScheduleDepController extends Controller
                                     <td class="p-0 position-relative" colspan="12">
                                         <div class="position-absolute">
                                             <div class="d-flex align-content-stretch" style="min-height: 60px;">';
-                    $inRowDay = "";
-                    for ($i = 1; $i < $sc_numCol; $i++) {
-                        $inRowDay .= '
+                        $inRowDay = "";
+                        for ($i = 1; $i < $sc_numCol; $i++) {
+                            $inRowDay .= '
                                             <div class="bg-light text-center border-right" style="width:' . $hour_block_width . 'px;margin-right: 1px;">
                                                 &nbsp;
                                             </div>';
-                    }
-                    $outputBody .= '' . $inRowDay . '</div>
+                        }
+                        $outputBody .= '' . $inRowDay . '</div>
                                 </div>
                                 <div class="position-absolute" style="z-index: 100;">';
-                    $strLop = "";
-                    if (isset($data_day_schedule[$dayKeyChk]) && count($data_day_schedule[$dayKeyChk]) > 0) {
-                        $lop = 0;
-                        foreach ($data_day_schedule[$dayKeyChk] as $row_day) {
-                            $lop++;
-                            $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
-                            $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
-                            if ($dayKeyChk == $row_day['UserChkDay'] && ($row_day['roomId'] == $tableRoom->roomID)) {
-                                $strLop = '<div class="position-absolute text-center sc-detail" 
+                        $strLop = "";
+                        if (isset($data_day_schedule[$dayKeyChk]) && count($data_day_schedule[$dayKeyChk]) > 0) {
+                            $lop = 0;
+                            foreach ($data_day_schedule[$dayKeyChk] as $row_day) {
+                                $lop++;
+                                $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
+                                $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
+                                if ($dayKeyChk == $row_day['UserChkDay'] && ($row_day['roomId'] == $tableRoom->roomID)) {
+                                    $strLop = '<div class="position-absolute text-center sc-detail" 
                                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                                                    <a href="#">' . $row_day['title'] . '</a><br/>sec '.$row_day['sec'] .'<br>' . $row_day['room'] .
-                                    '</div>';
+                                                    <a href="#">' . $row_day['title'] . '</a><br/>sec ' . $row_day['sec'] . '<br>' . $row_day['room'] .
+                                        '</div>';
+                                }
                             }
+                            $outputBody .= "" . $strLop;
                         }
-                        $outputBody .= "" . $strLop;
+                        $outputBody .= ' </div></td></tr>';
                     }
-                    $outputBody .= ' </div></td></tr>';
+                    $output .= '' . $outputBody . '</tbody></table></div></div>';
+                    echo $output;
                 }
-                $output .= '' . $outputBody . '</tbody></table></div></div>';
-                echo $output;
             }
         } else {
             return $output;

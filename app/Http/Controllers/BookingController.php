@@ -182,16 +182,17 @@ class BookingController extends Controller
                 'booking_camera' => $booking_camera,
                 'booker_cmuaccount' => $request->booker_cmuaccount,
                 'description' => $request->description,
-                'booking_cancel' => $request->booking_cancel,
                 'booking_at' => Carbon::now()
             ];
-            // echo print_r($setDataBooking);
-            booking_rooms::create($setDataBooking);
-            return response()->json([
-                'status' => 200,
-                'searchRoomID' => $request->roomID,
-                'searchDates' => $request->dateStart
-            ]);
+            //  echo print_r($setDataBooking);
+            $result =    booking_rooms::create($setDataBooking);
+            if ($result) {
+                return response()->json([
+                    'status' => 200,
+                    'searchRoomID' => $request->roomID,
+                    'searchDates' => $request->dateStart
+                ]);
+            }
         }
     }
 }
