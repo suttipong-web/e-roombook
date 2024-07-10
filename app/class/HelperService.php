@@ -29,7 +29,6 @@ class HelperService
         }
         return $setdate;
     }
-
     public static function getStatusTh($status)
     {
         $result = DB::table('action_status')

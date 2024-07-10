@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\ScheduleImport;
+use App\Models\Listday;
 use App\Models\Rooms;
 use App\Models\roomSchedule;
 use Illuminate\Http\Request;
@@ -18,7 +19,6 @@ class ScheduleDepController extends Controller
     // 
     public function index(Request $request)
     {
-
         $nowYear = (date('Y')) + 543;
         $Byuser =  Session::get('cmuitaccount');
         //ข้อมูลห้อง ทั้งหมด join
@@ -161,13 +161,26 @@ class ScheduleDepController extends Controller
                 if ($resultBooking) {
                     foreach ($resultBooking as $row) {
                         $repeat_day = ($row->schedule_repeatday != "") ? $row->schedule_repeatday : '';
+                        $day1 = "";
+                        $day2 = "";
+                        $list = DB::table('listdays')->where('dayTitle', $row->schedule_repeatday)->first();
+                        if ($list) {
+                            if ($list->id < 8) {
+                                $day1 = $list->dayList;
+                            } else {
+                                $temp = explode(",", $list->dayList);
+                                $day1 = $temp[0];
+                                $day2 = $temp[1];
+                            }
+                        }
                         $data_schedule[] = array(
                             "id" => $row->id,
                             "start_date" => $row->schedule_startdate,
                             "end_date" => $row->schedule_enddate,
                             "start_time" => $row->booking_time_start,
                             "end_time" => $row->booking_time_finish,
-                            "repeat_day" => $repeat_day,
+                            "repeat_day" => $day1,
+                            "repeat_day2" => $day2,
                             "title" => $row->courseNO,
                             "sec" =>  $row->courseSec,
                             "room" => $row->roomFullName,
@@ -190,7 +203,7 @@ class ScheduleDepController extends Controller
                             || (strtotime($start_weekDay) > strtotime($row['start_date']) && strtotime($end_weekDay) < strtotime($row['end_date'])
                                 && strtotime($row['end_date']) >= strtotime($start_weekDay))
                         ) {
-                            if (isset($row['repeat_day'])) { // have day repeat
+                            if (!empty($row['repeat_day'])) { // have day repeat
                                 for ($i = 0; $i < $num_dayShow; $i++) {
                                     if (strtotime($start_weekDay . " +" . $i . "day") >= strtotime($row['start_date']) && strtotime($start_weekDay . " +" . $i . " day") <= strtotime($row['end_date'])) {
                                         $dayKey = date("D", strtotime($start_weekDay . " +" . $i . " day"));
@@ -204,7 +217,8 @@ class ScheduleDepController extends Controller
                                             "roomId" => $row['isroomID'],
                                             "building" => $row['building'],
                                             "sec" => $row['sec'],
-                                            'UserChkDay' => $row['repeat_day']
+                                            'UserChkDay' => $row['repeat_day'],
+                                            'UserChkDay2' => $row['repeat_day2']
                                         ];
                                     }
                                 }
@@ -331,7 +345,7 @@ class ScheduleDepController extends Controller
                                 $lop++;
                                 $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
                                 $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
-                                if ($dayKeyChk == $row_day['UserChkDay'] && ($row_day['roomId'] == $tableRoom->roomID)) {
+                                if (($dayKeyChk == $row_day['UserChkDay'] || $dayKeyChk == $row_day['UserChkDay2']) && ($row_day['roomId'] == $tableRoom->roomID)) {
                                     $strLop = '<div class="position-absolute text-center sc-detail" 
                                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
                                                     <a href="#">' . $row_day['title'] . '</a><br/>sec ' . $row_day['sec'] . '<br>' . $row_day['room'] .
@@ -352,7 +366,18 @@ class ScheduleDepController extends Controller
         //echo $output;
         // return $output;
     }
+    public function  getListDay($days)
+    {
+        $list = DB::table('listdays')->where('dayTitle', $days)->first();
 
+        if ($list->id < 8) {
+            $result = $list->dayList;
+        } else {
+            $temp = explode(",", $list->dayList);
+        }
+
+        $result =  $list;
+    }
     function getduration($datetime1, $datetime2)
     {
         $datetime1 = (preg_match('/-/', $datetime1)) ? (int) strtotime($datetime1) : (int) $datetime1;
