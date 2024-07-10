@@ -72,10 +72,11 @@
                             <th>ชื่อวิชา</th>
                             <th>Section</th>
                             <th>จำนวนคน</th>
-                            <th align="center" class="text-center">วัน/เวลา</th>
+                            <th>วัน</th>
+                            <th align="center" class="text-center">เวลา</th>
                             <th>ห้องเรียน</th>
                             <th>ผู้สอน</th>
-                            <th>หมายเหตุ</th>
+
                             <th>จัดการ</th>
                         </tr>
                     </thead>
@@ -89,15 +90,14 @@
                                     <td>{{ $rows->courseTitle }}</td>
                                     <td>{{ $rows->courseSec }}</td>
                                     <td>{{ $rows->Stdamount }}</td>
-                                    <td align="center" class="text-center">
-                                        {{ $rows->schedule_repeatday }} |
-                                        {{ substr($rows->booking_time_start, 0, 5) }} -
+                                    <td>{{ $rows->schedule_repeatday }} </td>
+                                    <td align="center" class="text-center">{{ substr($rows->booking_time_start, 0, 5) }} -
                                         {{ substr($rows->booking_time_finish, 0, 5) }} <br />
                                         {{ $rows->schedule_startdate . ' - ' . $rows->schedule_enddate }}
                                     </td>
                                     <td>{{ $rows->roomFullName }}</td>
                                     <td>{{ $rows->lecturer }}</td>
-                                    <td>{{ $rows->description }}</td>
+
                                     <td> <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
                                             <i class="bi-pencil-square h6"></i></a>
                                         <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">
@@ -416,21 +416,21 @@
 
                         <div class="col-md-4 mt-2 p-2">
                             <!-- <div class="input-group">
-                                                                                                                                            <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
-                                                                                                                                            @foreach ($getService->getAllDayName() as $k => $day_value)
+                                                                                                                                                                <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
+                                                                                                                                                                @foreach ($getService->getAllDayName() as $k => $day_value)
     <div class="form-check ml-3">
-                                                                                                                                                    <input class="custom-control-input repeatday_chk" type="checkbox"
-                                                                                                                                                        name="schedule_repeatday_chk" id="schedule_repeatday_chk{{ $k }}"
-                                                                                                                                                        value="{{ $k }}">
-                                                                                                                                                    <label class="custom-control-label"
-                                                                                                                                                        for="schedule_repeatday_chk{{ $k }}">
-                                                                                                                                                        {{ $day_value }}
-                                                                                                                                                    </label>
-                                                                                                                                                </div>
+                                                                                                                                                                        <input class="custom-control-input repeatday_chk" type="checkbox"
+                                                                                                                                                                            name="schedule_repeatday_chk" id="schedule_repeatday_chk{{ $k }}"
+                                                                                                                                                                            value="{{ $k }}">
+                                                                                                                                                                        <label class="custom-control-label"
+                                                                                                                                                                            for="schedule_repeatday_chk{{ $k }}">
+                                                                                                                                                                            {{ $day_value }}
+                                                                                                                                                                        </label>
+                                                                                                                                                                    </div>
     @endforeach
-                                                                                                                                        </div>
-                                                                                                                                        <input type="hidden" name="schedule_repeatday" id="schedule_repeatday" value="" />
-                                                                                                                                    -->
+                                                                                                                                                            </div>
+                                                                                                                                                            <input type="hidden" name="schedule_repeatday" id="schedule_repeatday" value="" />
+                                                                                                                                                        -->
                             <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน </label>
                             <select id="schedule_repeatday" class="form-control" name="schedule_repeatday" required>
                                 <option value="0">--- เลือก --- </option>
