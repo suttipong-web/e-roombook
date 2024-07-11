@@ -32,6 +32,10 @@
                     ตารางเรียนโดยกรอกข้อมูลตามรูปแบบไฟล์ตัวอย่างที่ให้เท่านั้น
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download << </a>
                 </li>
+                <li><span class="bg-danger text-white ">** เมื่อรายการของท่านขึ้นพื้นสีแดง
+                        หมายความว่าไม่สามารถลงช่วงเวลานี้ได้
+                        เนื่องจากมีวิชาอื่นลงตารางแล้ว
+                    </span> </li>
                 <li> เมื่อกดยืนยันแล้วจะไม่สามารถ แก้ไขช่วงเวลาได้ </li>
                 <li> ระบบแสดงตารางเรียนตามห้องเรียน และช่วงวันที่ ที่ระบุไว้ในการเพิ่มข้อมูล </li>
                 <li>กระบวนวิชาวิศวกรรมพื้นฐาน (ลงข้อมูลก่อนเปิดเทอม 4 อาทิตย์) </li>
@@ -416,12 +420,12 @@
 
                         <div class="col-md-4 mt-2 p-2">
                             <!-- <div class="input-group">
-                                                                                                                                                                                                                                            <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
-                                                                                                                                                                                                                                            @foreach ($getService->getAllDayName() as $k => $day_value)
+                                                                                                                                                                                                                                                                                        <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
+                                                                                                                                                                                                                                                                                        @foreach ($getService->getAllDayName() as $k => $day_value)
     <div class="form-check ml-3">
-                                                                                                                                                                                                                              </div>
-         @endforeach
-                                                                                                                                                                                                       -->
+                                                                                                                                                                                                                                                                          </div>
+    @endforeach
+                                                                                                                                                                                                                                                   -->
                             <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน </label>
                             <select id="schedule_repeatday" class="form-control" name="schedule_repeatday" required>
                                 <option value="0">--- เลือก --- </option>
