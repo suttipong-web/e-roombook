@@ -9,12 +9,23 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ScheduleDepController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\ScheduleroomController;
 use Illuminate\Support\Facades\Route;
 
 // Route Home Page
 Route::get('/', function () {
     return view('welcome');
 });
+//callback form cmuoauth
+Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
+
+Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchScheduleByRoom'])->name('fetchScheduleByRoom');
+
+Route::prefix('/room')->group(
+    function () {
+        Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
+    }
+);
 
 
 // Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
@@ -35,8 +46,7 @@ Route::prefix('/admin')->group(
     }
 );
 
-//callback form cmuoauth
-Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
+
 
 
 
@@ -71,7 +81,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
     Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
     Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
-    
+
 });
 
 
