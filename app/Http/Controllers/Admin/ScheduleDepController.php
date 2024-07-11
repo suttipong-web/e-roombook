@@ -20,7 +20,12 @@ class ScheduleDepController extends Controller
     public function index(Request $request)
     {
         $nowYear = (date('Y')) + 543;
-        $Byuser =  Session::get('cmuitaccount');
+        $Byuser =  $request->session()->get('cmuitaccount');
+
+        $getliatday  = DB::table('listdays')
+            ->select('dayTitle', 'dayList')
+            ->get();
+
         //ข้อมูลห้อง ทั้งหมด join
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
@@ -30,15 +35,71 @@ class ScheduleDepController extends Controller
             ->get();
 
         //ข้อมูลห้องจองห่้องเรียน
+        $BookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
+            ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+            ->where('room_schedules.is_confirm', 0)
+            ->where('room_schedules.straff_account', $Byuser)
+            ->get();
+
+        foreach ($BookingList as $rows) {
+
+            $is_duplicate = false;
+            //ตรวจสอบว่าวันที่ เวลา มีคนการจองก่อนหน้าหรือยัง  
+            //ถ้ามีให่  update  ฟิด is_duplicate = true  ด้วย เพื่อเป้นการแจ้งเตือน 
+            //ตรวจสอบว่าจองเวลานี้ได้ไหม 
+
+            //'schedule_startdate', 'schedule_enddate', 'booking_time_start', 'booking_time_finish'
+            $bkstartdate = $rows->schedule_startdate;
+            $bkwnddate = $rows->schedule_enddate;
+            // เวลาเริ่ม จบ  
+            $bkstart = $rows->booking_time_start;
+            $bkfinish = $rows->booking_time_finish;
+
+            //ตรวจสอบหาวัน /เวลานี้ว่ามีรายการซื้อไหม 
+            $sql = " SELECT * FROM `room_schedules` WHERE
+                    room_schedules.roomID ='" . $rows->roomID . "'  AND
+                    room_schedules.schedule_startdate >= '" . $rows->schedule_startdate . "' AND 
+                    room_schedules.schedule_enddate <='" . $rows->schedule_enddate . "'  AND   
+                    room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "' AND 
+                    ( room_schedules.id <> '" . $rows->id . "' AND room_schedules.id > $rows->id)  AND 
+                    room_schedules.is_duplicate = '0'
+                    ORDER BY booking_time_start ASC
+                    ";
+            //echo  $sql;
+            $qresult  = DB::select(DB::raw($sql));
+            if ($qresult) {
+                foreach ($qresult as $row_chk) {
+                    if (
+                        ($bkstart >= $row_chk->booking_time_start && $bkstart < $row_chk->booking_time_finish)
+                        ||
+                        ($bkfinish > $row_chk->booking_time_start && $bkfinish <= $row_chk->booking_time_finish)
+                        ||
+                        ($bkstart <  $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
+                    ) {
+                        //เวลาซ้ำ    
+                        $result = DB::table('room_schedules')
+                            /*       ->where('id', $rows->id)*/
+                            ->where('id', $row_chk->id)
+                            ->update([
+                                'is_duplicate' => 1
+                            ]);
+                    }
+                }
+            }
+        }
+
+
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
             ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('room_schedules.is_confirm', 0)
             ->where('room_schedules.straff_account', $Byuser)
             ->get();
+
         return view('admin.schedule.index')->with([
             'getBookingList' => $getBookingList,
             'getListRoom' => $getListRoom,
-            'nowYear' => $nowYear
+            'nowYear' => $nowYear,
+            'listDays' => $getliatday
         ]);
     }
 
@@ -84,7 +145,7 @@ class ScheduleDepController extends Controller
             SELECT room_schedules.roomID , rooms.roomFullName,rooms.roomTitle ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id
-            WHERE (room_schedules.straff_account = '" . $Byuser . "')   ";
+            WHERE (room_schedules.straff_account = '" . $Byuser . "')  AND  (room_schedules.is_duplicate =0)  ";
         if ($roomId > 0) {
             $sql .= " AND ( room_schedules.roomID ='{$roomId}' ) ";
         }
@@ -149,12 +210,14 @@ class ScheduleDepController extends Controller
                         INNER JOIN rooms ON room_schedules.roomID = rooms.id
                         WHERE 
                         (room_schedules.roomID  = '" . $tableRoom->roomID . "') AND   
-                        (straff_account = '" . $Byuser . "')
-                        AND
-                        (schedule_startdate  >= '" . $start_weekDay . "' AND schedule_startdate <  '" . $end_weekDay . "') OR
-                        ('" . $start_weekDay . "' > schedule_startdate  AND schedule_enddate <  '" . $end_weekDay . "'  AND schedule_enddate >= '" . $start_weekDay . "' )  OR
-                        ('" . $start_weekDay . "' > schedule_startdate  AND '" . $end_weekDay . "'  < schedule_enddate  AND schedule_enddate >= '" . $start_weekDay . "' ) 
-                        ORDER BY schedule_startdate
+                        (room_schedules.is_duplicate =0)  AND 
+                        (room_schedules.straff_account = '" . $Byuser . "') AND 
+                        (                       
+                            (room_schedules.schedule_startdate  >= '" . $start_weekDay . "' AND schedule_startdate <  '" . $end_weekDay . "') OR
+                            ('" . $start_weekDay . "' > schedule_startdate  AND schedule_enddate <  '" . $end_weekDay . "'  AND schedule_enddate >= '" . $start_weekDay . "' )  OR
+                            ('" . $start_weekDay . "' > schedule_startdate  AND '" . $end_weekDay . "'  < schedule_enddate  AND schedule_enddate >= '" . $start_weekDay . "' ) 
+                        )
+                        ORDER BY  schedule_startdate ASC  
                     "));
 
                 $data_schedule = array();

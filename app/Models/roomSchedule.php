@@ -27,9 +27,11 @@ class roomSchedule extends Model
         'is_confirm_date',
         'admin_confirm_date',
         'roomID',
-        'straff_account',    
+        'straff_account',
         'schedule_repeatday',
-        'is_import_excel'        
-       
+        'is_import_excel',
+        'is_duplicate'
+
+
     ];
 }

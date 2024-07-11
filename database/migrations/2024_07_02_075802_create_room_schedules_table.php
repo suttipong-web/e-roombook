@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('schedule_repeatday', 20)->nullable();
             $table->char('courseofyear', 4)->nullable();
             $table->tinyInteger('terms', 1)->default(0);
+            $table->boolean('is_duplicate')->default(false);
             $table->timestamps();
         });
     }
