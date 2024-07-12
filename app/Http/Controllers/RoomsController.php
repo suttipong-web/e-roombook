@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\room_gallery;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,11 +13,11 @@ class RoomsController extends Controller
     public function index()
     {
         //ประเภทห้อง 
-        $roomType  = DB::table('room_type')
+        $roomType = DB::table('room_type')
             ->select('id', 'roomtypeName')
             ->get();
         // สถานที่     
-        $roomPlace  = DB::table('place')
+        $roomPlace = DB::table('place')
             ->select('id', 'placeName')
             ->get();
 
@@ -28,7 +29,7 @@ class RoomsController extends Controller
     // handle fetch all  ajax request
     public function fetchAll()
     {
-        
+
         $rowsRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
             ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
@@ -62,10 +63,10 @@ class RoomsController extends Controller
                 }
 
 
-                $isOpen =  ($rows->is_open)  ? '<span class="badge text-bg-success  badge-success">เปิดปกติ</span>' : '<span class="badge text-bg-danger  badge-danger">ปิดการใช้</span>';
+                $isOpen = ($rows->is_open) ? '<span class="badge text-bg-success  badge-success">เปิดปกติ</span>' : '<span class="badge text-bg-danger  badge-danger">ปิดการใช้</span>';
                 $output .= '<tr class="text-start">
             <td>' . $rows->id . '</td>
-            <td  class="text-left"><img src="' .   $img . '"  class="img-thumbnail "  width="100" ></td>
+            <td  class="text-left"><img src="' . $img . '"  class="img-thumbnail "  width="100" ></td>
             <td>' . $rows->roomFullName . '</td>
              <td>' . $rows->roomtypeName . '</td>
              <td>' . $rows->placeName . '</td>
@@ -95,7 +96,7 @@ class RoomsController extends Controller
             $file->storeAs('public/images', $fileName);
         }
 
-        $roomToken  = md5(time());
+        $roomToken = md5(time());
         $setData = [
             'roomToken' => $roomToken,
             'roomFullName' => $request->roomFullName,
@@ -130,7 +131,7 @@ class RoomsController extends Controller
 
         $fileName = '';
         $RoomOpen = false;
-        $result  = Rooms::find($request->room_id);
+        $result = Rooms::find($request->room_id);
 
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
@@ -170,4 +171,30 @@ class RoomsController extends Controller
             Rooms::destroy($id);
         }
     }
+
+    public function detail(Request $request)
+    {
+
+        if ($request->roomId) {
+            $roomId = $request->roomId;
+            //`room_galleries` 
+            $getgallery = room_gallery::join('rooms', 'rooms.id', '=', 'room_galleries.roomID')
+                ->select('filename', 'rooms.roomFullName')->where('roomID', $roomId)->get();
+
+            $listRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
+                ->join('place', 'place.id', '=', 'rooms.placeId')
+                ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
+                ->where('rooms.id', '=', $roomId)
+                ->get();
+
+            $roomTitle = trim($listRoom[0]->roomFullName);
+            return view("room/detail")->with([
+                'getListRoom' => $listRoom,
+                'roomGallery' => $getgallery,
+                'roomTitle' => $roomTitle
+            ]);
+        }
+    }
+
+
 }

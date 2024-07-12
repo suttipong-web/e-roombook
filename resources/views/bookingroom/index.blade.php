@@ -61,7 +61,6 @@
                                 <option value="{{ $item->id }}">รายการ{{ $item->roomtypeName }}</option>
                             @endforeach
                         </select>
-
                     </div>
                     <div class="row row-cols-1 row-cols-md-3 g-4 text-start displayRooms">
                         @foreach ($getListRoom as $rows)
@@ -70,16 +69,8 @@
                                     <img src="/storage/images/{{ $rows->thumbnail }}" class="card-img-top"
                                         alt="{{ $rows->roomFullName }}">
                                     <div class="card-body">
-                                        <h6 class="card-title text-center">{{ $rows->roomFullName }}</h6>
-                                        <div class="card-text">ประเภทห้อง : {{ $rows->roomtypeName }}</div>
-                                        <div class="card-text">ขนาด/ความจุห้อง : {{ $rows->roomSize }} ที่นั่ง</div>
-                                        <p class="card-text">รายละเอียด : {{ $rows->roomDetail }}</p>
-                                    </div>
-                                    <div class="card-footer text-center">
-                                        <button type="button" class="btn btn-outline-secondary">
-                                            ตรวจสอบการจอง
-                                        </button>
-                                    </div>
+                                       <a href="/room/{{$rows->id}}/{{$rows->roomFullName}}"> <h6 class="card-title text-center">{{ $rows->roomFullName }}</h6> </a>                                                                        
+                                    </div>                                    
                                 </div>
                             </div>
                         @endforeach
@@ -87,6 +78,7 @@
                 </div>
             </div>
         </div>
+
         <footer class="py-5" style="">
             <div class="row">
                 <div class="col-6 col-md-3 mb-3">
