@@ -37,10 +37,13 @@
                                 </select>
                             </div>
                             <div class="mb-3">
+                                {{ $nowdate = date('d/m/Y') }}
                                 <label for="search_date" class="form-label"> วันที่ </label>
                                 <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                    data-date-language="th" id="search_date" name="search_date">
+                                    data-date-language="th" id="search_date" name="search_date"
+                                    value="{{ $nowdate }}">
                             </div>
+
                             <div class="text-center d-flex justify-content-center">
                                 <button type="submit" id="search_booking" class="btn btn-dark">
                                     ตรวจสอบการจอง
@@ -86,99 +89,110 @@
         </div>
         <footer class="py-5" style="">
             <div class="row">
-              <div class="col-6 col-md-3 mb-3">
-                <h5>ติดต่อมหาวิทยาลัย</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-body-secondary">
-                            มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200 <br>
-                            โทรศัพท์ :+66 5394 1300 <br>
-                            โทรสาร : +66 5321 7143 <br>
-                            อีเมล : contacts@cmu.ac.th
-                        </a>
-                    </li>
-                  <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-body-secondary">
-                            ศูนย์สื่อสารองค์กรและนักศึกษาเก่าสัมพันธ์ <br>
-                            โทรศัพท์ : +66 5394 3333, +66 5394 4444 <br>
-                            โทรสาร : +66 5394 4900 <br>
-                            อีเมล : ccarc@cmu.ac.th
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="#" class="nav-link p-0 text-body-secondary">
-                            กองวิเทศสัมพันธ์ สำนักงานมหาวิทยาลัย
-                        </a>
-                    </li>
-                </ul>
-              </div>
-        
-              <div class="col-6 col-md-3 mb-3">
-                <h5>บริการสำคัญ</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf" class="nav-link p-0 text-body-secondary">
-                            สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf" class="nav-link p-0 text-body-secondary">
-                            แผนที่มหาวิทยาลัยเชียงใหม่
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                            การบริจาค
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
-                            CMU MAIL
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                            CMU MIS
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                            สำหรับเจ้าหน้าที่
-                        </a>
-                    </li>
-                </ul>
-              </div>
-        
-              <div class="col-md-5 offset-md-1 mb-3">
-                <h5>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
-                            CMU 360 องศา
-                        </a>
-                    </li>
-                </ul>
-                <form>
-                  <h5>ช่องทางสื่อสาร</h5>
-                  <p> Website :  <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a></p>
-                  <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                    <label for="newsletter1" class="visually-hidden">Email address</label>
-                    <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-                    <button class="btn btn-primary" type="button">Subscribe</button>
-                  </div>
-                </form>
-              </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <h5>ติดต่อมหาวิทยาลัย</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-body-secondary">
+                                มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200 <br>
+                                โทรศัพท์ :+66 5394 1300 <br>
+                                โทรสาร : +66 5321 7143 <br>
+                                อีเมล : contacts@cmu.ac.th
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-body-secondary">
+                                ศูนย์สื่อสารองค์กรและนักศึกษาเก่าสัมพันธ์ <br>
+                                โทรศัพท์ : +66 5394 3333, +66 5394 4444 <br>
+                                โทรสาร : +66 5394 4900 <br>
+                                อีเมล : ccarc@cmu.ac.th
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-body-secondary">
+                                กองวิเทศสัมพันธ์ สำนักงานมหาวิทยาลัย
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-3 mb-3">
+                    <h5>บริการสำคัญ</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
+                                class="nav-link p-0 text-body-secondary">
+                                สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
+                                class="nav-link p-0 text-body-secondary">
+                                แผนที่มหาวิทยาลัยเชียงใหม่
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                การบริจาค
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
+                                CMU MAIL
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                CMU MIS
+                            </a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                สำหรับเจ้าหน้าที่
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-5 offset-md-1 mb-3">
+                    <h5>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
+                                CMU 360 องศา
+                            </a>
+                        </li>
+                    </ul>
+                    <form>
+                        <h5>ช่องทางสื่อสาร</h5>
+                        <p> Website : <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a></p>
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                            <label for="newsletter1" class="visually-hidden">Email address</label>
+                            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        
+
             <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-              <p>Copyright © 2024 Chiang Mai University, All rights reserved.</p>
-              <ul class="list-unstyled d-flex">
-                <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-                <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-                <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-              </ul>
+                <p>Copyright © 2024 Chiang Mai University, All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi"
+                                width="24" height="24">
+                                <use xlink:href="#twitter"></use>
+                            </svg></a></li>
+                    <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi"
+                                width="24" height="24">
+                                <use xlink:href="#instagram"></use>
+                            </svg></a></li>
+                    <li class="ms-3"><a class="link-body-emphasis" href="#"><svg class="bi"
+                                width="24" height="24">
+                                <use xlink:href="#facebook"></use>
+                            </svg></a></li>
+                </ul>
             </div>
-          </footer>
+        </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
