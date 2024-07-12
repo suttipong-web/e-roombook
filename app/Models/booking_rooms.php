@@ -12,6 +12,8 @@ class booking_rooms extends Model
         'booking_no',
         'roomID',
         'booking_date',
+        'schedule_startdate',
+        'schedule_enddate',
         'booking_time_start',
         'booking_time_finish',
         'booking_subject',
@@ -42,7 +44,5 @@ class booking_rooms extends Model
         'dean_action_date',
         'admin_action_acount',
         'dean_action_acount'
-            
-
     ];
 }

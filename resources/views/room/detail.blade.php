@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>รายรเอียดห้อง : {{$roomTitle}}</title>
+    <title>รายรเอียดห้อง : {{ $roomTitle }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
@@ -18,10 +18,12 @@
             border: 1px solid #000;
         }
     </style>
+
+    <link rel="stylesheet" href="/css/schedule.css">
+
 </head>
 
 <body>
-
     <div class="container px-10">
         <div class="container">
             <div class="row g-0 text-start">
@@ -40,22 +42,20 @@
 
                                 <div class="carousel-item  active" data-bs-interval="5000">
                                     <img src="/storage/images/{{ $getListRoom[0]->thumbnail }}" class="d-block w-100"
-                                        alt="{{$getListRoom[0]->roomFullName}}">
+                                        alt="{{ $getListRoom[0]->roomFullName }}">
                                     <div class="carousel-caption d-none d-md-block">
 
                                     </div>
                                 </div>
 
-                                @foreach ($roomGallery as $rows) 
-
+                                @foreach ($roomGallery as $rows)
                                     <div class="carousel-item " data-bs-interval="3000">
                                         <img src="/storage/images/{{ $rows->filename }}" class="d-block w-100"
-                                            alt="{{$rows->roomFullName}}">
+                                            alt="{{ $rows->roomFullName }}">
                                         <div class="carousel-caption d-none d-md-block">
 
                                         </div>
                                     </div>
-
                                 @endforeach
 
                             </div>
@@ -93,12 +93,7 @@
                         <h4> อุปกรณ์ภายในห้อง ( Room Services ) </h4>
                         <div> </div>
                         <hr />
-                        <h4> ตารางการจองห้อง ( Room Availability) </h4>
 
-                        <div class="showtable">
-
-
-                        </div>
                     </div>
                 </div>
                 <div class="col-6 col-md-4 mt-3 p-2">
@@ -113,7 +108,7 @@
                         <form id="serachBookingDate" method="post" action="/booking/search"
                             style="width: 90%;margin: 5px auto;text-align: left;">
                             @csrf
-                            <input type="hidden" id="roomID" name="roomID" value="{{$getListRoom[0]->id}}">
+                            <input type="hidden" id="hinden_roomID" name="roomID" value="{{ $getListRoom[0]->id }}">
                             <div class="mb-3">
                                 <label for="search_date" class="form-label"> วันที่ </label>
                                 <input class="form-control dateScl" type="text" data-provide="datepicker"
@@ -130,6 +125,14 @@
                     </div>
 
                 </div>
+                <div class="col-md-10">
+                    <h4> ตารางการจองห้อง ( Room Availability) </h4>
+
+                    <div class="showtable">
+                        .....
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -142,30 +145,33 @@
 <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 
 
 <script>
-    $(function () {
+    $(function() {
         fetchAll('');
+
         function fetchAll($uts) {
             var val = "";
+            console.log('Start');
             $.ajax({
                 url: "/fetchScheduleByRoom",
                 method: 'get',
                 data: {
                     uts: $uts,
-                    getroomId: $("#roomID").val(),      
-                    _token: '{{ csrf_token() }}',
+                    getroomId: $("#hinden_roomID").val(),
+                    _token: '{{ csrf_token() }}'
                 },
-                success: function (response) {
+                success: function(response) {
+                    console.log(response);
                     $(".showtable").html(response);
                 }
             });
         }
-        $(document).on('click', '.btnUTS', function (e) {
+        $(document).on('click', '.btnUTS', function(e) {
             var $uts = $(this).attr('valuts');
             fetchAll($uts);
         });
@@ -173,13 +179,13 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $('#select_date').datetimepicker({
             useCurrent: false,
             locale: 'th',
             format: 'YYYY-MM-DD'
         });
-        $('#select_date').on('change.datetimepicker', function (e) {
+        $('#select_date').on('change.datetimepicker', function(e) {
             window.location = 'demo_schedule.php?uts=' + e.date.format("X");
         });
     });
