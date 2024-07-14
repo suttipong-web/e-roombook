@@ -127,7 +127,9 @@
                 </div>
                 <div class="col-md-10">
                     <h4> ตารางการจองห้อง ( Room Availability) </h4>
+                    <div class="row">
 
+                    </div>
                     <div class="showtable">
                         .....
 
@@ -136,59 +138,111 @@
             </div>
         </div>
     </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
-<script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
+    <!-- Modol  Checkc บุคคลภายนอก/ภายใน  -->
+    <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> โปรดเลือกขั้นตอนการขอใช้สถานที่  </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 bg-light">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> สำหรับบุคคลภายนอก</h5>
+
+                            </div>
+                            <p class="mb-1">
+                                <ul>
+                                    <li>คือบุคคลหรือหน่วยงานที่อยู่นอกการกำกับดูแลของคณะวิศวกรรมศาสตร์ มหาวิทยาลับเชียงใหม่ </li>
+                                    <li>สำหรับการขอใช้ห้อง หากเป็นบุคคลภายนอก ท่านจะต้องแนบเอกสารการขอใช้สถานที่
+                                        และหากมีค่าใช้จ่ายทางผู้ดูจะแจ้งค่าใช้จ่ายและผลการอนุมัติ ให้ท่านภายใน 1-3 วันทำการ
+                                         </li>
+                                </ul>
+
+                            </p>
+
+                        </a>
+                    </div>
+                    <br />
+                    <div class="list-group" >
+                        <a href="#" class="list-group-item list-group-item-action " aria-current="true"
+                              style="background-color: #7d1a11;color: #fff;" >
+                            <div class="d-flex w-100 justify-content-between" >
+                                <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน</h5>
+
+                            </div>
+                            <p class="mb-1">
+                                <ul>
+                                    <li>คือบุคคลหรือหน่วยงานที่อยู่ภายใต้สังกัดของคณะวิศวกรรมศาสตร์  มหาวิทยาลับเชียงใหม่ </li>
+                                    <li>ท่านสามารถทำรายการขอใช้สถานที่ โดยใช้  CMU Acount  (xxx@cmu.ac.th) ในการเข้าสู่ระบบการจองห้อง </li>
+                                    <li>ขึั้นตอนนี้ไม่รวมการขอใช้ห้องในการจัดทำระบบตารางเรียนตารางสอน  </li>
+                                </ul>
+                            </p>
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 
 
-<script>
-    $(function() {
-        fetchAll('');
+    <script>
+        $(function () {
+            fetchAll('');
 
-        function fetchAll($uts) {
-            var val = "";
-            console.log('Start');
-            $.ajax({
-                url: "/fetchScheduleByRoom",
-                method: 'get',
-                data: {
-                    uts: $uts,
-                    getroomId: $("#hinden_roomID").val(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    console.log(response);
-                    $(".showtable").html(response);
-                }
+            function fetchAll($uts) {
+                var val = "";
+                console.log('Start');
+                $.ajax({
+                    url: "/fetchScheduleByRoom",
+                    method: 'get',
+                    data: {
+                        uts: $uts,
+                        getroomId: $("#hinden_roomID").val(),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+
+                        $(".showtable").html(response);
+                    }
+                });
+            }
+            $(document).on('click', '.btnUTS', function (e) {
+                var $uts = $(this).attr('valuts');
+                fetchAll($uts);
             });
-        }
-        $(document).on('click', '.btnUTS', function(e) {
-            var $uts = $(this).attr('valuts');
-            fetchAll($uts);
         });
-    });
-</script>
+    </script>
 
-<script type="text/javascript">
-    $(function() {
-        $('#select_date').datetimepicker({
-            useCurrent: false,
-            locale: 'th',
-            format: 'YYYY-MM-DD'
+    <script type="text/javascript">
+        $(function () {
+            $('#select_date').datetimepicker({
+                useCurrent: false,
+                locale: 'th',
+                format: 'YYYY-MM-DD'
+            });
+            $('#select_date').on('change.datetimepicker', function (e) {
+                window.location = 'demo_schedule.php?uts=' + e.date.format("X");
+            });
         });
-        $('#select_date').on('change.datetimepicker', function(e) {
-            window.location = 'demo_schedule.php?uts=' + e.date.format("X");
-        });
-    });
-</script>
+    </script>
+</body>
 
 </html>

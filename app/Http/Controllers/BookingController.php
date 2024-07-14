@@ -29,7 +29,7 @@ class BookingController extends Controller
             ->get();
 
         //ประเภทห้อง 
-        $roomType  = DB::table('room_type')
+        $roomType = DB::table('room_type')
             ->select('id', 'roomtypeName')
             ->get();
 
@@ -43,7 +43,7 @@ class BookingController extends Controller
 
         );
     }
-    public  function filter(Request $request)
+    public function filter(Request $request)
     {
         //ข้อมูลห้อง ตามประเภท
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
@@ -84,14 +84,17 @@ class BookingController extends Controller
         }
     }
 
-    public  function search(Request $request)
+    public function search(Request $request)
     {
+        $datenow = date('d/m/Y');
+        $roomDataSlc = (!empty($request->search_date)) ? $request->search_date : $datenow;
+        $roomID = (!empty($request->slcRoom)) ? $request->slcRoom : 1;
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
             ->get();
 
-        // 25/06/2024
+       
         $dateBooking = $request->search_date;
         $roomID = $request->slcRoom;
         $roomData = Rooms::find($roomID);
@@ -102,7 +105,6 @@ class BookingController extends Controller
             $img = '/storage/images/noimage.png';
         }
 
-        //  $matchThese = ['booking_rooms.roomID' => $roomID, 'booking_rooms.booking_time_start' =>$dateBooking];
         // Query Booking room Table 
         $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
@@ -119,24 +121,75 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,
-                'imgRoom'   => $roomData->thumbnail
+                'imgRoom' => $roomData->thumbnail
             ]
         );
     }
 
-    public  function insertBooking(Request $request)
+
+
+    public function check(Request $request)
+    {
+
+        $roomID = $request->roomID;
+        $roomData = Rooms::find($roomID);
+        $dateNow  = date('Y-m-d');
+         // 25/06/2024
+        $dateBooking =date('d/m/Y');
+
+        if (!empty($roomData->thumbnail)) {
+            $img = '/storage/images/' . $roomData->thumbnail;
+        } else {
+            $img = '/storage/images/noimage.png';
+        }
+
+
+        // Query Booking room Table 
+        $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
+            ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+            ->where('booking_rooms.roomID', $roomID)
+            ->where('booking_rooms.schedule_startdate','>=' , $dateNow)
+            ->where('booking_rooms.schedule_enddate', '<=',$dateNow)
+            ->get();
+
+
+        $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateNow . " ] ";
+        // Load index  view and  data room        
+
+        //Select option ข้อมูลห้อง 
+        $roomDataSlc = Rooms::orderby('id', 'asc')
+            ->select('id', 'roomFullName')
+            ->get();
+
+        return view('/bookingroom/search')->with(
+            [
+                'titleSearch' => $titleSearch,
+                'getBookingList' => $searhResult,
+                'roomSlc' => $roomDataSlc,
+                'searchRoomID' => $roomID,
+                'searchDates' => $dateBooking,
+                'imgRoom' => $roomData->thumbnail
+            ]
+        );
+
+    }
+
+    public function roomDataSlc() {
+
+    }
+    public function insertBooking(Request $request)
     {
         //ตรวจสอบว่าจองเวลานี้ได้ไหม 
-        $ChkTimeBookig  = DB::table('booking_rooms')
+        $ChkTimeBookig = DB::table('booking_rooms')
             ->select('booking_time_start', 'booking_time_finish')
             ->where('booking_rooms.roomID', $request->roomID)
             ->where('booking_rooms.booking_date', $request->dateStart)
             ->get();
 
         // เวลาเริ่ม 
-        $bkstart =  $request->booking_time_start;
+        $bkstart = $request->booking_time_start;
         // เวลาสิ้สสุด
-        $bkfinish =  $request->booking_time_finish;
+        $bkfinish = $request->booking_time_finish;
         $error = true;
         foreach ($ChkTimeBookig as $row_chk) {
             if (
@@ -144,7 +197,7 @@ class BookingController extends Controller
                 ||
                 ($bkfinish > $row_chk->booking_time_start && $bkfinish <= $row_chk->booking_time_finish)
                 ||
-                ($bkstart <  $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
+                ($bkstart < $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
             ) {
                 return response()->json([
                     'status' => 208,
@@ -155,13 +208,13 @@ class BookingController extends Controller
         }
 
         if ($error) {
-            $bookingToken  = md5(time());
+            $bookingToken = md5(time());
             //checkbox
-            $zoom =  ($request->booking_zoom == 1) ? true : false;
+            $zoom = ($request->booking_zoom == 1) ? true : false;
             $computer = ($request->booking_computer == 1) ? true : false;
-            $booking_lcd  = ($request->booking_lcd == 1) ? true : false;
-            $booking_food  =  ($request->booking_food == 1) ? true : false;
-            $booking_camera  = ($request->booking_camera == 1) ? true : false;
+            $booking_lcd = ($request->booking_lcd == 1) ? true : false;
+            $booking_food = ($request->booking_food == 1) ? true : false;
+            $booking_camera = ($request->booking_camera == 1) ? true : false;
 
             $no = time();
             $setDataBooking = [
@@ -185,7 +238,7 @@ class BookingController extends Controller
                 'booking_at' => Carbon::now()
             ];
             //  echo print_r($setDataBooking);
-            $result =    booking_rooms::create($setDataBooking);
+            $result = booking_rooms::create($setDataBooking);
             if ($result) {
                 return response()->json([
                     'status' => 200,

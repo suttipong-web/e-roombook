@@ -34,6 +34,7 @@ Route::prefix('/booking')->group(
         Route::get('/', [BookingController::class, 'index']);
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
+        Route::get('/check/{roomID}', [BookingController::class, 'check'])->name('check');
         Route::post('/insertBooking', [BookingController::class, 'insertBooking'])->name('insertBooking');
     }
 );

@@ -20,9 +20,9 @@ class ScheduleDepController extends Controller
     public function index(Request $request)
     {
         $nowYear = (date('Y')) + 543;
-        $Byuser =  $request->session()->get('cmuitaccount');
+        $Byuser = $request->session()->get('cmuitaccount');
 
-        $getliatday  = DB::table('listdays')
+        $getliatday = DB::table('listdays')
             ->select('dayTitle', 'dayList')
             ->get();
 
@@ -66,7 +66,7 @@ class ScheduleDepController extends Controller
                     ORDER BY booking_time_start ASC
                     ";
             //echo  $sql;
-            $qresult  = DB::select(DB::raw($sql));
+            $qresult = DB::select(DB::raw($sql));
             if ($qresult) {
                 foreach ($qresult as $row_chk) {
                     if (
@@ -74,7 +74,7 @@ class ScheduleDepController extends Controller
                         ||
                         ($bkfinish > $row_chk->booking_time_start && $bkfinish <= $row_chk->booking_time_finish)
                         ||
-                        ($bkstart <  $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
+                        ($bkstart < $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
                     ) {
                         //เวลาซ้ำ    
                         $result = DB::table('room_schedules')
@@ -108,7 +108,7 @@ class ScheduleDepController extends Controller
     {
         $cmuitaccount = $request->session()->get('cmuitaccount');
         Excel::import(new ScheduleImport, $request->file('fileupload'));
-        return  redirect()->back()->with('success', true);
+        return redirect()->back()->with('success', true);
     }
 
     //แสดงตารางเรียน
@@ -246,7 +246,7 @@ class ScheduleDepController extends Controller
                             "repeat_day" => $day1,
                             "repeat_day2" => $day2,
                             "title" => $row->courseNO,
-                            "sec" =>  $row->courseSec,
+                            "sec" => $row->courseSec,
                             "room" => $row->roomFullName,
                             "isroomID" => $row->roomID,
                             "building" => $row->roomTitle
@@ -286,24 +286,24 @@ class ScheduleDepController extends Controller
                                         ];
                                     }
                                 }
-                            }
-                        } else { // else repeat all day
-                            for ($i = 0; $i < $num_dayShow; $i++) {
-                                if (strtotime($start_weekDay . " +" . $i . " day") >= strtotime($row["start_date"]) && strtotime($start_weekDay . " +" . $i . "  day") <= strtotime($row["end_date"])) {
-                                    $dayKey = date("D", strtotime($start_weekDay . " +" . $i . " day"));
+                            } else { // else repeat all day
+                                for ($i = 0; $i < $num_dayShow; $i++) {
+                                    if (strtotime($start_weekDay . " +" . $i . " day") >= strtotime($row["start_date"]) && strtotime($start_weekDay . " +" . $i . "  day") <= strtotime($row["end_date"])) {
+                                        $dayKey = date("D", strtotime($start_weekDay . " +" . $i . " day"));
 
-                                    $data_day_schedule[$dayKey][] = [
-                                        "start_time" => $row['start_time'],
-                                        "end_time" => $row['end_time'],
-                                        "duration" => $this->getduration(strtotime($row['start_time']), strtotime($row["end_time"])),
-                                        "timeblock" => $this->timeblock($row["start_time"], $sc_numCol, $sc_timeStep),
-                                        "title" => $row['title'],
-                                        "room" => $row['room'],
-                                        "roomId" => $row['isroomID'],
-                                        "building" => $row['building'],
-                                        "sec" => $row['sec'],
-                                        'UserChkDay' => $row['repeat_day']
-                                    ];
+                                        $data_day_schedule[$dayKey][] = [
+                                            "start_time" => $row['start_time'],
+                                            "end_time" => $row['end_time'],
+                                            "duration" => $this->getduration(strtotime($row['start_time']), strtotime($row["end_time"])),
+                                            "timeblock" => $this->timeblock($row["start_time"], $sc_numCol, $sc_timeStep),
+                                            "title" => $row['title'],
+                                            "room" => $row['room'],
+                                            "roomId" => $row['isroomID'],
+                                            "building" => $row['building'],
+                                            "sec" => $row['sec'],
+                                            'UserChkDay' => $row['repeat_day']
+                                        ];
+                                    }
                                 }
                             }
                         }
@@ -312,7 +312,7 @@ class ScheduleDepController extends Controller
 
                 ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
 
-                if ($roomIdDisplay  <> $tableRoom->roomID) {
+                if ($roomIdDisplay <> $tableRoom->roomID) {
                     $roomIdDisplay = $tableRoom->roomID;
                     $output .= '
 
@@ -402,7 +402,7 @@ class ScheduleDepController extends Controller
                         $outputBody .= '' . $inRowDay . '</div>
                                 </div>
                                 <div class="position-absolute" style="z-index: 100;">';
-                        $strLop = "";
+                      //  $strLop = "";
                         if (isset($data_day_schedule[$dayKeyChk]) && count($data_day_schedule[$dayKeyChk]) > 0) {
                             $lop = 0;
                             foreach ($data_day_schedule[$dayKeyChk] as $row_day) {
@@ -410,13 +410,13 @@ class ScheduleDepController extends Controller
                                 $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
                                 $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
                                 if (($dayKeyChk == $row_day['UserChkDay'] || $dayKeyChk == $row_day['UserChkDay2']) && ($row_day['roomId'] == $tableRoom->roomID)) {
-                                    $strLop = '<div class="position-absolute text-center sc-detail" 
+                                    $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
                                                     <a href="#">' . $row_day['title'] . '</a><br/>sec ' . $row_day['sec'] . '<br>' . $row_day['room'] .
                                         '</div>';
                                 }
                             }
-                            $outputBody .= "" . $strLop;
+                             //$outputBody .= "" . $strLop;
                         }
                         $outputBody .= ' </div></td></tr>';
                     }
@@ -430,7 +430,7 @@ class ScheduleDepController extends Controller
         //echo $output;
         // return $output;
     }
-    public function  getListDay($days)
+    public function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();
 
@@ -440,7 +440,7 @@ class ScheduleDepController extends Controller
             $temp = explode(",", $list->dayList);
         }
 
-        $result =  $list;
+        $result = $list;
     }
     function getduration($datetime1, $datetime2)
     {

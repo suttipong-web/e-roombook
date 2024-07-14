@@ -103,7 +103,7 @@ class ScheduleroomController extends Controller
                     "end_time" => $row->booking_time_finish,
                     "repeat_day" => $repeat_day,
                     "title" => $row->booking_subject,
-                    "sec" =>  $row->booking_booker,
+                    "sec" => $row->booking_booker,
                     "room" => $row->roomFullName,
                     "isroomID" => $row->roomID,
                     "building" => $row->roomTitle
@@ -124,14 +124,9 @@ class ScheduleroomController extends Controller
                         && strtotime($row['end_date']) >= strtotime($start_weekDay))
                 ) {
                     if (!empty($row['repeat_day'])) { // have day repeat
-
                         for ($i = 0; $i < $num_dayShow; $i++) {
                             if (strtotime($start_weekDay . " +" . $i . "day") >= strtotime($row['start_date']) && strtotime($start_weekDay . " +" . $i . " day") <= strtotime($row['end_date'])) {
                                 $dayKey = date("D", strtotime($start_weekDay . " +" . $i . " day"));
-                                //  echo "<br/>daykey have day repeat=>" . $dayKey;
-                                //if (in_array($i + 1, $row['repeat_day'])) {
-                                //echo "<br/> checkDayKey =" . $checkDayKey[$i + 1] . "===" . $row['repeat_day'];
-                                // if ($checkDayKey[$i + 1] == $row['repeat_day']) {
                                 $data_day_schedule[$dayKey][] = [
                                     "start_time" => $row['start_time'],
                                     "end_time" => $row['end_time'],
@@ -143,7 +138,6 @@ class ScheduleroomController extends Controller
                                     "sec" => $row['sec'],
                                     'UserChkDay' => $row['repeat_day']
                                 ];
-                                // }
                             }
                         }
                     }
@@ -151,16 +145,18 @@ class ScheduleroomController extends Controller
             }
         }
         $num_dayShow_in_schedule = $num_dayShow - 1;
-        $output = '<div class="wrap_schedule_control mt-5">
-                        <div class="d-flex">
-                            <div class="text-left  text-start d-flex align-items-center">';
-
-        $output .= '         </div>';
-
-        $output .= '            <div class="col-auto text-right text-end">
-                                    <button type="button" class="btn btn-secondary btn-sm btnUTS mR-2" valuts =' . $timestamp_prev . ' >< Prev </button>
+        $output = '<div class="wrap_schedule_control mt-3">
+                        <div class="d-flex  justify-content-end">';
+        $output .= '            <div class="">
+                               
+                                    <button type="button" class="btn btn-secondary btn-sm btnUTS mr-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
-                                    <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" >Home </button>        
+                                    <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button>        
+
+                                         <button type="button"  class="btn btn-primary btn-sm ml-3" data-bs-toggle="modal"
+                                     data-bs-target="#caseBooker">
+                                       <i class="bi bi-calendar-week-fill"></i> ทำการจองห้องนี้ 
+                                 </button>
                                 </div>
                             </div>
                         </div>            
@@ -225,13 +221,13 @@ class ScheduleroomController extends Controller
                     $difx = 0;
 
                     $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
-                    $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int)$row_day['timeblock'];
+                    $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
                     $strlen = Str::length($row_day['title']);
                     $scaly = ($sc_width / $strlen);
                     if (($sc_width / 60) >= 3.75) {
-                        $difx = ((int)($sc_width / 60)) + 1;
+                        $difx = ((int) ($sc_width / 60)) + 1;
                         $scalx = ($sc_width / 60) - $difx;
-                        $percenStr  =  $percenStr + (int)$scalx;
+                        $percenStr = $percenStr + (int) $scalx;
                     }
 
                     if ($scaly <= $percenStr) {
@@ -242,7 +238,7 @@ class ScheduleroomController extends Controller
 
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                                    <a href="#" title ="' . $row_day['title'] . '" >' .  $subjectTitle . '</a></div>';
+                                    <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . '</a></div>';
                 }
                 //$outputBody .= "" . $strLop;
             }
