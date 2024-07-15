@@ -39,8 +39,8 @@
                                 <select name="slcRoom" id="slcRoom" class="form-select " required>
                                     <option value="0">-- เลือก --</option>
                                     @foreach ($roomSlc as $item)
-                                        <option value='{{ $item->id }}'
-                                            @if ($searchRoomID == $item->id) selected @endif> {{ $item->roomFullName }}
+                                        <option value='{{ $item->id }}' @if ($searchRoomID == $item->id) selected @endif>
+                                            {{ $item->roomFullName }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -146,6 +146,9 @@
                                 action="/booking/insertBooking" method="post">
                                 @csrf
                                 <input type="hidden" name="roomID" id="roomID" value="{{ $searchRoomID }}">
+                                <input type="hidden" name="booking_type" id="booking_type" value="{{ $usertype }}">
+
+
                                 <div class="col-md-3 p-2">
                                     <label for="schedule_startdate" class="form-label"> วันที่เริ่ม *</label>
                                     <input class="form-control dateScl" type="text" data-provide="datepicker"
@@ -179,9 +182,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
-                                    <input type="text" class="form-control" id="booking_booker"
-                                        name="booking_booker" placeholder=" ระบุชื่อผู้ทำรายการ "
-                                        value=" {{ Session::get('userfullname') }}" required />
+                                    <input type="text" class="form-control" id="booking_booker" name="booking_booker"
+                                        placeholder=" ระบุชื่อผู้ทำรายการ " value=" {{ Session::get('userfullname') }}"
+                                        required />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="booking_department" class="form-label">สังกัดหน่วยงาน /องค์กร
@@ -193,8 +196,8 @@
                                     <label for="booking_subject" class="form-label">
                                         เรื่องที่ขอใช้/โครงการกิจกรรม
                                         *</label>
-                                    <input type="text" class="form-control" id="booking_subject"
-                                        name="booking_subject" required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
+                                    <input type="text" class="form-control" id="booking_subject" name="booking_subject"
+                                        required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
                                 </div>
                                 <div class="col-md-4">
                                     <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าใช้</label>
@@ -204,21 +207,21 @@
 
                                 <div class="col-md-4">
                                     <label for="booking_email" class="form-label"> Email * </label>
-                                    <input type="email" class="form-control" id="booking_email"
-                                        name="booking_email" placeholder=" Email " required
-                                        value="{{ Session::get('cmuitaccount') }}" />
+                                    <input type="email" class="form-control" id="booking_email" name="booking_email"
+                                        placeholder=" Email " required value="{{ Session::get('cmuitaccount') }}" />
                                 </div>
 
                                 <div class="col-md-4">
                                     <label for="booking_phone" class="form-label">เบอร์โทรติดต่อ
                                         *</label>
-                                    <input type="text" class="form-control" id="booking_phone"
-                                        name="booking_phone" placeholder=" 05394xxxx" />
+                                    <input type="text" class="form-control" id="booking_phone" name="booking_phone"
+                                        placeholder=" 05394xxxx" />
                                 </div>
                                 <div class="col-12">
                                     <label for="description" class="form-label">
                                         ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
-                                    <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
+                                    <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม "
+                                        id="description" name="description"></textarea>
                                 </div>
                                 <input type="hidden" name="booker_cmuaccount"
                                     value="{{ Session::get('cmuitaccount') }}">
@@ -249,14 +252,14 @@
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
     <script>
-        $(function() {
+        $(function () {
             //Add Data เพิ่มการจอง ใหม่
             // add new  ajax request
-            $("#add_booking_form").submit(function(e) {
+            $("#add_booking_form").submit(function (e) {
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#add_btn").text('Adding...');
@@ -269,7 +272,7 @@
                     contentType: false,
                     processData: false,
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.status == 200) {
                             Swal.fire({
                                 title: 'Booking Successfully!',
@@ -315,15 +318,16 @@
                     data: {
                         uts: $uts,
                         getroomId: $("#roomID").val(),
+                        hindenBtnBooking: false,
                         _token: '{{ csrf_token() }}'
                     },
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                         $(".showtable").html(response);
                     }
                 });
             }
-            $(document).on('click', '.btnUTS', function(e) {
+            $(document).on('click', '.btnUTS', function (e) {
                 var $uts = $(this).attr('valuts');
                 fetchScheduleTable($uts);
             });

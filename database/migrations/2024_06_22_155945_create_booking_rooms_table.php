@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('booking_zoom')->nullable();
             $table->string('bookingToken')->nullable();
             $table->tinyInteger('booking_status')->default(0);
-            $table->tinyInteger('booking_type')->default(0);
+            $table->string('booking_type',15)->nullable();
             $table->string('booking_AdminAction', 20)->nullable();
             $table->string('booking_DeanAction', 20)->nullable();
             $table->string('description')->nullable();

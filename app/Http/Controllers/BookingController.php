@@ -127,13 +127,12 @@ class BookingController extends Controller
         );
     }
 
-
-
     public function check(Request $request)
     {
         $roomID = $request->roomID;
         $roomData = Rooms::find($roomID);
         $dateNow  = date('Y-m-d');
+        $usertype = $request->usertype;
         // 25/06/2024
         $dateBooking = date('d/m/Y');
 
@@ -166,7 +165,8 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,
-                'imgRoom' => $roomData->thumbnail
+                'imgRoom' => $roomData->thumbnail, 
+                'usertype'=> $usertype
             ]
         );
     }
@@ -229,6 +229,7 @@ class BookingController extends Controller
                 'booking_email' => $request->booking_email,
                 'booker_cmuaccount' => $request->booker_cmuaccount,
                 'description' => $request->description,
+                'booking_type' => $request->booking_type,                
                 'booking_at' => Carbon::now()
             ];
             echo print_r($setDataBooking);

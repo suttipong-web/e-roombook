@@ -151,11 +151,17 @@ class ScheduleroomController extends Controller
                                
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS mr-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
-                                    <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button>        
+                                    <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button> ';
+
+        if (!$request->hindenBtnBooking) {
+            $output .= '       
                                     <button type="button"  class="btn btn-primary btn-sm ml-3" data-bs-toggle="modal"
                                      data-bs-target="#caseBooker">
                                        <i class="bi bi-calendar-week-fill"></i> ทำรายการขอใช้ห้อง 
-                                    </button>
+                                    </button> ';
+        }
+
+        $output .= '                           
                                 </div>
                             </div>
                         </div>            
