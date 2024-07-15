@@ -26,8 +26,8 @@
 <body>
     <div class="container px-10">
         <div class="container">
-            <div class="row g-0 text-start">
-                <div class="col-sm-6 col-md-8 p-3">
+            <div class="row g-0 text-start  justify-content-center">
+                <div class="col-sm-10 col-md-10 p-3 ">
                     <div class="slideImg">
                         <div id="carouselExampleDark" class="carousel carousel-dark slide">
                             <div class="carousel-indicators">
@@ -47,7 +47,6 @@
 
                                     </div>
                                 </div>
-
                                 @foreach ($roomGallery as $rows)
                                     <div class="carousel-item " data-bs-interval="3000">
                                         <img src="/storage/images/{{ $rows->filename }}" class="d-block w-100"
@@ -57,7 +56,6 @@
                                         </div>
                                     </div>
                                 @endforeach
-
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
                                 data-bs-slide="prev">
@@ -72,9 +70,17 @@
                         </div>
                     </div>
                     <!--End Slide Images -->
-                    <div class="col-lg-12 mt-4">
+                    <div class="col-lg-12 mt-5">
+
+                        <div class="row p-3 text-center justify-content-center mb-2 mt-2">
+                            <button type="button" class="btn btn-primary   ml-3 col-4 bg-purple" data-bs-toggle="modal"
+                                data-bs-target="#caseBooker">
+                                <i class="bi bi-calendar-week-fill"></i> ทำรายการขอใช้ห้อง
+                            </button>
+                        </div>
 
                         <h2> {{ $getListRoom[0]->roomFullName }}</h2>
+
                         <div class="container text-start mt-3">
                             <div class="row p-10">
                                 <div class="col-6 col-md-4"><i class="bi bi-building-fill"></i>
@@ -84,60 +90,30 @@
                                 </div>
                                 <div class="col-6 col-md-4"><i class="bi bi-calendar2-check-fill"></i> สถานะ</div>
                             </div>
-
                         </div>
-
                         <br />
                         <div> {{ $getListRoom[0]->roomDetail }} </div>
                         <hr />
-                        <h4> อุปกรณ์ภายในห้อง ( Room Services ) </h4>
+                        <h5> อุปกรณ์ภายในห้อง ( Room Services ) </h5>
                         <div> </div>
                         <hr />
 
                     </div>
                 </div>
-                <div class="col-6 col-md-4 mt-3 p-2">
-                    <div class="formSlc  text-center" style="border: 1px solid #000;">
-                        <br />
-                        <h4>
-                            <i class="bi bi-calendar-fill"></i>
-                            ตรวจสอบการจองห้อง
-                        </h4>
-                        <hr />
 
-                        <form id="serachBookingDate" method="post" action="/booking/search"
-                            style="width: 90%;margin: 5px auto;text-align: left;">
-                            @csrf
-                            <input type="hidden" id="hinden_roomID" name="roomID" value="{{ $getListRoom[0]->id }}">
-                            <div class="mb-3">
-                                <label for="search_date" class="form-label"> วันที่ </label>
-                                <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                    data-date-language="th" id="search_date" name="search_date">
-                            </div>
-                            <div class="text-center d-flex justify-content-center">
-                                <button type="submit" id="search_booking" class="btn btn-dark">
-                                    ตรวจสอบการจอง
-                                </button>
-                            </div>
-                            <hr />
-
-                        </form>
-                    </div>
-
-                </div>
-                <div class="col-md-10">
-                    <h4> ตารางการจองห้อง ( Room Availability) </h4>
+                <div class="col-sm-10 col-md-10 p-3 ">
+                    <h5> ตารางการจองห้อง ( Room Availability) </h5>
                     <div class="row">
 
                     </div>
                     <div class="showtable">
-                        .....
 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Modol  Checkc บุคคลภายนอก/ภายใน  -->
     <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
@@ -145,51 +121,61 @@
         <div class="modal-dialog modal-dialog-centered modal-lg ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> โปรดเลือกขั้นตอนการขอใช้สถานที่  </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> โปรดเลือกขั้นตอนการขอใช้สถานที่ </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4 bg-light">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <div class="list-group-item list-group-item-action active" aria-current="true">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> สำหรับบุคคลภายนอก</h5>
-
+                                <a href="/booking/check/{{ $getListRoom[0]->id }}/general/{{ $getListRoom[0]->roomFullName }}"
+                                    class="btn btn-light " tabindex="-1" role="button" aria-disabled="true">
+                                    <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> สำหรับบุคคลภายนอก
+                                    </h5>
+                                </a>
                             </div>
                             <p class="mb-1">
-                                <ul>
-                                    <li>คือบุคคลหรือหน่วยงานที่อยู่นอกการกำกับดูแลของคณะวิศวกรรมศาสตร์ มหาวิทยาลับเชียงใหม่ </li>
-                                    <li>สำหรับการขอใช้ห้อง หากเป็นบุคคลภายนอก ท่านจะต้องแนบเอกสารการขอใช้สถานที่
-                                        และหากมีค่าใช้จ่ายทางผู้ดูจะแจ้งค่าใช้จ่ายและผลการอนุมัติ ให้ท่านภายใน 1-3 วันทำการ
-                                         </li>
-                                </ul>
+                            <ul>
+                                <li>คือบุคคลหรือหน่วยงานที่อยู่นอกการกำกับดูแลของคณะวิศวกรรมศาสตร์
+                                    มหาวิทยาลับเชียงใหม่ </li>
+                                <li>สำหรับการขอใช้ห้อง หากเป็นบุคคลภายนอก ท่านจะต้องแนบเอกสารการขอใช้สถานที่
+                                    และหากมีค่าใช้จ่ายทางผู้ดูจะแจ้งค่าใช้จ่ายและผลการอนุมัติ ให้ท่านภายใน 1-3
+                                    วันทำการ
+                                </li>
+                            </ul>
 
-                            </p>
 
-                        </a>
+                        </div>
                     </div>
                     <br />
-                    <div class="list-group" >
-                        <a href="#" class="list-group-item list-group-item-action " aria-current="true"
-                              style="background-color: #7d1a11;color: #fff;" >
-                            <div class="d-flex w-100 justify-content-between" >
-                                <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน</h5>
+                    <div class="list-group">
+                        <div href="#" class="list-group-item list-group-item-action " aria-current="true"
+                            style="background-color: #7d1a11;color: #fff;">
+                            <div class="d-flex w-100 justify-content-between">
 
+                                <a href="{{ $urlCMUOauth }}" class="btn btn-light " tabindex="-1" role="button"
+                                    aria-disabled="true">
+                                    <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน</h5>
+                                </a>
                             </div>
+
                             <p class="mb-1">
-                                <ul>
-                                    <li>คือบุคคลหรือหน่วยงานที่อยู่ภายใต้สังกัดของคณะวิศวกรรมศาสตร์  มหาวิทยาลับเชียงใหม่ </li>
-                                    <li>ท่านสามารถทำรายการขอใช้สถานที่ โดยใช้  CMU Acount  (xxx@cmu.ac.th) ในการเข้าสู่ระบบการจองห้อง </li>
-                                    <li>ขึั้นตอนนี้ไม่รวมการขอใช้ห้องในการจัดทำระบบตารางเรียนตารางสอน  </li>
-                                </ul>
+                            <ul>
+                                <li>คือบุคคลหรือหน่วยงานที่อยู่ภายใต้สังกัดของคณะวิศวกรรมศาสตร์ มหาวิทยาลับเชียงใหม่
+                                </li>
+                                <li>ท่านสามารถทำรายการขอใช้สถานที่ โดยใช้ CMU Acount (xxx@cmu.ac.th)
+                                    ในการเข้าสู่ระบบการจองห้อง </li>
+                                <li>ขึั้นตอนนี้ไม่รวมการขอใช้ห้องในการจัดทำระบบตารางเรียนตารางสอน </li>
+                            </ul>
                             </p>
 
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <input type="hidden" id="hinden_roomID" value="{{ $getListRoom[0]->id }}">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -198,13 +184,13 @@
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 
 
     <script>
-        $(function () {
+        $(function() {
             fetchAll('');
 
             function fetchAll($uts) {
@@ -218,13 +204,13 @@
                         getroomId: $("#hinden_roomID").val(),
                         _token: '{{ csrf_token() }}'
                     },
-                    success: function (response) {
+                    success: function(response) {
 
                         $(".showtable").html(response);
                     }
                 });
             }
-            $(document).on('click', '.btnUTS', function (e) {
+            $(document).on('click', '.btnUTS', function(e) {
                 var $uts = $(this).attr('valuts');
                 fetchAll($uts);
             });
@@ -232,13 +218,13 @@
     </script>
 
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#select_date').datetimepicker({
                 useCurrent: false,
                 locale: 'th',
                 format: 'YYYY-MM-DD'
             });
-            $('#select_date').on('change.datetimepicker', function (e) {
+            $('#select_date').on('change.datetimepicker', function(e) {
                 window.location = 'demo_schedule.php?uts=' + e.date.format("X");
             });
         });

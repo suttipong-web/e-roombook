@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('positionName')->nullable();
             $table->string('positionName2')->nullable();
             $table->timestamp('last_activity')->nullable();
+            $table->integer('dep_id')->nullable();
+
             $table->timestamps();
         });
     }

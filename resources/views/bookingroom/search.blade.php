@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/schedule2.css">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 
                         <h4>
                             <i class="bi bi-calendar2-plus-fill"></i>
-                            ทำรายการจองห้อง
+                            ตรวจสอบการใช้ห้อง
                         </h4>
                         <hr />
                         <form id="serachBookingDate" method="post" action="/booking/search">
@@ -52,179 +53,194 @@
                             </div>
                             <div class="text-center d-flex justify-content-center">
                                 <button type="submit" id="search_booking" class="btn btn-dark">
-                                    ตรวจสอบการจอง
+                                    ตรวจสอบ
                                 </button>
                             </div>
                             <hr />
                         </form>
                     </div>
-
-
                 </div>
                 <div class="col-sm-6 col-md-8">
                     <div class="card">
                         <h5 class="card-header">{{ $titleSearch }}</h5>
                         <div class="card-body">
-                            <div class="show_all">
-                                <table class="table mt-2">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>ช่วงเวลาที่ใช้งาน</th>
-                                            <th>รายการจอง</th>
-                                            <th>ผู้จอง</th>
-                                            <th>หมายเหตุ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (count($getBookingList) > 0)
-                                            @foreach ($getBookingList as $rows)
-                                                <tr>
-                                                    <td>{{ $rows->booking_time_start }} -
-                                                        {{ $rows->booking_time_finish }}
-                                                    </td>
-                                                    <td>{{ $rows->booking_subject }}</td>
-                                                    <td>{{ $rows->booking_booker }}</td>
-                                                    <td>{{ $rows->description }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="4">
-                                                    <div class="p-2 mt-2 text-center">
-                                                        <div class="alert alert-success" role="alert">
-                                                            <i class="bi bi-check2-circle"></i>
 
-                                                            <br /> ไม่พบรายการจองห้องวันนี้
-                                                            <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม " ทำรายจองห้อง "
-                                                                และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endif
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer text-body-secondary">
-                                <div class="text-center d-flex justify-content-center">
-                                    <button type="button" id="btnBooking" class="btn btn-success"
-                                        data-bs-toggle="modal" data-bs-target="#addModal">
-                                        <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#home-tab-pane" type="button" role="tab"
+                                        aria-controls="home-tab-pane" aria-selected="true"> แสดงรายการจองห้องประจำวัน
                                     </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                        aria-controls="profile-tab-pane"
+                                        aria-selected="false">ตารางการจองห้องประจำสัปดาห์</button>
+                                </li>
 
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                    aria-labelledby="home-tab" tabindex="0">
+                                    <div class="show_all">
+                                        <table class="table mt-2">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>ช่วงเวลาที่ใช้งาน</th>
+                                                    <th>รายการจอง</th>
+                                                    <th>ผู้จอง</th>
+                                                    <th>หมายเหตุ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (count($getBookingList) > 0)
+                                                    @foreach ($getBookingList as $rows)
+                                                        <tr>
+                                                            <td>{{ $rows->booking_time_start }} -
+                                                                {{ $rows->booking_time_finish }}
+                                                            </td>
+                                                            <td>{{ $rows->booking_subject }}</td>
+                                                            <td>{{ $rows->booking_booker }}</td>
+                                                            <td>{{ $rows->description }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="p-2 mt-2 text-center">
+                                                                <div class="alert alert-success" role="alert">
+                                                                    <i class="bi bi-check2-circle"></i>
+
+                                                                    <br /> ไม่พบรายการจองห้องวันนี้
+                                                                    <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม "
+                                                                        ทำรายจองห้อง
+                                                                        "
+                                                                        และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                    aria-labelledby="profile-tab" tabindex="0">
+                                    <div class="showtable"> </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h4> ระบุรายละเอียดการขอใช้ห้อง </h4>
+                        </div>
+                        <div class="card-body justify-content-start text-start">
+                            <form id="add_booking_form" class="row g-3 w-90 m-10-auto" enctype="multipart/form-data"
+                                action="/booking/insertBooking" method="post">
+                                @csrf
+                                <input type="hidden" name="roomID" id="roomID" value="{{ $searchRoomID }}">
+                                <div class="col-md-3 p-2">
+                                    <label for="schedule_startdate" class="form-label"> วันที่เริ่ม *</label>
+                                    <input class="form-control dateScl" type="text" data-provide="datepicker"
+                                        data-date-language="th" value="{{ $searchDates }}" id="schedule_startdate"
+                                        name="schedule_startdate" required>
+                                </div>
+                                <div class="col-md-3 p-2">
+                                    <label for="schedule_enddate" class="form-label"> วันที่สิ้นสุด </label>
+                                    <input class="form-control dateScl" type="text" data-provide="datepicker"
+                                        data-date-language="th" value="{{ $searchDates }}" id="schedule_enddate"
+                                        name="schedule_enddate" required>
+                                </div>
+
+                                <div class="col-md-6 p-2">
+                                    <label for="timesStart" class="form-label">ช่วงเวลาที่ใช้งาน *</label>
+                                    <br />
+                                    <select name="booking_time_start" class="form-control-2" required>
+                                        <option value=""> เวลาเริ่ม* </option>
+                                        @foreach ($getService->getALlTimes() as $item)
+                                            <option value="{{ $item }}">{{ $item }}
+                                            </option>
+                                        @endforeach
+                                    </select> :
+                                    <select name="booking_time_finish" class="form-control-2" required>
+                                        <option value="">เวลาสิ้นสุด*</option>
+                                        @foreach ($getService->getALlTimes() as $item)
+                                            <option value="{{ $item }}">{{ $item }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
+                                    <input type="text" class="form-control" id="booking_booker"
+                                        name="booking_booker" placeholder=" ระบุชื่อผู้ทำรายการ "
+                                        value=" {{ Session::get('userfullname') }}" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="booking_department" class="form-label">สังกัดหน่วยงาน /องค์กร
+                                        /บริษัท </label>
+                                    <input type="text" class="form-control" id="booking_department"
+                                        name="booking_department" placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="booking_subject" class="form-label">
+                                        เรื่องที่ขอใช้/โครงการกิจกรรม
+                                        *</label>
+                                    <input type="text" class="form-control" id="booking_subject"
+                                        name="booking_subject" required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าใช้</label>
+                                    <input type="number" class="form-control" id="booking_ofPeople"
+                                        name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน " />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="booking_email" class="form-label"> Email * </label>
+                                    <input type="email" class="form-control" id="booking_email"
+                                        name="booking_email" placeholder=" Email " required
+                                        value="{{ Session::get('cmuitaccount') }}" />
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="booking_phone" class="form-label">เบอร์โทรติดต่อ
+                                        *</label>
+                                    <input type="text" class="form-control" id="booking_phone"
+                                        name="booking_phone" placeholder=" 05394xxxx" />
+                                </div>
+                                <div class="col-12">
+                                    <label for="description" class="form-label">
+                                        ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
+                                    <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
+                                </div>
+                                <input type="hidden" name="booker_cmuaccount"
+                                    value="{{ Session::get('cmuitaccount') }}">
+
+                                <div class="text-center  justify-content-center">
+                                    <button type="submit" id="add_btn" class="btn btn-success">
+                                        <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                    <br />
+
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Booking FORM   modal start --}}
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> ระบุรายละเอียกการขอใช้ห้อง </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4 bg-light">
-                    <form id="add_booking_form" class="row g-3 w-90 m-10-auto" enctype="multipart/form-data"
-                        action="/booking/insertBooking" method="post">
-                        @csrf
-                        <input type="hidden" name="roomID" value="{{ $searchRoomID }}">
-                        <input type="hidden" name="dateStart" value="{{ $searchDates }}">
 
-                        <div class="col-md-6 p-2">
-                            <label for="timesStart" class="form-label">ช่วงเวลาที่ใช้งาน *</label>
-                            <br />
-                            <select name="booking_time_start" class="form-control-2" required>
-                                <option value=""> เริ่ม </option>
-                                @foreach ($getService->getALlTimes() as $item)
-                                    <option value="{{ $item }}">{{ $item }}</option>
-                                @endforeach
-                            </select> :
-                            <select name="booking_time_finish" class="form-control-2" required>
-                                <option value="">สิ้นสุด</option>
-                                @foreach ($getService->getALlTimes() as $item)
-                                    <option value="{{ $item }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-6 p-2">
-                            <label for="booking_booker" class="form-label">ผู้จอง </label>
-                            <input type="text" class="form-control" id="booking_booker" name="booking_booker"
-                                placeholder=" ผู้ทำรายการ " />
-                        </div>
-                        <div class="col-md-12">
-                            <label for="booking_subject" class="form-label"> เรื่องที่ขอใช้ / กิจกรรม / ตารางเรียน
-                                *</label>
-                            <input type="text" class="form-control" id="booking_subject" name="booking_subject"
-                                required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
-                        </div>
-                        <div class="col-md-4">
-                            <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าร่วมประชุม</label>
-                            <input type="number" class="form-control" id="booking_ofPeople" name="booking_ofPeople"
-                                placeholder=" จำนวนที่เข้าใช้งาน " />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="booking_department" class="form-label">หน่วยงาน</label>
-                            <input type="text" class="form-control" id="booking_department"
-                                name="booking_department" placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
-                        </div>
-                        <div class="col-md-4">
-                            <label for="booking_department" class="form-label">เบอร์โทรติดต่อ</label>
-                            <input type="text" class="form-control" id="booking_contact" name="booking_contact"
-                                placeholder=" 05394xxxx" />
-                        </div>
-                        <div class="col-12">
-                            <div>
-                                รายการขอใช้เพิ่มเติม :
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="booking_computer"
-                                        name="booking_computer" value="1">
-                                    <label class="form-check-label" for="inlineRadio1"> คอมพิวเตอร์ </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="booking_food"
-                                        name="booking_food" value="1">
-                                    <label class="form-check-label" for="inlineRadio2">อาหารและเครื่องดื่ม</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="booking_zoom"
-                                        name="booking_zoom" value="1">
-                                    <label class="form-check-label" for="inlineRadio2">ใช้โปรแกรม zoom </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="booking_camera"
-                                        name="booking_camera" value="1">
-                                    <label class="form-check-label" for="inlineRadio2">ช่างภาพ/บันทึกภาพ</label>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <label for="description" class="form-label"> หมายเหตุ </label>
-                            <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
-                        </div>
-
-
-                        <div class="modal-footer my-2">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                            <button type="submit" id="add_btn" class="btn btn-primary"> จองห้อง </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- Booking FORM    modal end --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -254,7 +270,6 @@
                     processData: false,
                     dataType: 'json',
                     success: function(response) {
-                        console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
                                 title: 'Booking Successfully!',
@@ -288,6 +303,30 @@
                 $("#serachBookingDate").submit();
             }
 
+
+            fetchScheduleTable('');
+
+            function fetchScheduleTable($uts) {
+                var val = "";
+
+                $.ajax({
+                    url: "/fetchScheduleByRoom",
+                    method: 'get',
+                    data: {
+                        uts: $uts,
+                        getroomId: $("#roomID").val(),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $(".showtable").html(response);
+                    }
+                });
+            }
+            $(document).on('click', '.btnUTS', function(e) {
+                var $uts = $(this).attr('valuts');
+                fetchScheduleTable($uts);
+            });
         });
     </script>
 </body>

@@ -187,14 +187,21 @@ class RoomsController extends Controller
                 ->where('rooms.id', '=', $roomId)
                 ->get();
 
+            //url CMU Outh 
+            $cmuKey  = DB::table('tbl_apikey')
+                ->select('clientID', 'clientSecret', 'redirect_uri')
+                ->where('apiweb', '=', 'cmuoauth')
+                ->first();
+            $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=booking-' . $roomId;
+
+
             $roomTitle = trim($listRoom[0]->roomFullName);
             return view("room/detail")->with([
                 'getListRoom' => $listRoom,
                 'roomGallery' => $getgallery,
-                'roomTitle' => $roomTitle
+                'roomTitle' => $roomTitle,
+                'urlCMUOauth' => $signwithCmu
             ]);
         }
     }
-
-
 }

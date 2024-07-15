@@ -78,7 +78,7 @@ class HelperService
         $result =  $list;
     }
 
-    function getduration($datetime1, $datetime2)
+    public function getduration($datetime1, $datetime2)
     {
         $datetime1 = (preg_match('/-/', $datetime1)) ? (int) strtotime($datetime1) : (int) $datetime1;
         $datetime2 = (preg_match('/-/', $datetime2)) ? (int) strtotime($datetime2) : (int) $datetime2;
@@ -86,7 +86,7 @@ class HelperService
         return $duration;
     }
 
-    function timeblock($time, $sc_numCol, $sc_timeStep)
+    public function timeblock($time, $sc_numCol, $sc_timeStep)
     {
         //  global $sc_numStep;
         $sc_numStep = 60;
@@ -104,7 +104,7 @@ class HelperService
         }
     }
 
-    function thai_date_short($time)
+    public function thai_date_short($time)
     {   // 19  ธ.ค. 2556 
 
         $monthTH = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
@@ -114,5 +114,12 @@ class HelperService
         $thai_date_return .= " " . $monthTH_brev[date("n", $time)];
         $thai_date_return .= " " . (date("Y", $time) + 543);
         return $thai_date_return;
+    }
+    public function convertDateSqlInsert($dates)
+    {
+        //15/07/2024
+        $temp = explode('/', $dates);
+        $result =  $temp[2] . '-' . $temp[1] . '-' . $temp[0];
+        return  $result;
     }
 }

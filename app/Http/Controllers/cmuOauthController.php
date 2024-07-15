@@ -1,45 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cookie;
+use App\Models\Rooms;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
-class AutnController extends Controller
+class cmuOauthController extends Controller
 {
-    //
-    public function getlogin()
-    {
-        // get CMU APIKEY clientID,clientSecret
-        $cmuKey  = DB::table('tbl_apikey')
-            ->select('clientID', 'clientSecret', 'redirect_uri')
-            ->where('apiweb', '=', 'cmuoauth')
-            ->first();
-        $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=admin';
-
-        return view('admin.auth.login')->with(
-            [
-                'urlCMUOauth' => $signwithCmu,
-            ]
-        );
-    }
-
     // POST API CMU OAUTH  REQEUST authorization_code FORM  https://oauth.cmu.ac.th/v1/GetToken.aspx?code
-    public  function  authorization_code(Request $request)
+    public function  callback(Request $request)
     {
         $code = request()->query('code');
+        $state = request()->query('state');
+        $temp = explode('-', $state);
+        $roomId = $temp[1];
+        $page =  $temp[0];
         $cmuKey  = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
-
         //ร้องขอ  authorization_code  เพื่อนำไป login เพื่อ ขอข้อมูลพนักงาน   
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://oauth.cmu.ac.th/v1/GetToken.aspx?code',
             CURLOPT_RETURNTRANSFER => true,
@@ -94,8 +78,12 @@ class AutnController extends Controller
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
             $users  = User::where('email', $email)->first();
-            if ($users["isAdmin"]) {
 
+            $roomData = Rooms::find($roomId);
+
+
+
+            if ($users) {
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
                     'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
@@ -111,7 +99,6 @@ class AutnController extends Controller
                 // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
                 //$request->session()->put('user', $users, 120);
                 $fullname =  $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
-
                 $request->session()->put('cmuitaccount', $email);
                 $request->session()->put('userfullname',  $fullname);
                 $request->session()->put('dep_id', $users["dep_id"]);
@@ -122,38 +109,22 @@ class AutnController extends Controller
                 $request->session()->put('positionName2', $users["positionName2"]);
 
 
-                return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
+                //check Admin  
+                if ($page  == "booking") {
+                    return redirect()->intended('/booking/check/' . $roomId . '/eng/' . $roomData->roomFullName)->with('success', 'Login Successfull');
+                } else  if ($page  == "admin") {
+                    return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
+                } else {
+                    return redirect()->intended('/booking')->with('success', 'Login Successfull');
+                }
             }
             //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
-            return view('admin.auth.error')->with([
+            return view('error')->with([
                 'displayError' => true
             ]);
         }
-        return view('admin.auth.error')->with([
+        return view('error')->with([
             'displayError' => ' '
         ]);
-    }
-
-
-    public function postLogin(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-        $passwords = md5($request->password);
-        $validated = auth()->attempt([
-            'email' => $request->email,
-            'password' => $passwords,
-            'isAdmin' => 1
-        ], $request->password);
-
-
-        if ($validated) {
-            return redirect()->route('dashboard')->with('success', 'Login Successfull');
-        } else {
-            return redirect()->back()->with('error', 'Invalid credentials');
-        }
     }
 }

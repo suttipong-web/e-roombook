@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ScheduleDepController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\ScheduleroomController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,8 @@ Route::get('/', function () {
 });
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
+Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
+
 
 Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchScheduleByRoom'])->name('fetchScheduleByRoom');
 
@@ -34,7 +37,7 @@ Route::prefix('/booking')->group(
         Route::get('/', [BookingController::class, 'index']);
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
-        Route::get('/check/{roomID}', [BookingController::class, 'check'])->name('check');
+        Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');
         Route::post('/insertBooking', [BookingController::class, 'insertBooking'])->name('insertBooking');
     }
 );
@@ -82,7 +85,6 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
     Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
     Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
-
 });
 
 

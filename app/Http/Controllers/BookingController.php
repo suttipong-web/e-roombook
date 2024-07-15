@@ -9,6 +9,7 @@ use App\Models\Rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
+use App\class\HelperService;
 
 class BookingController extends Controller
 {
@@ -94,7 +95,7 @@ class BookingController extends Controller
             ->select('id', 'roomFullName')
             ->get();
 
-       
+
         $dateBooking = $request->search_date;
         $roomID = $request->slcRoom;
         $roomData = Rooms::find($roomID);
@@ -130,12 +131,11 @@ class BookingController extends Controller
 
     public function check(Request $request)
     {
-
         $roomID = $request->roomID;
         $roomData = Rooms::find($roomID);
         $dateNow  = date('Y-m-d');
-         // 25/06/2024
-        $dateBooking =date('d/m/Y');
+        // 25/06/2024
+        $dateBooking = date('d/m/Y');
 
         if (!empty($roomData->thumbnail)) {
             $img = '/storage/images/' . $roomData->thumbnail;
@@ -143,15 +143,13 @@ class BookingController extends Controller
             $img = '/storage/images/noimage.png';
         }
 
-
         // Query Booking room Table 
         $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('booking_rooms.roomID', $roomID)
-            ->where('booking_rooms.schedule_startdate','>=' , $dateNow)
-            ->where('booking_rooms.schedule_enddate', '<=',$dateNow)
+            ->where('booking_rooms.schedule_startdate', '>=', $dateNow)
+            ->where('booking_rooms.schedule_enddate', '<=', $dateNow)
             ->get();
-
 
         $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateNow . " ] ";
         // Load index  view and  data room        
@@ -171,14 +169,12 @@ class BookingController extends Controller
                 'imgRoom' => $roomData->thumbnail
             ]
         );
-
     }
 
-    public function roomDataSlc() {
 
-    }
     public function insertBooking(Request $request)
     {
+        $class = new HelperService();
         //ตรวจสอบว่าจองเวลานี้ได้ไหม 
         $ChkTimeBookig = DB::table('booking_rooms')
             ->select('booking_time_start', 'booking_time_finish')
@@ -188,8 +184,10 @@ class BookingController extends Controller
 
         // เวลาเริ่ม 
         $bkstart = $request->booking_time_start;
+
         // เวลาสิ้สสุด
         $bkfinish = $request->booking_time_finish;
+
         $error = true;
         foreach ($ChkTimeBookig as $row_chk) {
             if (
@@ -206,44 +204,41 @@ class BookingController extends Controller
                 $error = false;
             }
         }
-
         if ($error) {
             $bookingToken = md5(time());
-            //checkbox
-            $zoom = ($request->booking_zoom == 1) ? true : false;
-            $computer = ($request->booking_computer == 1) ? true : false;
-            $booking_lcd = ($request->booking_lcd == 1) ? true : false;
-            $booking_food = ($request->booking_food == 1) ? true : false;
-            $booking_camera = ($request->booking_camera == 1) ? true : false;
-
             $no = time();
+            $result = "";
+            //15/07/2024
+            $schedule_startdate =  $class->convertDateSqlInsert($request->schedule_startdate);
+            $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
+
             $setDataBooking = [
                 'booking_no' => $no,
                 'bookingToken' => $bookingToken,
                 'roomID' => $request->roomID,
-                'booking_date' => $request->dateStart,
+                'booking_date' => $request->schedule_startdate,
                 'booking_time_start' => $request->booking_time_start,
                 'booking_time_finish' => $request->booking_time_finish,
                 'booking_subject' => $request->booking_subject,
                 'booking_booker' => $request->booking_booker,
                 'booking_ofPeople' => $request->booking_ofPeople,
                 'booking_department' => $request->booking_department,
-                'booking_computer' => $computer,
-                'booking_zoom' => $zoom,
-                'booking_lcd' => $booking_lcd,
-                'booking_food' => $booking_food,
-                'booking_camera' => $booking_camera,
+                'schedule_startdate' => $schedule_startdate,
+                'schedule_enddate' => $schedule_enddate,
+                'booking_phone' => $request->booking_phone,
+                'booking_email' => $request->booking_email,
                 'booker_cmuaccount' => $request->booker_cmuaccount,
                 'description' => $request->description,
                 'booking_at' => Carbon::now()
             ];
-            //  echo print_r($setDataBooking);
-            $result = booking_rooms::create($setDataBooking);
+            echo print_r($setDataBooking);
+            exit;
+            // $result = booking_rooms::create($setDataBooking);
             if ($result) {
                 return response()->json([
                     'status' => 200,
                     'searchRoomID' => $request->roomID,
-                    'searchDates' => $request->dateStart
+                    'searchDates' => $request->schedule_startdate
                 ]);
             }
         }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2024-07-12 16:53:04
+Date: 2024-07-15 16:49:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -116,7 +116,7 @@ CREATE TABLE `booking_rooms` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of booking_rooms
@@ -130,6 +130,8 @@ INSERT INTO `booking_rooms` VALUES ('13', '1719288738', '2', null, '2024-07-12',
 INSERT INTO `booking_rooms` VALUES ('14', '1719298867', '2', null, '2024-07-13', '2024-07-13', '16:00:00', '17:00:00', 'ประชุม88844', null, null, 'AOd', '123', '123', '0', '0', '1', '1', '3116c765babee8bee2198b2ca7032f6b', '1', '0', 'approved', '0', '313213', '2024-06-25 07:01:07', '0', null, '1', '1', 'suttipong.r@cmu.ac.th', '053944120', '2024-06-29 12:40:44', null, 'suttipong.r@cmu.ac.th', null, '2024-06-25 07:01:07', '2024-06-25 07:01:07');
 INSERT INTO `booking_rooms` VALUES ('15', '1720415923', '1', null, '2024-07-10', '2024-07-10', '11:30:00', '14:30:00', 'ประชุม', null, null, '1323', '4141', '411', '0', '0', '1', '0', '12c6ff48e99c2490cc368648a57e6ad2', '1', '0', '', '', '41414', '2024-07-08 05:18:43', '0', null, '1', '0', null, null, null, null, '', null, '2024-07-08 05:18:43', '2024-07-08 05:18:43');
 INSERT INTO `booking_rooms` VALUES ('16', '1720426761', '1', null, '2024-07-10', '2024-07-10', '11:30:00', '13:00:00', '123123', null, null, '12312', '10', '123', '0', '0', '1', '0', 'd0c949ca3e5378633c8a29690a965431', '1', '0', 'approved', '', '1010', '2024-07-08 08:19:21', '0', null, '0', '0', null, null, '2024-07-08 08:19:42', null, 'suttipong.r@cmu.ac.th', null, '2024-07-08 08:19:21', '2024-07-08 08:19:21');
+INSERT INTO `booking_rooms` VALUES ('17', '1721034133', '3', '15/07/2024', '2024-07-15', '2024-07-15', '16:00:00', '17:00:00', 'ประชุม', null, null, 'สุทธิพงค์ ริโปนยอง', '2', 'IT', '0', '0', '0', null, '399b4fe7a185056102183ce944290275', '0', '0', '', '', 'test', '2024-07-15 09:02:13', '0', 'suttipong.r@cmu.ac.th', '0', '0', 'suttipong.r@cmu.ac.th', null, null, null, '', null, '2024-07-15 09:02:13', '2024-07-15 09:02:13');
+INSERT INTO `booking_rooms` VALUES ('19', '1721036409', '3', '16/07/2024', '2024-07-16', '2024-07-16', '11:30:00', '14:00:00', 'ประชุม', null, null, 'สุทธิพงค์ ริโปนยอง', '10', 'IT', '0', '0', '0', null, '607e83a93615fd543cc6a8c31f7675b8', '0', '0', '', '', '1010101', '2024-07-15 09:40:09', '0', 'suttipong.r@cmu.ac.th', '0', '0', 'suttipong.r@cmu.ac.th', '1010101', null, null, '', null, '2024-07-15 09:40:09', '2024-07-15 09:40:09');
 
 -- ----------------------------
 -- Table structure for cmu_oauth
@@ -563,7 +565,7 @@ CREATE TABLE `tbl_apikey` (
 -- ----------------------------
 -- Records of tbl_apikey
 -- ----------------------------
-INSERT INTO `tbl_apikey` VALUES ('1', 'cmuoauth', 'nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM', 'U6bZTJ81TZnnUgPUgqTW9skTSKg5wNjreH6RCT4u', 'oauth.cmu.ac.th', 'http://127.0.0.1:8000/callback_cmuoauth');
+INSERT INTO `tbl_apikey` VALUES ('1', 'cmuoauth', 'nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM', 'U6bZTJ81TZnnUgPUgqTW9skTSKg5wNjreH6RCT4u', 'oauth.cmu.ac.th', 'http://127.0.0.1:8000/callback_booking');
 
 -- ----------------------------
 -- Table structure for users
@@ -588,6 +590,7 @@ CREATE TABLE `users` (
   `itaccounttype_TH` varchar(255) DEFAULT NULL,
   `positionName` varchar(255) DEFAULT NULL,
   `positionName2` varchar(255) DEFAULT NULL,
+  `dep_id` int(11) DEFAULT 0,
   `last_activity` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `user_type_id` smallint(4) DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -597,4 +600,4 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', null, 'suttipong.r@cmu.ac.th', null, 'b986700c627db479a4d9460b75de7222', '1', '1', null, null, '2024-07-12 07:24:09', 'suttipong.r', 'นาย', 'สุทธิพงค์', 'ริโปนยอง', 'MISEmpAcc', 'บุคลากร', null, null, '2024-07-12 07:24:09', '0');
+INSERT INTO `users` VALUES ('1', null, 'suttipong.r@cmu.ac.th', null, 'b986700c627db479a4d9460b75de7222', '1', '1', null, null, '2024-07-15 07:36:29', 'suttipong.r', 'นาย', 'สุทธิพงค์', 'ริโปนยอง', 'MISEmpAcc', 'บุคลากร', null, null, '0', '2024-07-15 07:36:29', '0');
