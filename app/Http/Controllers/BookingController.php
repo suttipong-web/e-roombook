@@ -16,6 +16,7 @@ class BookingController extends Controller
     //
     public function index()
     {
+      
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
@@ -88,11 +89,11 @@ class BookingController extends Controller
     public function search(Request $request)
     {
         $class = new HelperService();
-        $search_date  = $class->convertDateSqlInsert($request->search_date);
+        $search_date = $class->convertDateSqlInsert($request->search_date);
         $dateBooking = $request->search_date;
         $usertype = $request->usertype;
         // $datenow = date('d/m/Y');
-        $datenow  = date('Y-m-d');
+        $datenow = date('Y-m-d');
 
         $DateScl = (!empty($search_date)) ? $search_date : $datenow;
 
@@ -119,6 +120,7 @@ class BookingController extends Controller
         // Query Booking room Table 
         $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+
             ->where('booking_rooms.roomID', $roomID)
             /*->where('booking_rooms.booking_status', '<>', 0)*/
             ->where('booking_rooms.schedule_startdate', '>=', $DateScl)
@@ -144,9 +146,10 @@ class BookingController extends Controller
 
     public function check(Request $request)
     {
+       
         $roomID = $request->roomID;
         $roomData = Rooms::find($roomID);
-        $dateNow  = date('Y-m-d');
+        $dateNow = date('Y-m-d');
         $usertype = $request->usertype;
         // 25/06/2024
         $dateBooking = date('d/m/Y');
@@ -196,12 +199,42 @@ class BookingController extends Controller
         $error = false;
         $fileName = '';
         $is_confirm = 0;
-        //ตรวจสอบบุคคลภายนอก
+        //วันที่ 
+        $schedule_startdate = $class->convertDateSqlInsert($request->schedule_startdate);
+        $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
 
+
+
+        // ตรวจสอบวันที่                 
+        $startDate = Carbon::parse($schedule_startdate); // The start date
+        $endDate = Carbon::parse($schedule_enddate); // The end date        
+        if ($startDate > $endDate) {
+            return response()->json([
+                'status' => 421,
+                'errortext' => 'ระบบไม่สามารถประมาลผลได้ กรุณาตรวจสอบวันเวลา และข้อมูลของท่านอีกครั้ง..'
+            ]);
+        }
+        // ตรวจสอบวันที่เวลา 
+        // เวลาเริ่ม 
+        $bkstart = $request->booking_time_start;
+        // เวลาสิ้สสุด
+        $bkfinish = $request->booking_time_finish;
+
+        $startTime = Carbon::parse($bkstart);
+        $endTime = Carbon::parse($bkfinish);
+        
+        if ($startTime > $endTime) {
+            return response()->json([
+                'status' => 422,
+                'errortext' => 'ระบบไม่สามารถประมาลผลได้ กรุณาตรวจสอบวันเวลา และข้อมูลของท่านอีกครั้ง..'
+            ]);
+        } 
+
+
+        //ตรวจสอบบุคคลภายนอก
         if ($request->booking_type == "general") {
             // Handle the file upload
             if ($request->hasFile('pdf')) {
-
                 $file = $request->file('pdf');
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
                 $file->storeAs('public/upload', $fileName);
@@ -218,8 +251,7 @@ class BookingController extends Controller
         }
 
         //ตรวจสอบว่าจองเวลานี้ได้ไหม 
-        $schedule_startdate =  $class->convertDateSqlInsert($request->schedule_startdate);
-        $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
+
         $ChkTimeBookig = DB::table('booking_rooms')
             ->select('booking_time_start', 'booking_time_finish')
             ->where('booking_rooms.roomID', $request->roomID)
@@ -227,11 +259,7 @@ class BookingController extends Controller
             ->where('booking_rooms.schedule_startdate', '>=', $schedule_startdate)
             ->where('booking_rooms.schedule_enddate', '<=', $schedule_enddate)
             ->get();
-        // เวลาเริ่ม 
-        $bkstart = $request->booking_time_start;
 
-        // เวลาสิ้สสุด
-        $bkfinish = $request->booking_time_finish;
         // ยืนยันการจอง
         $is_confirm = true;
         $error = true;
@@ -261,7 +289,8 @@ class BookingController extends Controller
             $result = "";
 
             //บุคคลภายใน
-            if (!empty($request->booker_cmuaccount)) $is_confirm = 1;
+            if (!empty($request->booker_cmuaccount))
+                $is_confirm = 1;
 
 
             $setDataBooking = [

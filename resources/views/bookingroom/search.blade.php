@@ -161,18 +161,21 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                
                                 <div class="col-md-6">
                                     <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
                                     <input type="text" class="form-control" id="booking_booker"
                                         name="booking_booker" placeholder=" ระบุชื่อผู้ทำรายการ "
                                         value=" {{ Session::get('userfullname') }}" required />
                                 </div>
+
                                 <div class="col-md-6">
                                     <label for="booking_department" class="form-label">สังกัดหน่วยงาน /องค์กร
                                         /บริษัท </label>
                                     <input type="text" class="form-control" id="booking_department"
                                         name="booking_department" placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
                                 </div>
+
                                 <div class="col-md-12">
                                     <label for="booking_subject" class="form-label">
                                         เรื่องที่ขอใช้/โครงการกิจกรรม
@@ -180,6 +183,7 @@
                                     <input type="text" class="form-control" id="booking_subject"
                                         name="booking_subject" required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
                                 </div>
+
                                 <div class="col-md-4">
                                     <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าใช้</label>
                                     <input type="number" class="form-control" id="booking_ofPeople"
@@ -199,6 +203,7 @@
                                     <input type="text" class="form-control" id="booking_phone"
                                         name="booking_phone" placeholder=" 05394xxxx" />
                                 </div>
+
                                 <div class="col-12">
                                     <label for="description" class="form-label">
                                         ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
