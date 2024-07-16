@@ -87,16 +87,25 @@ class BookingController extends Controller
 
     public function search(Request $request)
     {
-        $datenow = date('d/m/Y');
-        $roomDataSlc = (!empty($request->search_date)) ? $request->search_date : $datenow;
+        $class = new HelperService();
+        $search_date  = $class->convertDateSqlInsert($request->search_date);
+        $dateBooking = $request->search_date;
+        $usertype = $request->usertype;
+        // $datenow = date('d/m/Y');
+        $datenow  = date('Y-m-d');
+
+        $DateScl = (!empty($search_date)) ? $search_date : $datenow;
+
         $roomID = (!empty($request->slcRoom)) ? $request->slcRoom : 1;
+
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
             ->get();
 
 
-        $dateBooking = $request->search_date;
+        //  $dateBooking = $request->search_date;
+
         $roomID = $request->slcRoom;
         $roomData = Rooms::find($roomID);
 
@@ -106,12 +115,17 @@ class BookingController extends Controller
             $img = '/storage/images/noimage.png';
         }
 
+
         // Query Booking room Table 
         $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('booking_rooms.roomID', $roomID)
-            ->where('booking_rooms.booking_date', $dateBooking)
+            /*->where('booking_rooms.booking_status', '<>', 0)*/
+            ->where('booking_rooms.schedule_startdate', '>=', $DateScl)
+            ->where('booking_rooms.schedule_enddate', '<=', $DateScl)
+            ->orderBy('booking_time_start', 'ASC')
             ->get();
+
 
         $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateBooking . " ] ";
         // Load index  view and  data room        
@@ -122,7 +136,8 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,
-                'imgRoom' => $roomData->thumbnail
+                'imgRoom' => $roomData->thumbnail,
+                'usertype' => $usertype
             ]
         );
     }
@@ -146,8 +161,10 @@ class BookingController extends Controller
         $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('booking_rooms.roomID', $roomID)
+            /*->where('booking_rooms.booking_status', '<>', 0)*/
             ->where('booking_rooms.schedule_startdate', '>=', $dateNow)
             ->where('booking_rooms.schedule_enddate', '<=', $dateNow)
+            ->orderBy('booking_time_start', 'ASC')
             ->get();
 
         $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateNow . " ] ";
@@ -165,8 +182,8 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,
-                'imgRoom' => $roomData->thumbnail, 
-                'usertype'=> $usertype
+                'imgRoom' => $roomData->thumbnail,
+                'usertype' => $usertype
             ]
         );
     }
@@ -175,19 +192,48 @@ class BookingController extends Controller
     public function insertBooking(Request $request)
     {
         $class = new HelperService();
+
+        $error = false;
+        $fileName = '';
+        $is_confirm = 0;
+        //ตรวจสอบบุคคลภายนอก
+
+        if ($request->booking_type == "general") {
+            // Handle the file upload
+            if ($request->hasFile('pdf')) {
+
+                $file = $request->file('pdf');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/upload', $fileName);
+                // Return a response
+                $error = true;
+            } else {
+                return response()->json([
+                    'status' => 209,
+                    'errortext' => 'บุคคลภายนอกต้องทำการแนบไฟล์ เพื่อขอใช้สถานที่และต้องเป็นเอกสาร ชนิดไฟล์ .pdf เท่านั้น'
+                ]);
+            }
+            // Validate the request
+            $is_confirm = 0;
+        }
+
         //ตรวจสอบว่าจองเวลานี้ได้ไหม 
+        $schedule_startdate =  $class->convertDateSqlInsert($request->schedule_startdate);
+        $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
         $ChkTimeBookig = DB::table('booking_rooms')
             ->select('booking_time_start', 'booking_time_finish')
             ->where('booking_rooms.roomID', $request->roomID)
-            ->where('booking_rooms.booking_date', $request->dateStart)
+            ->where('booking_rooms.booking_status', '<>', 0)
+            ->where('booking_rooms.schedule_startdate', '>=', $schedule_startdate)
+            ->where('booking_rooms.schedule_enddate', '<=', $schedule_enddate)
             ->get();
-
         // เวลาเริ่ม 
         $bkstart = $request->booking_time_start;
 
         // เวลาสิ้สสุด
         $bkfinish = $request->booking_time_finish;
-
+        // ยืนยันการจอง
+        $is_confirm = true;
         $error = true;
         foreach ($ChkTimeBookig as $row_chk) {
             if (
@@ -201,16 +247,22 @@ class BookingController extends Controller
                     'status' => 208,
                     'text' => 'มีรายการจองของวันนี้แล้ว'
                 ]);
-                $error = false;
+                $error = 0;
+                $is_confirm = 0;
+            } else {
+                $is_confirm = 1;
             }
         }
+
         if ($error) {
             $bookingToken = md5(time());
+            $filenames = "";
             $no = time();
             $result = "";
-            //15/07/2024
-            $schedule_startdate =  $class->convertDateSqlInsert($request->schedule_startdate);
-            $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
+
+            //บุคคลภายใน
+            if (!empty($request->booker_cmuaccount)) $is_confirm = 1;
+
 
             $setDataBooking = [
                 'booking_no' => $no,
@@ -229,12 +281,14 @@ class BookingController extends Controller
                 'booking_email' => $request->booking_email,
                 'booker_cmuaccount' => $request->booker_cmuaccount,
                 'description' => $request->description,
-                'booking_type' => $request->booking_type,                
-                'booking_at' => Carbon::now()
+                'booking_type' => $request->booking_type,
+                'booking_at' => Carbon::now(),
+                'booking_fileurl' => $fileName,
+                'booking_status' => $is_confirm
             ];
-            echo print_r($setDataBooking);
-            exit;
-            // $result = booking_rooms::create($setDataBooking);
+            //echo print_r($setDataBooking);
+
+            $result = booking_rooms::create($setDataBooking);
             if ($result) {
                 return response()->json([
                     'status' => 200,
@@ -242,6 +296,13 @@ class BookingController extends Controller
                     'searchDates' => $request->schedule_startdate
                 ]);
             }
+
+            return response()->json([
+                'status' => 208,
+                'searchRoomID' => $request->roomID,
+                'searchDates' => $request->schedule_startdate,
+                'error' => $result
+            ]);
         }
     }
 }

@@ -21,27 +21,28 @@
                     <div class="formSlc  text-start w-75">
                         <h4>
                             <i class="bi bi-calendar-fill"></i>
-                            ทำรายการจองห้อง
+                            ตรวจสอบการใช้ห้อง
                         </h4>
                         <hr />
 
                         <form id="serachBookingDate" method="post" action="/booking/search">
                             @csrf
+                            <input type="hidden" name="booking_type" id="booking_type" value="general">
                             <div class="mb-3">
                                 <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
                                 <select name="slcRoom" id="slcRoom" class="form-select ">
-                                    <option value="0">-- เลือก --</option>
+
                                     @foreach ($roomSlc as $item)
                                         <option value='{{ $item->id }}'> {{ $item->roomFullName }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
-                                {{ $nowdate = date('d/m/Y') }}
+
                                 <label for="search_date" class="form-label"> วันที่ </label>
                                 <input class="form-control dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="search_date" name="search_date"
-                                    value="{{ $nowdate }}">
+                                    value="{{ date('d/m/Y') }}">
                             </div>
 
                             <div class="text-center d-flex justify-content-center">
@@ -49,6 +50,7 @@
                                     ตรวจสอบการจอง
                                 </button>
                             </div>
+
                             <hr />
                         </form>
                     </div>
@@ -69,8 +71,10 @@
                                     <img src="/storage/images/{{ $rows->thumbnail }}" class="card-img-top"
                                         alt="{{ $rows->roomFullName }}">
                                     <div class="card-body">
-                                       <a href="/room/{{$rows->id}}/{{$rows->roomFullName}}"> <h6 class="card-title text-center">{{ $rows->roomFullName }}</h6> </a>                                                                        
-                                    </div>                                    
+                                        <a href="/room/{{ $rows->id }}/{{ $rows->roomFullName }}">
+                                            <h6 class="card-title text-center">{{ $rows->roomFullName }}</h6>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach

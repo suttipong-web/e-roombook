@@ -73,7 +73,8 @@ class ScheduleroomController extends Controller
         $sql = " SELECT booking_rooms.*,rooms.roomFullName,rooms.roomTitle
                     FROM booking_rooms
                     INNER JOIN rooms ON booking_rooms.roomID = rooms.id
-                    WHERE booking_rooms.roomID = '{$roomID}'
+                    WHERE booking_rooms.roomID = '{$roomID}' AND  booking_rooms.booking_status <> 0
+                    
                          /* (booking_rooms.booking_status >=1)  AND */
                          AND (
                           (schedule_startdate  >= '" . $start_weekDay . "' AND schedule_startdate <  '" . $end_weekDay . "') OR
@@ -241,7 +242,10 @@ class ScheduleroomController extends Controller
                         $subjectTitle = $row_day['title'];
                     }
 
+                    $details = '<div> ช่วงเวลา : ' . $row_day['start_time'] . '-' . $row_day['end_time'] . ' <br/> ผู้ขอใช้ :' . $row_day["sec"] . '</div>';
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
+                                     detail="' . $details . '"
+                                     htitle ="' . $row_day['title'] . '"
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
                                     <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . '</a></div>';
                 }

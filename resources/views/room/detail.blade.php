@@ -210,10 +210,24 @@
                     }
                 });
             }
+
             $(document).on('click', '.btnUTS', function(e) {
                 var $uts = $(this).attr('valuts');
                 fetchAll($uts);
             });
+
+            $(document).on('click', '.sc-detail', function(e) {
+                var detail = $(this).attr('detail');
+                var titles = $(this).attr('htitle');
+                Swal.fire({
+                    title: "<strong>" + titles + "</strong>",
+                    icon: "info",
+                    html: detail,
+                    showCloseButton: true,
+                    focusConfirm: false
+                });
+            });
+
         });
     </script>
 
