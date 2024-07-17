@@ -10,13 +10,10 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-
     public function  adminindex()
     {
         return redirect('/admin/login');
     }
-
-
     //Route admin.dashboard
     public function index(Request $request)
     {
@@ -122,10 +119,6 @@ class DashboardController extends Controller
         $Count = booking_rooms::where('booking_AdminAction', '=', 'approved')->count();
         return $Count;
     }
-
-
-
-
 
     public function bookingDetail(Request $request)
     {

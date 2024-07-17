@@ -13,10 +13,11 @@ class cmuOauthController extends Controller
     // POST API CMU OAUTH  REQEUST authorization_code FORM  https://oauth.cmu.ac.th/v1/GetToken.aspx?code
     public function  callback(Request $request)
     {
+        $roomId = 0;
         $code = request()->query('code');
         $state = request()->query('state');
         $temp = explode('-', $state);
-        $roomId = $temp[1];
+        if (!empty($temp[1])) $roomId = $temp[1];
         $page =  $temp[0];
         $cmuKey  = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
@@ -78,8 +79,7 @@ class cmuOauthController extends Controller
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
             $users  = User::where('email', $email)->first();
-
-            $roomData = Rooms::find($roomId);
+            if (empty($roomId)) $roomData = Rooms::find($roomId);
 
 
 

@@ -161,7 +161,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
                                     <input type="text" class="form-control" id="booking_booker"
@@ -209,6 +209,7 @@
                                         ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
                                     <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                 </div>
+
                                 @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">*แนบไฟล์ เอกสารการขอให้สถานที่ (.pdf
@@ -228,12 +229,20 @@
                                     *** โปรดตรวจสอบข้อมูลของท่าน ก่อนยืนยันการทำรายการจองห้อง
                                 </div>
                                 <div class="text-center  justify-content-center  mb-3 ">
-
                                     <button type="submit" id="add_btn" class="btn btn-success">
                                         <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
                                     </button>
                                 </div>
-
+                                @if ($usertype == 'general')
+                                    <div class="text-center  ujstify-content-center  mb-3 ">
+                                        <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
+                                            class="btn btn-warning " tabindex="-1" role="button"
+                                            aria-disabled="true">
+                                            <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน
+                                                เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
+                                        </a>
+                                    </div>
+                                @endif
                             </form>
                         </div>
                         <br />
@@ -364,7 +373,6 @@
                 document.getElementById('home-tab').focus();
             }
 
-
             fetchScheduleTable('');
 
             function fetchScheduleTable($uts) {
@@ -388,7 +396,6 @@
                 var $uts = $(this).attr('valuts');
                 fetchScheduleTable($uts);
             });
-
             $(document).on('click', '.sc-detail', function(e) {
                 var detail = $(this).attr('detail');
                 var titles = $(this).attr('htitle');
