@@ -16,7 +16,7 @@ class BookingController extends Controller
     //
     public function index()
     {
-      
+
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
@@ -146,7 +146,7 @@ class BookingController extends Controller
 
     public function check(Request $request)
     {
-       
+
         $roomID = $request->roomID;
         $roomData = Rooms::find($roomID);
         $dateNow = date('Y-m-d');
@@ -222,13 +222,13 @@ class BookingController extends Controller
 
         $startTime = Carbon::parse($bkstart);
         $endTime = Carbon::parse($bkfinish);
-        
+
         if ($startTime > $endTime) {
             return response()->json([
                 'status' => 422,
                 'errortext' => 'ระบบไม่สามารถประมาลผลได้ กรุณาตรวจสอบวันเวลา และข้อมูลของท่านอีกครั้ง..'
             ]);
-        } 
+        }
 
 
         //ตรวจสอบบุคคลภายนอก
@@ -289,9 +289,13 @@ class BookingController extends Controller
             $result = "";
 
             //บุคคลภายใน
-            if (!empty($request->booker_cmuaccount))
+            if (!empty($request->booker_cmuaccount)) {
                 $is_confirm = 1;
+            }
 
+            if ($request->booking_type == "general") {
+                $is_confirm = 0;
+            }
 
             $setDataBooking = [
                 'booking_no' => $no,
