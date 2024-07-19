@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\admin\AutnController;
+use App\Http\Controllers\Admin\ManageBookingController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ScheduleDepController;
@@ -72,6 +73,9 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::delete('/admin/room/delete', [RoomsController::class, 'delete'])->name('delete');
     Route::get('/admin/room/edit', [RoomsController::class, 'edit'])->name('edit');
     Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
+
+    Route::get('/admin/bookingDetail/{getStatus}/{bookingID}/{token}', [ManageBookingController::class, 'bookingDetail'])->name('bookingDetail');
+
 
     Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
     Route::get('/admin/report', [ReportController::class, 'index'])->name('index');
