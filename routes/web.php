@@ -53,7 +53,7 @@ Route::prefix('/admin')->group(
 
 
 
-
+Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 
 Route::group(['middleware' => ['admin_auth']], function () {
 
@@ -72,10 +72,22 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/room/fetchall', [RoomsController::class, 'fetchAll'])->name('fetchAll');
     Route::delete('/admin/room/delete', [RoomsController::class, 'delete'])->name('delete');
     Route::get('/admin/room/edit', [RoomsController::class, 'edit'])->name('edit');
+
+    Route::get('/admin/room/editAdmin', [RoomsController::class, 'editAdmin'])->name('editAdmin');
+    Route::get('/admin/room/fetchAdmin', [RoomsController::class, 'fetchAdmin'])->name('fetchAdmin');
+    Route::get('/admin/room/deleteAdmin', [RoomsController::class, 'deleteAdmin'])->name('deleteAdmin');
+
     Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
 
     Route::get('/admin/bookingDetail/{getStatus}/{bookingID}/{token}', [ManageBookingController::class, 'bookingDetail'])->name('bookingDetail');
 
+    //กำหนดผู้ปฏิบัติงาน     
+    Route::get('/admin/assignEmployee', [ManageBookingController::class, 'assignEmployee'])->name('assignEmployee');
+    Route::get('/admin/getAssignEmployee', [ManageBookingController::class, 'getAssignEmployee'])->name('getAssignEmployee');
+    Route::delete('/admin/delete/assignEmployee', [ManageBookingController::class, 'deleteAssign'])->name('deleteAssign');
+   
+
+    
 
     Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
     Route::get('/admin/report', [ReportController::class, 'index'])->name('index');

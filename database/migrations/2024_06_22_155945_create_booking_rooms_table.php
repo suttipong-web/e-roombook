@@ -49,7 +49,8 @@ return new class extends Migration
             $table->string('admin_action_acount')->nullable();
             $table->string('dean_action_acount')->nullable();
             $table->string('booking_fileurl')->nullable();
-
+            $table->boolean('is_read')->default(false);
+            
             $table->timestamps();
         });
     }

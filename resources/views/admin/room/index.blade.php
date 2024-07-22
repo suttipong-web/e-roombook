@@ -144,9 +144,14 @@
                                     <input type="text" class="form-control" id="Edit_roomTitle" name="roomTitle"
                                         placeholder="ห้อง วสท. (*ถ้ามี)" />
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="roomSize" class="form-label">ขนาดห้อง</label>
+                                <div class="col-md-3">
+                                    <label for="roomSize" class="form-label">จำนวนที่นั่ง</label>
                                     <input type="text" class="form-control" id="Edit_roomSize" name="roomSize"
+                                        placeholder=" 20 ที่นั่ง " />
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="room_wh" class="form-label">ขนาดห้อง</label>
+                                    <input type="text" class="form-control" id="Edit_room_wh" name="room_wh"
                                         placeholder=" 20 ที่นั่ง " />
                                 </div>
                                 <div class="col-12">
@@ -155,7 +160,7 @@
                                         id="Edit_roomDetail" name="roomDetail"></textarea>
                                 </div>
 
-                                <div class="col-6 mt-2">
+                                <!--<div class="col-6 mt-2">
                                     <strong>ระบุผู้ดูแลประจำห้อง</strong>
                                     <hr />
                                     <div class="col-12 mt-2">
@@ -176,7 +181,7 @@
                                             name="Edit_adminPhone1" required placeholder=" ระบุชื่อ นามสกุลผู้" />
                                     </div>
                                     
-                                </div>
+                                </div>-->
 
                                 <div class="col-6 mt-2">
                                     <div class="mt-2">
@@ -205,6 +210,61 @@
             </div>
         </div>
         {{-- edit modal end --}}
+
+
+        {{-- edit Admin Room --}}
+        <div class="modal fade" id="editAdminRoomModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">จัดการผู้ดูแลห้อง</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body  bg-light ">
+                        <div class="row">
+                            <div class="col-3 mt-2">
+                                <label for="Edit_adminfullname1" class="form-label"> 1. ชื่อ นามสกุล
+                                </label>
+                                <input type="text" class="form-control" id="Edit_adminfullname1"
+                                    name="Edit_adminfullname1" required placeholder=" ระบุชื่อ นามสกุลผู้ดูแล " />
+                            </div>
+                            <div class="col-3 mt-2">
+                                <label for="Edit_adminEmail1" class="form-label">Email </label>
+                                <input type="email" class="form-control" id="Edit_adminEmail1" name="Edit_adminEmail1"
+                                    required placeholder=" ระบุ Email นามสกุลผู้ดูแล" />
+                            </div>
+                            <div class="col-3 mt-2">
+                                <label for="Edit_adminPhone1" class="form-label">เบอร์โทร</label>
+                                <input type="text" class="form-control" id="Edit_adminPhone1" name="Edit_adminPhone1"
+                                    required placeholder=" ระบุชื่อ นามสกุลผู้" />
+                            </div>
+                            <div class="col-3 mt-2">
+                                +
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row ">
             <div class="col-lg-12">
                 <div class="card shadow">
@@ -260,6 +320,42 @@
                 }
             });
         });
+
+        // if click edit  /  ajax request
+        $(document).on('click', '.editAdminIcon', function (e) {
+            e.preventDefault();
+            let id = $(this).attr('id');
+            $.ajax({
+                url: "{{ url('/admin/room/editAdmin') }}",
+                method: 'get',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+            $('#editAdminRoomModal').modal("show");
+        });
+
+        function getAdminRoom (){
+            $.ajax({
+                url: "{{ url('/admin/room/fetchAdmin') }} ",
+                method: 'get',
+                data: {
+                    roomid: id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                   console.log(response);                   
+                }
+            });
+        }
+
+
+
 
         // if click edit  /  ajax request
         $(document).on('click', '.editIcon', function (e) {

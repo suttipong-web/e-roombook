@@ -20,6 +20,7 @@ class Rooms extends Model
         'is_open',
         'is_status',
         'room_admin_email',
-        'room_price'
+        'room_price',
+        'room_wh'
     ];
 }

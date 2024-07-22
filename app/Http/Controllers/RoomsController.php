@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\adminRooom;
 use App\Models\room_gallery;
 use App\Models\Rooms;
 use Illuminate\Http\Request;
@@ -73,9 +74,9 @@ class RoomsController extends Controller
             <td>' . $rows->roomDetail . '</td>
            
             <td>' . $isOpen . '</td>
-            <td  width="80" >
+            <td  width="120" >
               <a href="#" id="' . $rows->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi-pencil-square h4"></i></a>
-
+ <a href="#" id="' . $rows->id . '" class="text-success mx-1 editAdminIcon" ><i class="bi bi-person-fill-gear"></i></a>
               <a href="#" id="' . $rows->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
             </td>
           </tr>';
@@ -105,7 +106,8 @@ class RoomsController extends Controller
             'roomTypeId' => $request->roomTypeId,
             'placeId' => $request->placeId,
             'roomDetail' => $request->roomDetail,
-            'thumbnail' => $fileName
+            'thumbnail' => $fileName,
+            'room_wh'=>$request->room_wh
         ];
         Rooms::create($setData);
         return response()->json([
@@ -124,6 +126,24 @@ class RoomsController extends Controller
             'dataRoom' => $result2
         ]);
     }
+
+
+    public function editAdmin(Request $request)
+    {
+        // $id = $request->id;
+        $result = adminRooom::find($request->id);
+        $result2 = json_encode($result);
+        return response()->json([
+            'status' => 200,
+            'dataRoom' => $result2
+        ]);
+    }
+    
+
+
+
+
+
 
     // handle update an  ajax request
     public function update(Request $request)
@@ -154,7 +174,8 @@ class RoomsController extends Controller
             'placeId' => $request->placeId,
             'roomDetail' => $request->roomDetail,
             'thumbnail' => $fileName,
-            'is_open' => $RoomOpen
+            'is_open' => $RoomOpen,
+            'room_wh'=>$request->room_wh
         ];
         $result->update($setData);
         return response()->json([

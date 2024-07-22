@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\DB;
 class cmuOauthController extends Controller
 {
     // POST API CMU OAUTH  REQEUST authorization_code FORM  https://oauth.cmu.ac.th/v1/GetToken.aspx?code
-    public function  callback(Request $request)
+    public function callback(Request $request)
     {
         $roomId = 0;
-        $code = request()->query('code');
-        $state = request()->query('state');
+        $code = $request->code;
+        $state = $request->state;
         $temp = explode('-', $state);
-        if (!empty($temp[1])) $roomId = $temp[1];
-        $page =  $temp[0];
-        $cmuKey  = DB::table('tbl_apikey')
+        if (!empty($temp[1]))
+            $roomId = $temp[1];
+        $page = $temp[0];
+        $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
@@ -40,7 +41,8 @@ class cmuOauthController extends Controller
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded'
             ),
-        ));
+        )
+        );
 
         $responseAuthCode = curl_exec($curl);
         curl_close($curl);
@@ -51,7 +53,7 @@ class cmuOauthController extends Controller
                 'displayError' => true
             ]);
         }
-        $access_token =  $callback_dataAuthCode['access_token'];
+        $access_token = $callback_dataAuthCode['access_token'];
 
         // เมื่อได้  access_token ก็  CURLOPT_CUSTOMREQUEST   ไปขอ basicinfo ด้วย access_token ที่ได้ 
         // return   basicinfo 
@@ -69,7 +71,9 @@ class cmuOauthController extends Controller
             CURLOPT_HTTPHEADER => array(
                 "cache-control: no-cache"
             ),
-        ));
+        )
+        );
+
         $responseInfo = curl_exec($curlStep2);
         // รับ response และ แปลงข้อมูลเป็น json
         $cmuitaccount = json_decode($responseInfo, true);
@@ -78,11 +82,10 @@ class cmuOauthController extends Controller
 
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
-            $users  = User::where('email', $email)->first();
-            if (empty($roomId)) $roomData = Rooms::find($roomId);
-
-
-
+            $users = User::where('email', $email)->first();
+            if (!empty($roomId)) {
+                $roomData = Rooms::find($roomId);
+            }
             if ($users) {
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
@@ -92,15 +95,15 @@ class cmuOauthController extends Controller
                     'lastname_TH' => $cmuitaccount["lastname_TH"],
                     'itaccounttype_id' => $cmuitaccount["itaccounttype_id"],
                     'itaccounttype_TH' => $cmuitaccount["itaccounttype_TH"],
-                    'updated_at' =>  Carbon::now(),
-                    'last_activity' =>  Carbon::now()
+                    'updated_at' => Carbon::now(),
+                    'last_activity' => Carbon::now()
                 ];
                 $users->update($setData);
                 // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
                 //$request->session()->put('user', $users, 120);
-                $fullname =  $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
+                $fullname = $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
                 $request->session()->put('cmuitaccount', $email);
-                $request->session()->put('userfullname',  $fullname);
+                $request->session()->put('userfullname', $fullname);
                 $request->session()->put('dep_id', $users["dep_id"]);
                 $request->session()->put('isAdmin', 1);
                 $request->session()->put('isDean', $users["isDean"]);
@@ -110,9 +113,9 @@ class cmuOauthController extends Controller
 
 
                 //check Admin  
-                if ($page  == "booking") {
+                if ($page == "booking") {
                     return redirect()->intended('/booking/check/' . $roomId . '/eng/' . $roomData->roomFullName)->with('success', 'Login Successfull');
-                } else  if ($page  == "admin") {
+                } else if ($page == "admin") {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 } else {
                     return redirect()->intended('/booking')->with('success', 'Login Successfull');

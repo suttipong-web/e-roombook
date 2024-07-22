@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\booking_assign;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 use App\Models\booking_rooms;
@@ -18,18 +19,121 @@ class ManageBookingController extends Controller
     public function bookingDetail(Request $request)
     {
 
+
+        //ข้อมูลหนักงาน Select option
+        $sclEmployee = DB::table('tbl_members')
+            ->select('tbl_members.*')
+            ->get();
+
         $getStatus = $request->getStatus;
         if ($request->bookingID) {
             $bookingId = $request->bookingID;
+            // update Status read inbox อ่านแล้ว
+            $updated = DB::table('booking_rooms')->where('id', $bookingId)
+                ->update([
+                    'is_read' => 1
+                ]);
+            // Return รายละเอียดการจอง 
             $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_rooms.id', $bookingId)
                 ->get();
-            return  view('admin.bookingDetail')->with([
-                'detailBooking' => $ResultBooking,
-                'getStatus' => $getStatus
 
+            return view('admin.bookingDetail')->with([
+                'detailBooking' => $ResultBooking,
+                'getStatus' => $getStatus,
+                'sclEmployee' => $sclEmployee
             ]);
         }
     }
+
+    public function getAssignEmployee(Request $request)
+    {
+        if ($request->bookingId) {
+            $sql = "SELECT
+                    booking_assigns.*,
+                    tbl_members.*,
+                    department.dep_name
+                  
+                    FROM
+                    booking_assigns
+                    INNER JOIN tbl_members ON booking_assigns.cmuitaccount = tbl_members.cmuitaccount
+                    left JOIN department ON tbl_members.dep_id = department.dep_id
+                    Where booking_assigns.bookingID='{$request->bookingId}'
+                    ";
+            $qresult = DB::select(DB::raw($sql));
+            if ($qresult) {
+                return response()->json([
+                    'listemp' => $qresult
+                ]);
+            }
+        }
+    }
+
+    public function assignEmployee(Request $request)
+    {
+        if ($request->cmuitaccount) {
+            $setData = [
+                'cmuitaccount' => $request->cmuitaccount,
+                'bookingID' => $request->bookingId,
+                'is_read' => 0
+            ];
+            $insert = booking_assign::create($setData);
+            if ($insert) {
+                return response()->json([
+                    'status' => 200
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 208,
+                    'error' => 'ERROR'
+                ]);
+            }
+        }
+
+    }
+
+    public function deleteAssign(Request $request)
+    {
+        $id = $request->id;
+        $result = booking_assign::find($id);
+        if ($result) {
+            booking_assign::destroy($id);
+        }
+    }
+    public function printFormBooking (Request $request) {
+
+        if ($request->bookingID) {
+            $bookingId = $request->bookingID;
+            $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
+            ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+            ->where('booking_rooms.id', $bookingId)
+            ->get();
+
+            $sql = "SELECT
+            booking_assigns.*,
+            tbl_members.*,
+            department.dep_name
+          
+            FROM
+            booking_assigns
+            INNER JOIN tbl_members ON booking_assigns.cmuitaccount = tbl_members.cmuitaccount
+            left JOIN department ON tbl_members.dep_id = department.dep_id
+            Where booking_assigns.bookingID='{$bookingId}'
+            ";
+            $ListEmployee = DB::select(DB::raw($sql));
+            return view('printformbooking')->with([
+                'detailBooking' => $ResultBooking,         
+                'ListEmployee' => $ListEmployee
+            ]);
+        }
+        
+        return view('printformbooking') ->with([
+            'Error' => 'ไม่สามารถทำรายการได้'     
+         
+        ]);
+
+    }
+
+
 }

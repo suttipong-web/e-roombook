@@ -22,8 +22,8 @@ class HelperService
         $date = Carbon::parse($arg);
         $month = $thai_months[$date->month];
         $year = $date->year + 543;
-        if ($istime) {
-            $setdate = $date->format("j $month $year $istime");
+        if ($addtime) {
+             $setdate = $date->format("j $month $year $istime");
         } else {
             $setdate = $date->format("j $month $year");
         }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function  adminindex()
+    public function adminindex()
     {
         return redirect('/admin/login');
     }
@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
         $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('booking_status', 0)
+            ->where('booking_AdminAction', '')
             ->get();
 
         return view('admin.dashboard')->with([
@@ -53,30 +53,30 @@ class DashboardController extends Controller
         if ($getStatus == 'Newinbox') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-                ->where('booking_status', 0)
+                ->where('booking_AdminAction', '')
                 ->get();
-            $titlesCard  = "รายการขอใช้ห้องมาใหม่ ";
+            $titlesCard = "รายการขอใช้ห้องมาใหม่ ";
         }
         if ($getStatus == 'ForwardDean') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_AdminAction', '=', 'ForwardDean')
                 ->get();
-            $titlesCard  = "รายการขอใช้ห้องที่ทำการส่งต่อผู้บริหาร";
+            $titlesCard = "รายการขอใช้ห้องที่ทำการส่งต่อผู้บริหาร";
         }
         if ($getStatus == 'canceled') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_AdminAction', '=', 'canceled')
                 ->get();
-            $titlesCard  = "รายการขอใช้ห้องที่ทำการยกเลิก";
+            $titlesCard = "รายการขอใช้ห้องที่ทำการยกเลิก";
         }
         if ($getStatus == 'approved') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_AdminAction', '=', 'approved')
                 ->get();
-            $titlesCard  = "รายการขอใช้ห้องที่ทำการอนมุัติ";
+            $titlesCard = "รายการขอใช้ห้องที่ทำการอนมุัติ";
         }
 
         return view('admin.dashboard')->with([
@@ -95,7 +95,8 @@ class DashboardController extends Controller
     // return   จำนวนการจอง ที่ยังไม่ได้อนุมัติ
     public function getCountNewBooking()
     {
-        $Count = booking_rooms::where('booking_status', '=', 0)->count();
+        $Count = booking_rooms::where('booking_AdminAction', '')
+            ->count();
         return $Count;
     }
 
@@ -174,8 +175,8 @@ class DashboardController extends Controller
             'booking_status' => $booking_status,
             'booking_no' => $booking_no,
             'userRequest' => $userRequest,
-            'admin_action_date' =>  $rows["admin_action_date"],
-            'admin_action_acount' =>  $rows["admin_action_acount"]
+            'admin_action_date' => $rows["admin_action_date"],
+            'admin_action_acount' => $rows["admin_action_acount"]
 
 
         ]);

@@ -24,7 +24,10 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('roomDetail')->nullable();
             $table->boolean('is_open')->default(true);
-            $table->boolean('is_status')->default(false);            
+            $table->boolean('is_status')->default(false);   
+            $table->integer('room_price')->default(0);  
+            $table->string('room_wh')->nullable();      
+               
             $table->timestamps();
         });
     }

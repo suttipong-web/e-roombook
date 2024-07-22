@@ -44,6 +44,7 @@ class booking_rooms extends Model
         'dean_action_date',
         'admin_action_acount',
         'dean_action_acount',
-        'booking_fileurl'
+        'booking_fileurl',
+        'is_read'
     ];
 }
