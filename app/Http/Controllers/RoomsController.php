@@ -22,9 +22,15 @@ class RoomsController extends Controller
             ->select('id', 'placeName')
             ->get();
 
+        //ข้อมูลหนักงาน Select option
+        $sclEmployee = DB::table('tbl_members')
+            ->select('tbl_members.*')
+            ->get();
+
         return view("/admin/room/index")->with([
             'getroomType' => $roomType,
-            'getroomPlace' => $roomPlace
+            'getroomPlace' => $roomPlace,
+            'sclEmployee' => $sclEmployee
         ]);
     }
     // handle fetch all  ajax request
@@ -75,9 +81,9 @@ class RoomsController extends Controller
            
             <td>' . $isOpen . '</td>
             <td  width="120" >
-              <a href="#" id="' . $rows->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi-pencil-square h4"></i></a>
- <a href="#" id="' . $rows->id . '" class="text-success mx-1 editAdminIcon" ><i class="bi bi-person-fill-gear"></i></a>
-              <a href="#" id="' . $rows->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
+              <a href="#" id="' . $rows->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi-pencil-square h5"></i></a>
+ <a href="/admin/room/getAdmin/' . $rows->id . '"  class="text-success mx-1 " ><i class="bi bi-person-fill-gear h5"></i></a>
+              <a href="#" id="' . $rows->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h5"></i></a>
             </td>
           </tr>';
             }
@@ -107,7 +113,7 @@ class RoomsController extends Controller
             'placeId' => $request->placeId,
             'roomDetail' => $request->roomDetail,
             'thumbnail' => $fileName,
-            'room_wh'=>$request->room_wh
+            'room_wh' => $request->room_wh
         ];
         Rooms::create($setData);
         return response()->json([
@@ -127,23 +133,106 @@ class RoomsController extends Controller
         ]);
     }
 
+    public function addAdmin(Request $request)
+    {
+        $setData = [
+            'roomID' => $request->roomID,
+            'cmuitaccount' => $request->cmuitaccount,
+            'phone' => $request->phone,
+
+        ];
+        $result = adminRooom::create($setData);
+        if ($result) {
+            return response()->json([
+                'status' => 200
+            ]);
+        }
+    }
+    
+    public function deleteAdmin(Request $request)
+    {
+        $id = $request->id;
+        $result = adminRooom::find($id);
+        if ($result) {
+            adminRooom::destroy($id);
+        }
+    }
+    
 
     public function editAdmin(Request $request)
     {
         // $id = $request->id;
-        $result = adminRooom::find($request->id);
-        $result2 = json_encode($result);
-        return response()->json([
-            'status' => 200,
-            'dataRoom' => $result2
-        ]);
+        //$result = adminRooom::find($request->roomid);
+        if ($request->roomid) {
+            $sql = " SELECT
+           admin_roooms.*,
+           tbl_members.*,
+           department.dep_name,
+           rooms.roomFullName,
+           rooms.roomTitle
+           FROM
+           admin_roooms
+           INNER JOIN tbl_members ON admin_roooms.cmuitaccount = tbl_members.cmuitaccount
+           left JOIN department ON tbl_members.dep_id = department.dep_id
+           INNER JOIN rooms ON admin_roooms.roomID = rooms.id ";
+            $ListAdmin = DB::select(DB::raw($sql));
+            return response()->json([
+                'status' => 200,
+                'ListAdmin' => $ListAdmin
+            ]);
+        }
     }
-    
 
+    public function pageAdmin(Request $request)
+    {
+        //ข้อมูลหนักงาน Select option
+        $sclEmployee = DB::table('tbl_members')
+            ->select('tbl_members.*')
+            ->get();
+        // $id = $request->id;
+        if ($request->roomID) {
+            $sql = " SELECT
+            admin_roooms.*,
+            tbl_members.*,
+            department.dep_name,
+            rooms.roomFullName,
+            rooms.roomTitle
+            FROM
+            admin_roooms
+            INNER JOIN tbl_members ON admin_roooms.cmuitaccount = tbl_members.cmuitaccount
+            left JOIN department ON tbl_members.dep_id = department.dep_id
+            INNER JOIN rooms ON admin_roooms.roomID = rooms.id 
+            where   admin_roooms.roomID = " . $request->roomID;
+            $ListAdmin = DB::select(DB::raw($sql));
+            return view("admin/room/manageAdmin")->with([
+                'ListAdmin' => $ListAdmin,
+                'sclEmployee' => $sclEmployee
+            ]);
+        }
+    }
 
-
-
-
+    public function fetchAdmin(Request $request)
+    {
+        // $id = $request->id;
+        if ($request->roomID) {
+            $sql = " SELECT
+            admin_roooms.*,
+            tbl_members.*,
+            department.dep_name,
+            rooms.roomFullName,
+            rooms.roomTitle
+            FROM
+            admin_roooms
+            INNER JOIN tbl_members ON admin_roooms.cmuitaccount = tbl_members.cmuitaccount
+            left JOIN department ON tbl_members.dep_id = department.dep_id
+            INNER JOIN rooms ON admin_roooms.roomID = rooms.id 
+            where   admin_roooms.roomID = '{$request->roomID}' ";
+            $ListAdmin = DB::select(DB::raw($sql));
+            return response()->json([
+                'ListAdmin' => $ListAdmin
+            ]);
+        }
+    }
 
     // handle update an  ajax request
     public function update(Request $request)
@@ -175,7 +264,7 @@ class RoomsController extends Controller
             'roomDetail' => $request->roomDetail,
             'thumbnail' => $fileName,
             'is_open' => $RoomOpen,
-            'room_wh'=>$request->room_wh
+            'room_wh' => $request->room_wh
         ];
         $result->update($setData);
         return response()->json([
@@ -209,7 +298,7 @@ class RoomsController extends Controller
                 ->get();
 
             //url CMU Outh 
-            $cmuKey  = DB::table('tbl_apikey')
+            $cmuKey = DB::table('tbl_apikey')
                 ->select('clientID', 'clientSecret', 'redirect_uri')
                 ->where('apiweb', '=', 'cmuoauth')
                 ->first();

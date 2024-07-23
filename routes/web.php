@@ -75,7 +75,11 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
     Route::get('/admin/room/editAdmin', [RoomsController::class, 'editAdmin'])->name('editAdmin');
     Route::get('/admin/room/fetchAdmin', [RoomsController::class, 'fetchAdmin'])->name('fetchAdmin');
-    Route::get('/admin/room/deleteAdmin', [RoomsController::class, 'deleteAdmin'])->name('deleteAdmin');
+    Route::get('/admin/room/getAdmin/{roomID}', [RoomsController::class, 'pageAdmin'])->name('pageAdmin');
+    Route::delete('/admin/room/delete/admin', [RoomsController::class, 'deleteAdmin'])->name('deleteAdmin');
+    
+    Route::get('/admin/room/AddAdminRoom', [RoomsController::class, 'addAdmin'])->name('addAdmin');
+    
 
     Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
 

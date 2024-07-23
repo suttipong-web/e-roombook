@@ -1,14 +1,78 @@
 @extends('admin.main-layout')
 @section('content-header')
 <!-- /.content-header -->
+
 @endsection
 @section('body')
+<style type="text/css">
+    .tdTitle {
+        text-align: right;
+        font-weight: 700;
+        width: 20%;
+    }
+
+    .tddetail {
+        width: 30%;
+        text-align: left;
+    }
+
+    .countText {
+        text-decoration-line: underline;
+        cursor: pointer;
+    }
+
+    .tableListbooking {
+        font-size: 12px;
+    }
+
+    .custom-combobox {
+        position: relative;
+        display: inline-block;
+
+    }
+
+    .custom-combobox-toggle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: -1px;
+        padding: 0;
+    }
+
+    .custom-combobox-input {
+        margin: 0;
+        padding: 5px 10px;
+    }
+
+    .custom-combobox {
+        position: relative;
+        display: inline-block;
+
+    }
+
+    .custom-combobox-toggle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: -1px;
+        padding: 2;
+        background-color: aliceblue;
+
+    }
+
+    .custom-combobox-input {
+        margin: 0;
+        padding: 6px 10px;
+        min-width: 350px;
+        max-width: 95%;
+        border: 1px solid #989595;
+    }
+</style>
 <!-- Main row -->
 <div class="row">
     <div class="container-fluid ">
 
-        {{-- add new employee modal start --}}
-        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             data-bs-backdrop="static" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
@@ -80,7 +144,8 @@
                 </div>
             </div>
         </div>
-        {{-- add new modal end --}}
+
+
 
         {{-- edit modal start --}}
         <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
@@ -212,59 +277,6 @@
         {{-- edit modal end --}}
 
 
-        {{-- edit Admin Room --}}
-        <div class="modal fade" id="editAdminRoomModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog  modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">จัดการผู้ดูแลห้อง</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body  bg-light ">
-                        <div class="row">
-                            <div class="col-3 mt-2">
-                                <label for="Edit_adminfullname1" class="form-label"> 1. ชื่อ นามสกุล
-                                </label>
-                                <input type="text" class="form-control" id="Edit_adminfullname1"
-                                    name="Edit_adminfullname1" required placeholder=" ระบุชื่อ นามสกุลผู้ดูแล " />
-                            </div>
-                            <div class="col-3 mt-2">
-                                <label for="Edit_adminEmail1" class="form-label">Email </label>
-                                <input type="email" class="form-control" id="Edit_adminEmail1" name="Edit_adminEmail1"
-                                    required placeholder=" ระบุ Email นามสกุลผู้ดูแล" />
-                            </div>
-                            <div class="col-3 mt-2">
-                                <label for="Edit_adminPhone1" class="form-label">เบอร์โทร</label>
-                                <input type="text" class="form-control" id="Edit_adminPhone1" name="Edit_adminPhone1"
-                                    required placeholder=" ระบุชื่อ นามสกุลผู้" />
-                            </div>
-                            <div class="col-3 mt-2">
-                                +
-                            </div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                             
-                            </tbody>
-
-                        </table>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="row ">
             <div class="col-lg-12">
                 <div class="card shadow">
@@ -321,42 +333,7 @@
             });
         });
 
-        // if click edit  /  ajax request
-        $(document).on('click', '.editAdminIcon', function (e) {
-            e.preventDefault();
-            let id = $(this).attr('id');
-            $.ajax({
-                url: "{{ url('/admin/room/editAdmin') }}",
-                method: 'get',
-                data: {
-                    id: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response);
-                }
-            });
-            $('#editAdminRoomModal').modal("show");
-        });
-
-        function getAdminRoom (){
-            $.ajax({
-                url: "{{ url('/admin/room/fetchAdmin') }} ",
-                method: 'get',
-                data: {
-                    roomid: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                   console.log(response);                   
-                }
-            });
-        }
-
-
-
-
+     
         // if click edit  /  ajax request
         $(document).on('click', '.editIcon', function (e) {
             e.preventDefault();
@@ -514,4 +491,7 @@
 
     });
 </script>
+
+<script type="text/javascript" src="/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/slccombobox.js"></script>
 @endsection
