@@ -16,6 +16,7 @@ class BookingController extends Controller
     //
     public function index()
     {
+        $class = new HelperService();
 
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
@@ -34,6 +35,7 @@ class BookingController extends Controller
         $roomType = DB::table('room_type')
             ->select('id', 'roomtypeName')
             ->get();
+
 
         // Load index  view and  data room        
         return view('/bookingroom/index')->with(
@@ -323,6 +325,24 @@ class BookingController extends Controller
 
             $result = booking_rooms::create($setDataBooking);
             if ($result) {
+                $roomData = Rooms::find($request->roomID);
+                // ส่ง LINE                  
+                $bookingRoom = $roomData->roomFullName;
+                $ิbooker = $request->booking_booker;
+                $msgLine = "มีรายการใหม่!%0A";
+                $msgLine .= "จากคุณ" . $ิbooker . "%0A";
+                $msgLine .= "ห้องที่ขอใช้:" . $bookingRoom . "%0A";
+                $msgLine .= "ตรวจสอบข้อมูลได้ที่ E-roombook";
+
+                // get Token  Admin 
+                $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 2);
+                if ($tokenUSer) {
+                    // lop หากมี Admin หลายคน                
+                    foreach ($tokenUSer as $admins) {
+                        $class->sendMessageTOline($admins->lineToken, $msgLine);
+                    }
+                }
+
                 return response()->json([
                     'status' => 200,
                     'searchRoomID' => $request->roomID,

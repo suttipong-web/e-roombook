@@ -26,8 +26,8 @@ return new class extends Migration
             $table->boolean('is_open')->default(true);
             $table->boolean('is_status')->default(false);   
             $table->integer('room_price')->default(0);  
-            $table->string('room_wh')->nullable();      
-               
+            $table->string('room_wh')->nullable();    
+            $table->string('room_itemlist')->nullable();      
             $table->timestamps();
         });
     }

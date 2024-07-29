@@ -34,8 +34,12 @@ class User extends Authenticatable
         'isDean',
         'dep_id',
         'last_activity',
-        'user_type_id',
-        'dep_id'
+        'typeposition_id',
+        'dep_id',
+        'lineToken',
+        'is_step_secretary',
+        'is_step_dean',
+        'is_step_eng'
 
     ];
 

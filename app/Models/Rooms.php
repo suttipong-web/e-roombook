@@ -21,6 +21,7 @@ class Rooms extends Model
         'is_status',
         'room_admin_email',
         'room_price',
-        'room_wh'
+        'room_wh' ,
+        'room_itemlist'
     ];
 }

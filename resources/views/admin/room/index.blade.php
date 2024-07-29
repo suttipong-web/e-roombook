@@ -1,7 +1,6 @@
 @extends('admin.main-layout')
 @section('content-header')
 <!-- /.content-header -->
-
 @endsection
 @section('body')
 <style type="text/css">
@@ -71,15 +70,14 @@
 <!-- Main row -->
 <div class="row">
     <div class="container-fluid ">
-
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             data-bs-backdrop="static" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title"> <i class="bi bi-plus-circle-fill"></i> เพิ่มข้อมูลใหม่ </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="tr ue">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body  bg-light">
@@ -106,28 +104,46 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="roomFullName" class="form-label">ชื่อห้อง</label>
                                 <input type="text" class="form-control" id="roomFullName" name="roomFullName" required
                                     placeholder=" ระบุชื่อห้อง | ห้องประชุม 3 ชั้น 7 " />
                             </div>
-                            <div class="col-md-6">
-                                <label for="roomTitle" class="form-label">ชื่อย่อ</label>
-                                <input type="text" class="form-control" id="roomTitle" name="roomTitle"
-                                    placeholder="ห้อง วสท. (*ถ้ามี)" />
-                            </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-3">
                                 <label for="roomSize" class="form-label">ขนาดห้อง</label>
                                 <input type="text" class="form-control" id="roomSize" name="roomSize"
                                     placeholder=" 20 ที่นั่ง " />
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="room_wh" class="form-label">ขนาดห้อง(ตรม.)</label>
+                                <input type="text" class="form-control" id="room_wh" name="room_wh"
+                                    placeholder=" กว้าง*ยาว" />
                             </div>
                             <div class="col-12">
                                 <label for="roomDetail" class="form-label">รายละเอียด/หมายเหตุ </label>
                                 <textarea class="form-control" placeholder="ระบุรายละเอียด ของห้อง " id="roomDetail"
                                     name="roomDetail"></textarea>
                             </div>
-                            <div class="col-12">
-                                <label for="avatar" class="form-label">ตัวอย่างห้อง</label>
+
+                                <div class="col-6 mt-2">
+                                    <strong>อุุปกรณ์เสริมภายในห้อง</strong>
+                                    <hr />
+                                    <div class="col-12 mt-2">
+                                        @foreach ($roomItemList as $item)                                     
+                                        <div class="col-md-6 mt-2">
+                                                <input class="form-check-input room_itemlist" type="checkbox" id="roomItem{{$item->id}}"
+                                                    value="{{$item->id}}" name="room_itemlist[]">
+                                                <label class="form-check-label"
+                                                    for="roomItem{{$item->id}}">{{$item->item_name}}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            <div class="col-6">
+                                <label for="avatar" class="form-label">รูปตัวอย่างห้อง</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="avatar" name="avatar">
                                     <label class="custom-file-label" for="avatar">Choose file</label>
@@ -159,13 +175,13 @@
                         </button>
                     </div>
                     <div class="modal-body  bg-light ">
-                        <form action="#" method="POST" id="edit_form" enctype="multipart/form-data"
+                        <form action="/admin/room/update" method="POST" id="edit_form" enctype="multipart/form-data"
                             class="row g-3 w-100 m-auto">
 
                             @csrf
                             <input type="hidden" name="room_id" id="Edit_id">
                             <input type="hidden" name="Edit_thumbnail" id="Edit_thumbnail">
-
+                            <input type="hidden" name="Edit_roomTitle" id="Edit_roomTitle">
                             <div class="row col-12 ">
                                 <div class="col-12 mt-2">
                                     <b>สถานะห้อง ( ปิดให้บริการ | เปิดบริการ)</b>
@@ -177,7 +193,7 @@
                                     </div>
                                     <hr />
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6 mb-2">
                                     <label for="roomTypeId" class="form-label">ประเภทห้อง</label>
                                     <select id="Edit_roomTypeId" class="form-control" name="roomTypeId">
                                         <option value="0">--- เลือก --- </option>
@@ -188,7 +204,7 @@
 
                                     </select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6 mb-2">
                                     <label for="placeId" class="form-label">สถานที่/อาคาร </label>
                                     <select id="Edit_placeId" class="form-control" name="placeId">
                                         <option value="0">--- เลือก --- </option>
@@ -199,54 +215,42 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6 mb-2">
                                     <label for="roomFullName" class="form-label">ชื่อห้อง</label>
                                     <input type="text" class="form-control" id="Edit_roomFullName" name="roomFullName"
                                         required placeholder=" ระบุชื่อห้อง | ห้องประชุม 3 ชั้น 7 " />
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="roomTitle" class="form-label">ชื่อย่อ</label>
-                                    <input type="text" class="form-control" id="Edit_roomTitle" name="roomTitle"
-                                        placeholder="ห้อง วสท. (*ถ้ามี)" />
-                                </div>
-                                <div class="col-md-3">
+
+                                <div class="col-md-3 mb-2">
                                     <label for="roomSize" class="form-label">จำนวนที่นั่ง</label>
                                     <input type="text" class="form-control" id="Edit_roomSize" name="roomSize"
                                         placeholder=" 20 ที่นั่ง " />
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="room_wh" class="form-label">ขนาดห้อง</label>
+                                    <label for="room_wh" class="form-label">ขนาดห้อง(ตรม.)</label>
                                     <input type="text" class="form-control" id="Edit_room_wh" name="room_wh"
-                                        placeholder=" 20 ที่นั่ง " />
+                                        placeholder=" กว้าง*ยาว" />
                                 </div>
                                 <div class="col-12">
-                                    <label for="roomDetail" class="form-label">รายละเอียด/หมายเหตุ </label>
+                                    <label for="roomDetail" class="form-label"> รายละเอียด/หมายเหตุ </label>
                                     <textarea class="form-control" placeholder="ระบุรายละเอียด ของห้อง "
                                         id="Edit_roomDetail" name="roomDetail"></textarea>
                                 </div>
 
-                                <!--<div class="col-6 mt-2">
-                                    <strong>ระบุผู้ดูแลประจำห้อง</strong>
+                                <div class="col-6 mt-2">
+                                    <strong>อุุปกรณ์เสริมภายในห้อง</strong>
                                     <hr />
                                     <div class="col-12 mt-2">
-                                        <label for="Edit_adminfullname1" class="form-label"> 1. ชื่อ นามสกุล
-                                           </label>
-                                        <input type="text" class="form-control" id="Edit_adminfullname1"
-                                            name="Edit_adminfullname1" required
-                                            placeholder=" ระบุชื่อ นามสกุลผู้ดูแล " />
+                                        @foreach ($roomItemList as $item)                                     
+                                        <div class="col-md-6 mt-2">
+                                                <input class="form-check-input room_itemlist" type="checkbox" id="EditroomItem{{$item->id}}"
+                                                    value="{{$item->id}}" name="room_itemlist[]">
+                                                <label class="form-check-label"
+                                                    for="EditroomItem{{$item->id}}">{{$item->item_name}}</label>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <label for="Edit_adminEmail1" class="form-label">Email </label>
-                                        <input type="email" class="form-control" id="Edit_adminEmail1"
-                                            name="Edit_adminEmail1" required placeholder=" ระบุ Email นามสกุลผู้ดูแล" />
-                                    </div>
-                                    <div class="col-12 mt-2">
-                                        <label for="Edit_adminPhone1" class="form-label">เบอร์โทร</label>
-                                        <input type="text" class="form-control" id="Edit_adminPhone1"
-                                            name="Edit_adminPhone1" required placeholder=" ระบุชื่อ นามสกุลผู้" />
-                                    </div>
-                                    
-                                </div>-->
+                                </div>
 
                                 <div class="col-6 mt-2">
                                     <div class="mt-2">
@@ -333,7 +337,7 @@
             });
         });
 
-     
+
         // if click edit  /  ajax request
         $(document).on('click', '.editIcon', function (e) {
             e.preventDefault();
@@ -347,6 +351,7 @@
                 },
                 dataType: 'json',
                 success: function (response) {
+
                     var obj = JSON.parse(response.dataRoom);
                     var isThumbnail = "";
                     var isRoomOpen = '0'
@@ -369,10 +374,23 @@
                         //  สถานที
                         else if (key == 'placeId') {
                             ISplaceId = value;
-                        } else {
+                        } else if(key == 'room_itemlist') {
+                            $('input[type="checkbox"].room_itemlist').prop('checked', false);
+                            if ($.trim(value) !== "") {
+                                var selectedValues = value.split(','); // ["1", "2", "3"]
+                            // ใช้ $.each() เพื่อวนลูปผ่านอาร์เรย์และตั้งค่า checkbox ที่มีค่าในอาร์เรย์นั้น
+                                $.each(selectedValues, function(index, vals) {
+                                    $('input[name="room_itemlist[]"][value="' + vals + '"]').prop('checked', true);
+                                });
+                            }
+                            
+                        }else {
                             $InputID = '#Edit_' + key;
                             $($InputID).val(value);
-                        }
+                        }                  
+                        
+                        
+
                     });
 
 
@@ -420,6 +438,7 @@
                 processData: false,
                 dataType: 'json',
                 success: function (response) {
+                    console.log(response);
                     if (response.status == 200) {
                         Swal.fire(
                             'Updated!',

@@ -23,7 +23,7 @@ class HelperService
         $month = $thai_months[$date->month];
         $year = $date->year + 543;
         if ($addtime) {
-             $setdate = $date->format("j $month $year $istime");
+            $setdate = $date->format("j $month $year $istime");
         } else {
             $setdate = $date->format("j $month $year");
         }
@@ -35,37 +35,61 @@ class HelperService
             ->where('action_en', '=', $status)
             ->select('action_th')
             ->first();
-        return   $result->action_th;
+        return $result->action_th;
     }
 
     public static function getAllDayName()
     {
         $thai_day_arr = array("อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์");
-        return   $thai_day_arr;
+        return $thai_day_arr;
     }
     public static function getAllDayNameEN($key)
     {
         //$day_arr = array("จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์","อาทิตย์");
         $kDayKey = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-        return   $kDayKey[$key];
+        return $kDayKey[$key];
     }
     public static function getALlTimes()
     {
         $time_day_arr = array(
-            '08:00', '08:00', '08:30', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00'
+            '08:00',
+            '08:00',
+            '08:30',
+            '09:30',
+            '10:00',
+            '10:30',
+            '11:00',
+            '11:30',
+            '12:00',
+            '12:30',
+            '13:00',
+            '13:30',
+            '14:00',
+            '14:30',
+            '15:00',
+            '15:30',
+            '16:00',
+            '16:30',
+            '17:00',
+            '17:30',
+            '18:00',
+            '18:30',
+            '19:00',
+            '19:30',
+            '20:00'
         );
 
-        return   $time_day_arr;
+        return $time_day_arr;
     }
-    public  function getFullNameCmuAcount($email)
+    public function getFullNameCmuAcount($email)
     {
-        $result =  User::where('email', $email)->first();
-        $fullNames =  $result->prename_TH . "" . $result->firstname_TH . " " . $result->lastname_TH;
-        return  $fullNames;
+        $result = User::where('email', $email)->first();
+        $fullNames = $result->prename_TH . "" . $result->firstname_TH . " " . $result->lastname_TH;
+        return $fullNames;
     }
 
-    public function  getListDay($days)
+    public function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();
 
@@ -75,7 +99,7 @@ class HelperService
             $temp = explode(",", $list->dayList);
         }
 
-        $result =  $list;
+        $result = $list;
     }
 
     public function getduration($datetime1, $datetime2)
@@ -119,18 +143,60 @@ class HelperService
     {
         //15/07/2024
         $temp = explode('/', $dates);
-        $result =  $temp[2] . '-' . $temp[1] . '-' . $temp[0];
-        return  $result;
+        $result = $temp[2] . '-' . $temp[1] . '-' . $temp[0];
+        return $result;
     }
 
     public function geturlCMUOauth($state)
     {
-        $cmuKey  = DB::table('tbl_apikey')
+        $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
 
         $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=booking-' . $state;
         return $signwithCmu;
+    }
+
+    // ฟังก์ชันสำหรับการส่งข้อความ
+    function sendMessageTOline($access_token, $message)
+    {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://notify-api.line.me/api/notify',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS => 'message=' . $message . '',
+              CURLOPT_HTTPHEADER => array(
+                 'Authorization: Bearer ' . $access_token . '',
+                 'Content-Type: application/x-www-form-urlencoded'
+              ),
+            ));    
+            $response = curl_exec($curl);
+            curl_close($curl);
+        return $response;
+    }
+    public function getlineTokenAdminRoom($roomID,$typeAdmin){
+        
+        $sql = " 
+        SELECT
+            admin_roooms.adminroom_type_id,
+            admin_roooms.cmuitaccount,
+            users.lineToken
+            FROM
+            admin_roooms
+            INNER JOIN users ON admin_roooms.cmuitaccount = users.email
+            WHERE
+            admin_roooms.roomID ='{$roomID}' AND
+            admin_roooms.adminroom_type_id = '{$typeAdmin}'
+        ";
+        $ListAdmin = DB::select(DB::raw($sql));
+        return   $ListAdmin ;
+
     }
 }

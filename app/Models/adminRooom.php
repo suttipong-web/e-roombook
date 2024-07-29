@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class adminRooom extends Model
 {
     use HasFactory;
-    
     protected $fillable = [
         'cmuitaccount',
         'roomID',
         'phone',
-        'lineToken'     
+        'adminroom_type_id'
     ];
 }

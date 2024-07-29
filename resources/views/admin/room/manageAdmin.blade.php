@@ -63,7 +63,7 @@
     .custom-combobox-input {
         margin: 0;
         padding: 6px 10px;
-        min-width: 350px;
+        min-width: 300px;
         max-width: 95%;
         border: 1px solid #989595;
     }
@@ -74,9 +74,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="card w-100">
-            <h5 class="card-header mRoomtitle">รายชื่อผู้ดูแลประจำห้อง : {{$ListAdmin[0]->roomFullName}}</h5>
+            <h5 class="card-header mRoomtitle">รายชื่อผู้ดูแลประจำห้อง : {{$roomData->roomFullName}}</h5>
             <div class="card-body">
-                <input type="hidden" id="hinden_roomID" value="{{$ListAdmin[0]->roomID}}">
+                <input type="hidden" id="hinden_roomID" value="{{$roomData->id}}">
 
                 <div class="row  mb-2 p-3 justify-content-center">
                     <div class="col-4 ">
@@ -89,17 +89,24 @@
                                 @if (!empty($rows->firstname_TH))
                                     {{ $fullname = $rows->firstname_TH . ' ' . $rows->lastname_TH}}
                                 @endif
-                                <option value="{{$rows->cmuitaccount}}">{{$fullname}}</option>
+                                <option value="{{$rows->email}}">{{$fullname}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3 ml-2">
+                    <div class="col-2 ml-2">
                         <label for="Edit_adminPhone1" class="form-label">เบอร์โทร</label>
                         <input type="text" class="form-control" id="adminPhone" name="adminPhone" required
                             placeholder=" เบอร์โทรติดต่อ " />
                     </div>
+                    <div class="form-group col-md-3 ml-2">
+                        <label for="adminroom_type_id">ประเภท</label>
+                        <select id="adminroom_type_id" class="form-control" name="adminroom_type_id">
+                            <option value="1">เจ้าหน้าที่ผู้ดูแลประจำห้อง</option>
+                            <option value="2">Admin ความคุมการอนุมัติ</option>
+                        </select>
+                    </div>
 
-                    <div class="col-3 mt-2">
+                    <div class="col-2 mt-2">
                         <br />
                         <button class="btn btn-light btnAddAdmin"> <i class="bi bi-plus-circle-fill h4"></i>
                         </button>
@@ -114,7 +121,7 @@
                                 <th align="center" class="text-center" style="width: 80px;">#</th>
                                 <th align="center" class="text-center" style="width: 40%;">ชื่อผู้ดูแล</th>
                                 <th align="center" class="text-center">เบอร์โทร</th>
-                                <th align="center" class="text-center">สังกัด/หน่วยงาน</th>
+                                <th align="center" class="text-center">ประเภท</th>
                                 <th align="center" class="text-center">จัดการ</th>
                             </tr>
                         </thead>
@@ -153,6 +160,7 @@
                     cmuitaccount: $("#assigncmuitaccount").val(),
                     roomID: $("#hinden_roomID").val(),
                     phone: $("#adminPhone").val(),
+                    lineToken: $("#lineToken").val(),
                     _token: '{{ csrf_token() }}'
                 }, success: function (response) {
                     console.log(response);
@@ -170,49 +178,8 @@
             });
         });
 
-        // if click edit  /  ajax request
-        $(document).on('click', '.editAdminIcon', function (e) {
-            e.preventDefault();
-            let id = $(this).attr('id');
-            console.log('roomID=>' + id);
-            $.ajax({
-                url: "{{ url('/admin/room/editAdmin') }}",
-                method: 'get',
-                data: {
-                    roomid: id,
-                    _token: '{{ csrf_token() }}'
-                },
-                dataType: 'json',
-                success: function (response) {
-                    console.log(response);
-                    var tr = "<tr>";
-                    var prename = "";
-                    var l = 0;
-                    var roomTitle = "";
-                    $.each(response.ListAdmin, function (i, element) {
-                        l++;
-                        prename = (element.typeposition_id == 1) ? element.position_work : element.prename_TH
-                        tr += "<td>" + l + "</td>";
-                        tr += "<td>" + prename + ' ' + element.firstname_TH + ' ' + element.lastname_TH + "</td>";
-                        tr += "<td>" + element.phone + "</td>";
-                        tr += "<td>" + element.dep_name + "</td>";
-                        tr += '<td align="center" class="text-center">';
-                        tr += '<a href="#" id="' + element.id + '" class="text-success mx-1 editAdmin"><i class="bi-pencil-square h5"></i></a>';
-                        tr += '<a href="#" id="' + element.id + '"  class="text-danger mx-1 deleteAdmin"><i class="bi-trash h5"></i></a></td>';
-                        tr += "</tr>";
-                        roomTitle = element.roomFullName;
-                    });
-                    $('.mRoomtitle').html('ผู้ดูแลประจำห้อง' + roomTitle);
-                    $('#hinden_roomID').val(id);
-                    $('.Trresponse').html(tr);
-                }
-            });
-            $('#editAdminRoomModal').modal("show");
-        });
-
-        
-         // Delete  ajax request
-         $(document).on('click', '.deleteAdmin', function (e) {
+        // Delete  ajax request
+        $(document).on('click', '.deleteAdmin', function (e) {
             e.preventDefault();
             let id = $(this).attr('id');
             let csrf = '{{ csrf_token() }}';
@@ -240,7 +207,7 @@
                                 'Your file has been deleted.',
                                 'success'
                             ).then((result) => {
-                                getAdminRoom() 
+                                getAdminRoom()
                             });
                         }
                     });
@@ -264,13 +231,13 @@
                     var l = 0;
                     $.each(response.ListAdmin, function (i, element) {
                         l++;
-                        prename = (element.typeposition_id == 1) ? element.position_work : element.prename_TH
+                        prename = (element.typeposition_id == 1) ? element.positionName : element.prename_TH
                         tr += "<td>" + l + "</td>";
                         tr += "<td>" + prename + ' ' + element.firstname_TH + ' ' + element.lastname_TH + "</td>";
                         tr += "<td>" + element.phone + "</td>";
-                        tr += "<td>" + element.dep_name + "</td>";
-                        tr += '<td>';
-                        tr += '<a href="#" id="' + element.id + '" class="text-success mx-1 editAdmin"><i class="bi-pencil-square h5"></i></a>';
+                        tr += "<td>" + element.type_name + "</td>";                    
+                        tr += '<td align="center">';
+                        /*tr += '<a href="#" id="' + element.id + '" class="text-success mx-1 editAdmin"><i class="bi-pencil-square h5"></i></a>';*/
                         tr += '<a href="#" id="' + element.id + '"  class="text-danger mx-1 deleteAdmin"><i class="bi-trash h5"></i></a></td>';
                         tr += "</tr>";
                     });

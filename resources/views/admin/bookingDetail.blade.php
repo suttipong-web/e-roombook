@@ -89,98 +89,252 @@
             @endif                 
             
             ">
-                รายละเอียดการขอใช้ห้อง
+                <h3>รายละเอียดการขอใช้ห้อง</h3>
             </div>
             <div class="card-body">
+
+                <input type="hidden" id="hinden_bookingID" name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
+                <input type="hidden" id="adminAccount" name="adminAccount" value="{{ Session::get('cmuitaccount') }}">
+                <div class="col-md-12 ">
+                    <div class="table-responsive">
+                        <table class="table text text-start table-light  table-hover ">
+                            <tbody>
+                                <tr>
+                                    <td class="tdTitle"> ห้อง </td>
+                                    <td class="text-start  fw-bold text-danger tddetail">
+                                        <span id="roomFullName">
+                                            {{ $detailBooking[0]->roomFullName }}
+                                        </span>
+                                    </td>
+                                    <td class="tdTitle">วันที่/เวลา</td>
+                                    <td class="text-start fw-bold text-danger tddetail">
+                                        <span id="booking_date">
+                                            {{ $detailBooking[0]->schedule_startdate }} -
+                                            {{ $detailBooking[0]->schedule_enddate }}
+                                        </span>
+                                        <br />
+                                        <span id="booking_time" class=" ml-2">
+                                            {{ $detailBooking[0]->booking_time_start }} -
+                                            {{ $detailBooking[0]->booking_time_finish }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdTitle"> เรื่องที่ขอใช้ </td>
+                                    <td class="text-start ">
+                                        <span id="booking_subject">
+                                            {{ $detailBooking[0]->booking_subject }}
+                                        </span>
+                                    </td>
+                                    <td class="tdTitle"> ประเภทผู้ขอใช้ </td>
+                                    </td>
+                                    <td class="text-start tddetail">
+                                        @if ($detailBooking[0]->booking_type == "general")
+                                            บุคคลภายนอก
+                                        @else
+                                            บุคคลภายใน
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdTitle">ผู้จอง / หน่วยงาน</td>
+                                    <td class="text-start tddetail">
+                                        <span id="booking_booker">
+                                            {{ $detailBooking[0]->booking_booker }}
+                                        </span>
+                                    </td>
+                                    <td class="tdTitle">จำนวนคน </td>
+                                    <td class="text-start tddetail">
+                                        <span id="booking_ofPeople">
+                                            {{ $detailBooking[0]->booking_ofPeople }}</span> คน
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdTitle">เบอร์โทรติดต่อ</td>
+                                    <td class="text-start tddetail">
+                                        <span id="booking_phone">
+                                            {{ $detailBooking[0]->booking_phone }}</span>
+                                        </span>
+                                    </td>
+                                    <td class="tdTitle">Email</td>
+                                    <td class="text-start">
+                                        <span id="booking_email">
+                                            {{ $detailBooking[0]->booking_email }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tdTitle">หมายเหตุ</td>
+                                    <td class="text-start" colspan="3">
+                                        <span id="description">
+                                            {{ $detailBooking[0]->description }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                @if (!empty($detailBooking[0]->booking_fileurl))
+                                    <tr>
+                                        <td class="tdTitle"> ไฟล์แนบ </td>
+                                        <td class="text-start" colspan="3">
+                                            <a href="/storage/upload/{{ $detailBooking[0]->booking_fileurl }} "
+                                                target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+                @if ($getStatus == 'approved' || $getStatus == 'Newinbox')
+
+                    <div class="card w-100 mt-5 ">
+                        <div class="card-header  bg-light">
+                            <h5> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="payment_form" class="row g-3 m-auto" method="post" action="#"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="col-12">
+                                    <h5>ข้อมูลที่ใช้ออกใบเสร็จรับเงิน</h5>
+                                    <hr>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="cust_address">กำหนดราคา</label>
+                                            <input type="number" style="padding: 7px;" placeholder="ระบุราคา"  name="cost"></input>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="cust_name">ชื่อที่แสดงในใบเสร็จรับเงิน</label>
+                                            <input type="text" class="form-control" id="cust_name" neme="cust_name"
+                                                placeholder="ระบุชื่อนามสกุล/ชื่อหน่วยงาน">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="cust_tax">เลขประจำตัวประชาชน/เลขผู้เสียภาษี</label>
+                                            <input type="text" class="form-control" id="cust_tax" name="cust_tax"
+                                                placeholder="เลขประจำตัวประชาชน/เลขผู้เสียภาษี">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="cust_email">Email</label>
+                                            <input type="email" class="form-control" id="cust_email" name="cust_email"
+                                                placeholder="ระบุ Email ที่ใช้รับใบเสร็จรับเงิน">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="cust_address">ที่อยู่</label>
+                                            <input type="text" class="form-control" id="cust_address"
+                                                placeholder=" ที่อยู่ ">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="cust_address">รายละเอียดรายการใบเสร็จรับเงิน</label>
+                                            <input type="text" class="form-control" id="cust_detail_receipt"  name="cust_detail_receipt"
+                                                placeholder=" รายละเอียดรายการใบเสร็จรับเงิน ">
+                                        </div>
+                                        
+
+                                    </div>
+                                    
+
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="number" style="padding: 7px;"
+                                                        placeholder="ระบุราคา"></input></td>
+                                                <td class="">></td>
+                                            </tr>
+                                            <tr>
+                                                <td>ชื่อที่แสดงในใบเสร็จรับเงิน</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>เลขประจำตัวประชาชน/ประจำตัวผู้เสียภาษี</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Address (ที่อยู่) </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>รายละเอียดรายการใบเสร็จรับเงิน </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card w-100 mt-5 ">
+                        <div class="card-header  bg-light">
+                            <h5>กำหนดผู้ปฏิบัติงาน</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-12">
+
+                                <div class="justify-content-center  w-75 ">
+                                    <div class=" d-flex ">
+                                        <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
+                                        <div class="ml-3 mr-3" style="width: 380px;">
+                                            <select class=" slcCombobox" name="assignCmu" id="assignEmp">
+                                                <option value="">--- เลือก --</option>
+                                                @foreach ($sclEmployee as $rows)
+                                                    @if (!empty($rows->firstname_TH))
+                                                        {{ $fullname = $rows->firstname_TH . ' ' . $rows->lastname_TH}}
+                                                    @endif
+                                                    <option value="{{$rows->cmuitaccount}}">{{$fullname}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="text-start ml- " align="left">
+                                            <button type="button" class="btn btn-secondary btnAddEmp ">
+                                                <i class="bi bi-plus-circle-fill"></i> เพิ่ม
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dispaly_listAssign mt-5">
+
+                                    <table class="table table-sm " id="empbyEach">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>ขื่อ นามสกุล</th>
+                                                <th>หน่วยงาน</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="Trresponse">
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <form id="approve_booking_form" class="row g-3 m-auto" method="post" action="#"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" id="hinden_bookingID" name="hinden_bookingID"
-                        value="{{ $detailBooking[0]->id }}">
-                    <input type="hidden" id="adminAccount" name="adminAccount"
-                        value="{{ Session::get('cmuitaccount') }}">
-                    <div class="col-md-12 ">
-                        <div class="table-responsive">
-                            <table class="table text text-start table-light  table-hover ">
-                                <tbody>
-                                    <tr>
-                                        <td class="tdTitle"> ห้อง </td>
-                                        <td class="text-start  fw-bold text-danger tddetail">
-                                            <span id="roomFullName">
-                                                {{ $detailBooking[0]->roomFullName }}
-                                            </span>
-                                        </td>
-                                        <td class="tdTitle">วันที่/เวลา</td>
-                                        <td class="text-start fw-bold text-danger tddetail">
-                                            <span id="booking_date">
-                                                {{ $detailBooking[0]->schedule_startdate }} -
-                                                {{ $detailBooking[0]->schedule_enddate }}
-                                            </span>
-                                            <br />
-                                            <span id="booking_time" class=" ml-2">
-                                                {{ $detailBooking[0]->booking_time_start }} -
-                                                {{ $detailBooking[0]->booking_time_finish }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tdTitle"> เรื่องที่ขอใช้ </td>
-                                        <td class="text-start " colspan="3">
-                                            <span id="booking_subject">
-                                                {{ $detailBooking[0]->booking_subject }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tdTitle">ผู้จอง / หน่วยงาน</td>
-                                        <td class="text-start tddetail">
-                                            <span id="booking_booker">
-                                                {{ $detailBooking[0]->booking_booker }}
-                                            </span>
-                                        </td>
-                                        <td class="tdTitle">จำนวนคน </td>
-                                        <td class="text-start tddetail">
-                                            <span id="booking_ofPeople">
-                                                {{ $detailBooking[0]->booking_ofPeople }}</span> คน
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tdTitle">เบอร์โทรติดต่อ</td>
-                                        <td class="text-start tddetail">
-                                            <span id="booking_phone">
-                                                {{ $detailBooking[0]->booking_phone }}</span>
-                                            </span>
-                                        </td>
-                                        <td class="tdTitle">Email</td>
-                                        <td class="text-start">
-                                            <span id="booking_email">
-                                                {{ $detailBooking[0]->booking_email }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="tdTitle">หมายเหตุ</td>
-                                        <td class="text-start" colspan="3">
-                                            <span id="description">
-                                                {{ $detailBooking[0]->description }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    @if (!empty($detailBooking[0]->booking_fileurl))
-                                        <tr>
-                                            <td class="tdTitle"> ไฟล์แนบ </td>
-                                            <td class="text-start" colspan="3">
-                                                <a href="/storage/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                    target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class=" col-md-12 p-2">
-                        <div class="" style="width: 80%;margin: 5px auto;">
+                    <div class=" col-md-12 p-2 mt-3">
+                        <div class="" style="width: 80%;margin: 10px auto;">
                             @if ($getStatus == 'Newinbox')
                                 <div
                                     class="text-center justify-content-center   p-3 border border-danger bg-light bg-opacity-10 m-auto fw-bold">
@@ -198,7 +352,8 @@
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="chkStatus" id="action3"
                                                 value="ForwardDean" />
-                                            <label class="form-check-label" for="action3"> ส่งต่อผู้บริหาร </label>
+                                            <label class="form-check-label" for="action3"> ส่งต่อผู้บริหาร
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="p-2 text-left">
@@ -213,6 +368,8 @@
                                     <button type="submit" id="btnActionssubmit" class="btn btn-primary mx-3">
                                         ดำเนินการ
                                     </button>
+
+
                                 </div>
                             @elseif ($getStatus == 'ForwardDean')
                                 <div class="alert alert-info d-flex- align-items-center text-center" role="alert">
@@ -261,65 +418,16 @@
                             @endif
                         </div>
                     </div>
+
                 </form>
+                <div class="text-center m-3"><a
+                        href="/print/form/booking/{{$detailBooking[0]->id}}/{{$detailBooking[0]->bookingToken}}"
+                        class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
+                        พิมพ์แบบฟอร์มการขอใช้ห้อง </a>
+                </div>
             </div>
         </div>
-        @if ($getStatus == 'approved')
-            <div class="card w-100 mt-5 ">
-                <div class="card-header text-white bg-success">
-                    กำหนดผู้ปฏิบัติงาน
-                </div>
-                <div class="card-body">
-                    <div class="col-12">
 
-                        <div class="justify-content-center  w-75 ">
-                            <div class=" d-flex ">
-                                <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
-                                <div class="ml-3 mr-3" style="width: 380px;">
-                                    <select class=" slcCombobox" name="assignCmu" id="assignEmp">
-                                        <option value="">--- เลือก --</option>
-                                        @foreach ($sclEmployee as $rows)
-                                            @if (!empty($rows->firstname_TH))
-                                                {{ $fullname = $rows->firstname_TH . ' ' . $rows->lastname_TH}}
-                                            @endif
-                                            <option value="{{$rows->cmuitaccount}}">{{$fullname}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="text-start ml- " align="left">
-                                    <button type="button" class="btn btn-secondary btnAddEmp ">
-                                        <i class="bi bi-plus-circle-fill"></i> เพิ่ม
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dispaly_listAssign mt-5">
-
-                            <table class="table table-sm " id="empbyEach">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>ขื่อ นามสกุล</th>
-                                        <th>หน่วยงาน</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="Trresponse">
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <br />
-                        <div class="text-center m-5"><a
-                                href="/print/form/booking/{{$detailBooking[0]->id}}/{{$detailBooking[0]->bookingToken}}"
-                                class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
-                                พิมพ์แบบฟอร์มการขอใช้ห้อง </a> </div>
-                    </div>
-                </div>
-            </div>
-        @endif
     </div>
 </div>
 @endsection
@@ -349,7 +457,10 @@
                             text: response.message,
                             icon: 'success'
                         }).then((result) => {
+
                             getAssign();
+                            (".custom-combobox-input").val('');
+                            $("#assignEmp").val("0").change();
                         });
                     }
                 }

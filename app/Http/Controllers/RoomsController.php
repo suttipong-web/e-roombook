@@ -8,6 +8,7 @@ use App\Models\Rooms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RoomsController extends Controller
 {
@@ -22,20 +23,26 @@ class RoomsController extends Controller
             ->select('id', 'placeName')
             ->get();
 
-        //ข้อมูลหนักงาน Select option
-        $sclEmployee = DB::table('tbl_members')
-            ->select('tbl_members.*')
+        // room Accessories    
+        $roomItems = DB::table('room_items')
+            ->select('id', 'item_name')
             ->get();
 
+        //ข้อมูลหนักงาน Select option
+        $sclEmployee = DB::table('users')
+            ->select('users.*')
+            ->get();
         return view("/admin/room/index")->with([
             'getroomType' => $roomType,
             'getroomPlace' => $roomPlace,
-            'sclEmployee' => $sclEmployee
+            'sclEmployee' => $sclEmployee,
+            'roomItemList' => $roomItems
         ]);
     }
     // handle fetch all  ajax request
     public function fetchAll()
     {
+
 
         $rowsRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
@@ -54,21 +61,18 @@ class RoomsController extends Controller
             <th>ห้อง</th>
               <th>ประเภท</th>
                 <th>สถานที่ </th>
-            <th>รายละอียด</th>
-          
+            <th>รายละอียด</th>          
             <th>สถานะ</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>';
             foreach ($rowsRoom as $rows) {
-
                 if (!empty($rows->thumbnail)) {
                     $img = '/storage/images/' . $rows->thumbnail;
                 } else {
                     $img = '/storage/images/noinages.png';
                 }
-
 
                 $isOpen = ($rows->is_open) ? '<span class="badge text-bg-success  badge-success">เปิดปกติ</span>' : '<span class="badge text-bg-danger  badge-danger">ปิดการใช้</span>';
                 $output .= '<tr class="text-start">
@@ -77,8 +81,7 @@ class RoomsController extends Controller
             <td>' . $rows->roomFullName . '</td>
              <td>' . $rows->roomtypeName . '</td>
              <td>' . $rows->placeName . '</td>
-            <td>' . $rows->roomDetail . '</td>
-           
+            <td>' . $rows->roomDetail . '</td>           
             <td>' . $isOpen . '</td>
             <td  width="120" >
               <a href="#" id="' . $rows->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bi-pencil-square h5"></i></a>
@@ -94,6 +97,11 @@ class RoomsController extends Controller
         }
     }
 
+    function convertArrayToComma($dataArr)
+    {
+        $val = implode(",", $dataArr);
+        return $val;
+    }
     public function store(Request $request)
     {
         $fileName = "";
@@ -104,16 +112,21 @@ class RoomsController extends Controller
         }
 
         $roomToken = md5(time());
+        $roomTitle =  str_replace(' ', '', $request->roomFullName);
+        $itemlist =  $this->convertArrayToComma($request->room_itemlist);   
+
+
         $setData = [
             'roomToken' => $roomToken,
             'roomFullName' => $request->roomFullName,
-            'roomTitle' => $request->roomTitle,
+            'roomTitle' => $roomTitle,
             'roomSize' => $request->roomSize,
             'roomTypeId' => $request->roomTypeId,
             'placeId' => $request->placeId,
             'roomDetail' => $request->roomDetail,
             'thumbnail' => $fileName,
-            'room_wh' => $request->room_wh
+            'room_wh' => $request->room_wh,
+            'room_itemlist'=>$itemlist
         ];
         Rooms::create($setData);
         return response()->json([
@@ -125,11 +138,17 @@ class RoomsController extends Controller
     public function edit(Request $request)
     {
         // $id = $request->id;
+        // room Accessories    
+        $roomItems = DB::table('room_items')
+            ->select('id', 'item_name')
+            ->get();
+
         $result = Rooms::find($request->id);
         $result2 = json_encode($result);
         return response()->json([
             'status' => 200,
-            'dataRoom' => $result2
+            'dataRoom' => $result2,
+            'roomItemList' => $roomItems
         ]);
     }
 
@@ -139,6 +158,7 @@ class RoomsController extends Controller
             'roomID' => $request->roomID,
             'cmuitaccount' => $request->cmuitaccount,
             'phone' => $request->phone,
+            'adminroom_type_id'=>$request->adminroom_type_id
 
         ];
         $result = adminRooom::create($setData);
@@ -148,7 +168,7 @@ class RoomsController extends Controller
             ]);
         }
     }
-    
+
     public function deleteAdmin(Request $request)
     {
         $id = $request->id;
@@ -157,7 +177,7 @@ class RoomsController extends Controller
             adminRooom::destroy($id);
         }
     }
-    
+
 
     public function editAdmin(Request $request)
     {
@@ -186,27 +206,33 @@ class RoomsController extends Controller
     public function pageAdmin(Request $request)
     {
         //ข้อมูลหนักงาน Select option
-        $sclEmployee = DB::table('tbl_members')
-            ->select('tbl_members.*')
+        $sclEmployee = DB::table('users')
+            ->select('users.*')
             ->get();
+      
         // $id = $request->id;
         if ($request->roomID) {
+            $roomData = Rooms::find($request->roomID);
+
             $sql = " SELECT
             admin_roooms.*,
-            tbl_members.*,
+            users.*,
             department.dep_name,
             rooms.roomFullName,
-            rooms.roomTitle
+            rooms.roomTitle,
+            adminroom_type.type_name
             FROM
             admin_roooms
-            INNER JOIN tbl_members ON admin_roooms.cmuitaccount = tbl_members.cmuitaccount
-            left JOIN department ON tbl_members.dep_id = department.dep_id
+            INNER JOIN users ON admin_roooms.cmuitaccount = users.email
+            left JOIN department ON users.dep_id = department.dep_id
             INNER JOIN rooms ON admin_roooms.roomID = rooms.id 
+            left JOIN adminroom_type ON admin_roooms.adminroom_type_id = adminroom_type.type_id
             where   admin_roooms.roomID = " . $request->roomID;
             $ListAdmin = DB::select(DB::raw($sql));
             return view("admin/room/manageAdmin")->with([
                 'ListAdmin' => $ListAdmin,
-                'sclEmployee' => $sclEmployee
+                'sclEmployee' => $sclEmployee,
+                'roomData' =>$roomData
             ]);
         }
     }
@@ -215,33 +241,44 @@ class RoomsController extends Controller
     {
         // $id = $request->id;
         if ($request->roomID) {
+            
+            $roomData = Rooms::find($request->roomID);
             $sql = " SELECT
-            admin_roooms.*,
-            tbl_members.*,
+             admin_roooms.*,
+            users.*,
             department.dep_name,
             rooms.roomFullName,
-            rooms.roomTitle
+            rooms.roomTitle,
+            adminroom_type.type_name
             FROM
             admin_roooms
-            INNER JOIN tbl_members ON admin_roooms.cmuitaccount = tbl_members.cmuitaccount
-            left JOIN department ON tbl_members.dep_id = department.dep_id
+            INNER JOIN users ON admin_roooms.cmuitaccount = users.email
+            left JOIN department ON users.dep_id = department.dep_id
             INNER JOIN rooms ON admin_roooms.roomID = rooms.id 
+            left JOIN adminroom_type ON admin_roooms.adminroom_type_id = adminroom_type.type_id
             where   admin_roooms.roomID = '{$request->roomID}' ";
             $ListAdmin = DB::select(DB::raw($sql));
-            return response()->json([
-                'ListAdmin' => $ListAdmin
-            ]);
+          //  if($ListAdmin){
+                return response()->json([
+                    'ListAdmin' => $ListAdmin ,
+                    'roomData' =>$roomData
+                ]);
+          //   }
+              
+               
+             
         }
     }
 
     // handle update an  ajax request
     public function update(Request $request)
     {
-
         $fileName = '';
         $RoomOpen = false;
         $result = Rooms::find($request->room_id);
-
+        $roomTitle =  str_replace(' ', '', $request->roomFullName);
+        $itemlist =  $this->convertArrayToComma($request->room_itemlist);   
+        
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -257,18 +294,19 @@ class RoomsController extends Controller
         }
         $setData = [
             'roomFullName' => $request->roomFullName,
-            'roomTitle' => $request->roomTitle,
+            'roomTitle' => $roomTitle,
             'roomSize' => $request->roomSize,
             'roomTypeId' => $request->roomTypeId,
             'placeId' => $request->placeId,
             'roomDetail' => $request->roomDetail,
             'thumbnail' => $fileName,
             'is_open' => $RoomOpen,
-            'room_wh' => $request->room_wh
+            'room_wh' => $request->room_wh,
+            'room_itemlist'=>$itemlist
         ];
         $result->update($setData);
         return response()->json([
-            'status' => 200
+            'status' => 200           
         ]);
     }
 
