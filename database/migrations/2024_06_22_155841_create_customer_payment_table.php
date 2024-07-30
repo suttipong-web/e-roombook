@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('payment_ref1',100)->nullable();
             $table->string('payment_ref2',20)->nullable();
             $table->string('orderInv',32);
+            $table->integer('bookingID');            
             $table->string('customerName',254)->nullable();;
             $table->string('customerEmail',100)->nullable();;
             $table->string('customerPhone',100)->nullable();;

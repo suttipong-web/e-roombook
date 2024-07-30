@@ -240,6 +240,8 @@
                                     </div>
                                     <div class="col-12 mt-3 text-center justify-content-center">
                                         <input type="hidden" id="hinden_bookingID" name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
+                                        <input type="hidden" id="hiddin_custid" name="hiddin_custid" value="{{ $paymentInfo->id }}">
+                                        
                                         <button type="submit" name="submitPayment" id="submitPayment"
                                             class=" btn btn-primary">
                                             <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระ และออกใบเสร็จรับเงิน

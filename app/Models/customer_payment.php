@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class customerPayment extends Model
+class customer_payment extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -21,6 +21,7 @@ class customerPayment extends Model
         'totalAmount',
         'payment_status',
         'is_confirm',
-        'payment_date'
+        'payment_date',
+        'bookingID'
     ];
 }

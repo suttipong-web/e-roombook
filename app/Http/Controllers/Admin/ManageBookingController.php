@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\booking_assign;
-use App\Models\customerPayment;
+use App\Models\customer_payment;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 use App\Models\booking_rooms;
@@ -31,19 +31,28 @@ class ManageBookingController extends Controller
             $bookingId = $request->bookingID;
             // update Status read inbox อ่านแล้ว
             $updated = DB::table('booking_rooms')->where('id', $bookingId)
+
                 ->update([
                     'is_read' => 1
                 ]);
+                $PaymentData = DB::table('customer_payment')      
+                                ->select('customer_payment.*')
+                ->where('bookingID', $bookingId)
+                ->get();
+                
+
+
             // Return รายละเอียดการจอง 
-            $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
-                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+            $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')             
+                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')                
                 ->where('booking_rooms.id', $bookingId)
                 ->get();
 
             return view('admin.bookingDetail')->with([
                 'detailBooking' => $ResultBooking,
                 'getStatus' => $getStatus,
-                'sclEmployee' => $sclEmployee
+                'sclEmployee' => $sclEmployee,
+                'paymentInfo'=>$PaymentData
             ]);
         }
     }
@@ -137,24 +146,26 @@ class ManageBookingController extends Controller
     }
     public function setdataPayment (Request $request) {
        $bookingId = $request->hinden_bookingID;   
-       if(empty($request->hcustid)) {
+       $setData = [
+        'customerName' => $request->customerName,
+        'customerEmail' => $request->customerEmail,
+        'customerPhone' => $request->customerPhone,
+        'customerTaxid' => $request->customerTaxid,
+        'customerAddress' => $request->customerAddress,
+        'totalAmount' => $request->totalAmount,
+        'payment_status' => '0',
+        'bookingID' => $request->hinden_bookingID
+      
+    ];
+       if(empty($request->hiddin_custid)) {
           // insert 
-            $setData = [
-                'customerName' => $request->customerName,
-                'customerEmail' => $request->customerEmail,
-                'customerPhone' => $request->customerPhone,
-                'customerTaxid' => $request->customerTaxid,
-                'customerAddress' => $request->customerAddress,
-                'totalAmount' => $request->totalAmount,
-                'payment_status' => '0',
-                'bookingID' => $request->hinden_bookingID,
-                'is_read' => 0
-            ];
-            $insert = customerPayment::create($setData);
+           $insert = customer_payment::create($setData);
         }else{
-            // Update
-        }
-    
+            // Updates
+            $result = customer_payment::find($request->hiddin_custid);
+
+            $result->update($setData);
+        }   
 
     }
 
