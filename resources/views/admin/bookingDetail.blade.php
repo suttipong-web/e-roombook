@@ -67,6 +67,9 @@
         max-width: 95%;
         border: 1px solid #989595;
     }
+    #accordion  .setfontnew  h3{
+        font-family: "Kanit", sans-serif;
+    }
 </style>
 <!-- /.content-header -->
 @endsection
@@ -187,103 +190,70 @@
                 <hr />
                 @if ($getStatus == 'approved' || $getStatus == 'Newinbox')
 
-                    <div class="card w-100 mt-5 ">
-                        <div class="card-header  bg-light">
-                            <h5> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h5>
-                        </div>
-                        <div class="card-body">
-                            <form id="payment_form" class="row g-3 m-auto" method="post" action="#"
+                    <div id="accordion">
+                        <h3> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h3>
+                        <div>
+                            <form id="payment_form" class="row g-3 m-auto setfontnew" method="post" action="/admin/payment/setdata"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12">
-                                    <h5>ข้อมูลที่ใช้ออกใบเสร็จรับเงิน</h5>
+                                    <h5>กำหนดราคาสำหรับการขอใช้สถานที่</h5>
                                     <hr>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12">
-                                            <label for="cust_address">กำหนดราคา</label>
-                                            <input type="number" style="padding: 7px;" placeholder="ระบุราคา"  name="cost"></input>
+                                    <div class="form-row mb-3">
+                                        <div class="form-group col-md-12 mb-3">
+                                            <label for="totalAmount"> ระบุราคา </label>
+                                            <input type="number" style="padding: 7px;" placeholder="ระบุราคา" id="totalAmount"
+                                                name="totalAmount"></input>
                                         </div>
                                     </div>
+
+                                    <h5 class="mt-3">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน</h5>
+                                    <hr>
+
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="cust_name">ชื่อที่แสดงในใบเสร็จรับเงิน</label>
-                                            <input type="text" class="form-control" id="cust_name" neme="cust_name"
-                                                placeholder="ระบุชื่อนามสกุล/ชื่อหน่วยงาน">
+                                            <input type="text" class="form-control" id="cust_name" neme="cust_name">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="cust_tax">เลขประจำตัวประชาชน/เลขผู้เสียภาษี</label>
-                                            <input type="text" class="form-control" id="cust_tax" name="cust_tax"
-                                                placeholder="เลขประจำตัวประชาชน/เลขผู้เสียภาษี">
+                                            <input type="text" class="form-control" id="cust_tax" name="cust_tax">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="cust_email">Email</label>
-                                            <input type="email" class="form-control" id="cust_email" name="cust_email"
-                                                placeholder="ระบุ Email ที่ใช้รับใบเสร็จรับเงิน">
+                                            <input type="email" class="form-control" id="cust_email" name="cust_email">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="cust_address">ที่อยู่</label>
-                                            <input type="text" class="form-control" id="cust_address"
-                                                placeholder=" ที่อยู่ ">
+                                            <input type="text" class="form-control" id="cust_address">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="cust_address">รายละเอียดรายการใบเสร็จรับเงิน</label>
-                                            <input type="text" class="form-control" id="cust_detail_receipt"  name="cust_detail_receipt"
-                                                placeholder=" รายละเอียดรายการใบเสร็จรับเงิน ">
+                                            <input type="text" class="form-control" id="cust_detail_receipt"
+                                                name="cust_detail_receipt">
                                         </div>
-                                        
+
 
                                     </div>
-                                    
+                                    <div class="col-12 mt-3 text-center justify-content-center">
+                                        <input type="hidden" id="hinden_bookingID" name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
+                                        <button type="submit" name="submitPayment" id="submitPayment"
+                                            class=" btn btn-primary">
+                                            <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระ และออกใบเสร็จรับเงิน
 
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td><input type="number" style="padding: 7px;"
-                                                        placeholder="ระบุราคา"></input></td>
-                                                <td class="">></td>
-                                            </tr>
-                                            <tr>
-                                                <td>ชื่อที่แสดงในใบเสร็จรับเงิน</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>เลขประจำตัวประชาชน/ประจำตัวผู้เสียภาษี</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Address (ที่อยู่) </td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>รายละเอียดรายการใบเสร็จรับเงิน </td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
-
-                    <div class="card w-100 mt-5 ">
-                        <div class="card-header  bg-light">
-                            <h5>กำหนดผู้ปฏิบัติงาน</h5>
-                        </div>
-                        <div class="card-body">
+                        <h3>ตั้งค่า กำหนดผู้ปฏิบัติงาน</h3>
+                        <div>
                             <div class="col-12">
 
-                                <div class="justify-content-center  w-75 ">
+                                <div class="justify-content-center  w-75  setfontnew">
                                     <div class=" d-flex ">
                                         <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
                                         <div class="ml-3 mr-3" style="width: 380px;">
@@ -327,7 +297,14 @@
 
                             </div>
                         </div>
+                       
                     </div>
+
+
+
+
+
+
                 @endif
 
                 <form id="approve_booking_form" class="row g-3 m-auto" method="post" action="#"
@@ -439,7 +416,9 @@
         $("#tableListbooking").DataTable({
             order: [0, 'ASC']
         });
-
+        $("#accordion").accordion({
+            heightStyle: "content"
+        });
         $(document).on('click', '.btnAddEmp', function (e) {
             $.ajax({
                 url: "/admin/assignEmployee",

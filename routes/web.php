@@ -59,6 +59,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/bookingDetail', [DashboardController::class, 'bookingDetail'])->name('bookingDetail');
+   
 
     Route::get('/admin/viewstatus/{getStatus}', [DashboardController::class, 'viewStatus'])->name('viewStatus');
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
@@ -89,6 +90,8 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/assignEmployee', [ManageBookingController::class, 'assignEmployee'])->name('assignEmployee');
     Route::get('/admin/getAssignEmployee', [ManageBookingController::class, 'getAssignEmployee'])->name('getAssignEmployee');
     Route::delete('/admin/delete/assignEmployee', [ManageBookingController::class, 'deleteAssign'])->name('deleteAssign');
+
+    Route::post('/admin/payment/setdata', [ManageBookingController::class, 'setdataPayment'])->name('setdataPayment');
    
 
     

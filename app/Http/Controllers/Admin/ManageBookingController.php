@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\booking_assign;
+use App\Models\customerPayment;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 use App\Models\booking_rooms;
@@ -134,6 +135,29 @@ class ManageBookingController extends Controller
         ]);
 
     }
+    public function setdataPayment (Request $request) {
+       $bookingId = $request->hinden_bookingID;   
+       if(empty($request->hcustid)) {
+          // insert 
+            $setData = [
+                'customerName' => $request->customerName,
+                'customerEmail' => $request->customerEmail,
+                'customerPhone' => $request->customerPhone,
+                'customerTaxid' => $request->customerTaxid,
+                'customerAddress' => $request->customerAddress,
+                'totalAmount' => $request->totalAmount,
+                'payment_status' => '0',
+                'bookingID' => $request->hinden_bookingID,
+                'is_read' => 0
+            ];
+            $insert = customerPayment::create($setData);
+        }else{
+            // Update
+        }
+    
+
+    }
+
 
 
 }

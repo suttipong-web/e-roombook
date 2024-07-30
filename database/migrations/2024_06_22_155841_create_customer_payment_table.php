@@ -21,11 +21,9 @@ return new class extends Migration
             $table->string('customerName',254)->nullable();;
             $table->string('customerEmail',100)->nullable();;
             $table->string('customerPhone',100)->nullable();;
-            $table->string('organization')->nullable();
-            $table->string('receipt_fname',254)->nullable();          
-            $table->string('receipt_taxid',20)->nullable();
-            $table->string('receipt_address')->nullable();
-            $table->string('receipt_phone',50)->nullable();
+            $table->string('organization')->nullable();    
+            $table->string('customerTaxid',20)->nullable();
+            $table->string('customerAddress')->nullable();           
             $table->decimal('totalAmount', 10, 2)->default(0);
             $table->boolean('payment_status')->default(false);
             $table->boolean('is_confirm')->default(false);
