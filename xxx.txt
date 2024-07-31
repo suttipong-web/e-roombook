@@ -1,0 +1,7 @@
+FTP user profile
+User: ftp_e_roombooki_eng_cmu_ac_th
+Password: 2447692874d64
+
+Database user profile
+User: sql_e_roombooki_
+Password: 57967bf71e593 

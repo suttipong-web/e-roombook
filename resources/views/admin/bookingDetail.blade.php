@@ -70,6 +70,9 @@
     #accordion  .setfontnew  h3{
         font-family: "Kanit", sans-serif;
     }
+    .setFn  {
+        font-family: "Kanit", sans-serif;
+    }
 </style>
 <!-- /.content-header -->
 @endsection
@@ -193,11 +196,11 @@
                     <div id="accordion">
                         <h3> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h3>
                         <div>
-                            <form id="payment_form" class="row g-3 m-auto setfontnew" method="post" action="/admin/payment/setdata"
+                            <form id="payment_form" class="row g-3 m-auto  setFn" method="post" action="/admin/payment/setdata"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12">
-                                    <h5>กำหนดราคาสำหรับการขอใช้สถานที่</h5>
+                                    <h5 class="setFn">กำหนดราคาสำหรับการขอใช้สถานที่</h5>
                                     <hr>
                                     <div class="form-row mb-3">
                                         <div class="form-group col-md-12 mb-3">
@@ -206,42 +209,38 @@
                                                 name="totalAmount"></input>
                                         </div>
                                     </div>
-
-                                    <h5 class="mt-3">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน</h5>
+                                   
+                                    <h5 class="mt-3 setFn">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน</h5>
                                     <hr>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="cust_name">ชื่อที่แสดงในใบเสร็จรับเงิน</label>
-                                            <input type="text" class="form-control" id="cust_name" neme="cust_name">
+                                            <label for="customerName">ชื่อที่แสดงในใบเสร็จรับเงิน</label>
+                                            <input type="text" class="form-control" id="customerName" neme="customerName">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="cust_tax">เลขประจำตัวประชาชน/เลขผู้เสียภาษี</label>
-                                            <input type="text" class="form-control" id="cust_tax" name="cust_tax">
+                                            <label for="customerTaxid">เลขประจำตัวประชาชน/เลขผู้เสียภาษี</label>
+                                            <input type="text" class="form-control" id="customerTaxid" name="customerTaxid">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="cust_email">Email</label>
-                                            <input type="email" class="form-control" id="cust_email" name="cust_email">
+                                            <label for="customerEmail">Email</label>
+                                            <input type="email" class="form-control" id="customerEmail" name="customerEmail">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="cust_address">ที่อยู่</label>
-                                            <input type="text" class="form-control" id="cust_address">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="cust_address">รายละเอียดรายการใบเสร็จรับเงิน</label>
-                                            <input type="text" class="form-control" id="cust_detail_receipt"
-                                                name="cust_detail_receipt">
-                                        </div>
+                                            <label for="customerAddress">ที่อยู่</label>
+                                            <input type="text" class="form-control" id="customerAddress">
+                                        </div>                            
 
 
                                     </div>
                                     <div class="col-12 mt-3 text-center justify-content-center">
                                         <input type="hidden" id="hinden_bookingID" name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
-                                        <input type="hidden" id="hiddin_custid" name="hiddin_custid" value="{{ $paymentInfo->id }}">
-                                        
+                                        @if(count($paymentInfo)>0) 
+                                            <input type="hidden" id="hiddin_custid" name="hiddin_custid" value="{{ $paymentInfo[0]->id }}">
+                                        @endif
                                         <button type="submit" name="submitPayment" id="submitPayment"
                                             class=" btn btn-primary">
                                             <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระ และออกใบเสร็จรับเงิน
@@ -255,7 +254,7 @@
                         <div>
                             <div class="col-12">
 
-                                <div class="justify-content-center  w-75  setfontnew">
+                                <div class="justify-content-center  w-75  setFn">
                                     <div class=" d-flex ">
                                         <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
                                         <div class="ml-3 mr-3" style="width: 380px;">
@@ -280,7 +279,7 @@
                                 </div>
                                 <div class="dispaly_listAssign mt-5">
 
-                                    <table class="table table-sm " id="empbyEach">
+                                    <table class="table table-sm  setFn" id="empbyEach">
                                         <thead>
                                             <tr>
                                                 <th></th>

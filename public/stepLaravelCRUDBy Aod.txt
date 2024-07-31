@@ -15,7 +15,7 @@ php artisan migrate
 php artisan migrate:fresh
 
 one table
- php  artisan migrate:refresh --path="database/migrations/2024_07_22_165242_create_admin_roooms_table.php" 
+ php  artisan migrate:refresh --path="database/migrations/2024_07_31_055013_create_payments_table.php" 
 
 Step 5: Creating Routes 
 Route:: get,post,delete 

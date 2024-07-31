@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomsController;
-use App\Http\Controllers\admin\AutnController;
+use App\Http\Controllers\Admin\AutnController;
 use App\Http\Controllers\Admin\ManageBookingController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -84,7 +84,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
     Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
 
-    Route::get('/admin/bookingDetail/{getStatus}/{bookingID}/{token}', [ManageBookingController::class, 'bookingDetail'])->name('bookingDetail');
+    Route::get('/admin/bookingDetail/{getStatus}/{bookingID}/{token}', [ManageBookingController::class, 'mbookingDetail'])->name('mbookingDetail');
 
     //กำหนดผู้ปฏิบัติงาน     
     Route::get('/admin/assignEmployee', [ManageBookingController::class, 'assignEmployee'])->name('assignEmployee');
