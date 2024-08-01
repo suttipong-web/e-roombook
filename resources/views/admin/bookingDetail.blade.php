@@ -206,7 +206,7 @@
                                         <div class="form-group col-md-12 mb-3">
                                             <label for="totalAmount"> ระบุราคา </label>
                                             <input type="number" style="padding: 7px;" placeholder="ระบุราคา" id="totalAmount"
-                                                name="totalAmount"></input>
+                                                name="totalAmount" value="{{ $detailBooking[0]->totalAmount}}"></input>
                                         </div>
                                     </div>
                                    
@@ -216,22 +216,22 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="customerName">ชื่อที่แสดงในใบเสร็จรับเงิน</label>
-                                            <input type="text" class="form-control" id="customerName" neme="customerName">
+                                            <input type="text" class="form-control" id="customerName" neme="customerName" value="{{ $detailBooking[0]->customerName}}">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="customerTaxid">เลขประจำตัวประชาชน/เลขผู้เสียภาษี</label>
-                                            <input type="text" class="form-control" id="customerTaxid" name="customerTaxid">
+                                            <input type="text" class="form-control" id="customerTaxid" name="customerTaxid" value="{{ $detailBooking[0]->customerTaxid}}">
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="customerEmail">Email</label>
-                                            <input type="email" class="form-control" id="customerEmail" name="customerEmail">
+                                            <input type="email" class="form-control" id="customerEmail" name="customerEmail" value="{{ $detailBooking[0]->customerEmail}}" >
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="customerAddress">ที่อยู่</label>
-                                            <input type="text" class="form-control" id="customerAddress">
+                                            <input type="text" class="form-control" id="customerAddress"  value="{{ $detailBooking[0]->customerAddress}}" >
                                         </div>                            
 
 
@@ -239,7 +239,7 @@
                                     <div class="col-12 mt-3 text-center justify-content-center">
                                         <input type="hidden" id="hinden_bookingID" name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
                                         @if(count($paymentInfo)>0) 
-                                            <input type="hidden" id="hiddin_custid" name="hiddin_custid" value="{{ $paymentInfo[0]->id }}">
+                                            <input type="hidden" id="hiddin_custid" name="hiddin_custid" value="{{ $detailBooking[0]->id }}">
                                         @endif
                                         <button type="submit" name="submitPayment" id="submitPayment"
                                             class=" btn btn-primary">

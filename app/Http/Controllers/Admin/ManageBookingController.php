@@ -38,16 +38,16 @@ class ManageBookingController extends Controller
                 ->get();
   
             // Return รายละเอียดการจอง 
-            $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')             
-                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')                
+            $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')     
+                ->leftJoin('payments', 'payments.bookingID', '=', 'booking_rooms.id')         
+                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail','payments.*')                
                 ->where('booking_rooms.id', $bookingId)
                 ->get();
-                
+                echo   print_r($ResultBooking);
             return view('admin.bookingDetail')->with([
                 'detailBooking' => $ResultBooking,
                 'getStatus' => $getStatus,
-                'sclEmployee' => $sclEmployee,
-                'paymentInfo'=> $PaymentData
+                'sclEmployee' => $sclEmployee                
             ]);
         }
     }
