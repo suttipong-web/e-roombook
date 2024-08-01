@@ -182,43 +182,5 @@ class DashboardController extends Controller
         ]);
     }
 
-    // 
-    public function approveBooking(Request $request)
-    {
-        $bookingId = $request->hinden_bookingID;
-        $actionStatus = $request->chkStatus;
-
-        // update Step  สถานะส่งต่อผู้บริหาร  :  Admin อนุมัติเอง 
-        $isStatus = ($actionStatus == 'ForwardDean') ? 2 : 1;
-
-        // เก็บประวัติการยกเลิกรายการจอง
-        $isstatusCanceled = ($actionStatus == 'canceled') ? 1 : 0;
-
-        // Message return 
-        if ($actionStatus == 'ForwardDean') {
-            $msg = " ส่งต่อให้ผู้บริหารพิจราณาเรียบร้อยแล้ว ";
-        } else if ($actionStatus == 'canceled') {
-            $msg = " ทำรายการยกเลิกรายการเรียบร้อยแล้ว ";
-        } else {
-            $msg = " ทำการอนุมัติ รายการจองเรียบร้อยแล้ว ";
-        }
-
-        // Apponve step 
-        if ($bookingId) {
-            $updated = DB::table('booking_rooms')->where('id', $bookingId)
-                ->update([
-                    'booking_status' => $isStatus,
-                    'booking_AdminAction' => $actionStatus,
-                    'booking_cancel' => $isstatusCanceled,
-                    'admin_action_date' => Carbon::now(),
-                    'admin_action_acount' => $request->adminAccount
-                ]);
-            if ($updated) {
-                return response()->json([
-                    'status' => 200,
-                    'message' => $msg
-                ]);
-            }
-        }
-    }
+    
 }

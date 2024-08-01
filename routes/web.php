@@ -64,7 +64,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/viewstatus/{getStatus}', [DashboardController::class, 'viewStatus'])->name('viewStatus');
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
-    Route::post('/admin/approveBooking', [DashboardController::class, 'approveBooking'])->name('approveBooking');
+    
 
     //Route  ระบบจัดการห้อง RoomsController
     Route::get('/admin', [DashboardController::class, 'adminindex'])->name('้adminindex');
@@ -92,7 +92,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::delete('/admin/delete/assignEmployee', [ManageBookingController::class, 'deleteAssign'])->name('deleteAssign');
 
     Route::post('/admin/payment/setdata', [ManageBookingController::class, 'setdataPayment'])->name('setdataPayment');
-   
+    Route::post('/admin/approveBooking', [ManageBookingController::class, 'approveBooking'])->name('approveBooking');
 
     
 
