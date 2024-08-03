@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2024-07-31 13:07:52
+Date: 2024-08-01 16:41:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -106,7 +106,7 @@ CREATE TABLE `booking_assigns` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of booking_assigns
@@ -115,6 +115,7 @@ INSERT INTO `booking_assigns` VALUES ('3', 'suttipong.r@cmu.ac.th', '16', '0', '
 INSERT INTO `booking_assigns` VALUES ('4', 'akaradate.p@cmu.ac.th', '16', '0', '0', '0', '0', '2024-07-22 03:57:18', '2024-07-22 03:57:18');
 INSERT INTO `booking_assigns` VALUES ('5', 'sittipong.b@cmu.ac.th', '26', '0', '0', '0', '0', '2024-07-28 09:01:43', '2024-07-28 09:01:43');
 INSERT INTO `booking_assigns` VALUES ('6', 'suttipong.r@cmu.ac.th', '26', '0', '0', '0', '0', '2024-07-28 09:02:11', '2024-07-28 09:02:11');
+INSERT INTO `booking_assigns` VALUES ('9', 'pitirat.nan@cmu.ac.th', '26', '0', '0', '0', '0', '2024-08-01 07:06:12', '2024-08-01 07:06:12');
 
 -- ----------------------------
 -- Table structure for booking_rooms
@@ -414,8 +415,8 @@ CREATE TABLE `password_resets` (
 DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `payment_ref1` varchar(100) DEFAULT NULL,
-  `payment_ref2` varchar(20) DEFAULT NULL,
+  `customerToken` varchar(100) DEFAULT '',
+  `urlPayment` varchar(255) DEFAULT '',
   `bookingID` int(11) NOT NULL,
   `customerName` varchar(254) DEFAULT NULL,
   `customerEmail` varchar(100) DEFAULT NULL,
@@ -430,12 +431,12 @@ CREATE TABLE `payments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of payments
 -- ----------------------------
-INSERT INTO `payments` VALUES ('1', null, null, '26', null, '10@fsdfs.fdgdf', '', null, '1', null, '2000.00', '0', '0', null, '2024-07-31 05:58:28', '2024-07-31 05:58:28');
+INSERT INTO `payments` VALUES ('5', null, null, '26', 'สุทธิพงค์ ริโปนยอง', 'stimulus.ad@gmail.com', '', null, '1234568794459', '352/252', '15000.00', '0', '0', null, '2024-08-01 08:51:00', '2024-08-01 08:54:21');
 
 -- ----------------------------
 -- Table structure for personal_access_tokens
@@ -1109,7 +1110,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', null, 'suttipong.r@cmu.ac.th', null, 'b986700c627db479a4d9460b75de7222', '1', '1', null, null, '2024-07-31 05:56:00', 'suttipong.r', 'นาย', 'สุทธิพงค์', 'ริโปนยอง', 'MISEmpAcc', 'บุคลากร', null, null, '0', '2024-07-31 05:56:00', '0', 'mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX', '0', null, null);
+INSERT INTO `users` VALUES ('1', null, 'suttipong.r@cmu.ac.th', null, 'b986700c627db479a4d9460b75de7222', '1', '1', null, null, '2024-08-01 08:24:32', 'suttipong.r', 'นาย', 'สุทธิพงค์', 'ริโปนยอง', 'MISEmpAcc', 'บุคลากร', null, null, '0', '2024-08-01 08:24:32', '0', 'mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX', '0', null, null);
 INSERT INTO `users` VALUES ('3', null, 'autanan.w@cmu.ac.th', null, '', '0', '0', null, null, null, 'นาย', 'อัฐนันต์', 'วรรณชัย', '', '', 'อาจารย์ ดร.', '', '35', '1', null, '0', null, '0', '0', '0');
 INSERT INTO `users` VALUES ('4', null, 'norrapon.v@cmu.ac.th', null, '', '0', '0', null, null, null, 'นาย', 'นรพนธ์', 'วิเชียรสาร', '', '', 'อาจารย์ ดร.', '', '35', '1', null, '0', null, '0', '0', '0');
 INSERT INTO `users` VALUES ('5', null, 'kittiya.thunsiri@cmu.ac.th', null, '', '0', '0', null, null, null, 'นางสาว', 'กิตติยา', 'ทุ่นศิริ', '', '', 'อาจารย์ ดร.', '', '35', '1', null, '0', null, '0', '0', '0');

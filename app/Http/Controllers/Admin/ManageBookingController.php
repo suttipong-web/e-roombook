@@ -33,33 +33,60 @@ class ManageBookingController extends Controller
                     'is_read' => 1
                 ]);
 
-                $PaymentData = DB::table('payments')
-                ->select('payments.*')->where('bookingID', $bookingId)
-                ->get();
+               // $PaymentData = DB::table('payments')
+               // ->select('payments.*')->where('bookingID', $bookingId)
+               // ->get();
   
-            // Return รายละเอียดการจอง 
-            $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')     
-                ->leftJoin('payments', 'payments.bookingID', '=', 'booking_rooms.id')         
-                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail','payments.*')                
-                ->where('booking_rooms.id', $bookingId)
-                ->get();
-                echo   print_r($ResultBooking);
+                // Return รายละเอียดการจอง 
+                $ResultBooking  = $this->getDetailByBookingID($bookingId);
+             //$json = json_encode($ResultBooking);
             return view('admin.bookingDetail')->with([
                 'detailBooking' => $ResultBooking,
                 'getStatus' => $getStatus,
-                'sclEmployee' => $sclEmployee                
+                'sclEmployee' => $sclEmployee               
             ]);
+
         }
     }
 
-    public function getAssignEmployee(Request $request)
-    {
+    public   function  getDetailByBookingID($bookingId){
+
+        $sql = " SELECT
+        booking_rooms.*,
+        booking_rooms.updated_at,
+        payments.id AS paymentid,
+        payments.payment_ref1,
+        payments.payment_ref2,
+        payments.customerName,
+        payments.customerEmail,
+        payments.customerPhone,
+        payments.organization,
+        payments.customerTaxid,
+        payments.customerAddress,
+        payments.totalAmount,
+        payments.payment_status,
+        payments.is_confirm,
+        payments.payment_date,
+        rooms.roomFullName,
+        rooms.roomSize,
+        rooms.thumbnail,
+        rooms.roomDetail
+        FROM
+        booking_rooms
+        left JOIN payments ON booking_rooms.id = payments.bookingID
+        INNER JOIN rooms ON rooms.id = booking_rooms.roomID
+        where booking_rooms.id = '{$bookingId}' ";
+        $ResultBooking =  DB::select(DB::raw($sql));
+        return  $ResultBooking;
+    }
+
+
+    public function getAssignEmployee(Request $request)    {
         if ($request->bookingId) {
             $sql = "SELECT
                     booking_assigns.*,
                     tbl_members.*,
-                    department.dep_name
-                  
+                    department.dep_name                  
                     FROM
                     booking_assigns
                     INNER JOIN tbl_members ON booking_assigns.cmuitaccount = tbl_members.cmuitaccount
@@ -149,21 +176,108 @@ class ManageBookingController extends Controller
         'customerAddress' => $request->customerAddress,
         'totalAmount' => $request->totalAmount,
         'payment_status' => '0',
-        'bookingID' => $request->hinden_bookingID
-      
-    ];
-    echo print_r($setData) ;
-       if(empty($request->hiddin_custid)) {
-          // insert 
+        'bookingID' => $bookingId     
+    ];  
+       if(empty($request->hinden_paymentid)) {
+            // insert 
            $insert = payments::create($setData);
+           if ($insert) {
+                return response()->json([
+                    'status' => 200
+                ]);
+           } 
         }else{
             // Updates
-            $result = payments::find($request->hiddin_custid);
-
+            $result = payments::find($request->hinden_paymentid);
             $result->update($setData);
+            if ($result) {
+                return response()->json([
+                    'status' => 200
+                ]);
+           } 
         }   
+         
+        return response()->json([
+                'status' => 208,
+                'error' => 'ERROR'
+         ]);
+    }
+
+
+    // Apponve 
+    public function approveBooking(Request $request)
+    {
+        $bookingId = $request->hinden_bookingID;
+        $actionStatus = $request->chkStatus;
+
+        // update Step  สถานะส่งต่อผู้บริหาร  :  Admin อนุมัติเอง 
+        $isStatus = ($actionStatus == 'ForwardDean') ? 2 : 1;
+
+        // เก็บประวัติการยกเลิกรายการจอง
+        $isstatusCanceled = ($actionStatus == 'canceled') ? 1 : 0;
+
+        // Message return 
+        if ($actionStatus == 'ForwardDean') {
+            $msg = " ส่งต่อให้ผู้บริหารพิจราณาเรียบร้อยแล้ว ";
+        } else if ($actionStatus == 'canceled') {
+            $msg = " ทำรายการยกเลิกรายการเรียบร้อยแล้ว ";
+        } else {
+            $msg = " ทำการอนุมัติ รายการจองเรียบร้อยแล้ว ";
+        }
+
+        // Apponve step 
+        if ($bookingId) {
+            $updated = DB::table('booking_rooms')->where('id', $bookingId)
+                ->update([
+                    'booking_status' => $isStatus,
+                    'booking_AdminAction' => $actionStatus,
+                    'booking_cancel' => $isstatusCanceled,
+                    'admin_action_date' => Carbon::now(),
+                    'admin_action_acount' => $request->adminAccount
+                ]);
+            if ($updated) {
+                $this->setAuthPayment($bookingId);
+                return response()->json([
+                    'status' => 200,
+                    'message' => $msg
+                ]);
+            }
+        }
+    }
+
+    public function setAuthPayment ($bookingID){
+        $ResultBooking  = $this->getDetailByBookingID($bookingID);
+        $engpaymentkey = '';        
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://payment.eng.cmu.ac.th/api/',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>'{
+            "APIKEY": "'.$engpaymentkey.'",
+            "customer_Name":"'.$ResultBooking["customerName"].'",
+            "customer_Taxid":"'.$ResultBooking["customerTaxid"].'",
+            "customer_Phone":"'.$ResultBooking["customerPhone"].'",
+            "customer_Email":"'.$ResultBooking["customerName"].'",
+            "customer_Address":"'.$ResultBooking["customerAddress"].'",
+            "Amount":"'.$ResultBooking["totalAmount"].'",	
+            "reUrl":"https://e-roombooking.eng.cmu.ac.th/paid"      
+        }',
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        //echo $response;
 
     }
+
 
 
 

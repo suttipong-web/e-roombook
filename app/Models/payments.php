@@ -9,8 +9,8 @@ class payments extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'payment_ref1',
-        'payment_ref2',
+        'customerToken',
+        'urlPayment',
         'customerName',
         'customerEmail',
         'customerPhone',

@@ -5,32 +5,28 @@
 <link href="/css/combobox.css" rel="stylesheet">
 @section('content-header')
 <style type="text/css">
+
     .tdTitle {
         text-align: right;
         font-weight: 700;
         width: 20%;
     }
-
     .tddetail {
         width: 30%;
         text-align: left;
     }
-
     .countText {
         text-decoration-line: underline;
         cursor: pointer;
     }
-
     .tableListbooking {
         font-size: 12px;
     }
-
     .custom-combobox {
         position: relative;
         display: inline-block;
 
     }
-
     .custom-combobox-toggle {
         position: absolute;
         top: 0;
@@ -81,7 +77,6 @@
 <!-- Main row -->
 <div class="container-fluid">
     <div class="row">
-
         <div class="card w-100">
             <div class="card-header 
             @if($getStatus == "approved")
@@ -92,8 +87,7 @@
                 text-white bg-info
             @else 
                 text-white bg-danger
-            @endif                 
-            
+            @endif                             
             ">
                 <h3>รายละเอียดการขอใช้ห้อง</h3>
             </div>
@@ -204,43 +198,65 @@
                                     <hr>
                                     <div class="form-row mb-3">
                                         <div class="form-group col-md-12 mb-3">
-                                            <label for="totalAmount"> ระบุราคา </label>
-                                            <input type="number" style="padding: 7px;" placeholder="ระบุราคา" id="totalAmount"
-                                                name="totalAmount" value="{{ $detailBooking[0]->totalAmount}}"></input>
+                                            <label for="totalAmount"> ระบุราคา *</label>
+                                            <input type="number" style="padding: 7px;" 
+                                             placeholder="ระบุราคา"
+                                             id="totalAmount"
+                                             name="totalAmount"
+                                             value="{{$detailBooking[0]->totalAmount}}"
+                                             required
+                                             @if ($detailBooking[0]->payment_status)
+                                                 @disabled(true)
+                                             @endif
+                                            
+                                             ></input>
                                         </div>
                                     </div>
                                    
-                                    <h5 class="mt-3 setFn">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน</h5>
+                                    <h5 class="mt-3 setFn">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน </h5>
                                     <hr>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="customerName">ชื่อที่แสดงในใบเสร็จรับเงิน</label>
-                                            <input type="text" class="form-control" id="customerName" neme="customerName" value="{{ $detailBooking[0]->customerName}}">
+                                            <label for="customerName">ชื่อที่แสดงในใบเสร็จรับเงิน *</label>
+                                            <input type="text" class="form-control" id="customerName" 
+                                            name="customerName"
+                                            value="{{$detailBooking[0]->customerName}}"
+                                            required
+                                            >
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="customerTaxid">เลขประจำตัวประชาชน/เลขผู้เสียภาษี</label>
-                                            <input type="text" class="form-control" id="customerTaxid" name="customerTaxid" value="{{ $detailBooking[0]->customerTaxid}}">
+                                            <label for="customerTaxid">เลขประจำตัวประชาชน/เลขผู้เสียภาษี *</label>
+                                            <input type="text" class="form-control" id="customerTaxid"
+                                             name="customerTaxid" value="{{$detailBooking[0]->customerTaxid}}" 
+                                             required 
+                                             >
+                                             
                                         </div>
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="customerEmail">Email</label>
-                                            <input type="email" class="form-control" id="customerEmail" name="customerEmail" value="{{ $detailBooking[0]->customerEmail}}" >
+                                            <label for="customerEmail">Email *</label>
+                                            <input type="email" class="form-control" id="customerEmail" 
+                                            name="customerEmail"
+                                             value="{{$detailBooking[0]->customerEmail}}"
+                                             required
+                                            >
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="customerAddress">ที่อยู่</label>
-                                            <input type="text" class="form-control" id="customerAddress"  value="{{ $detailBooking[0]->customerAddress}}" >
+                                            <label for="customerAddress">ที่อยู่ *</label>
+                                            <input type="text" class="form-control" id="customerAddress" name="customerAddress"
+                                            value="{{$detailBooking[0]->customerAddress}}"
+                                            required
+                                            >
                                         </div>                            
+                                   </div>
 
-
-                                    </div>
                                     <div class="col-12 mt-3 text-center justify-content-center">
                                         <input type="hidden" id="hinden_bookingID" name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
-                                        @if(count($paymentInfo)>0) 
-                                            <input type="hidden" id="hiddin_custid" name="hiddin_custid" value="{{ $detailBooking[0]->id }}">
-                                        @endif
+                                        <input type="hidden" id="hinden_paymentid" name="hinden_paymentid" value="{{ $detailBooking[0]->paymentid  }}">
+                                        
                                         <button type="submit" name="submitPayment" id="submitPayment"
                                             class=" btn btn-primary">
                                             <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระ และออกใบเสร็จรับเงิน
@@ -262,10 +278,11 @@
                                                 <option value="">--- เลือก --</option>
                                                 @foreach ($sclEmployee as $rows)
                                                     @if (!empty($rows->firstname_TH))
-                                                        {{ $fullname = $rows->firstname_TH . ' ' . $rows->lastname_TH}}
+                                                       @php
+                                                           $fullname = $rows->firstname_TH . ' ' . $rows->lastname_TH
+                                                       @endphp 
                                                     @endif
-                                                    <option value="{{$rows->cmuitaccount}}">{{$fullname}}
-                                                    </option>
+                                                    <option value="{{$rows->cmuitaccount}}">{{$fullname}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -300,11 +317,6 @@
                         </div>
                        
                     </div>
-
-
-
-
-
 
                 @endif
 
@@ -509,7 +521,8 @@
             })
         });
 
-        // ทำการอนุมัติ / ไม่อนุมัติ /ส่งต่อผู้บริหาร
+
+               // ทำการอนุมัติ / ไม่อนุมัติ /ส่งต่อผู้บริหาร
         $("#approve_booking_form").submit(function (e) {
             e.preventDefault();
             const fd = new FormData(this);
@@ -535,6 +548,35 @@
                 }
             });
         });
+
+        $("#payment_form").submit(function (e) {
+            e.preventDefault();
+            const fd = new FormData(this);
+            $.ajax({
+                url: "/admin/payment/setdata",
+                method: 'post',
+                data: fd,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response);
+                    if (response.status == 200) {
+                        Swal.fire({
+                            title: 'บันทึกข้อมูลการชำระเงินแล้ว !',
+                            text: 'และท่านยังสามาถแก้ไข รายละเอียดได้จนกว่าจะทำการอนุมัติรายการ  ',
+                            icon: 'success'
+                        }).then((result) => {
+                           //location.reload();
+                        });
+                    }
+                }
+            });
+
+
+        });
+
         getAssign();
     });
 </script>
