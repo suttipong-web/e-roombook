@@ -161,28 +161,30 @@ class HelperService
     // ฟังก์ชันสำหรับการส่งข้อความ
     function sendMessageTOline($access_token, $message)
     {
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://notify-api.line.me/api/notify',
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => '',
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 0,
-              CURLOPT_FOLLOWLOCATION => true,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS => 'message=' . $message . '',
-              CURLOPT_HTTPHEADER => array(
-                 'Authorization: Bearer ' . $access_token . '',
-                 'Content-Type: application/x-www-form-urlencoded'
-              ),
-            ));    
-            $response = curl_exec($curl);
-            curl_close($curl);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://notify-api.line.me/api/notify',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => 'message=' . $message . '',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $access_token . '',
+                'Content-Type: application/x-www-form-urlencoded'
+            ),
+        )
+        );
+        $response = curl_exec($curl);
+        curl_close($curl);
         return $response;
     }
-    public function getlineTokenAdminRoom($roomID,$typeAdmin){
-        
+    public function getlineTokenAdminRoom($roomID, $typeAdmin)
+    {
+
         $sql = " 
         SELECT
             admin_roooms.adminroom_type_id,
@@ -196,7 +198,13 @@ class HelperService
             admin_roooms.adminroom_type_id = '{$typeAdmin}'
         ";
         $ListAdmin = DB::select(DB::raw($sql));
-        return   $ListAdmin ;
+        return $ListAdmin;
 
+    }
+
+    public function getAPIKEYPayment()
+    {
+        $token = '596e2bbe6d68d09d38e2a53addaeb1c7';
+        return $token;
     }
 }

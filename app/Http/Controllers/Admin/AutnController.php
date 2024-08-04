@@ -15,7 +15,7 @@ class AutnController extends Controller
     public function getlogin()
     {
         // get CMU APIKEY clientID,clientSecret
-        $cmuKey  = DB::table('tbl_apikey')
+        $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
@@ -29,10 +29,10 @@ class AutnController extends Controller
     }
 
     // POST API CMU OAUTH  REQEUST authorization_code FORM  https://oauth.cmu.ac.th/v1/GetToken.aspx?code
-    public  function  authorization_code(Request $request)
+    public function authorization_code(Request $request)
     {
         $code = request()->query('code');
-        $cmuKey  = DB::table('tbl_apikey')
+        $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
@@ -55,7 +55,8 @@ class AutnController extends Controller
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded'
             ),
-        ));
+        )
+        );
 
         $responseAuthCode = curl_exec($curl);
         curl_close($curl);
@@ -66,7 +67,7 @@ class AutnController extends Controller
                 'displayError' => true
             ]);
         }
-        $access_token =  $callback_dataAuthCode['access_token'];
+        $access_token = $callback_dataAuthCode['access_token'];
 
         // เมื่อได้  access_token ก็  CURLOPT_CUSTOMREQUEST   ไปขอ basicinfo ด้วย access_token ที่ได้ 
         // return   basicinfo 
@@ -84,7 +85,8 @@ class AutnController extends Controller
             CURLOPT_HTTPHEADER => array(
                 "cache-control: no-cache"
             ),
-        ));
+        )
+        );
         $responseInfo = curl_exec($curlStep2);
         // รับ response และ แปลงข้อมูลเป็น json
         $cmuitaccount = json_decode($responseInfo, true);
@@ -93,7 +95,7 @@ class AutnController extends Controller
 
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
-            $users  = User::where('email', $email)->first();
+            $users = User::where('email', $email)->first();
             if ($users["isAdmin"]) {
 
                 // UPDATE  ข้อมูลในตาราง Table  user 
@@ -104,22 +106,28 @@ class AutnController extends Controller
                     'lastname_TH' => $cmuitaccount["lastname_TH"],
                     'itaccounttype_id' => $cmuitaccount["itaccounttype_id"],
                     'itaccounttype_TH' => $cmuitaccount["itaccounttype_TH"],
-                    'updated_at' =>  Carbon::now(),
-                    'last_activity' =>  Carbon::now()
+                    'updated_at' => Carbon::now(),
+                    'last_activity' => Carbon::now()
                 ];
                 $users->update($setData);
                 // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
                 //$request->session()->put('user', $users, 120);
-                $fullname =  $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
+                $fullname = $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
 
                 $request->session()->put('cmuitaccount', $email);
-                $request->session()->put('userfullname',  $fullname);
+                $request->session()->put('userfullname', $fullname);
                 $request->session()->put('dep_id', $users["dep_id"]);
                 $request->session()->put('isAdmin', 1);
                 $request->session()->put('isDean', $users["isDean"]);
                 $request->session()->put('last_activity', Carbon::now());
                 $request->session()->put('positionName', $users["positionName"]);
                 $request->session()->put('positionName2', $users["positionName2"]);
+                $request->session()->put('is_step_secretary', $users["is_step_secretary"]);
+                $request->session()->put('is_step_dean', $users["is_step_dean"]);
+                $request->session()->put('is_step_eng', $users["is_step_eng"]);
+                $request->session()->put('is_step_secretary', $users["is_step_secretary"]);
+                $request->session()->put('is_step_dean', $users["is_step_dean"]);
+                $request->session()->put('is_step_eng', $users["is_step_eng"]);
 
 
                 return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
@@ -156,4 +164,6 @@ class AutnController extends Controller
             return redirect()->back()->with('error', 'Invalid credentials');
         }
     }
+
+
 }

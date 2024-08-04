@@ -269,7 +269,6 @@
                         <h3>ตั้งค่า กำหนดผู้ปฏิบัติงาน</h3>
                         <div>
                             <div class="col-12">
-
                                 <div class="justify-content-center  w-75  setFn">
                                     <div class=" d-flex ">
                                         <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
@@ -311,8 +310,6 @@
                                     </table>
 
                                 </div>
-
-
                             </div>
                         </div>
                        
@@ -355,6 +352,7 @@
                                             การส่งให้ผู้บริหารอนุมัติรายการขอใช้ห้อง
                                             และท่านจะไม่สามารถทำการอนุมัติรายการนี้ได้อีก </div>
                                     </div>
+                                    <input type="hidden"  name="hinden_bookingID" value="{{ $detailBooking[0]->id }}">
                                     <button type="submit" id="btnActionssubmit" class="btn btn-primary mx-3">
                                         ดำเนินการ
                                     </button>
@@ -449,7 +447,6 @@
                             text: response.message,
                             icon: 'success'
                         }).then((result) => {
-
                             getAssign();
                             (".custom-combobox-input").val('');
                             $("#assignEmp").val("0").change();
@@ -521,11 +518,11 @@
             })
         });
 
-
-               // ทำการอนุมัติ / ไม่อนุมัติ /ส่งต่อผู้บริหาร
+        // ทำการอนุมัติ / ไม่อนุมัติ /ส่งต่อผู้บริหาร
         $("#approve_booking_form").submit(function (e) {
             e.preventDefault();
             const fd = new FormData(this);
+            console.log('start');
             $.ajax({
                 url: "{{ url('/admin/approveBooking') }}",
                 method: 'post',
@@ -541,8 +538,9 @@
                             title: 'Successfully !',
                             text: response.message,
                             icon: 'success'
-                        }).then((result) => {
-                            location.reload();
+                        }).then((result) => {               
+                            // GO to page with status          
+                            window.location.href='/admin/viewstatus/'+response.pagestatus;
                         });
                     }
                 }

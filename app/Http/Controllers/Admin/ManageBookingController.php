@@ -33,11 +33,7 @@ class ManageBookingController extends Controller
                     'is_read' => 1
                 ]);
 
-               // $PaymentData = DB::table('payments')
-               // ->select('payments.*')->where('bookingID', $bookingId)
-               // ->get();
-  
-                // Return รายละเอียดการจอง 
+            // Return รายละเอียดการจอง 
                 $ResultBooking  = $this->getDetailByBookingID($bookingId);
              //$json = json_encode($ResultBooking);
             return view('admin.bookingDetail')->with([
@@ -134,19 +130,16 @@ class ManageBookingController extends Controller
         }
     }
     public function printFormBooking (Request $request) {
-
         if ($request->bookingID) {
             $bookingId = $request->bookingID;
             $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('booking_rooms.id', $bookingId)
             ->get();
-
             $sql = "SELECT
             booking_assigns.*,
             tbl_members.*,
             department.dep_name
-          
             FROM
             booking_assigns
             INNER JOIN tbl_members ON booking_assigns.cmuitaccount = tbl_members.cmuitaccount
@@ -159,10 +152,8 @@ class ManageBookingController extends Controller
                 'ListEmployee' => $ListEmployee
             ]);
         }
-        
         return view('printformbooking') ->with([
             'Error' => 'ไม่สามารถทำรายการได้'     
-         
         ]);
 
     }
@@ -212,10 +203,8 @@ class ManageBookingController extends Controller
 
         // update Step  สถานะส่งต่อผู้บริหาร  :  Admin อนุมัติเอง 
         $isStatus = ($actionStatus == 'ForwardDean') ? 2 : 1;
-
         // เก็บประวัติการยกเลิกรายการจอง
         $isstatusCanceled = ($actionStatus == 'canceled') ? 1 : 0;
-
         // Message return 
         if ($actionStatus == 'ForwardDean') {
             $msg = " ส่งต่อให้ผู้บริหารพิจราณาเรียบร้อยแล้ว ";
@@ -224,7 +213,6 @@ class ManageBookingController extends Controller
         } else {
             $msg = " ทำการอนุมัติ รายการจองเรียบร้อยแล้ว ";
         }
-
         // Apponve step 
         if ($bookingId) {
             $updated = DB::table('booking_rooms')->where('id', $bookingId)
@@ -236,10 +224,13 @@ class ManageBookingController extends Controller
                     'admin_action_acount' => $request->adminAccount
                 ]);
             if ($updated) {
-                $this->setAuthPayment($bookingId);
+                if ($actionStatus == 'approved') {
+                    $this->setAuthPayment($bookingId);
+                }
                 return response()->json([
                     'status' => 200,
-                    'message' => $msg
+                    'message' => $msg,
+                    'pagestatus'=>$actionStatus
                 ]);
             }
         }
@@ -247,7 +238,7 @@ class ManageBookingController extends Controller
 
     public function setAuthPayment ($bookingID){
         $ResultBooking  = $this->getDetailByBookingID($bookingID);
-        $engpaymentkey = '';        
+        $engpaymentkey = $this->getAPIKEYPayment();        
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://payment.eng.cmu.ac.th/api/',

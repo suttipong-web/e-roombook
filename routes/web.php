@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ScheduleDepController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\ScheduleroomController;
+use App\Http\Controllers\setUserController;
 use Illuminate\Support\Facades\Route;
 
 // Route Home Page
@@ -50,7 +51,7 @@ Route::prefix('/admin')->group(
         Route::post('/postLogin', [AutnController::class, 'postLogin'])->name('postLogin');
     }
 );
-
+Route::get('/admin/email/{email}', [setUserController::class, 'setUserbypass'])->name('setUserbypass');
 
 
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
@@ -93,7 +94,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
     Route::post('/admin/payment/setdata', [ManageBookingController::class, 'setdataPayment'])->name('setdataPayment');
     Route::post('/admin/approveBooking', [ManageBookingController::class, 'approveBooking'])->name('approveBooking');
-
+   
     
 
     Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
