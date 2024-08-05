@@ -13,16 +13,13 @@
 </head>
 
 <body>
-
-
-
     <div class="container px-10">
         <div class="container">
             <div class="row my-5">
                 <div class="col-lg-12">
                     <div class="card shadow">
                         <div class="card-header bg-danger d-flex justify-content-between align-items-center">
-                            
+
                         </div>
                         <div class="card-body" id="show_all">
                             <h1 class="text-center text-secondary my-5">Loading...</h1>
@@ -43,7 +40,7 @@
     <script>
         //Add Data เพิ่มข้อมูลใหม่
         $(function() {
-          
+
 
 
 

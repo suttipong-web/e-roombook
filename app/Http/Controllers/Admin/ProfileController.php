@@ -18,7 +18,7 @@ class ProfileController extends Controller
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('booking_AdminApprove', 0)
             ->get();
-
+            
         return view('admin.dashboard')->with([
             'title' => 'Dashboard',
             'sessionUser' => $user,

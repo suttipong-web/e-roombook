@@ -10,6 +10,7 @@ use PhpParser\Node\Expr\FuncCall;
 use App\Models\booking_rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\class\HelperService;
 
 class ManageBookingController extends Controller
 {
@@ -33,7 +34,8 @@ class ManageBookingController extends Controller
                     'is_read' => 1
                 ]);
 
-            // Return รายละเอียดการจอง 
+              //  $this->setAuthPayment($bookingId);
+              // Return รายละเอียดการจอง 
                 $ResultBooking  = $this->getDetailByBookingID($bookingId);
              //$json = json_encode($ResultBooking);
             return view('admin.bookingDetail')->with([
@@ -51,8 +53,6 @@ class ManageBookingController extends Controller
         booking_rooms.*,
         booking_rooms.updated_at,
         payments.id AS paymentid,
-        payments.payment_ref1,
-        payments.payment_ref2,
         payments.customerName,
         payments.customerEmail,
         payments.customerPhone,
@@ -63,6 +63,8 @@ class ManageBookingController extends Controller
         payments.payment_status,
         payments.is_confirm,
         payments.payment_date,
+        payments.customerToken,
+         payments.urlPayment,
         rooms.roomFullName,
         rooms.roomSize,
         rooms.thumbnail,
@@ -118,7 +120,6 @@ class ManageBookingController extends Controller
                 ]);
             }
         }
-
     }
 
     public function deleteAssign(Request $request)
@@ -186,8 +187,8 @@ class ManageBookingController extends Controller
                     'status' => 200
                 ]);
            } 
-        }   
-         
+        }            
+        
         return response()->json([
                 'status' => 208,
                 'error' => 'ERROR'
@@ -197,7 +198,8 @@ class ManageBookingController extends Controller
 
     // Apponve 
     public function approveBooking(Request $request)
-    {
+    {   
+        $class = new HelperService();
         $bookingId = $request->hinden_bookingID;
         $actionStatus = $request->chkStatus;
 
@@ -226,7 +228,10 @@ class ManageBookingController extends Controller
             if ($updated) {
                 if ($actionStatus == 'approved') {
                     $this->setAuthPayment($bookingId);
-                }
+                    $msg=" TEST จองห้อง ".$bookingId."...";
+                    $class->sendMessageTOline('mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX',$msg);   
+                   // $listAdmin = $class->getlineTokenAdminRoom();            
+                 }
                 return response()->json([
                     'status' => 200,
                     'message' => $msg,
@@ -237,8 +242,9 @@ class ManageBookingController extends Controller
     }
 
     public function setAuthPayment ($bookingID){
-        $ResultBooking  = $this->getDetailByBookingID($bookingID);
-        $engpaymentkey = $this->getAPIKEYPayment();        
+        $class = new HelperService();
+        $ResultBooking  = $this->getDetailByBookingID($bookingID);    
+        $engpaymentkey = $class->getAPIKEYPayment();        
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://payment.eng.cmu.ac.th/api/',
@@ -251,12 +257,12 @@ class ManageBookingController extends Controller
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS =>'{
             "APIKEY": "'.$engpaymentkey.'",
-            "customer_Name":"'.$ResultBooking["customerName"].'",
-            "customer_Taxid":"'.$ResultBooking["customerTaxid"].'",
-            "customer_Phone":"'.$ResultBooking["customerPhone"].'",
-            "customer_Email":"'.$ResultBooking["customerName"].'",
-            "customer_Address":"'.$ResultBooking["customerAddress"].'",
-            "Amount":"'.$ResultBooking["totalAmount"].'",	
+            "customer_Name":"'.$ResultBooking[0]->customerName.'",
+            "customer_Taxid":"'.$ResultBooking[0]->customerTaxid.'",
+            "customer_Phone":"'.$ResultBooking[0]->customerPhone.'",
+            "customer_Email":"'.$ResultBooking[0]->customerName.'",
+            "customer_Address":"'.$ResultBooking[0]->customerAddress.'",
+            "Amount":"'.$ResultBooking[0]->totalAmount.'",	
             "reUrl":"https://e-roombooking.eng.cmu.ac.th/paid"      
         }',
         CURLOPT_HTTPHEADER => array(
@@ -265,7 +271,14 @@ class ManageBookingController extends Controller
         ));
         $response = curl_exec($curl);
         curl_close($curl);
-        //echo $response;
+        $callback_payment = json_decode($response, true);
+        //echo print_r($callback_payment);
+        //update LINK 
+        $updated = DB::table('payments')->where('bookingID',$bookingID)
+                ->update([
+                    'customerToken' => $callback_payment['customerToken'],
+                    'urlPayment' =>$callback_payment['urlPayment']    
+                ]);
 
     }
 

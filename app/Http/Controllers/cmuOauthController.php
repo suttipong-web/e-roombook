@@ -111,7 +111,6 @@ class cmuOauthController extends Controller
                 $request->session()->put('positionName', $users["positionName"]);
                 $request->session()->put('positionName2', $users["positionName2"]);
 
-
                 //check Admin  
                 if ($page == "booking") {
                     return redirect()->intended('/booking/check/' . $roomId . '/eng/' . $roomData->roomFullName)->with('success', 'Login Successfull');
