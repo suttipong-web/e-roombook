@@ -51,22 +51,21 @@ Route::prefix('/admin')->group(
         Route::post('/postLogin', [AutnController::class, 'postLogin'])->name('postLogin');
     }
 );
+
+
 Route::get('/admin/email/{email}', [setUserController::class, 'setUserbypass'])->name('setUserbypass');
+Route::get('/admin/secretary', [setUserController::class, 'dashboard'])->name('dashboard');
 
 
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 
 Route::group(['middleware' => ['admin_auth']], function () {
-
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/bookingDetail', [DashboardController::class, 'bookingDetail'])->name('bookingDetail');
-   
-
     Route::get('/admin/viewstatus/{getStatus}', [DashboardController::class, 'viewStatus'])->name('viewStatus');
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
     
-
     //Route  ระบบจัดการห้อง RoomsController
     Route::get('/admin', [DashboardController::class, 'adminindex'])->name('้adminindex');
     Route::get('/admin/room/', [RoomsController::class, 'index']);
@@ -96,7 +95,6 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::post('/admin/approveBooking', [ManageBookingController::class, 'approveBooking'])->name('approveBooking');
    
     
-
     Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
     Route::get('/admin/report', [ReportController::class, 'index'])->name('index');
     Route::get('/admin/report/bookingtable', [ReportController::class, 'bookingtable'])->name('bookingtable');

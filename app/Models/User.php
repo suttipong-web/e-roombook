@@ -39,7 +39,8 @@ class User extends Authenticatable
         'lineToken',
         'is_step_secretary',
         'is_step_dean',
-        'is_step_eng'
+        'is_step_eng',
+        'user_type'
 
     ];
 

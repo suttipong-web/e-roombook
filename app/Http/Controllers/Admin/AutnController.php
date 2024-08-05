@@ -97,7 +97,6 @@ class AutnController extends Controller
             $email = $cmuitaccount["cmuitaccount"];
             $users = User::where('email', $email)->first();
             if ($users["isAdmin"]) {
-
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
                     'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
@@ -117,7 +116,7 @@ class AutnController extends Controller
                 $request->session()->put('cmuitaccount', $email);
                 $request->session()->put('userfullname', $fullname);
                 $request->session()->put('dep_id', $users["dep_id"]);
-                $request->session()->put('isAdmin', 1);
+                $request->session()->put('isAdmin', $users["isAdmin"]);
                 $request->session()->put('isDean', $users["isDean"]);
                 $request->session()->put('last_activity', Carbon::now());
                 $request->session()->put('positionName', $users["positionName"]);
@@ -125,9 +124,7 @@ class AutnController extends Controller
                 $request->session()->put('is_step_secretary', $users["is_step_secretary"]);
                 $request->session()->put('is_step_dean', $users["is_step_dean"]);
                 $request->session()->put('is_step_eng', $users["is_step_eng"]);
-                $request->session()->put('is_step_secretary', $users["is_step_secretary"]);
-                $request->session()->put('is_step_dean', $users["is_step_dean"]);
-                $request->session()->put('is_step_eng', $users["is_step_eng"]);
+ 
 
 
                 return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
