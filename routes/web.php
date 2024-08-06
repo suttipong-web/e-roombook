@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ScheduleDepController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\Admin\secretaryController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\ScheduleroomController;
 use App\Http\Controllers\setUserController;
@@ -54,8 +55,8 @@ Route::prefix('/admin')->group(
 
 
 Route::get('/admin/email/{email}', [setUserController::class, 'setUserbypass'])->name('setUserbypass');
-Route::get('/admin/secretary', [setUserController::class, 'dashboard'])->name('dashboard');
 
+Route::get('/admin/secretary', [secretaryController::class, 'index'])->name('secretary.dashboard');
 
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 

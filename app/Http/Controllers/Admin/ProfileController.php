@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\booking_rooms;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
@@ -29,6 +30,13 @@ class ProfileController extends Controller
     public function logout()
     {
         auth()->logout();
+                Session::forget('cmuitaccount');
+                Session::forget('userfullname');
+                Session::forget('isAdmin');
+                Session::forget('user_type');
+                Session::forget('userfullname');
+                Session::flush();        
+        
         return redirect()->route('getLogin')->with('success', 'You have been successfully logged out');
     }
 }

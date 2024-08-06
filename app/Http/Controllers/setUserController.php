@@ -23,16 +23,21 @@ class setUserController extends Controller
                 $request->session()->put('isDean', $profile["isDean"]);
                 $request->session()->put('last_activity', Carbon::now());
                 $request->session()->put('positionName', $profile["positionName"]);
-                $request->session()->put('positionName2', $profile["positionName2"]);
-                
+                $request->session()->put('positionName2', $profile["positionName2"]);                
                 $request->session()->put('is_step_secretary', $profile["is_step_secretary"]);
                 $request->session()->put('is_step_dean', $profile["is_step_dean"]);
                 $request->session()->put('is_step_eng', $profile["is_step_eng"]);
+                $request->session()->put('user_type', $profile["user_type"]);
 
-                if($profile["is_step_secretary"]){
+             
+                if($profile["user_type"]=="secretary"){
                     return redirect()->intended('/admin/secretary')->with('success', 'Login Successfull');
-                }else if($profile["is_step_dean"]){
+                }else if($profile["dean"]){
                     return redirect()->intended('/admin/dean')->with('success', 'Login Successfull');
+                }else if($profile["eng"]){
+                    return redirect()->intended('/admin/eng')->with('success', 'Login Successfull');
+                }else if($profile["deaneng"]){
+                    return redirect()->intended('/admin/deaneng')->with('success', 'Login Successfull');
                 }else {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 }

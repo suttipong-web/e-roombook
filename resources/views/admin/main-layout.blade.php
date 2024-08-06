@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>ผู้ดูแลระบบจองห้อง </title> @php 
-   isset($title)? '|' . $title : ''     @endphp  @yield('ytitle')</title>
+    <title>ผู้ดูแลระบบจองห้อง </title> @php
+    isset($title) ? '|' . $title : ''; @endphp @yield('ytitle')</title>
     <!-- Custom fonts for this template-->
     <link href="/admin_asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template-->
@@ -23,11 +23,19 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('admin.partials.left-sidebar')
+        @if (Session::get('user_type') == 'secretary')
+            @include('admin.partials.left-sidebar_secretary')
+        @elseif (Session::get('user_type') == 'secretary')
+            @include('admin.partials.left-sidebar_secretary')
+        @else
+            @include('admin.partials.left-sidebar')
+        @endif
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
+
                 @include('admin.partials.navbar')
                 @yield('content-header')
                 <!-- Begin Page Content -->

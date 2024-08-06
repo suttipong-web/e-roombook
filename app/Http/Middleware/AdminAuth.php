@@ -11,7 +11,7 @@ class AdminAuth
     public function handle(Request $request, Closure $next)
     {
         if ($request->session()->has('cmuitaccount')) {
-            if ($request->session()->has('isAdmin')) {
+            if ($request->session()->get('isAdmin') || ($request->session()->get('user_type')=="admin") ) {
                 $userFullname = $request->session()->get('cmuitaccount');
                 $last_activity = $request->session()->get('last_activity');
                 if (now()->diffInMinutes($last_activity) > 120) {
