@@ -11,6 +11,8 @@ use App\Models\booking_rooms;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\class\HelperService;
+use App\Models\stepappove;
+use App\Models\User;
 
 class ManageBookingController extends Controller
 {
@@ -210,6 +212,22 @@ class ManageBookingController extends Controller
         // Message return 
         if ($actionStatus == 'ForwardDean') {
             $msg = " ส่งต่อให้ผู้บริหารพิจราณาเรียบร้อยแล้ว ";
+
+            //ส่งต่อตามส่ายงาน
+            $getEmailDean =  DB::table('users')
+            ->select('users.email')
+            ->where('user_type','eng')
+            ->get();        
+ 
+            if($getEmailDean){
+                 $setDataStep = [
+                'bookingID' =>  $bookingId,
+                'email' => $getEmailDean[0]->email,
+                'is_step' => 'eng'   
+                 ];          
+            $result =  stepappove::create($setDataStep);  
+          }
+
         } else if ($actionStatus == 'canceled') {
             $msg = " ทำรายการยกเลิกรายการเรียบร้อยแล้ว ";
         } else {

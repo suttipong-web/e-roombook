@@ -23,9 +23,10 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @if (Session::get('user_type') == 'secretary')
-            @include('admin.partials.left-sidebar_secretary')
-        @elseif (Session::get('user_type') == 'secretary')
+        @if (Session::get('user_type') == 'secretary' ||
+                Session::get('user_type') == 'deaneng' ||
+                Session::get('user_type') == 'eng' ||
+                Session::get('user_type') == 'dean')
             @include('admin.partials.left-sidebar_secretary')
         @else
             @include('admin.partials.left-sidebar')

@@ -18,7 +18,7 @@
 
         </div>
     </a>
-
+    <div class="text-center text-white"> {{ Session::get('positionName2') }}</div>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
