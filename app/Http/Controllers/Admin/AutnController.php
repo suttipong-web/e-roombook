@@ -126,14 +126,8 @@ class AutnController extends Controller
                 $request->session()->put('is_step_eng', $users["is_step_eng"]); 
                 $request->session()->put('user_type', $users["user_type"]);
 
-                if($users["user_type"]=="secretary"){
-                    return redirect()->intended('/admin/secretary')->with('success', 'Login Successfull');
-                }else if($users["dean"]){
-                    return redirect()->intended('/admin/dean')->with('success', 'Login Successfull');
-                }else if($users["eng"]){
-                    return redirect()->intended('/admin/eng')->with('success', 'Login Successfull');
-                }else if($users["deaneng"]){
-                    return redirect()->intended('/admin/deaneng')->with('success', 'Login Successfull');
+                if($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
+                    return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
                 }else {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 }

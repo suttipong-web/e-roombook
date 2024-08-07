@@ -50,7 +50,7 @@ return new class extends Migration
             $table->string('dean_action_acount')->nullable();
             $table->string('booking_fileurl')->nullable();
             $table->boolean('is_read')->default(false);
-            
+            $table->boolean('dean_appove_status')->default(false);            
             $table->timestamps();
         });
     }

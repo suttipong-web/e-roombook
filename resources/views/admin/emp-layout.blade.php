@@ -23,15 +23,8 @@
     {{  session('user_type')  }}
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @if (
-                session('user_type') == 'secretary' ||
-                session('user_type') == 'deaneng' ||
-                session('user_type') == 'eng' ||
-                session('user_type') == 'dean'
-            )
-                    @include('admin.partials.left-sidebar_secretary')
-        @else
-            @include('admin.partials.left-sidebar')
+        @if 
+            @include('admin.partials.left_users-sidebar')
         @endif
 
         <!-- Content Wrapper -->

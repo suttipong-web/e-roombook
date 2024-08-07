@@ -5,13 +5,17 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\Admin\AutnController;
+use App\Http\Controllers\Admin\deanApporveController;
+use App\Http\Controllers\Admin\engdeanApporveController;
 use App\Http\Controllers\Admin\ManageBookingController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ScheduleDepController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\secretaryController;
+use App\Http\Controllers\Admin\stepApporveController;
 use App\Http\Controllers\cmuOauthController;
+use App\Http\Controllers\engApporveController;
 use App\Http\Controllers\ScheduleroomController;
 use App\Http\Controllers\setUserController;
 use Illuminate\Support\Facades\Route;
@@ -55,8 +59,16 @@ Route::prefix('/admin')->group(
 
 
 Route::get('/admin/email/{email}', [setUserController::class, 'setUserbypass'])->name('setUserbypass');
-
+// Step apporve
 Route::get('/admin/secretary', [secretaryController::class, 'index'])->name('secretary.dashboard');
+Route::get('/admin/dean', [deanApporveController::class, 'index'])->name('dean.dashboard');
+Route::get('/admin/deaneng', [engdeanApporveController::class, 'index'])->name('deaneng.dashboard');
+Route::get('/admin/eng', [engApporveController::class, 'index'])->name('eng.dashboard');
+
+Route::get('/admin/stepapporve', [stepApporveController::class, 'index'])->name('apporve.dashboard');
+Route::get('/admin/apporve_detail/{getStatus}/{bookingID}/{token}/{stepapporveId}', [stepApporveController::class, 'bookingDetail'])->name('apporve.detali');
+Route::post('/admin/dean/approveBooking', [stepApporveController::class, 'approveBooking'])->name('dean.approveBooking');
+Route::get('/admin/listapprove_booking', [stepApporveController::class, 'listapprove_booking'])->name('dean.listapprove_booking');
 
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 
@@ -79,6 +91,9 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/room/fetchAdmin', [RoomsController::class, 'fetchAdmin'])->name('fetchAdmin');
     Route::get('/admin/room/getAdmin/{roomID}', [RoomsController::class, 'pageAdmin'])->name('pageAdmin');
     Route::delete('/admin/room/delete/admin', [RoomsController::class, 'deleteAdmin'])->name('deleteAdmin');
+
+
+
     
     Route::get('/admin/room/AddAdminRoom', [RoomsController::class, 'addAdmin'])->name('addAdmin');
     

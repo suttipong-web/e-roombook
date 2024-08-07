@@ -207,4 +207,14 @@ class HelperService
         $token = '596e2bbe6d68d09d38e2a53addaeb1c7';
         return $token;
     }
+
+    public function getEmailStepAcction($step) {
+        $getEmailDean =  DB::table('users')
+        ->select('users.email')
+        ->where('user_type',$step)
+        ->get();        
+        return  $getEmailDean[0]->email;
+    }
+
+
 }

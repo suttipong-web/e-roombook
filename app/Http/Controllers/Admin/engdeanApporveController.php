@@ -5,15 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class secretaryController extends Controller
+class engdeanApporveController extends Controller
 {
-    //เลขาคณะ
+     //รองคณบดี
     public function __construct()
     {
-        $this->middleware('checkusertype:secretary');
+        $this->middleware('checkusertype:deaneng');
     }
     public function index()
     {
-        return view('admin.secretary_dashboard');
+        return view('admin.eng_dashboard');
     }
 }

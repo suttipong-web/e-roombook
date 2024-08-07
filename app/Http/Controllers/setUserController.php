@@ -30,14 +30,8 @@ class setUserController extends Controller
                 $request->session()->put('user_type', $profile["user_type"]);
 
              
-                if($profile["user_type"]=="secretary"){
-                    return redirect()->intended('/admin/secretary')->with('success', 'Login Successfull');
-                }else if($profile["dean"]){
-                    return redirect()->intended('/admin/dean')->with('success', 'Login Successfull');
-                }else if($profile["eng"]){
-                    return redirect()->intended('/admin/eng')->with('success', 'Login Successfull');
-                }else if($profile["deaneng"]){
-                    return redirect()->intended('/admin/deaneng')->with('success', 'Login Successfull');
+                if($profile["user_type"]=="secretary" || $profile["user_type"]=="eng" || $profile["user_type"]=="deaneng" || $profile["user_type"]=="dean"){
+                    return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
                 }else {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 }

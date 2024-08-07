@@ -35,7 +35,7 @@
 
 
     <div class="sidebar-heading">
-        Report
+        จัดการ
     </div>
     <li class="nav-item active">
         <a href="/admin/listapprove_booking" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
