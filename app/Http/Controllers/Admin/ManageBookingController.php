@@ -210,6 +210,11 @@ class ManageBookingController extends Controller
         // Message return 
         if ($actionStatus == 'ForwardDean') {
             $msg = " ส่งต่อให้ผู้บริหารพิจราณาเรียบร้อยแล้ว ";
+            // update  ส่งต่อผู้บริหาร
+            $updated1 = DB::table('booking_rooms')->where('id', $bookingId)
+            ->update([
+                'is_step_approve' => 'eng'             
+            ]);          
         } else if ($actionStatus == 'canceled') {
             $msg = " ทำรายการยกเลิกรายการเรียบร้อยแล้ว ";
         } else {
