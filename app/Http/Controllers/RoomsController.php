@@ -186,14 +186,14 @@ class RoomsController extends Controller
         if ($request->roomid) {
             $sql = " SELECT
            admin_roooms.*,
-           tbl_members.*,
+           users.*,
            department.dep_name,
            rooms.roomFullName,
            rooms.roomTitle
            FROM
            admin_roooms
-           INNER JOIN tbl_members ON admin_roooms.cmuitaccount = tbl_members.cmuitaccount
-           left JOIN department ON tbl_members.dep_id = department.dep_id
+           INNER JOIN users ON admin_roooms.cmuitaccount = users.email
+           left JOIN department ON users.dep_id = department.dep_id
            INNER JOIN rooms ON admin_roooms.roomID = rooms.id ";
             $ListAdmin = DB::select(DB::raw($sql));
             return response()->json([
@@ -244,7 +244,11 @@ class RoomsController extends Controller
             
             $roomData = Rooms::find($request->roomID);
             $sql = " SELECT
-             admin_roooms.*,
+             admin_roooms.id as AdminId,
+            admin_roooms.roomID,
+            admin_roooms.cmuitaccount,
+            admin_roooms.phone,
+            admin_roooms.adminroom_type_id,
             users.*,
             department.dep_name,
             rooms.roomFullName,

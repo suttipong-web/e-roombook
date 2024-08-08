@@ -19,8 +19,8 @@
         cursor: pointer;
     }
 
-    .tableListbooking {
-        font-size: 12px;
+    #tableListbooking {
+        font-size: 14px;
     }
 </style>
 <!-- /.content-header -->
@@ -148,13 +148,15 @@
                 <table class="table table-sm mt-2" id="tableListbooking">
                     <thead class="table-secondary ">
                         <tr style="text-align: left;">
-                            <th width="15%">วันที่ทำรายการ</th>
+                            <th width="15%">วันที่ขอ</th>
+                            <th width="15%">วันที่ขอ</th>
                             <th width="12%">ช่วงเวลาขอใช้</th>
                             <th width="25%">ห้องที่ขอใช้</th>
                             <th width="25%">เรื่อง</th>
                             <th width="13%">ผู้จอง</th>
-                            <th width="13%" class="text-center">บุคคล</th>  
-                            <th></th>                    
+                            <th width="10%" class="text-center">บุคคล</th>
+                            <th width="20">*หมายเหตุ</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -163,25 +165,44 @@
                                 <tr style="text-align: left;">
                                     <td>
                                         @if(!$rows->is_read)
-                                        <span class="text-danger"><i class="bi bi-envelope-exclamation-fill"></i></span>
+                                            <span class="text-danger"><i class="bi bi-envelope-exclamation-fill"></i></span>
                                         @endif
-                                        {{ $getService->convertDateThai($rows->booking_at, true, true) }}
+                                        {{ $getService->convertDateThai($rows->booking_at, false, true) }}
+                                    </td>
+                                    <td> 
+                                        @if (!empty($rows->dean_action_date))
+                                       {{$getService->convertDateThai($rows->dean_action_date, false, true)}} 
+                                       @else
+                                       {{$getService->convertDateThai($rows->admin_action_date, false, true)}} 
+                                        @endif
                                     </td>
                                     <td class="text-center">
-                                        {{$getService->convertDateThai($rows->schedule_startdate, true, true)}}
+                                        {{$getService->convertDateThai($rows->schedule_startdate, false, true)}}
                                         <br />
                                         {{ Str::limit($rows->booking_time_start, 5, '') }} -
                                         {{ Str::limit($rows->booking_time_finish, 5, '') }}
                                     </td>
                                     <td>{{ $rows->roomFullName }} </td>
                                     <td>{{ $rows->booking_subject }} </td>
-                                    <td>{{ $rows->booking_booker }} </td>
-                                    <td class="text-center">@if($rows->booking_type=="general")
-                                            ภายนอก
-                                        @else
-                                            ภายใน
+                                    <td>{{ $rows->booking_booker }} 
+                                    <br/>
+                                    @if($rows->booking_type == "general")
+                                        ภายนอก
+                                    @else
+                                        ภายใน
+                                    @endif
+
+                                    </td>
+                                    <td class="text-center">
+                                    
+                                    </td>
+                                    <td>
+                                        @if ($rows->dean_appove_status)
+                                            อนุมัติรายการโดยผู้บริหาร
+
                                         @endif
                                     </td>
+
                                     <td class="text-center">
 
                                         <a class="btn btn-primary btn-sm"
@@ -193,7 +214,7 @@
                                             </svg></a>
 
                                     </td>
-                                  
+
                                 </tr>
                             @endforeach
                         @else
@@ -374,7 +395,7 @@
 <script>
     $(function () {
         $("#tableListbooking").DataTable({
-            order: [0, 'ASC']
+            order: [1, 'desc']
         });
 
 

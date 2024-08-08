@@ -147,7 +147,7 @@ class stepApporveController extends Controller
         // update Step  สถานะส่งต่อผู้บริหาร  :  Admin อนุมัติเอง 
         if ($actionStatus == 1) {
             $actionDetail = 'ส่งต่อผู้บริหาร';
-        } else if ($actionStatus == 3) {
+        } elseif ($actionStatus == 3) {
             $actionDetail = 'อนุมัติรายการ โดยคณบดี';
         } else {
             $actionDetail = 'ไม่อนุมติรายการ';
@@ -189,9 +189,9 @@ class stepApporveController extends Controller
                     ];
                     $result = stepappove::create($setDataStep);
                     if ($result) {
-                        $msg = "เรียนผู้บริหารมีรายการขอใช้ห้องมาใหม่...";
+                        $msgLine = "เรียนผู้บริหารมีรายการขอใช้ห้องมาใหม่...";
                         $token = 'mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX';
-                        //$class->sendMessageTOline($token, $msg);
+                        $class->sendMessageTOline($token, $msgLine);
 
                         $msgReturn = "อนุมัติรายการและทำการส่งต่อให้ผู้บริหารแล้ว";
                         return response()->json([
@@ -208,18 +208,25 @@ class stepApporveController extends Controller
                 if ($actionStatus == 3) {
                     $dean_appove_status = 1;
                     $msgReturn = "อนุมัติรายการเรียบร้อยแล้ว";
+
                 }
                 $updated = DB::table('booking_rooms')->where('id', $bookingId)
                     ->update([
                         'dean_appove_status' => $dean_appove_status,
                         'dean_action_date' => Carbon::now(),
-                        'dean_action_acount' => $request->session()->get('cmuitaccount')
+                        'dean_action_acount' => $request->session()->get('cmuitaccount'),
+                        'is_read'=>0
                     ]);
                 if ($updated) {
+
+                    $msgLine =  'เรียนผู้มีผุ้บริหารอนุมัติรายการจองห้องแล้วกรุณาตราวสอบ...';
+                    $token = 'mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX';
+                    $class->sendMessageTOline($token, $msgLine);
                     return response()->json([
                         'status' => 200,
                         'message' => $msgReturn
                     ]);
+                    
                 }
             }
         }

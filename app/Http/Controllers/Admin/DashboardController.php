@@ -61,6 +61,7 @@ class DashboardController extends Controller
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_AdminAction', '=', 'ForwardDean')
+                ->where('dean_appove_status', 0)
                 ->get();
             $titlesCard = "รายการขอใช้ห้องที่ทำการส่งต่อผู้บริหาร";
         }
@@ -73,8 +74,11 @@ class DashboardController extends Controller
         }
         if ($getStatus == 'approved') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
-                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-                ->where('booking_AdminAction', '=', 'approved')
+                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')               
+                ->where(function($query) {
+                    $query->where('dean_appove_status', 1)
+                          ->orWhere('booking_AdminAction', 'approved');
+                })
                 ->get();
             $titlesCard = "รายการขอใช้ห้องที่ทำการอนมุัติ";
         }
@@ -110,14 +114,14 @@ class DashboardController extends Controller
     // return   จำนวนการจองที่ ส่งต่อแผู้บริหาร
     public function getCountBooking_ForwardDean()
     {
-        $Count = booking_rooms::where('booking_AdminAction', '=', 'ForwardDean')->count();
+        $Count = booking_rooms::where('booking_AdminAction', '=', 'ForwardDean')->where('dean_appove_status', 0)->count();
         return $Count;
     }
 
-    // return   จำนวนการจองที่ ส่งต่อแผู้บริหาร
+    // return   จำนวนการจองที่ approved
     public function getCountBooking_Approve()
     {
-        $Count = booking_rooms::where('booking_AdminAction', '=', 'approved')->count();
+        $Count = booking_rooms::where('booking_AdminAction', '=', 'approved')->OrWhere('dean_appove_status', 1)->count();
         return $Count;
     }
 
@@ -177,10 +181,8 @@ class DashboardController extends Controller
             'userRequest' => $userRequest,
             'admin_action_date' => $rows["admin_action_date"],
             'admin_action_acount' => $rows["admin_action_acount"]
-
-
         ]);
     }
 
-    
+
 }

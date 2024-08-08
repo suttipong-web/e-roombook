@@ -249,12 +249,14 @@
                                                 value="{{ $detailBooking[0]->id }}">
                                             <input type="hidden" id="hinden_paymentid" name="hinden_paymentid"
                                                 value="{{ $detailBooking[0]->paymentid }}">
-
+                                        @if ($getStatus != 'approved')
                                             <button type="submit" name="submitPayment" id="submitPayment"
                                                 class=" btn btn-primary">
                                                 <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระ และออกใบเสร็จรับเงิน
 
                                             </button>
+                                        @endif
+
                                         </div>
                                     </div>
                                 </form>
@@ -372,6 +374,7 @@
                                             <h3>ยกเลิกรายการแล้ว</h3>
                                         </div>
                                         <div>
+                                        
                                             ถูกยกเลิกโดย : <span id="admin_action_acount">
                                                 {{ $getService->getFullNameCmuAcount($detailBooking[0]->admin_action_acount) }}
                                             </span> <br />
@@ -389,13 +392,24 @@
                                             <h3>รายการอนุมัติแล้ว</h3>
                                         </div>
                                         <div class="">
+
+                                        <?php
+                                                if(!empty($detailBooking[0]->dean_action_date)) {
+                                                    $dateAppove = $detailBooking[0]->dean_action_date ;
+                                                    $action_acount = $detailBooking[0]->dean_action_acount ;
+                                                }else {
+                                                    $dateAppove =  $detailBooking[0]->admin_action_date ;
+                                                    $action_acount =   $detailBooking[0]->admin_action_acount ;
+                                                }
+                                            ?>
+
                                             อนุมติโดย :
                                             <span id="admin_action_acount">
-                                                {{ $getService->getFullNameCmuAcount($detailBooking[0]->admin_action_acount) }}
+                                                {{ $getService->getFullNameCmuAcount($action_acount) }}
                                             </span>
                                             <br />
                                             เมื่อ : <span id="admin_action_date">
-                                                {{ $getService->convertDateThai($detailBooking[0]->admin_action_date, '', true) }}
+                                                {{ $getService->convertDateThai( $dateAppove , true, true) }}
                                             </span>
 
                                         </div>

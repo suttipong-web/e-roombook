@@ -27,7 +27,7 @@
         display: block;
         margin: 0 auto;
         margin-bottom: 0.5cm;
-       /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);*/
+        /* box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);*/
         padding-top: 1px;
 
     }
@@ -43,7 +43,7 @@
 
     .main-form {
         width: 93%;
-        border: 1px solid ;
+        border: 1px solid;
         margin: 30px auto;
         min-height: 500px;
         padding-bottom: 50px;
@@ -63,7 +63,7 @@
     <page size="A4">
         <div class="main-form">
             <div class="htitlte">
-                <center> <img src="/storage/images/RibbinENG1-150x130.png" height="90"></center>
+                <center> <img src="/storage/images/RibbinENG1-150x130.png" height="100"></center>
                 <br />
                 <h6> แบบฟอร์มการขอใช้ห้องประชุม / ห้องเรียน / ห้องปฏิบัติการคอมพิวเตอร์
                     <hr />
@@ -112,7 +112,7 @@
                             @endif
 
                         </div>
-                        
+
                         <div> รายละเอียดการขอใช้เพิ่มเติม &nbsp;&nbsp; {{ $detailBooking[0]->description }}</div>
 
                     </td>
@@ -158,9 +158,9 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td >
-                        <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == "approved" || $detailBooking[0]->booking_DeanAction == "approved") checked @endif> อนุญาต</div>
-                        <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == "canceled" || $detailBooking[0]->booking_DeanAction == "canceled") checked @endif> ไม่อนุัมติ </div>
+                    <td>
+                        <div > <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == "approved" || ($detailBooking[0]->dean_appove_status)) checked @endif class="fs-5"> อนุญาต</div>
+                        <div > <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == "canceled" || ($detailBooking[0]->dean_appove_status == 2)) checked @endif class="fs-5"> ไม่อนุัมติ </div>
                     </td>
                 </tr>
                 <!-- <tr>

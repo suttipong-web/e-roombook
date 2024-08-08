@@ -85,7 +85,12 @@ class HelperService
     public function getFullNameCmuAcount($email)
     {
         $result = User::where('email', $email)->first();
-        $fullNames = $result->prename_TH . "" . $result->firstname_TH . " " . $result->lastname_TH;
+        if ($result->typeposition_id) {
+            $prename = $result->positionName;
+        } else {
+            $prename = $result->prename_TH;
+        }
+        $fullNames = $prename . "" . $result->firstname_TH . " " . $result->lastname_TH;
         return $fullNames;
     }
 
@@ -162,21 +167,23 @@ class HelperService
     function sendMessageTOline($access_token, $message)
     {
         $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://notify-api.line.me/api/notify',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'message=' . $message . '',
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $access_token . '',
-                'Content-Type: application/x-www-form-urlencoded'
-            ),
-        )
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => 'https://notify-api.line.me/api/notify',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => 'message=' . $message . '',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $access_token . '',
+                    'Content-Type: application/x-www-form-urlencoded'
+                ),
+            )
         );
         $response = curl_exec($curl);
         curl_close($curl);
@@ -208,12 +215,13 @@ class HelperService
         return $token;
     }
 
-    public function getEmailStepAcction($step) {
-        $getEmailDean =  DB::table('users')
-        ->select('users.email')
-        ->where('user_type',$step)
-        ->get();        
-        return  $getEmailDean[0]->email;
+    public function getEmailStepAcction($step)
+    {
+        $getEmailDean = DB::table('users')
+            ->select('users.email')
+            ->where('user_type', $step)
+            ->get();
+        return $getEmailDean[0]->email;
     }
 
 

@@ -98,6 +98,10 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/bookingDetail', [DashboardController::class, 'bookingDetail'])->name('bookingDetail');
     Route::get('/admin/viewstatus/{getStatus}', [DashboardController::class, 'viewStatus'])->name('viewStatus');
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/admin/user/viewprifile/{userId}', [UserController::class, 'viewprifile'])->name('users.viewprifile');
+    Route::post('/admin/user/save', [UserController::class, 'saved'])->name('users.saved');
+    
+
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
     
     //Route  ระบบจัดการห้อง RoomsController

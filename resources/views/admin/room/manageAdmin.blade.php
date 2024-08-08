@@ -160,7 +160,7 @@
                     cmuitaccount: $("#assigncmuitaccount").val(),
                     roomID: $("#hinden_roomID").val(),
                     phone: $("#adminPhone").val(),
-                    lineToken: $("#lineToken").val(),
+                    adminroom_type_id: $("#adminroom_type_id").val(),
                     _token: '{{ csrf_token() }}'
                 }, success: function (response) {
                     console.log(response);
@@ -238,7 +238,7 @@
                         tr += "<td>" + element.type_name + "</td>";                    
                         tr += '<td align="center">';
                         /*tr += '<a href="#" id="' + element.id + '" class="text-success mx-1 editAdmin"><i class="bi-pencil-square h5"></i></a>';*/
-                        tr += '<a href="#" id="' + element.id + '"  class="text-danger mx-1 deleteAdmin"><i class="bi-trash h5"></i></a></td>';
+                        tr += '<a href="#" id="' + element.AdminId + '"  class="text-danger mx-1 deleteAdmin"><i class="bi-trash h5"></i></a></td>';
                         tr += "</tr>";
                     });
                     $('.Trresponse').html(tr);
