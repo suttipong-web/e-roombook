@@ -96,6 +96,13 @@ class AutnController extends Controller
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
             $users = User::where('email', $email)->first();
+            $getDepN = DB::table('department')
+             ->select('dep_name')
+             ->where('dep_id',$users["dep_id"])           
+             ->get();
+
+
+
             if ($users["isAdmin"]) {
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
@@ -116,6 +123,7 @@ class AutnController extends Controller
                 $request->session()->put('cmuitaccount', $email);
                 $request->session()->put('userfullname', $fullname);
                 $request->session()->put('dep_id', $users["dep_id"]);
+                 $request->session()->put('dep_name',$getDepN[0]->dep_name);
                 $request->session()->put('isAdmin', $users["isAdmin"]);
                 $request->session()->put('isDean', $users["isDean"]);
                 $request->session()->put('last_activity', Carbon::now());

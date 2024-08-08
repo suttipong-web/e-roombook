@@ -20,25 +20,20 @@
 </head>
 
 <body id="page-top">
-    {{  session('user_type')  }}
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @if (
-                session('user_type') == 'secretary' ||
+        @if (session('user_type') == 'secretary' ||
                 session('user_type') == 'deaneng' ||
                 session('user_type') == 'eng' ||
-                session('user_type') == 'dean'
-            )
-                    @include('admin.partials.left-sidebar_secretary')
+                session('user_type') == 'dean')
+            @include('admin.partials.left-sidebar_secretary')
         @else
             @include('admin.partials.left-sidebar')
         @endif
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
-
                 @include('admin.partials.navbar')
                 @yield('content-header')
                 <!-- Begin Page Content -->

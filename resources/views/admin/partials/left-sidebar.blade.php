@@ -28,17 +28,12 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
-
-
     <!-- Divider -->
     <hr class="sidebar-divider">
-
     <!-- Heading -->
     <div class="sidebar-heading">
         <h5> ระบบจัดการ </h5>
-
     </div>
-
     <li class="nav-item ">
         <a href="/admin/room" class="nav-link {{ $current_route == 'room' ? 'active' : '' }}">
             <i class="bi bi-hospital"></i>
@@ -50,6 +45,7 @@
             <i class="bi bi-hospital"></i>
             <span>ข้อมูลการจองห้อง</span></a>
     </li>
+
 
     <li class="nav-item ">
         <a href="/admin/schedules" class="nav-link {{ $current_route == 'admin.schedule' ? 'active' : '' }}">

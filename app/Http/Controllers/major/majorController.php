@@ -1,24 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\major;
 
+use App\class\HelperService;
 use App\Http\Controllers\Controller;
-use App\Imports\ScheduleImport;
 use App\Models\Listday;
+use App\Imports\ScheduleImport;
 use App\Models\Rooms;
 use App\Models\roomSchedule;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\FuncCall;
+use Carbon\Carbon;
 use Excel;
 use Session;
 
-class ScheduleDepController extends Controller
+class majorController extends Controller
+
 {
-    // 
-    public function index(Request $request)
+    public function __construct()
     {
+        $this->middleware('checkusertype:major');
+    }
+    //
+    public  function index(Request $request){        
+        return view('admin.employee.index')->with([
+                'title' => 'Dashboard Major' 
+            ]);
+    }
+    
+    public function schedules(Request $request) {
+
         $nowYear = (date('Y')) + 543;
         $Byuser = $request->session()->get('cmuitaccount');
 
@@ -88,46 +99,31 @@ class ScheduleDepController extends Controller
             }
         }
 
-
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
             ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('room_schedules.is_confirm', 0)
             ->where('room_schedules.straff_account', $Byuser)
             ->get();
 
-        return view('admin.schedule.index')->with([
+        return view('admin.employee.schedule')->with([
             'getBookingList' => $getBookingList,
             'getListRoom' => $getListRoom,
             'nowYear' => $nowYear,
             'listDays' => $getliatday
-        ]);
+        ]);                
     }
 
-    //Import file Excel to Database with call 
-    public function saveImportfile(Request $request)
-    {
-        $cmuitaccount = $request->session()->get('cmuitaccount');
-        Excel::import(new ScheduleImport, $request->file('fileupload'));
-        return redirect()->back()->with('success', true);
-    }
-    //แสดงตารางเรียน
-    public function views(Request $request)
-    {
-        return view('admin.schedule.showSchedule')->with([
+    public function views(Request $request) {
+          return view('admin.employee.viewSchedule')->with([
             "TitlePage" => "แสดงรายกาาตารางเรียนของท่าน"
         ]);
-    }
-    public function delete(Request $request)
-    {
-        $id = $request->id;
-        $result = roomSchedule::find($id);
-        if ($result) {
-            roomSchedule::destroy($id);
-        }
     }
 
     public function fetchall(Request $request)
     {
+        $class = new HelperService();
+
+        $Byuser = $request->session()->get('cmuitaccount');
         $output = " ไม่พบรายการลงเวลาของท่าน ";
         // ส่วนของตัวแปรสำหรับกำหนด
         $dayTH = array("จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์");
@@ -135,7 +131,7 @@ class ScheduleDepController extends Controller
         $monthTH_brev = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
         $roomId = 0;
-        $Byuser = $request->cmuaccount;
+       // $Byuser = $request->cmuaccount;
         if ($request->getroomId) {
             $roomId = $request->getroomId;
         }
@@ -273,8 +269,8 @@ class ScheduleDepController extends Controller
                                         $data_day_schedule[$dayKey][] = [
                                             "start_time" => $row['start_time'],
                                             "end_time" => $row['end_time'],
-                                            "duration" => $this->getduration(strtotime($row['start_time']), strtotime($row['end_time'])),
-                                            "timeblock" => $this->timeblock($row['start_time'], $sc_numCol, $sc_timeStep),
+                                            "duration" => $class->getduration(strtotime($row['start_time']), strtotime($row['end_time'])),
+                                            "timeblock" => $class->timeblock($row['start_time'], $sc_numCol, $sc_timeStep),
                                             "title" => $row['title'],
                                             "room" => $row['room'],
                                             "roomId" => $row['isroomID'],
@@ -293,8 +289,8 @@ class ScheduleDepController extends Controller
                                         $data_day_schedule[$dayKey][] = [
                                             "start_time" => $row['start_time'],
                                             "end_time" => $row['end_time'],
-                                            "duration" => $this->getduration(strtotime($row['start_time']), strtotime($row["end_time"])),
-                                            "timeblock" => $this->timeblock($row["start_time"], $sc_numCol, $sc_timeStep),
+                                            "duration" => $class->getduration(strtotime($row['start_time']), strtotime($row["end_time"])),
+                                            "timeblock" => $class->timeblock($row["start_time"], $sc_numCol, $sc_timeStep),
                                             "title" => $row['title'],
                                             "room" => $row['room'],
                                             "roomId" => $row['isroomID'],
@@ -319,7 +315,7 @@ class ScheduleDepController extends Controller
                             <div class="d-flex">
                                 <div class="text-left d-flex align-items-center">';
                     $num_dayShow_in_schedule = $num_dayShow - 1;
-                    $output .= 'ตารางเรียนห้อง &nbsp&nbsp&nbsp<span class="badge badge-info"><h5>' . $tableRoom->roomFullName . '</h5> </span> &nbsp&nbsp&nbsp ช่วงวันที่ ' . $this->thai_date_short(strtotime($start_weekDay)) . ' ถึง ' . $this->thai_date_short(strtotime($start_weekDay . $num_dayShow_in_schedule . ' day')) . '</div>';
+                    $output .= 'ตารางเรียนห้อง &nbsp&nbsp&nbsp<span class="badge badge-info"><h5>' . $tableRoom->roomFullName . '</h5> </span> &nbsp&nbsp&nbsp ช่วงวันที่ ' . $class->thai_date_short(strtotime($start_weekDay)) . ' ถึง ' . $class->thai_date_short(strtotime($start_weekDay . $num_dayShow_in_schedule . ' day')) . '</div>';
                     $output .= '  <div class="col-auto text-right ml-auto">';
                     $slc = '<div class="input-group mb-3">
                                             <div class="input-group-prepend">
@@ -381,7 +377,7 @@ class ScheduleDepController extends Controller
                         $dayInSchedule_chk = date("Y-m-d", strtotime($start_weekDay . " +" . $i_day . " day"));
                         $dayKeyChk = date("D", strtotime($start_weekDay . " +" . $i_day . " day"));
                         //$dayInSchedule_show = date("d-m-Y", strtotime($start_weekDay . " +" . $i_day . " day"));
-                        $dayInSchedule_show = $this->thai_date_short(strtotime($start_weekDay . " +" . $i_day . " day"));
+                        $dayInSchedule_show = $class->thai_date_short(strtotime($start_weekDay . " +" . $i_day . " day"));
                         $outputBody .= '<tr>
                                     <td class="p-0 text-center table-active">
                                         <div class="day_schedule_text text-nowrap" style="min-height: 60px;">
@@ -426,196 +422,17 @@ class ScheduleDepController extends Controller
         } else {
             return $output;
         }
-        //echo $output;
-        // return $output;
     }
-    
-    public function getListDay($days)
+
+       //Import file Excel to Database with call 
+    public function saveImportfile(Request $request)
     {
-        $list = DB::table('listdays')->where('dayTitle', $days)->first();
-
-        if ($list->id < 8) {
-            $result = $list->dayList;
-        } else {
-            $temp = explode(",", $list->dayList);
-        }
-
-        $result = $list;
-    }
-    function getduration($datetime1, $datetime2)
-    {
-        $datetime1 = (preg_match('/-/', $datetime1)) ? (int) strtotime($datetime1) : (int) $datetime1;
-        $datetime2 = (preg_match('/-/', $datetime2)) ? (int) strtotime($datetime2) : (int) $datetime2;
-        $duration = ($datetime2 >= $datetime1) ? $datetime2 - $datetime1 : $datetime1 - $datetime2;
-        return $duration;
-    }
-
-    function timeblock($time, $sc_numCol, $sc_timeStep)
-    {
-        //  global $sc_numStep;
-        $sc_numStep = 60;
-        $time = (preg_match('/:/', $time)) ? (int) strtotime($time) : (int) $time;
-        for ($i_time = 0; $i_time < $sc_numCol - 1; $i_time++) {
-            if ($time >= strtotime($sc_timeStep[$i_time]) && $time < strtotime($sc_timeStep[$i_time + 1])) {
-                if ($time > strtotime($sc_timeStep[$i_time])) {
-                    $duation = $this->getduration($time, strtotime($sc_timeStep[$i_time]));
-                    $float_duration = ((($duation / 60) * 100) / $sc_numStep) * 0.01;
-                    return $i_time + $float_duration;
-                } else {
-                    return $i_time;
-                }
-            }
-        }
-    }
-
-    function thai_date_short($time)
-    {   // 19  ธ.ค. 2556 
-
-        $monthTH = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
-        $monthTH_brev = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-
-        $thai_date_return = date("j", $time);
-        $thai_date_return .= " " . $monthTH_brev[date("n", $time)];
-        $thai_date_return .= " " . (date("Y", $time) + 543);
-        return $thai_date_return;
+        $cmuitaccount = $request->session()->get('cmuitaccount');
+        Excel::import(new ScheduleImport, $request->file('fileupload'));
+        return redirect()->back()->with('success', true);
     }
 
 
-    public function editSchedule(Request $request)
-    {
-        // $id = $request->id;        
-        $result = roomSchedule::find($request->id);
-        $result2 = json_encode($result);
-        return response()->json([
-            'status' => 200,
-            'dataRoom' => $result2
-        ]);
-    }
-
-    public function updated(Request $request)
-    {
-        $result = "";
-        //ตรวจสอบรหัส ID ที่จะแก้ไขก่อน 
-
-        $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
-        $p_schedule_enddate = (isset($request->schedule_enddate)) ? $request->schedule_enddate : "0000-00-00";
-        $p_schedule_starttime = (isset($request->booking_time_start)) ? $request->booking_time_start : "00:00:00";
-        $p_schedule_endtime = (isset($request->booking_time_finish)) ? $request->booking_time_finish : "00:00:00";
-        $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
-
-        $setData = [
-            'courseNO' => $request->courseNO,
-            'courseTitle' => $request->courseTitle,
-            'courseSec' => $request->courseSec,
-            'Stdamount' => $request->Stdamount,
-            'booking_time_start' => $p_schedule_starttime,
-            'booking_time_finish' => $p_schedule_endtime,
-            'roomID' => $request->roomID,
-            'lecturer' => $request->lecturer,
-            'description' => $request->description,
-            'staffupdated' => Carbon::now(),
-            'straff_account' => $request->adminAccount,
-            'schedule_startdate' => $p_schedule_startdate,
-            'schedule_enddate' => $p_schedule_enddate,
-            'schedule_repeatday' => $p_schedule_repeatday,
-            'courseofyear' => $request->courseofyear,
-            'terms' => $request->terms
-        ];
-
-        $result = roomSchedule::find($request->id);
-        if ($result) {
-            $result->update($setData);
-            return response()->json([
-                'status' => 200,
-                'data' => $setData
-            ]);
-        }
-        return response()->json([
-            'status' => 208,
-            'msg' => compact($result)
-        ]);
-    }
-
-    public function insertSchedule(Request $request)
-    {
 
 
-        $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
-        $p_schedule_enddate = (isset($request->schedule_enddate)) ? $request->schedule_enddate : "0000-00-00";
-        $p_schedule_starttime = (isset($request->booking_time_start)) ? $request->booking_time_start : "00:00:00";
-        $p_schedule_endtime = (isset($request->booking_time_finish)) ? $request->booking_time_finish : "00:00:00";
-        $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
-
-
-        //03/07/2024
-        //$dstart = explode('/', $p_schedule_startdate);
-        // $dend = explode('/', $p_schedule_enddate);
-
-        // $dateStart = $dstart[2] . '-' . $dstart[1] .'-'. $dstart[0];
-        //$dateEnd = $dend[2] . '-' . $dend[1].'-'.  $dend[0];
-
-
-        // $p_schedule_allday = (isset($_POST['schedule_allday']))?1:0;
-
-
-        //ตรวจสอบว่าจองเวลานี้ได้ไหม 
-        /* $ChkTimeBookig = DB::table('room_schedules')
-             ->select('booking_time_start', 'booking_time_finish')
-             ->where('room_schedules.roomID', $request->roomID)
-             ->where('room_schedules.schedule_startdate', $p_schedule_startdate )
-             ->whereIn('room_schedules.p_schedule_repeatday',$p_schedule_repeatday)
-             ->get();
-
-         // เวลาเริ่ม 
-         $bkstart = $request->booking_time_start;
-         // เวลาสิ้สสุด
-         $bkfinish = $request->booking_time_finish;
-         $error = true;
-         foreach ($ChkTimeBookig as $row_chk) {
-             if (
-                 ($bkstart >= $row_chk->booking_time_start && $bkstart < $row_chk->booking_time_finish)
-                 ||
-                 ($bkfinish > $row_chk->booking_time_start && $bkfinish <= $row_chk->booking_time_finish)
-                 ||
-                 ($bkstart < $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
-             ) {
-                 return response()->json([
-                     'status' => 208,
-                     'text' => 'มีรายการจองของวันนี้แล้ว'
-                 ]);
-                 $error = false;
-             }
-         }
-      */
-        $setDataBooking = [
-            'courseNO' => $request->courseNO,
-            'courseTitle' => $request->courseTitle,
-            'courseSec' => $request->courseSec,
-            'Stdamount' => $request->Stdamount,
-            'booking_time_start' => $p_schedule_starttime,
-            'booking_time_finish' => $p_schedule_endtime,
-            'roomID' => $request->roomID,
-            'lecturer' => $request->lecturer,
-            'description' => $request->description,
-            'staffupdated' => Carbon::now(),
-            'straff_account' => $request->adminAccount,
-            'schedule_startdate' => $p_schedule_startdate,
-            'schedule_enddate' => $p_schedule_enddate,
-            'schedule_repeatday' => $p_schedule_repeatday,
-            'courseofyear' => $request->courseofyear,
-            'terms' => $request->terms
-        ];
-
-        $success = roomSchedule::create($setDataBooking);
-        if ($success) {
-            return response()->json([
-                'status' => 200,
-                'msg' => $setDataBooking
-            ]);
-        } else {
-            return response()->json([
-                'alert' => compact($success)
-            ]);
-        }
-    }
 }

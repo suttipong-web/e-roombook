@@ -18,36 +18,40 @@
 
         </div>
     </a>
-
-    <div class="text-center text-white"> {{ Session::get('positionName2') }}</div>
+    <div class="text-center text-white"> {{ Session::get('positionName') }}
+        <br>
+        {{ Session::get('dep_name') }}
+    </div>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
+
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a href="/admin/stepapporve" class="nav-link {{ $current_route == 'dashboard' ? 'active' : 'active' }}">
+        <a href="/major" class="nav-link {{ $current_route == 'dashboard' ? 'active' : 'active' }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
+
+    <li class="nav-item active">
+        <a href="/major/schedules" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
+            <i class="bi bi-list-check"></i>
+            <span> จัดการตารางเรียน </span></a>
+    </li>
+    <li class="nav-item active">
+        <a href="/major/schedules/view" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
+            <i class="bi bi-list-check"></i>
+            <span> แสดงตารางเรียน </span></a>
+    </li>
+
+
     <!-- Divider -->
     <hr class="sidebar-divider">
+
+
     <div class="sidebar-heading">
-        จัดการ
+        Report
     </div>
 
-
-
-    <li class="nav-item active">
-        <a href="/admin/listapprove_booking" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
-            <i class="bi bi-list-check"></i>
-            <span> รายการจอง </span></a>
-    </li>
-
-
-    <li class="nav-item active">
-        <a href="/admin/listapprove_booking" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
-            <i class="bi bi-list-check"></i>
-            <span> รายการที่ท่านอนุมัติ</span></a>
-    </li>
     <li class="nav-item active">
         <a href="/admin/report/" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>

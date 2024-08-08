@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\secretaryController;
 use App\Http\Controllers\Admin\stepApporveController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\engApporveController;
+use App\Http\Controllers\major\majorController;
 use App\Http\Controllers\ScheduleroomController;
 use App\Http\Controllers\setUserController;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,26 @@ Route::get('/admin/apporve_detail/{getStatus}/{bookingID}/{token}/{stepapporveId
 Route::post('/admin/dean/approveBooking', [stepApporveController::class, 'approveBooking'])->name('dean.approveBooking');
 Route::get('/admin/listapprove_booking', [stepApporveController::class, 'listapprove_booking'])->name('dean.listapprove_booking');
 
+
+//MAJOR
+Route::get('/major', [majorController::class, 'index'])->name('major.index');
+Route::get('/major/schedules', [majorController::class, 'schedules'])->name('major.schedules');
+Route::get('/major/schedules/view', [majorController::class, 'views'])->name('major.views');
+Route::get('/major/schedules/fetchall', [majorController::class, 'fetchAll'])->name('major.fetchAll');
+Route::post('/major/schedule/saveImportfile', [majorController::class, 'saveImportfile'])->name('major.saveImportfile');
+
+
+// Schedule
+Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSchedule'])->name('insertSchedule');
+Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
+Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');
+Route::get('/admin/schedules/view', [ScheduleDepController::class, 'views'])->name('views');
+Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
+Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
+Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
+
+
+
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 
 Route::group(['middleware' => ['admin_auth']], function () {
@@ -116,13 +137,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/report/bookingtable', [ReportController::class, 'bookingtable'])->name('bookingtable');
 
     Route::get('/admin/schedules', [ScheduleDepController::class, 'index'])->name('index');
-    Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSchedule'])->name('insertSchedule');
-    Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
-    Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');
-    Route::get('/admin/schedules/view', [ScheduleDepController::class, 'views'])->name('views');
-    Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
-    Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
-    Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
+
 });
 
 

@@ -1,6 +1,6 @@
 <!-- import  function service -->
 @inject('getService', 'App\class\HelperService')
-@extends('admin.main-layout')
+@extends('admin.emp-layout')
 @section('content-css')
     <link rel="stylesheet" href="/css/schedule.css">
 @endsection
@@ -23,6 +23,7 @@
                 <li>กระบวนวิชาวิศวกรรมพื้นฐาน (ลงข้อมูลก่อนเปิดเทอม 4 อาทิตย์) </li>
                 <li>กระบวนวิชาภาคพิเศษ (ลงข้อมูลก่อนเปิดเทอม 3 อาทิตย์)</li>
                 <li>กระบวนวิชาจากภาควิชาต่างๆ (ลงข้อมูลก่อนเปิดเทอม 2 อาทิตย์) </li>
+
             </ul>
             <a href="/major/schedules/" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
 
@@ -51,7 +52,7 @@
         function fetchAll($uts, $roomId) {
             var val = "";
             $.ajax({
-                url: "/admin/schedules/fetchall",
+                url: "/major/schedules/fetchall",
                 method: 'get',
                 data: {
                     uts: $uts,
@@ -80,9 +81,6 @@
             $('#select_date').on('change.datetimepicker', function(e) {
                 window.location = 'demo_schedule.php?uts=' + e.date.format("X");
             });
-
-
-
 
         });
     </script>

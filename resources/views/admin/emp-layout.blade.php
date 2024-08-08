@@ -20,11 +20,10 @@
 </head>
 
 <body id="page-top">
-    {{  session('user_type')  }}
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @if 
-            @include('admin.partials.left_users-sidebar')
+        @if (session('user_type') == 'major')
+            @include('admin.partials.left_major_menu')
         @endif
 
         <!-- Content Wrapper -->
