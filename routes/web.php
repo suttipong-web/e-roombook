@@ -117,12 +117,8 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/room/getAdmin/{roomID}', [RoomsController::class, 'pageAdmin'])->name('pageAdmin');
     Route::delete('/admin/room/delete/admin', [RoomsController::class, 'deleteAdmin'])->name('deleteAdmin');
 
-
-
-    
     Route::get('/admin/room/AddAdminRoom', [RoomsController::class, 'addAdmin'])->name('addAdmin');
     
-
     Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
 
     Route::get('/admin/bookingDetail/{getStatus}/{bookingID}/{token}', [ManageBookingController::class, 'mbookingDetail'])->name('mbookingDetail');
@@ -149,7 +145,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
 //Route  ระบบ Signin  With  Cmu OAuth
 
-//Route Payment 
+//Route Payment detail.blade
 
 //Route page api scinet TV 
 

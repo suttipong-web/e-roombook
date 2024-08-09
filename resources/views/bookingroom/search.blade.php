@@ -30,420 +30,434 @@
 
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
-    
-          <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
-            {{-- <h1 class="sitename">Arsha</h1> --}}
-          </a>
-    
-          <nav id="navmenu" class="navmenu">
-            <ul>
-              <li><a href="/#hero" class="active">หน้าแรก</a></li>
-              <li><a href="/#about">เกี่ยวกับเรา</a></li>
-              <li><a href="/#services">บริการของเรา</a></li>
-              <li><a href="/#faq-2">คำถามที่พบบ่อย</a></li>
-              <li><a href="#footer">ติดต่อเรา</a></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-          </nav>
-    
-          <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
-    
-        </div>
-      </header>
 
-      <main class="main">
+            <a href="index.html" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
+                {{-- <h1 class="sitename">Arsha</h1> --}}
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="/#hero" class="active">หน้าแรก</a></li>
+                    <li><a href="/#about">เกี่ยวกับเรา</a></li>
+                    <li><a href="/#services">บริการของเรา</a></li>
+                    <li><a href="/#faq-2">คำถามที่พบบ่อย</a></li>
+                    <li><a href="#footer">ติดต่อเรา</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
+
+        </div>
+    </header>
+
+    <main class="main">
 
         <section id="search" class="about section" style="padding: 160px 0px 100px 0px">
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-              <h2> รายการห้องประชุมคณะวิศวกรรมศาสตร์ </h2>
+                <h2> รายการห้องประชุมคณะวิศวกรรมศาสตร์ </h2>
             </div><!-- End Section Title -->
-      
+
             <div class="container">
 
-        <div class="row">
-            <div class="row g-0 text-center mt-5">
+                <div class="row">
+                    <div class="row g-0 text-center mt-5">
 
-                <div class="col-md-9">
-                    <div class="card">
-                        <h5 class="card-header">{{ $titleSearch }}</h5>
-                        <div class="card-body">
+                        <div class="col-md-9">
+                            <div class="card">
+                                <h5 class="card-header">{{ $titleSearch }}</h5>
+                                <div class="card-body">
 
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                        data-bs-target="#home-tab-pane" type="button" role="tab"
-                                        aria-controls="home-tab-pane" aria-selected="true"> แสดงรายการจองห้องประจำวัน
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                        aria-controls="profile-tab-pane"
-                                        aria-selected="false">ตารางการจองห้องประจำสัปดาห์</button>
-                                </li>
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                                data-bs-target="#home-tab-pane" type="button" role="tab"
+                                                aria-controls="home-tab-pane" aria-selected="true">
+                                                แสดงรายการจองห้องประจำวัน
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                                data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                                aria-controls="profile-tab-pane"
+                                                aria-selected="false">ตารางการจองห้องประจำสัปดาห์</button>
+                                        </li>
 
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
-                                    aria-labelledby="home-tab" tabindex="0">
-                                    <div class="show_all">
-                                        <table class="table mt-2 table-sm">
-                                            <thead class="table-light ">
-                                                <tr class="text-start">
-                                                    <th>ช่วงเวลาที่ใช้งาน</th>
-                                                    <th>รายการ</th>
-                                                    <th>ผู้จอง</th>
-                                                    <th>สถานะ</th>
-                                                    <th>หมายเหตุ</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (count($getBookingList) > 0)
-                                                    @foreach ($getBookingList as $rows)
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                            aria-labelledby="home-tab" tabindex="0">
+                                            <div class="show_all">
+                                                <table class="table mt-2 table-sm">
+                                                    <thead class="table-light ">
                                                         <tr class="text-start">
-                                                            <td>{{ Str::limit($rows->booking_time_start, 5, '') }}-{{ Str::limit($rows->booking_time_finish, 5, '') }}
-                                                            </td>
-                                                            <td>{{ $rows->booking_subject }}</td>
-                                                            <td>{{ $rows->booking_booker }}</td>
-                                                            <td>
-                                                                @if ((int) $rows->booking_status > 0)
-                                                                    <span class="badge text-bg-success"> <i
-                                                                            class="bi bi-check-circle-fill"></i> อนุมัติ
-                                                                    </span>
-                                                                @else
-                                                                    <span class="badge text-bg-warning"> <i
-                                                                            class="bi bi-clock-history"></i>
-                                                                        รอการอนุมัติ</span>
-                                                                @endif
-                                                            </td>
-
-                                                            <td>{{ $rows->description }} </td>
+                                                            <th>ช่วงเวลาที่ใช้งาน</th>
+                                                            <th>รายการ</th>
+                                                            <th>ผู้จอง</th>
+                                                            <th>สถานะ</th>
+                                                            <th>หมายเหตุ</th>
                                                         </tr>
-                                                    @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="4">
-                                                            <div class="p-2 mt-2 text-center">
-                                                                <div class="alert alert-success" role="alert">
-                                                                    <i class="bi bi-check2-circle"></i>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (count($getBookingList) > 0)
+                                                            @foreach ($getBookingList as $rows)
+                                                                <tr class="text-start">
+                                                                    <td>{{ Str::limit($rows->booking_time_start, 5, '') }}-{{ Str::limit($rows->booking_time_finish, 5, '') }}
+                                                                    </td>
+                                                                    <td>{{ $rows->booking_subject }}</td>
+                                                                    <td>{{ $rows->booking_booker }}</td>
+                                                                    <td>
+                                                                        @if ((int) $rows->booking_status == 1)
+                                                                            <span class="badge text-bg-success"> <i
+                                                                                    class="bi bi-check-circle-fill"></i>
+                                                                                อนุมัติ
+                                                                            </span>
+                                                                        @else
+                                                                            <span class="badge text-bg-warning"> <i
+                                                                                    class="bi bi-clock-history"></i>
+                                                                                รอการอนุมัติ</span>
+                                                                        @endif
+                                                                    </td>
 
-                                                                    <br /> ไม่พบรายการจองห้องวันนี้
-                                                                    <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม "
-                                                                        ทำรายจองห้อง
-                                                                        "
-                                                                        และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endif
+                                                                    <td>{{ $rows->description }} </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr>
+                                                                <td colspan="4">
+                                                                    <div class="p-2 mt-2 text-center">
+                                                                        <div class="alert alert-success"
+                                                                            role="alert">
+                                                                            <i class="bi bi-check2-circle"></i>
 
-                                            </tbody>
-                                        </table>
+                                                                            <br /> ไม่พบรายการจองห้องวันนี้
+                                                                            <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม "
+                                                                                ทำรายจองห้อง
+                                                                                "
+                                                                                และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                            aria-labelledby="profile-tab" tabindex="0">
+                                            <div class="showtable"> </div>
+                                        </div>
                                     </div>
-
-                                </div>
-                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
-                                    aria-labelledby="profile-tab" tabindex="0">
-                                    <div class="showtable"> </div>
                                 </div>
                             </div>
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h4> ระบุรายละเอียดการขอใช้ห้อง </h4>
+                                    @if (empty(Session::get('cmuitaccount')))
+                                        <div class="text-center">
+                                            <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
+                                                class="btn btn-warning " tabindex="-1" role="button"
+                                                aria-disabled="true">
+                                                <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน
+                                                    เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
+                                            </a>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="card-body justify-content-start text-start">
+                                    <form id="add_booking_form" class="row g-3 w-90 m-10-auto"
+                                        enctype="multipart/form-data" action="/booking/insertBooking" method="post">
+                                        @csrf
+                                        <input type="hidden" name="roomID" id="roomID"
+                                            value="{{ $searchRoomID }}">
+                                        <input type="hidden" name="booking_type" id="booking_type"
+                                            value="{{ $usertype }}">
+                                        <div class="col-md-3 p-2">
+                                            <label for="schedule_startdate" class="form-label"> วันที่เริ่ม *</label>
+                                            <input class="form-control dateScl" type="text"
+                                                data-provide="datepicker" data-date-language="th"
+                                                value="{{ $searchDates }}" id="schedule_startdate"
+                                                name="schedule_startdate" required>
+                                        </div>
+                                        <div class="col-md-3 p-2">
+                                            <label for="schedule_enddate" class="form-label"> วันที่สิ้นสุด </label>
+                                            <input class="form-control dateScl" type="text"
+                                                data-provide="datepicker" data-date-language="th"
+                                                value="{{ $searchDates }}" id="schedule_enddate"
+                                                name="schedule_enddate" required>
+                                        </div>
+
+                                        <div class="col-md-6 p-2">
+                                            <label for="booking_time_start" class="form-label">ช่วงเวลาที่ใช้งาน
+                                                *</label>
+                                            <br />
+                                            <select name="booking_time_start" class="form-control-2" required
+                                                id="booking_time_start">
+                                                <option value=""> เวลาเริ่ม* </option>
+                                                @foreach ($getService->getALlTimes() as $item)
+                                                    <option value="{{ $item }}">{{ $item }}
+                                                    </option>
+                                                @endforeach
+                                            </select> :
+                                            <select name="booking_time_finish" class="form-control-2" required>
+                                                <option value="">เวลาสิ้นสุด*</option>
+                                                @foreach ($getService->getALlTimes() as $item)
+                                                    <option value="{{ $item }}">{{ $item }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
+                                            <input type="text" class="form-control" id="booking_booker"
+                                                name="booking_booker" placeholder=" ระบุชื่อผู้ทำรายการ "
+                                                value=" {{ Session::get('userfullname') }}" required />
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="booking_department" class="form-label">สังกัดหน่วยงาน /องค์กร
+                                                /บริษัท </label>
+                                            <input type="text" class="form-control" id="booking_department"
+                                                name="booking_department"
+                                                placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label for="booking_subject" class="form-label">
+                                                เรื่องที่ขอใช้/โครงการกิจกรรม
+                                                *</label>
+                                            <input type="text" class="form-control" id="booking_subject"
+                                                name="booking_subject" required
+                                                placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าใช้</label>
+                                            <input type="number" class="form-control" id="booking_ofPeople"
+                                                name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน " />
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="booking_email" class="form-label"> Email * </label>
+                                            <input type="email" class="form-control" id="booking_email"
+                                                name="booking_email" placeholder=" Email " required
+                                                value="{{ Session::get('cmuitaccount') }}" />
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="booking_phone" class="form-label">เบอร์โทรติดต่อ
+                                                *</label>
+                                            <input type="text" class="form-control" id="booking_phone"
+                                                name="booking_phone" placeholder=" 05394xxxx" />
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="description" class="form-label">
+                                                ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
+                                            <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
+                                        </div>
+
+                                        @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">*แนบไฟล์
+                                                    เอกสารการขอให้สถานที่ (.pdf
+                                                    เท่านั้น)
+                                                </label>
+                                                <input class="form-control" type="file" id="formFile"
+                                                    accept="application/pdf" required name="pdf">
+                                                <br />
+                                                <div> กรณีบุคคลภายนอกต้องแนบเอกสาร เพื่อขอใช้สถานที่ </div>
+                                            </div>
+                                        @endif
+
+                                        <input type="hidden" name="booker_cmuaccount"
+                                            value="{{ Session::get('cmuitaccount') }}">
+
+                                        <div class="p-2 text-center text-danger">
+                                            *** โปรดตรวจสอบข้อมูลของท่าน ก่อนยืนยันการทำรายการจองห้อง
+                                        </div>
+                                        <div class="text-center  justify-content-center  mb-3 ">
+                                            <button type="submit" id="add_btn" class="btn btn-success">
+                                                <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
+                                            </button>
+                                        </div>
+                                        @if ($usertype == 'general')
+                                            <div class="text-center  ujstify-content-center  mb-3 ">
+                                                <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
+                                                    class="btn btn-warning " tabindex="-1" role="button"
+                                                    aria-disabled="true">
+                                                    <h5 class="mb-1"> <i class="bi bi-gear-wide"></i>
+                                                        สำหรับบุคคลภายใน
+                                                        เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </form>
+                                </div>
+                                <br />
+                            </div>
+                            <br />
                         </div>
-                    </div>
-                    <div class="card mt-3">
-                        <div class="card-header">
-                            <h4> ระบุรายละเอียดการขอใช้ห้อง </h4>
-                            @if (empty(Session::get('cmuitaccount')))
-                                <div class="text-center">
-                                    <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}" class="btn btn-warning "
-                                        tabindex="-1" role="button" aria-disabled="true">
-                                        <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน
-                                            เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
 
-                        <div class="card-body justify-content-start text-start">
-                            <form id="add_booking_form" class="row g-3 w-90 m-10-auto" enctype="multipart/form-data"
-                                action="/booking/insertBooking" method="post">
-                                @csrf
-                                <input type="hidden" name="roomID" id="roomID" value="{{ $searchRoomID }}">
-                                <input type="hidden" name="booking_type" id="booking_type" value="{{ $usertype }}">
-                                <div class="col-md-3 p-2">
-                                    <label for="schedule_startdate" class="form-label"> วันที่เริ่ม *</label>
-                                    <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                        data-date-language="th" value="{{ $searchDates }}" id="schedule_startdate"
-                                        name="schedule_startdate" required>
-                                </div>
-                                <div class="col-md-3 p-2">
-                                    <label for="schedule_enddate" class="form-label"> วันที่สิ้นสุด </label>
-                                    <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                        data-date-language="th" value="{{ $searchDates }}" id="schedule_enddate"
-                                        name="schedule_enddate" required>
-                                </div>
+                        <div class="col-md-3">
+                            <div class="justify-content-center text-center w-90">
+                                <img src="/storage/images/{{ $imgRoom }}" class="img-fluid img-thumbnail">
+                            </div>
+                            <div class="formSlc  text-start w-90 mt-4">
 
-                                <div class="col-md-6 p-2">
-                                    <label for="booking_time_start" class="form-label">ช่วงเวลาที่ใช้งาน *</label>
-                                    <br />
-                                    <select name="booking_time_start" class="form-control-2" required
-                                        id="booking_time_start">
-                                        <option value=""> เวลาเริ่ม* </option>
-                                        @foreach ($getService->getALlTimes() as $item)
-                                            <option value="{{ $item }}">{{ $item }}
-                                            </option>
-                                        @endforeach
-                                    </select> :
-                                    <select name="booking_time_finish" class="form-control-2" required>
-                                        <option value="">เวลาสิ้นสุด*</option>
-                                        @foreach ($getService->getALlTimes() as $item)
-                                            <option value="{{ $item }}">{{ $item }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
-                                    <input type="text" class="form-control" id="booking_booker"
-                                        name="booking_booker" placeholder=" ระบุชื่อผู้ทำรายการ "
-                                        value=" {{ Session::get('userfullname') }}" required />
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="booking_department" class="form-label">สังกัดหน่วยงาน /องค์กร
-                                        /บริษัท </label>
-                                    <input type="text" class="form-control" id="booking_department"
-                                        name="booking_department" placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="booking_subject" class="form-label">
-                                        เรื่องที่ขอใช้/โครงการกิจกรรม
-                                        *</label>
-                                    <input type="text" class="form-control" id="booking_subject"
-                                        name="booking_subject" required placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าใช้</label>
-                                    <input type="number" class="form-control" id="booking_ofPeople"
-                                        name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน " />
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="booking_email" class="form-label"> Email * </label>
-                                    <input type="email" class="form-control" id="booking_email"
-                                        name="booking_email" placeholder=" Email " required
-                                        value="{{ Session::get('cmuitaccount') }}" />
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="booking_phone" class="form-label">เบอร์โทรติดต่อ
-                                        *</label>
-                                    <input type="text" class="form-control" id="booking_phone"
-                                        name="booking_phone" placeholder=" 05394xxxx" />
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="description" class="form-label">
-                                        ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
-                                    <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
-                                </div>
-
-                                @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
+                                <h4>
+                                    <i class="bi bi-calendar2-plus-fill"></i>
+                                    ตรวจสอบการใช้ห้อง
+                                </h4>
+                                <hr />
+                                <form id="serachBookingDate" method="post" action="/booking/search">
+                                    @csrf
+                                    <input type="hidden" name="booking_type" id="booking_type"
+                                        value="{{ $usertype }}">
                                     <div class="mb-3">
-                                        <label for="formFile" class="form-label">*แนบไฟล์ เอกสารการขอให้สถานที่ (.pdf
-                                            เท่านั้น)
-                                        </label>
-                                        <input class="form-control" type="file" id="formFile"
-                                            accept="application/pdf" required name="pdf">
-                                        <br />
-                                        <div> กรณีบุคคลภายนอกต้องแนบเอกสาร เพื่อขอใช้สถานที่ </div>
+                                        <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
+                                        <select name="slcRoom" id="slcRoom" class="form-select " required>
+                                            <option value="0">-- เลือก --</option>
+                                            @foreach ($roomSlc as $item)
+                                                <option value='{{ $item->id }}'
+                                                    @if ($searchRoomID == $item->id) selected @endif>
+                                                    {{ $item->roomFullName }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                @endif
-
-                                <input type="hidden" name="booker_cmuaccount"
-                                    value="{{ Session::get('cmuitaccount') }}">
-
-                                <div class="p-2 text-center text-danger">
-                                    *** โปรดตรวจสอบข้อมูลของท่าน ก่อนยืนยันการทำรายการจองห้อง
-                                </div>
-                                <div class="text-center  justify-content-center  mb-3 ">
-                                    <button type="submit" id="add_btn" class="btn btn-success">
-                                        <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
-                                    </button>
-                                </div>
-                                @if ($usertype == 'general')
-                                    <div class="text-center  ujstify-content-center  mb-3 ">
-                                        <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
-                                            class="btn btn-warning " tabindex="-1" role="button"
-                                            aria-disabled="true">
-                                            <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน
-                                                เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
-                                        </a>
+                                    <div class="mb-3">
+                                        <label for="search_date" class="form-label"> วันที่ </label>
+                                        <input class="form-control dateScl" type="text" data-provide="datepicker"
+                                            data-date-language="th" value="{{ $searchDates }}" id="search_date"
+                                            name="search_date" required>
                                     </div>
-                                @endif
-                            </form>
+                                    <div class="text-center d-flex justify-content-center">
+                                        <button type="submit" id="search_booking" class="btn btn-dark">
+                                            ตรวจสอบ
+                                        </button>
+                                    </div>
+                                    <hr />
+                                </form>
+                            </div>
                         </div>
-                        <br />
-                    </div>
-                    <br />
-                </div>
 
-                <div class="col-md-3">
-                    <div class="justify-content-center text-center w-90">
-                        <img src="/storage/images/{{ $imgRoom }}" class="img-fluid img-thumbnail">
-                    </div>
-                    <div class="formSlc  text-start w-90 mt-4">
 
-                        <h4>
-                            <i class="bi bi-calendar2-plus-fill"></i>
-                            ตรวจสอบการใช้ห้อง
-                        </h4>
-                        <hr />
-                        <form id="serachBookingDate" method="post" action="/booking/search">
-                            @csrf
-                            <input type="hidden" name="booking_type" id="booking_type"
-                                value="{{ $usertype }}">
-                            <div class="mb-3">
-                                <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
-                                <select name="slcRoom" id="slcRoom" class="form-select " required>
-                                    <option value="0">-- เลือก --</option>
-                                    @foreach ($roomSlc as $item)
-                                        <option value='{{ $item->id }}'
-                                            @if ($searchRoomID == $item->id) selected @endif>
-                                            {{ $item->roomFullName }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="search_date" class="form-label"> วันที่ </label>
-                                <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                    data-date-language="th" value="{{ $searchDates }}" id="search_date"
-                                    name="search_date" required>
-                            </div>
-                            <div class="text-center d-flex justify-content-center">
-                                <button type="submit" id="search_booking" class="btn btn-dark">
-                                    ตรวจสอบ
-                                </button>
-                            </div>
-                            <hr />
-                        </form>
+
                     </div>
                 </div>
-
-
-
             </div>
-        </div>
-    </div>
         </section>
     </main>
 
     <footer id="footer" class="footer light-background">
-    
+
         <div class="container footer-top">
-          <div class="row gy-4">
-            <div class="col-lg-4 col-md-6 footer-about">
-              <a href="index.html" class="d-flex align-items-center">
-                <span class="sitename">คณะวิศวกรรมศาสตร์</span>
-              </a>
-              <div class="footer-contact pt-3">
-                <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 00</p>
-                <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
-                <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
-                <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
-                <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
-              </div>
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="d-flex align-items-center">
+                        <span class="sitename">คณะวิศวกรรมศาสตร์</span>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 00</p>
+                        <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
+                        <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
+                        <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
+                        <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>บริการสำคัญ</h4>
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
+                                class="nav-link p-0 text-body-secondary">
+                                สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
+                                class="nav-link p-0 text-body-secondary">
+                                แผนที่มหาวิทยาลัยเชียงใหม่
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                การบริจาค
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
+                                CMU MAIL
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                CMU MIS
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                สำหรับเจ้าหน้าที่
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
+                                CMU 360 องศา
+                            </a>
+                        </li>
+                    </ul>
+                    <h4 class="mt-3">ช่องทางสื่อสาร</h4>
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <h4>ติดตามเรา</h4>
+                    <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
+                    <div class="social-links d-flex">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
             </div>
-    
-            <div class="col-lg-2 col-md-3 footer-links">
-              <h4>บริการสำคัญ</h4>
-              <ul>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
-                                    class="nav-link p-0 text-body-secondary">
-                                    สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
-                                </a>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
-                      class="nav-link p-0 text-body-secondary">
-                      แผนที่มหาวิทยาลัยเชียงใหม่
-                  </a>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                    การบริจาค
-                  </a>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
-                    CMU MAIL
-                </a>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                    CMU MIS
-                </a>
-                </li>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                    สำหรับเจ้าหน้าที่
-                </a>
-                </li>
-              </ul>
-            </div>
-    
-            <div class="col-lg-2 col-md-3 footer-links">
-              <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
-              <ul>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
-                    CMU 360 องศา
-                </a>
-                </li>
-              </ul>
-              <h4 class="mt-3">ช่องทางสื่อสาร</h4>
-              <ul>
-                <li><i class="bi bi-chevron-right"></i> 
-                  <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
-                </li>
-              </ul>
-            </div>
-    
-            <div class="col-lg-4 col-md-12">
-              <h4>ติดตามเรา</h4>
-              <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
-              <div class="social-links d-flex">
-                <a href=""><i class="bi bi-twitter-x"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-    
-          </div>
         </div>
-    
+
         <div class="container copyright text-center mt-4">
-          <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All rights reserved.</span></p>
-          <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you've purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-          </div>
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All
+                    rights reserved.</span></p>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you've purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
         </div>
-    
-      </footer>
+
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

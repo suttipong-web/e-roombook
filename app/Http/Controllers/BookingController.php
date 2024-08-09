@@ -232,7 +232,6 @@ class BookingController extends Controller
             ]);
         }
 
-
         //ตรวจสอบบุคคลภายนอก
         if ($request->booking_type == "general") {
             // Handle the file upload
@@ -257,7 +256,7 @@ class BookingController extends Controller
         $ChkTimeBookig = DB::table('booking_rooms')
             ->select('booking_time_start', 'booking_time_finish')
             ->where('booking_rooms.roomID', $request->roomID)
-            ->where('booking_rooms.booking_status', '<>', 0)
+            ->where('booking_rooms.booking_status', '<>', 2)
             ->where('booking_rooms.schedule_startdate', '>=', $schedule_startdate)
             ->where('booking_rooms.schedule_enddate', '<=', $schedule_enddate)
             ->get();
@@ -280,19 +279,19 @@ class BookingController extends Controller
                 $error = 0;
                 $is_confirm = 0;
             } else {
-                $is_confirm = 1;
+                $is_confirm = 3;
             }
         }
-
+      //  $is_confirm =3;
         if ($error) {
             $bookingToken = md5(time());
             $filenames = "";
             $no = time();
             $result = "";
 
-            //บุคคลภายใน
+            //บุคคลภายใน รอการอนุมัติ
             if (!empty($request->booker_cmuaccount)) {
-                $is_confirm = 1;
+                $is_confirm = 3;
             }
 
             if ($request->booking_type == "general") {

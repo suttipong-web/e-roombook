@@ -338,7 +338,11 @@ class RoomsController extends Controller
                 ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
                 ->where('rooms.id', '=', $roomId)
                 ->get();
-
+                
+         
+            $itemlist  =  DB::select(DB::raw('SELECT * FROM `room_items` WHERE room_items.id IN ('. $listRoom[0]->room_itemlist.')')); 
+            
+           
             //url CMU Outh 
             $cmuKey = DB::table('tbl_apikey')
                 ->select('clientID', 'clientSecret', 'redirect_uri')
@@ -352,7 +356,8 @@ class RoomsController extends Controller
                 'getListRoom' => $listRoom,
                 'roomGallery' => $getgallery,
                 'roomTitle' => $roomTitle,
-                'urlCMUOauth' => $signwithCmu
+                'urlCMUOauth' => $signwithCmu,
+                'listItemRoom'=>  $itemlist
             ]);
         }
     }
