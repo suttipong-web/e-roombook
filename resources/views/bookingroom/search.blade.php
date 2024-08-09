@@ -11,14 +11,59 @@
     <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('theme_1/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme_1/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme_1/vendor/aos/aos.css" rel="stylesheet') }}">
+    <link href="{{ asset('theme_1/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{{ asset('theme_1/css/main.css') }}" rel="stylesheet">
+
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/schedule2.css">
 </head>
 
 <body>
 
-    <div class="container p-10 mt-5">
-        <h1 class="text-center"> รายการห้องประชุมคณะวิศวกรรมศาสตร์ </h1>
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    
+          <a href="index.html" class="logo d-flex align-items-center me-auto">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
+            {{-- <h1 class="sitename">Arsha</h1> --}}
+          </a>
+    
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="/#hero" class="active">หน้าแรก</a></li>
+              <li><a href="/#about">เกี่ยวกับเรา</a></li>
+              <li><a href="/#services">บริการของเรา</a></li>
+              <li><a href="/#faq-2">คำถามที่พบบ่อย</a></li>
+              <li><a href="#footer">ติดต่อเรา</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+    
+          <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
+    
+        </div>
+      </header>
+
+      <main class="main">
+
+        <section id="search" class="about section" style="padding: 160px 0px 100px 0px">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+              <h2> รายการห้องประชุมคณะวิศวกรรมศาสตร์ </h2>
+            </div><!-- End Section Title -->
+      
+            <div class="container">
+
         <div class="row">
             <div class="row g-0 text-center mt-5">
 
@@ -298,6 +343,107 @@
             </div>
         </div>
     </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="footer light-background">
+    
+        <div class="container footer-top">
+          <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+              <a href="index.html" class="d-flex align-items-center">
+                <span class="sitename">คณะวิศวกรรมศาสตร์</span>
+              </a>
+              <div class="footer-contact pt-3">
+                <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 00</p>
+                <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
+                <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
+                <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
+                <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
+              </div>
+            </div>
+    
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>บริการสำคัญ</h4>
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
+                                    class="nav-link p-0 text-body-secondary">
+                                    สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
+                                </a>
+                </li>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
+                      class="nav-link p-0 text-body-secondary">
+                      แผนที่มหาวิทยาลัยเชียงใหม่
+                  </a>
+                </li>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                    การบริจาค
+                  </a>
+                </li>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
+                    CMU MAIL
+                </a>
+                </li>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                    CMU MIS
+                </a>
+                </li>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                    สำหรับเจ้าหน้าที่
+                </a>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
+                    CMU 360 องศา
+                </a>
+                </li>
+              </ul>
+              <h4 class="mt-3">ช่องทางสื่อสาร</h4>
+              <ul>
+                <li><i class="bi bi-chevron-right"></i> 
+                  <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
+                </li>
+              </ul>
+            </div>
+    
+            <div class="col-lg-4 col-md-12">
+              <h4>ติดตามเรา</h4>
+              <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
+              <div class="social-links d-flex">
+                <a href=""><i class="bi bi-twitter-x"></i></a>
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+    
+          </div>
+        </div>
+    
+        <div class="container copyright text-center mt-4">
+          <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All rights reserved.</span></p>
+          <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you've purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+    
+      </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
