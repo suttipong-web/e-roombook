@@ -52,9 +52,9 @@
           <li><a href="#hero" class="active">หน้าแรก</a></li>
           <li><a href="#about">เกี่ยวกับเรา</a></li>
           <li><a href="#services">บริการของเรา</a></li>
-          <li><a href="#pricing">ราคา</a></li>
+          {{-- <li><a href="#pricing">ราคา</a></li> --}}
           <li><a href="#faq-2">คำถามที่พบบ่อย</a></li>
-          <li class="dropdown"><a href="#"><span>ข้อมูลทั่วไป</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          {{-- <li class="dropdown"><a href="#"><span>ข้อมูลทั่วไป</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -70,8 +70,8 @@
               <li><a href="#">Dropdown 3</a></li>
               <li><a href="#">Dropdown 4</a></li>
             </ul>
-          </li>
-          <li><a href="#contact">ติดต่อเรา</a></li>
+          </li> --}}
+          <li><a href="#footer">ติดต่อเรา</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -177,18 +177,17 @@
 
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+              ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ เป็นโครงการที่พัฒนาขึ้นเพื่อตอบสนองความต้องการในการใช้ทรัพยากรห้องเรียนและพื้นที่ต่างๆ ภายในคณะอย่างมีประสิทธิภาพ โดยมีวัตถุประสงค์หลักในการอำนวยความสะดวกให้แก่นักศึกษา คณาจารย์ และบุคลากรทุกท่าน.
             </p>
             <ul>
-              <li><i class="bi bi-check2-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-              <li><i class="bi bi-check2-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-              <li><i class="bi bi-check2-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>เรามุ่งมั่นที่จะพัฒนาและปรับปรุงระบบอย่างต่อเนื่อง.</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>ใช้เทคโนโลยีล่าสุดมาประยุกต์ใช้เพื่อสร้างระบบที่มีความปลอดภัย</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>ใช้งานง่าย และมีประสิทธิภาพสูง</span></li>
             </ul>
           </div>
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <p>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <p>วิสัยทัศน์ของเราคือการเป็นผู้นำในการให้บริการระบบจองห้องที่ทันสมัยและมีประสิทธิภาพสูงสุด สนับสนุนการเรียนการสอน การวิจัย และกิจกรรมต่างๆ ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ให้ดำเนินไปอย่างราบรื่นและประสบความสำเร็จ</p>
             <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
 
@@ -317,7 +316,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>บริการของเรา</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>ระบบจองห้องของเราสามารถตอบสนองความต้องการของประชาคมคณะวิศวกรรมศาสตร์ได้อย่างดีที่สุด</p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -327,32 +326,32 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-activity icon"></i></div>
-              <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <h4><a href="" class="stretched-link">ระบบจองห้องออนไลน์</a></h4>
+              <p>ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ ช่วยให้นักศึกษา อาจารย์ และบุคลากรสามารถจองห้องต่างๆ ได้อย่างสะดวกและรวดเร็ว</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-              <h4><a href="" class="stretched-link">Sed ut perspici</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <h4><a href="" class="stretched-link">ประเภทห้องที่ให้บริการ</a></h4>
+              <p>เรามีห้องหลากหลายประเภทให้เลือกใช้บริการ ได้แก่ ห้องเรียนขนาดต่างๆ ห้องประชุม ห้องปฏิบัติการ และห้องทำงานกลุ่ม  แต่ละห้องมีอุปกรณ์และสิ่งอำนวยความสะดวกที่เหมาะสมกับการใช้งาน</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-              <h4><a href="" class="stretched-link">Magni Dolores</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+              <h4><a href="" class="stretched-link">บริการเสริมและการสนับสนุน</a></h4>
+              <p>นอกจากการจองห้องแล้ว เรายังมีบริการเสริมต่างๆ เช่น การขอใช้อุปกรณ์พิเศษ การจัดเตรียมห้องตามความต้องการเฉพาะ และการให้คำแนะนำในการใช้งานอุปกรณ์ต่างๆ</p>
             </div>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="" class="stretched-link">Nemo Enim</a></h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+              <h4><a href="" class="stretched-link">การพัฒนาและปรับปรุงอย่างต่อเนื่อง</a></h4>
+              <p>เราให้ความสำคัญกับการพัฒนาและปรับปรุงระบบจองห้องอย่างต่อเนื่อง โดยรับฟังความคิดเห็นและข้อเสนอแนะจากผู้ใช้บริการ เพื่อนำมาปรับปรุงทั้งในด้านระบบออนไลน์และคุณภาพของห้องและอุปกรณ์ต่างๆ</p>
             </div>
           </div><!-- End Service Item -->
 
@@ -591,7 +590,7 @@
     </section><!-- /Team Section --> --}}
 
     <!-- Pricing Section -->
-    <section id="pricing" class="pricing section light-background">
+    {{-- <section id="pricing" class="pricing section light-background">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -652,7 +651,7 @@
 
       </div>
 
-    </section><!-- /Pricing Section -->
+    </section><!-- /Pricing Section --> --}}
 
     {{-- <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
@@ -776,8 +775,8 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Frequently Asked Questions</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        <h2>คำถามที่พบบ่อย</h2>
+        <p>คำถามที่พบบ่อยสำหรับระบบจองห้องของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ </p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -790,45 +789,45 @@
 
               <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
                 <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Non consectetur a erat nam at lectus urna duis?</h3>
+                <h3>ใครสามารถจองห้องได้บ้าง?</h3>
                 <div class="faq-content">
-                  <p>Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.</p>
+                  <p>นักศึกษา อาจารย์ และบุคลากรของคณะวิศวกรรมศาสตร์สามารถจองห้องได้ โดยต้องใช้บัญชีผู้ใช้ของมหาวิทยาลัย</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
                 <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
+                <h3> ต้องจองห้องล่วงหน้ากี่วัน?</h3>
                 <div class="faq-content">
-                  <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
+                  <p>สามารถจองล่วงหน้าได้ตั้งแต่ 1-30 วัน ขึ้นอยู่กับประเภทของห้องและวัตถุประสงค์การใช้งาน</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
                 <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
+                <h3>สามารถจองห้องได้นานที่สุดกี่ชั่วโมงต่อครั้ง?</h3>
                 <div class="faq-content">
-                  <p>Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis</p>
+                  <p>โดยทั่วไปสามารถจองได้ครั้งละไม่เกิน 4 ชั่วโมง หากต้องการใช้นานกว่านั้นต้องขออนุมัติพิเศษ</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
                 <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?</h3>
+                <h3>มีห้องประเภทไหนให้จองบ้าง?</h3>
                 <div class="faq-content">
-                  <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
+                  <p>: มีห้องเรียน ห้องประชุม ห้องปฏิบัติการ และห้องทำงานกลุ่ม ซึ่งแต่ละประเภทมีขนาดและอุปกรณ์แตกต่างกัน</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
 
               <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
                 <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Tempus quam pellentesque nec nam aliquam sem et tortor consequat?</h3>
+                <h3>ขั้นตอนการจองห้องเป็นอย่างไร?</h3>
                 <div class="faq-content">
-                  <p>Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in</p>
+                  <p>เข้าสู่ระบบด้วยบัญชีผู้ใช้ เลือกประเภทห้อง วันเวลาที่ต้องการ กรอกรายละเอียดการใช้งาน และรอการอนุมัติ</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
