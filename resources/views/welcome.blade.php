@@ -2,32 +2,34 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>ระบบจองห้องคณะวิศวกรรมศาสตร์</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>ระบบจองห้องคณะวิศวกรรมศาสตร์</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
-  <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="{{ asset('theme_1/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('theme_1/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-  <link href="{{ asset('theme_1/vendor/aos/aos.css" rel="stylesheet') }}">
-  <link href="{{ asset('theme_1/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('theme_1/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme_1/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme_1/vendor/aos/aos.css" rel="stylesheet') }}">
+    <link href="{{ asset('theme_1/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="{{ asset('theme_1/css/main.css') }}" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="{{ asset('theme_1/css/main.css') }}" rel="stylesheet">
 
-  <!-- =======================================================
+    <!-- =======================================================
   * Template Name: Arsha
   * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
   * Updated: Jun 29 2024 with Bootstrap v5.3.3
@@ -38,23 +40,23 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
-        {{-- <h1 class="sitename">Arsha</h1> --}}
-      </a>
+            <a href="index.html" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
+                {{-- <h1 class="sitename">Arsha</h1> --}}
+            </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">หน้าแรก</a></li>
-          <li><a href="#about">เกี่ยวกับเรา</a></li>
-          <li><a href="#services">บริการของเรา</a></li>
-          {{-- <li><a href="#pricing">ราคา</a></li> --}}
-          <li><a href="#faq-2">คำถามที่พบบ่อย</a></li>
-          {{-- <li class="dropdown"><a href="#"><span>ข้อมูลทั่วไป</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="#hero" class="active">หน้าแรก</a></li>
+                    <li><a href="#about">เกี่ยวกับเรา</a></li>
+                    <li><a href="#services">บริการของเรา</a></li>
+                    {{-- <li><a href="#pricing">ราคา</a></li> --}}
+                    <li><a href="#faq-2">คำถามที่พบบ่อย</a></li>
+                    {{-- <li class="dropdown"><a href="#"><span>ข้อมูลทั่วไป</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -71,41 +73,45 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li> --}}
-          <li><a href="#footer">ติดต่อเรา</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+                    <li><a href="#footer">ติดต่อเรา2222</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
 
-      <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
+            <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
 
-    </div>
-  </header>
-
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="zoom-out">
-            <h1>ระบบจองห้องคณะวิศวกรรมศาสตร์</h1>
-            <p>ตรงสอบและจองห้องรวดเร็ว ทันสมัย ใช้งานง่าย</p>
-            <div class="d-flex">
-              <a href="/booking" class="btn-get-started">เริ่มต้นจองห้อง</a>
-              <a href="https://www.youtube.com/watch?v=tOQX52VS00s" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
-            </div>
-          </div>
-          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
-            <img src="{{ asset('theme_1/img/engineering_CMU_Logo_01.png') }}" class="img-fluid animated" alt="">
-          </div>
         </div>
-      </div>
+    </header>
 
-    </section><!-- /Hero Section -->
+    <main class="main">
 
-    <!-- Clients Section -->
-    {{-- <section id="clients" class="clients section light-background">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section dark-background">
+
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"
+                        data-aos="zoom-out">
+                        <h1>ระบบจองห้องคณะวิศวกรรมศาสตร์</h1>
+                        <p>ตรงสอบและจองห้องรวดเร็ว ทันสมัย ใช้งานง่าย</p>
+                        <div class="d-flex">
+                            <a href="/booking" class="btn-get-started">เริ่มต้นจองห้อง</a>
+                            <a href="https://www.youtube.com/watch?v=tOQX52VS00s"
+                                class="glightbox btn-watch-video d-flex align-items-center"><i
+                                    class="bi bi-play-circle"></i><span>Watch Video</span></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
+                        <img src="{{ asset('theme_1/img/engineering_CMU_Logo_01.png') }}" class="img-fluid animated"
+                            alt="">
+                    </div>
+                </div>
+            </div>
+
+        </section><!-- /Hero Section -->
+
+        <!-- Clients Section -->
+        {{-- <section id="clients" class="clients section light-background">
 
       <div class="container" data-aos="zoom-in">
 
@@ -163,41 +169,48 @@
 
     </section><!-- /Clients Section --> --}}
 
-    <!-- About Section -->
-    <section id="about" class="about section">
+        <!-- About Section -->
+        <section id="about" class="about section">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>เกี่ยวกับเรา</h2>
-      </div><!-- End Section Title -->
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>เกี่ยวกับเรา</h2>
+            </div><!-- End Section Title -->
 
-      <div class="container">
+            <div class="container">
 
-        <div class="row gy-4">
+                <div class="row gy-4">
 
-          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
-            <p>
-              ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ เป็นโครงการที่พัฒนาขึ้นเพื่อตอบสนองความต้องการในการใช้ทรัพยากรห้องเรียนและพื้นที่ต่างๆ ภายในคณะอย่างมีประสิทธิภาพ โดยมีวัตถุประสงค์หลักในการอำนวยความสะดวกให้แก่นักศึกษา คณาจารย์ และบุคลากรทุกท่าน.
-            </p>
-            <ul>
-              <li><i class="bi bi-check2-circle"></i> <span>เรามุ่งมั่นที่จะพัฒนาและปรับปรุงระบบอย่างต่อเนื่อง.</span></li>
-              <li><i class="bi bi-check2-circle"></i> <span>ใช้เทคโนโลยีล่าสุดมาประยุกต์ใช้เพื่อสร้างระบบที่มีความปลอดภัย</span></li>
-              <li><i class="bi bi-check2-circle"></i> <span>ใช้งานง่าย และมีประสิทธิภาพสูง</span></li>
-            </ul>
-          </div>
+                    <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                        <p>
+                            ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่
+                            เป็นโครงการที่พัฒนาขึ้นเพื่อตอบสนองความต้องการในการใช้ทรัพยากรห้องเรียนและพื้นที่ต่างๆ
+                            ภายในคณะอย่างมีประสิทธิภาพ โดยมีวัตถุประสงค์หลักในการอำนวยความสะดวกให้แก่นักศึกษา คณาจารย์
+                            และบุคลากรทุกท่าน.
+                        </p>
+                        <ul>
+                            <li><i class="bi bi-check2-circle"></i>
+                                <span>เรามุ่งมั่นที่จะพัฒนาและปรับปรุงระบบอย่างต่อเนื่อง.</span></li>
+                            <li><i class="bi bi-check2-circle"></i>
+                                <span>ใช้เทคโนโลยีล่าสุดมาประยุกต์ใช้เพื่อสร้างระบบที่มีความปลอดภัย</span></li>
+                            <li><i class="bi bi-check2-circle"></i> <span>ใช้งานง่าย และมีประสิทธิภาพสูง</span></li>
+                        </ul>
+                    </div>
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <p>วิสัยทัศน์ของเราคือการเป็นผู้นำในการให้บริการระบบจองห้องที่ทันสมัยและมีประสิทธิภาพสูงสุด สนับสนุนการเรียนการสอน การวิจัย และกิจกรรมต่างๆ ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ให้ดำเนินไปอย่างราบรื่นและประสบความสำเร็จ</p>
-            <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-          </div>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <p>วิสัยทัศน์ของเราคือการเป็นผู้นำในการให้บริการระบบจองห้องที่ทันสมัยและมีประสิทธิภาพสูงสุด
+                            สนับสนุนการเรียนการสอน การวิจัย และกิจกรรมต่างๆ ของคณะวิศวกรรมศาสตร์
+                            มหาวิทยาลัยเชียงใหม่ให้ดำเนินไปอย่างราบรื่นและประสบความสำเร็จ</p>
+                        <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                    </div>
 
-        </div>
+                </div>
 
-      </div>
+            </div>
 
-    </section><!-- /About Section -->
+        </section><!-- /About Section -->
 
-    {{-- <!-- Why Us Section -->
+        {{-- <!-- Why Us Section -->
     <section id="why-us" class="section why-us light-background" data-builder="section">
 
       <div class="container-fluid">
@@ -253,7 +266,7 @@
 
     </section><!-- /Why Us Section --> --}}
 
-    {{-- <!-- Skills Section -->
+        {{-- <!-- Skills Section -->
     <section id="skills" class="skills section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -310,58 +323,64 @@
 
     </section><!-- /Skills Section --> --}}
 
-    <!-- Services Section -->
-    <section id="services" class="services section light-background">
+        <!-- Services Section -->
+        <section id="services" class="services section light-background">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>บริการของเรา</h2>
-        <p>ระบบจองห้องของเราสามารถตอบสนองความต้องการของประชาคมคณะวิศวกรรมศาสตร์ได้อย่างดีที่สุด</p>
-      </div><!-- End Section Title -->
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>บริการของเรา</h2>
+                <p>ระบบจองห้องของเราสามารถตอบสนองความต้องการของประชาคมคณะวิศวกรรมศาสตร์ได้อย่างดีที่สุด</p>
+            </div><!-- End Section Title -->
 
-      <div class="container">
+            <div class="container">
 
-        <div class="row gy-4">
+                <div class="row gy-4">
 
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-activity icon"></i></div>
-              <h4><a href="" class="stretched-link">ระบบจองห้องออนไลน์</a></h4>
-              <p>ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ ช่วยให้นักศึกษา อาจารย์ และบุคลากรสามารถจองห้องต่างๆ ได้อย่างสะดวกและรวดเร็ว</p>
+                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-item position-relative">
+                            <div class="icon"><i class="bi bi-activity icon"></i></div>
+                            <h4><a href="" class="stretched-link">ระบบจองห้องออนไลน์</a></h4>
+                            <p>ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ ช่วยให้นักศึกษา อาจารย์
+                                และบุคลากรสามารถจองห้องต่างๆ ได้อย่างสะดวกและรวดเร็ว</p>
+                        </div>
+                    </div><!-- End Service Item -->
+
+                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-item position-relative">
+                            <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
+                            <h4><a href="" class="stretched-link">ประเภทห้องที่ให้บริการ</a></h4>
+                            <p>เรามีห้องหลากหลายประเภทให้เลือกใช้บริการ ได้แก่ ห้องเรียนขนาดต่างๆ ห้องประชุม
+                                ห้องปฏิบัติการ และห้องทำงานกลุ่ม
+                                แต่ละห้องมีอุปกรณ์และสิ่งอำนวยความสะดวกที่เหมาะสมกับการใช้งาน</p>
+                        </div>
+                    </div><!-- End Service Item -->
+
+                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-item position-relative">
+                            <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
+                            <h4><a href="" class="stretched-link">บริการเสริมและการสนับสนุน</a></h4>
+                            <p>นอกจากการจองห้องแล้ว เรายังมีบริการเสริมต่างๆ เช่น การขอใช้อุปกรณ์พิเศษ
+                                การจัดเตรียมห้องตามความต้องการเฉพาะ และการให้คำแนะนำในการใช้งานอุปกรณ์ต่างๆ</p>
+                        </div>
+                    </div><!-- End Service Item -->
+
+                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+                        <div class="service-item position-relative">
+                            <div class="icon"><i class="bi bi-broadcast icon"></i></div>
+                            <h4><a href="" class="stretched-link">การพัฒนาและปรับปรุงอย่างต่อเนื่อง</a></h4>
+                            <p>เราให้ความสำคัญกับการพัฒนาและปรับปรุงระบบจองห้องอย่างต่อเนื่อง
+                                โดยรับฟังความคิดเห็นและข้อเสนอแนะจากผู้ใช้บริการ
+                                เพื่อนำมาปรับปรุงทั้งในด้านระบบออนไลน์และคุณภาพของห้องและอุปกรณ์ต่างๆ</p>
+                        </div>
+                    </div><!-- End Service Item -->
+
+                </div>
+
             </div>
-          </div><!-- End Service Item -->
 
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-              <h4><a href="" class="stretched-link">ประเภทห้องที่ให้บริการ</a></h4>
-              <p>เรามีห้องหลากหลายประเภทให้เลือกใช้บริการ ได้แก่ ห้องเรียนขนาดต่างๆ ห้องประชุม ห้องปฏิบัติการ และห้องทำงานกลุ่ม  แต่ละห้องมีอุปกรณ์และสิ่งอำนวยความสะดวกที่เหมาะสมกับการใช้งาน</p>
-            </div>
-          </div><!-- End Service Item -->
+        </section><!-- /Services Section -->
 
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-              <h4><a href="" class="stretched-link">บริการเสริมและการสนับสนุน</a></h4>
-              <p>นอกจากการจองห้องแล้ว เรายังมีบริการเสริมต่างๆ เช่น การขอใช้อุปกรณ์พิเศษ การจัดเตรียมห้องตามความต้องการเฉพาะ และการให้คำแนะนำในการใช้งานอุปกรณ์ต่างๆ</p>
-            </div>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="" class="stretched-link">การพัฒนาและปรับปรุงอย่างต่อเนื่อง</a></h4>
-              <p>เราให้ความสำคัญกับการพัฒนาและปรับปรุงระบบจองห้องอย่างต่อเนื่อง โดยรับฟังความคิดเห็นและข้อเสนอแนะจากผู้ใช้บริการ เพื่อนำมาปรับปรุงทั้งในด้านระบบออนไลน์และคุณภาพของห้องและอุปกรณ์ต่างๆ</p>
-            </div>
-          </div><!-- End Service Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Services Section -->
-
-    {{-- <!-- Call To Action Section -->
+        {{-- <!-- Call To Action Section -->
     <section id="call-to-action" class="call-to-action section dark-background">
 
       <img src="{{ asset('theme_1/img/cta-bg.jpg') }}" alt="">
@@ -382,7 +401,7 @@
 
     </section><!-- /Call To Action Section --> --}}
 
-    {{-- <!-- Portfolio Section -->
+        {{-- <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section">
 
       <!-- Section Title -->
@@ -502,7 +521,7 @@
 
     </section><!-- /Portfolio Section --> --}}
 
-    {{-- <!-- Team Section -->
+        {{-- <!-- Team Section -->
     <section id="team" class="team section">
 
       <!-- Section Title -->
@@ -589,8 +608,8 @@
 
     </section><!-- /Team Section --> --}}
 
-    <!-- Pricing Section -->
-    {{-- <section id="pricing" class="pricing section light-background">
+        <!-- Pricing Section -->
+        {{-- <section id="pricing" class="pricing section light-background">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -653,7 +672,7 @@
 
     </section><!-- /Pricing Section --> --}}
 
-    {{-- <!-- Testimonials Section -->
+        {{-- <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
 
       <!-- Section Title -->
@@ -770,79 +789,84 @@
 
     </section><!-- /Testimonials Section --> --}}
 
-    <!-- Faq 2 Section -->
-    <section id="faq-2" class="faq-2 section light-background">
+        <!-- Faq 2 Section -->
+        <section id="faq-2" class="faq-2 section light-background">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>คำถามที่พบบ่อย</h2>
-        <p>คำถามที่พบบ่อยสำหรับระบบจองห้องของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ </p>
-      </div><!-- End Section Title -->
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>คำถามที่พบบ่อย</h2>
+                <p>คำถามที่พบบ่อยสำหรับระบบจองห้องของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ </p>
+            </div><!-- End Section Title -->
 
-      <div class="container">
+            <div class="container">
 
-        <div class="row justify-content-center">
+                <div class="row justify-content-center">
 
-          <div class="col-lg-10">
+                    <div class="col-lg-10">
 
-            <div class="faq-container">
+                        <div class="faq-container">
 
-              <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>ใครสามารถจองห้องได้บ้าง?</h3>
-                <div class="faq-content">
-                  <p>นักศึกษา อาจารย์ และบุคลากรของคณะวิศวกรรมศาสตร์สามารถจองห้องได้ โดยต้องใช้บัญชีผู้ใช้ของมหาวิทยาลัย</p>
+                            <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
+                                <i class="faq-icon bi bi-question-circle"></i>
+                                <h3>ใครสามารถจองห้องได้บ้าง?</h3>
+                                <div class="faq-content">
+                                    <p>นักศึกษา อาจารย์ และบุคลากรของคณะวิศวกรรมศาสตร์สามารถจองห้องได้
+                                        โดยต้องใช้บัญชีผู้ใช้ของมหาวิทยาลัย</p>
+                                </div>
+                                <i class="faq-toggle bi bi-chevron-right"></i>
+                            </div><!-- End Faq item-->
+
+                            <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                                <i class="faq-icon bi bi-question-circle"></i>
+                                <h3> ต้องจองห้องล่วงหน้ากี่วัน?</h3>
+                                <div class="faq-content">
+                                    <p>สามารถจองล่วงหน้าได้ตั้งแต่ 1-30 วัน
+                                        ขึ้นอยู่กับประเภทของห้องและวัตถุประสงค์การใช้งาน</p>
+                                </div>
+                                <i class="faq-toggle bi bi-chevron-right"></i>
+                            </div><!-- End Faq item-->
+
+                            <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                                <i class="faq-icon bi bi-question-circle"></i>
+                                <h3>สามารถจองห้องได้นานที่สุดกี่ชั่วโมงต่อครั้ง?</h3>
+                                <div class="faq-content">
+                                    <p>โดยทั่วไปสามารถจองได้ครั้งละไม่เกิน 4 ชั่วโมง
+                                        หากต้องการใช้นานกว่านั้นต้องขออนุมัติพิเศษ</p>
+                                </div>
+                                <i class="faq-toggle bi bi-chevron-right"></i>
+                            </div><!-- End Faq item-->
+
+                            <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                                <i class="faq-icon bi bi-question-circle"></i>
+                                <h3>มีห้องประเภทไหนให้จองบ้าง?</h3>
+                                <div class="faq-content">
+                                    <p>: มีห้องเรียน ห้องประชุม ห้องปฏิบัติการ และห้องทำงานกลุ่ม
+                                        ซึ่งแต่ละประเภทมีขนาดและอุปกรณ์แตกต่างกัน</p>
+                                </div>
+                                <i class="faq-toggle bi bi-chevron-right"></i>
+                            </div><!-- End Faq item-->
+
+                            <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                                <i class="faq-icon bi bi-question-circle"></i>
+                                <h3>ขั้นตอนการจองห้องเป็นอย่างไร?</h3>
+                                <div class="faq-content">
+                                    <p>เข้าสู่ระบบด้วยบัญชีผู้ใช้ เลือกประเภทห้อง วันเวลาที่ต้องการ
+                                        กรอกรายละเอียดการใช้งาน และรอการอนุมัติ</p>
+                                </div>
+                                <i class="faq-toggle bi bi-chevron-right"></i>
+                            </div><!-- End Faq item-->
+
+                        </div>
+
+                    </div>
+
                 </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3> ต้องจองห้องล่วงหน้ากี่วัน?</h3>
-                <div class="faq-content">
-                  <p>สามารถจองล่วงหน้าได้ตั้งแต่ 1-30 วัน ขึ้นอยู่กับประเภทของห้องและวัตถุประสงค์การใช้งาน</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>สามารถจองห้องได้นานที่สุดกี่ชั่วโมงต่อครั้ง?</h3>
-                <div class="faq-content">
-                  <p>โดยทั่วไปสามารถจองได้ครั้งละไม่เกิน 4 ชั่วโมง หากต้องการใช้นานกว่านั้นต้องขออนุมัติพิเศษ</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>มีห้องประเภทไหนให้จองบ้าง?</h3>
-                <div class="faq-content">
-                  <p>: มีห้องเรียน ห้องประชุม ห้องปฏิบัติการ และห้องทำงานกลุ่ม ซึ่งแต่ละประเภทมีขนาดและอุปกรณ์แตกต่างกัน</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>ขั้นตอนการจองห้องเป็นอย่างไร?</h3>
-                <div class="faq-content">
-                  <p>เข้าสู่ระบบด้วยบัญชีผู้ใช้ เลือกประเภทห้อง วันเวลาที่ต้องการ กรอกรายละเอียดการใช้งาน และรอการอนุมัติ</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
 
             </div>
 
-          </div>
+        </section><!-- /Faq 2 Section -->
 
-        </div>
-
-      </div>
-
-    </section><!-- /Faq 2 Section -->
-
-    {{-- <!-- Contact Section -->
+        {{-- <!-- Contact Section -->
     <section id="contact" class="contact section">
 
       <!-- Section Title -->
@@ -928,11 +952,11 @@
 
     </section><!-- /Contact Section --> --}}
 
-  </main>
+    </main>
 
-  <footer id="footer" class="footer">
+    <footer id="footer" class="footer">
 
-    {{-- <div class="footer-newsletter">
+        {{-- <div class="footer-newsletter">
       <div class="container">
         <div class="row justify-content-center text-center">
           <div class="col-lg-6">
@@ -949,121 +973,123 @@
       </div>
     </div> --}}
 
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="d-flex align-items-center">
-            <span class="sitename">คณะวิศวกรรมศาสตร์</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 00</p>
-            <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
-            <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
-            <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
-            <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
-          </div>
-        </div>
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="d-flex align-items-center">
+                        <span class="sitename">คณะวิศวกรรมศาสตร์</span>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 00</p>
+                        <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
+                        <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
+                        <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
+                        <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
+                    </div>
+                </div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>บริการสำคัญ</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>บริการสำคัญ</h4>
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
                                 class="nav-link p-0 text-body-secondary">
                                 สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
                             </a>
-            </li>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
-                  class="nav-link p-0 text-body-secondary">
-                  แผนที่มหาวิทยาลัยเชียงใหม่
-              </a>
-            </li>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                การบริจาค
-              </a>
-            </li>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
-                CMU MAIL
-            </a>
-            </li>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                CMU MIS
-            </a>
-            </li>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                สำหรับเจ้าหน้าที่
-            </a>
-            </li>
-          </ul>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
+                                class="nav-link p-0 text-body-secondary">
+                                แผนที่มหาวิทยาลัยเชียงใหม่
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                การบริจาค
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
+                                CMU MAIL
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                CMU MIS
+                            </a>
+                        </li>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                                สำหรับเจ้าหน้าที่
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
+                                CMU 360 องศา
+                            </a>
+                        </li>
+                    </ul>
+                    <h4 class="mt-3">ช่องทางสื่อสาร</h4>
+                    <ul>
+                        <li><i class="bi bi-chevron-right"></i>
+                            <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <h4>ติดตามเรา</h4>
+                    <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
+                    <div class="social-links d-flex">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
-                CMU 360 องศา
-            </a>
-            </li>
-          </ul>
-          <h4 class="mt-3">ช่องทางสื่อสาร</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> 
-              <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
-            </li>
-          </ul>
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All
+                    rights reserved.</span></p>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you've purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
         </div>
 
-        <div class="col-lg-4 col-md-12">
-          <h4>ติดตามเรา</h4>
-          <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
-          <div class="social-links d-flex">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
+    </footer>
 
-      </div>
-    </div>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All rights reserved.</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
+    <!-- Preloader -->
+    <div id="preloader"></div>
 
-  </footer>
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('theme_1/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/waypoints/noframework.waypoints.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('theme_1/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="{{ asset('theme_1/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/php-email-form/validate.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/aos/aos.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/glightbox/js/glightbox.min.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/waypoints/noframework.waypoints.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
-  <script src="{{ asset('theme_1/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
-
-  <!-- Main JS File -->
-  <script src="{{ asset('theme_1/js/main.js') }}"></script>
+    <!-- Main JS File -->
+    <script src="{{ asset('theme_1/js/main.js') }}"></script>
 
 </body>
 
