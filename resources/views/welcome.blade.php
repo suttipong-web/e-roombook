@@ -36,6 +36,28 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+    <style type="text/css">
+        .background-images {
+            background-image: url("{{ asset('theme_1/img/banner.png') }}");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .main-header-img {
+            background-image: url("{{ asset('theme_1/img/banner.png') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            width: 100%;
+            height: 100vh;
+            /* responsive height */
+        }
+    </style>
 </head>
 
 <body class="index-page">
@@ -54,26 +76,8 @@
                     <li><a href="#hero" class="active">หน้าแรก</a></li>
                     <li><a href="#about">เกี่ยวกับเรา</a></li>
                     <li><a href="#services">บริการของเรา</a></li>
-                    {{-- <li><a href="#pricing">ราคา</a></li> --}}
                     <li><a href="#faq-2">คำถามที่พบบ่อย</a></li>
-                    {{-- <li class="dropdown"><a href="#"><span>ข้อมูลทั่วไป</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li> --}}
-                    <li><a href="#footer">ติดต่อเรา2222</a></li>
+                    <li><a href="#footer">ติดต่อเรา</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -83,32 +87,27 @@
         </div>
     </header>
 
-    <main class="main">
+    <main class="main ">
 
-        <!-- Hero Section -->
-        <section id="hero" class="hero section dark-background">
+        <div class="container-full">
+            <div style="min-height:120px;margin-top:15px;">
+                <img src="{{ asset('theme_1/img/banner.png') }}" style="width:100%;z-index:2;">
+            </div>
+        </div>
+        <!-- Hero Section
+        <section id="hero" class="hero section dark-background  ">
 
-            <div class="container">
+
+
+            <div class="container-fluid2">
+
                 <div class="row gy-4">
-                    <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"
-                        data-aos="zoom-out">
-                        <h1>ระบบจองห้องคณะวิศวกรรมศาสตร์</h1>
-                        <p>ตรงสอบและจองห้องรวดเร็ว ทันสมัย ใช้งานง่าย</p>
-                        <div class="d-flex">
-                            <a href="/booking" class="btn-get-started">เริ่มต้นจองห้อง</a>
-                            <a href="https://www.youtube.com/watch?v=tOQX52VS00s"
-                                class="glightbox btn-watch-video d-flex align-items-center"><i
-                                    class="bi bi-play-circle"></i><span>Watch Video</span></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
-                        <img src="{{ asset('theme_1/img/engineering_CMU_Logo_01.png') }}" class="img-fluid animated"
-                            alt="">
-                    </div>
+                    
                 </div>
             </div>
 
-        </section><!-- /Hero Section -->
+        </section>-->
+        <!-- /Hero Section -->
 
         <!-- Clients Section -->
         {{-- <section id="clients" class="clients section light-background">
@@ -168,209 +167,92 @@
       </div>
 
     </section><!-- /Clients Section --> --}}
-
-        <!-- About Section -->
-        <section id="about" class="about section">
-
-            <!-- Section Title -->
-            <div class="container section-title" data-aos="fade-up">
-                <h2>เกี่ยวกับเรา</h2>
-            </div><!-- End Section Title -->
-
-            <div class="container">
-
-                <div class="row gy-4">
-
-                    <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
-                        <p>
-                            ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่
-                            เป็นโครงการที่พัฒนาขึ้นเพื่อตอบสนองความต้องการในการใช้ทรัพยากรห้องเรียนและพื้นที่ต่างๆ
-                            ภายในคณะอย่างมีประสิทธิภาพ โดยมีวัตถุประสงค์หลักในการอำนวยความสะดวกให้แก่นักศึกษา คณาจารย์
-                            และบุคลากรทุกท่าน.
-                        </p>
-                        <ul>
-                            <li><i class="bi bi-check2-circle"></i>
-                                <span>เรามุ่งมั่นที่จะพัฒนาและปรับปรุงระบบอย่างต่อเนื่อง.</span></li>
-                            <li><i class="bi bi-check2-circle"></i>
-                                <span>ใช้เทคโนโลยีล่าสุดมาประยุกต์ใช้เพื่อสร้างระบบที่มีความปลอดภัย</span></li>
-                            <li><i class="bi bi-check2-circle"></i> <span>ใช้งานง่าย และมีประสิทธิภาพสูง</span></li>
-                        </ul>
+        <div style="clear: both"></div>
+        <div class="container ">
+            <!-- About Section -->
+            <section id="about" class="about section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>เกี่ยวกับเรา</h2>
+                </div><!-- End Section Title -->
+                <div class="container">
+                    <div class="row gy-4 ">
+                        <div class="col-lg-8 content" data-aos="fade-up" data-aos-delay="100">
+                            <p> ระบบจองห้อง คณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่
+                                จะช่วยให้ผู้ใช้งานทุกคนสามารถเข้าถึงการใช้งานของห้องเรียน
+                                ห้องปฏิบัติการคอมพิวเตอร์ รวมไปถึงห้องประชุมได้อย่างรวดเร็ว ทราบถึงสถานการณ์ใช้งาน
+                                และอำนวยความสะดวกให้กับ
+                                เจ้าหน้าที่ส่วนงานในการจัดการตารางการเรียนการสอนของแต่ละภาคการศึกษา
+                                มากไปกว่านั้นระบบนี้
+                                มาพร้อมกับฟังก์ชั่น
+                                สำหรับผู้ดูแลระบบที่จะช่วยในการบริหารจัดการห้องต่างๆ ได้อย่างสะดวก รวดเร็ว
+                                และมีประสิทธิภาพมากยิ่งขึ้น เป็นโซลูชั่นที่
+                                ตอบโจทย์ความต้องการให้กับทุก ๆ ส่วนงาน รวมไปถึงผู้ใช้งานทั้งภายในและภายนอกคณะฯ
+                            </p>
+                        </div>
+                        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                            <ul>
+                                <li><i class="bi bi-check2-circle"></i><span>ตรวจสอบสถานะะการใช้งานได้</span>
+                                </li>
+                                <li><i class="bi bi-check2-circle"></i><span>เพิ่มข้อมูลตารางสอนได้อย่างง่ายดาย</span>
+                                </li>
+                                <li><i class="bi bi-check2-circle"></i> <span>จองใช้งานห้องได้ทุกที่ ทุกเวลา</span>
+                                </li>
+                                <li><i class="bi bi-check2-circle"></i> <span>แจ้งเตือนผู้ดูแลห้องได้</span></li>
+                            </ul>
+                        </div>
                     </div>
-
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                        <p>วิสัยทัศน์ของเราคือการเป็นผู้นำในการให้บริการระบบจองห้องที่ทันสมัยและมีประสิทธิภาพสูงสุด
-                            สนับสนุนการเรียนการสอน การวิจัย และกิจกรรมต่างๆ ของคณะวิศวกรรมศาสตร์
-                            มหาวิทยาลัยเชียงใหม่ให้ดำเนินไปอย่างราบรื่นและประสบความสำเร็จ</p>
-                        <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-                    </div>
-
                 </div>
 
-            </div>
+            </section><!-- /About Section -->
 
-        </section><!-- /About Section -->
-
-        {{-- <!-- Why Us Section -->
-    <section id="why-us" class="section why-us light-background" data-builder="section">
-
-      <div class="container-fluid">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
-
-            <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
-              <h3><span>Eum ipsam laborum deleniti </span><strong>velit pariatur architecto aut nihil</strong></h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-              </p>
-            </div>
-
-            <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
-
-              <div class="faq-item faq-active">
-
-                <h3><span>01</span> Non consectetur a erat nam at lectus urna duis?</h3>
-                <div class="faq-content">
-                  <p>Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <h3><span>02</span> Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
-                <div class="faq-content">
-                  <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <h3><span>03</span> Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
-                <div class="faq-content">
-                  <p>Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-5 order-1 order-lg-2 why-us-img">
-            <img src="{{ asset('theme_1/img/why-us.png') }}" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100">
-          </div>
         </div>
-
-      </div>
-
-    </section><!-- /Why Us Section --> --}}
-
-        {{-- <!-- Skills Section -->
-    <section id="skills" class="skills section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row">
-
-          <div class="col-lg-6 d-flex align-items-center">
-            <img src="{{ asset('theme_1/img/skills.png') }}" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-6 pt-4 pt-lg-0 content">
-
-            <h3>Voluptatem dignissimos provident quasi corporis voluptas</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-
-            <div class="skills-content skills-animation">
-
-              <div class="progress">
-                <span class="skill"><span>HTML</span> <i class="val">100%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
-              <div class="progress">
-                <span class="skill"><span>CSS</span> <i class="val">90%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
-              <div class="progress">
-                <span class="skill"><span>JavaScript</span> <i class="val">75%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
-              <div class="progress">
-                <span class="skill"><span>Photoshop</span> <i class="val">55%</i></span>
-                <div class="progress-bar-wrap">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div><!-- End Skills Item -->
-
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
-    </section><!-- /Skills Section --> --}}
-
         <!-- Services Section -->
         <section id="services" class="services section light-background">
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>บริการของเรา</h2>
-                <p>ระบบจองห้องของเราสามารถตอบสนองความต้องการของประชาคมคณะวิศวกรรมศาสตร์ได้อย่างดีที่สุด</p>
+                <h2>ประเภทห้อง</h2>
+                <p>ระบบจองห้องคณะวิศวกรรมศาสตร์ มีประเภทห้องทั้งหมด 3 ประเภทด้วยกันดังนี้</p>
             </div><!-- End Section Title -->
 
             <div class="container">
 
-                <div class="row gy-4">
+                <div class="row gy-4 text-center justify-content-center">
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
                             <div class="icon"><i class="bi bi-activity icon"></i></div>
-                            <h4><a href="" class="stretched-link">ระบบจองห้องออนไลน์</a></h4>
-                            <p>ระบบจองห้องออนไลน์ของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ ช่วยให้นักศึกษา อาจารย์
-                                และบุคลากรสามารถจองห้องต่างๆ ได้อย่างสะดวกและรวดเร็ว</p>
+                            <h4><a href="" class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
+                            <p>ห้องปฏิบัติการคอมพิวเตอร์มีทั้งหมด 5 ห้อง
+                                ใช้สำหรับการเรียนการสอน / อบรมการใช้งาน
+                                วัดคุณสมบัติพนักงาน</p>
                         </div>
                     </div><!-- End Service Item -->
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
                         <div class="service-item position-relative">
                             <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-                            <h4><a href="" class="stretched-link">ประเภทห้องที่ให้บริการ</a></h4>
-                            <p>เรามีห้องหลากหลายประเภทให้เลือกใช้บริการ ได้แก่ ห้องเรียนขนาดต่างๆ ห้องประชุม
-                                ห้องปฏิบัติการ และห้องทำงานกลุ่ม
-                                แต่ละห้องมีอุปกรณ์และสิ่งอำนวยความสะดวกที่เหมาะสมกับการใช้งาน</p>
-                        </div>
-                    </div><!-- End Service Item -->
+                            <h4><a href="" class="stretched-link">ห้องเรียน</a></h4>
+                            <p>ห้องเรียนทั้วไปใช้สำหรับการเรียนการสอน
 
-                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-                        <div class="service-item position-relative">
-                            <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-                            <h4><a href="" class="stretched-link">บริการเสริมและการสนับสนุน</a></h4>
-                            <p>นอกจากการจองห้องแล้ว เรายังมีบริการเสริมต่างๆ เช่น การขอใช้อุปกรณ์พิเศษ
-                                การจัดเตรียมห้องตามความต้องการเฉพาะ และการให้คำแนะนำในการใช้งานอุปกรณ์ต่างๆ</p>
+                                ในลักษณะการบรรยาย / การสอบทั้งภายใน
+
+                                และภายนอก และการใช้งานอื่นๆน</p>
                         </div>
                     </div><!-- End Service Item -->
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
                         <div class="service-item position-relative">
                             <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-                            <h4><a href="" class="stretched-link">การพัฒนาและปรับปรุงอย่างต่อเนื่อง</a></h4>
-                            <p>เราให้ความสำคัญกับการพัฒนาและปรับปรุงระบบจองห้องอย่างต่อเนื่อง
-                                โดยรับฟังความคิดเห็นและข้อเสนอแนะจากผู้ใช้บริการ
-                                เพื่อนำมาปรับปรุงทั้งในด้านระบบออนไลน์และคุณภาพของห้องและอุปกรณ์ต่างๆ</p>
+                            <h4><a href="" class="stretched-link">ห้องประชุม</a></h4>
+                            <p>
+                                ห้องประชุมใช้สำหรับประชุม / อบรมและบรรยาย /
+
+                                ศึกษาดูงาน รวมไปถึงใช้สำหรับต้อนรับ
+
+                                แขกที่มาเยื่ยมเยือนคณะฯ
+                            </p>
                         </div>
                     </div><!-- End Service Item -->
 
@@ -1058,8 +940,10 @@
         </div>
 
         <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All
-                    rights reserved.</span></p>
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong>
+                <span> All
+                    rights reserved.</span>
+            </p>
             <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you've purchased the pro version. -->

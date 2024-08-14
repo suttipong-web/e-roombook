@@ -327,6 +327,7 @@ class RoomsController extends Controller
     public function detail(Request $request)
     {
 
+        $itemlist[]="";
         if ($request->roomId) {
             $roomId = $request->roomId;
             //`room_galleries` 
@@ -339,9 +340,9 @@ class RoomsController extends Controller
                 ->where('rooms.id', '=', $roomId)
                 ->get();
                 
-         
-            $itemlist  =  DB::select(DB::raw('SELECT * FROM `room_items` WHERE room_items.id IN ('. $listRoom[0]->room_itemlist.')')); 
-            
+            if($listRoom[0]->room_itemlist){
+                $itemlist  =  DB::select(DB::raw('SELECT * FROM `room_items` WHERE room_items.id IN ('. $listRoom[0]->room_itemlist.')')); 
+            }
            
             //url CMU Outh 
             $cmuKey = DB::table('tbl_apikey')
