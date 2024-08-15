@@ -167,8 +167,8 @@ h6 {
   color: var(--default-color);
   background-color: var(--background-color);*/
   background-image: linear-gradient(to right top, #0097b2, #00acb3, #00bea3, #24ce82, #7ed957);
-  padding: 3px 0;
-  transition: all 0.75s;
+  padding: 5px 0;
+  transition: all 0.5s;
   z-index: 100;
 }
 

@@ -38,24 +38,8 @@
   ======================================================== -->
 
     <style type="text/css">
-        .background-images {
-            background-image: url("{{ asset('theme_1/img/banner.png') }}");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            height: 100vh;
-            width: 100%;
-        }
-
-        .main-header-img {
-            background-image: url("{{ asset('theme_1/img/banner.png') }}");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-            width: 100%;
-            height: 100vh;
-            /* responsive height */
+        .main-header {
+            background-image: linear-gradient(to right top, #0097b2, #00acb3, #00bea3, #24ce82, #7ed957);
         }
     </style>
 </head>
@@ -88,85 +72,20 @@
     </header>
 
     <main class="main ">
+        <div class=" main-header w-100" data-aos="zoom-in">
+            <div class="row">
+                <div style="min-height:120px;margin-top:15px;">
+                    <img src="{{ asset('theme_1/img/banner.png') }}" style="width:100%;z-index:2;">
+                    <div style="position: relative;">
+                        <a href="/booking/"
+                            style="position: absolute;bottom: 80px;width:98%;height: 70px;z-index: 9999;"></a>
 
-        <div class="container-full">
-            <div style="min-height:120px;margin-top:15px;">
-                <img src="{{ asset('theme_1/img/banner.png') }}" style="width:100%;z-index:2;">
-            </div>
-        </div>
-        <!-- Hero Section
-        <section id="hero" class="hero section dark-background  ">
-
-
-
-            <div class="container-fluid2">
-
-                <div class="row gy-4">
-                    
+                    </div>
                 </div>
+
             </div>
-
-        </section>-->
-        <!-- /Hero Section -->
-
-        <!-- Clients Section -->
-        {{-- <section id="clients" class="clients section light-background">
-
-      <div class="container" data-aos="zoom-in">
-
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 2,
-                  "spaceBetween": 40
-                },
-                "480": {
-                  "slidesPerView": 3,
-                  "spaceBetween": 60
-                },
-                "640": {
-                  "slidesPerView": 4,
-                  "spaceBetween": 80
-                },
-                "992": {
-                  "slidesPerView": 5,
-                  "spaceBetween": 120
-                },
-                "1200": {
-                  "slidesPerView": 6,
-                  "spaceBetween": 120
-                }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper align-items-center">
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-1.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-2.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-3.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-4.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-5.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-6.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-7.png') }}" class="img-fluid" alt=""></div>
-            <div class="swiper-slide"><img src="{{ asset('theme_1/img/clients/client-8.png') }}" class="img-fluid" alt=""></div>
-          </div>
         </div>
 
-      </div>
-
-    </section><!-- /Clients Section --> --}}
         <div style="clear: both"></div>
         <div class="container ">
             <!-- About Section -->
@@ -222,7 +141,8 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
-                            <div class="icon"><i class="bi bi-activity icon"></i></div>
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom1.png') }}" height="94">
+                            </div>
                             <h4><a href="" class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
                             <p>ห้องปฏิบัติการคอมพิวเตอร์มีทั้งหมด 5 ห้อง
                                 ใช้สำหรับการเรียนการสอน / อบรมการใช้งาน
@@ -232,7 +152,8 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
                         <div class="service-item position-relative">
-                            <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom2.png') }}" height="94">
+                            </div>
                             <h4><a href="" class="stretched-link">ห้องเรียน</a></h4>
                             <p>ห้องเรียนทั้วไปใช้สำหรับการเรียนการสอน
 
@@ -244,7 +165,8 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
                         <div class="service-item position-relative">
-                            <div class="icon"><i class="bi bi-broadcast icon"></i></div>
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3.png') }}" height="94">
+                            </div>
                             <h4><a href="" class="stretched-link">ห้องประชุม</a></h4>
                             <p>
                                 ห้องประชุมใช้สำหรับประชุม / อบรมและบรรยาย /
@@ -677,7 +599,8 @@
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <h2>คำถามที่พบบ่อย</h2>
-                <p>คำถามที่พบบ่อยสำหรับระบบจองห้องของคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ </p>
+                <p>เราได้รวบรวมคำถามที่พบบ่อยไว้ให้ด้านล่างนี้ หากมีคำถามเพิ่มเติม
+                    สามารถติดต่อเจ้าหน้าที่ได้ที่เบอร๋โทรศัพท์ 44120 </p>
             </div><!-- End Section Title -->
 
             <div class="container">
@@ -690,37 +613,40 @@
 
                             <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
                                 <i class="faq-icon bi bi-question-circle"></i>
-                                <h3>ใครสามารถจองห้องได้บ้าง?</h3>
+                                <h3>ใครที่สามารถจองห้องผ่านระบบนี้ได้บ้าง ?</h3>
                                 <div class="faq-content">
-                                    <p>นักศึกษา อาจารย์ และบุคลากรของคณะวิศวกรรมศาสตร์สามารถจองห้องได้
-                                        โดยต้องใช้บัญชีผู้ใช้ของมหาวิทยาลัย</p>
+                                    <p>สามารถจองได้ทั้งบุคคลภายในคณะฯ และภายนอกคณะฯ
+                                        สำหรับบุคคลภายนอกคณะฯสามารถจองได้เฉพาะห้องเรียนและห้องปฏิบัติการคอมพิวเตอร์เท่านั้น
+                                        ไม่สามารถจองห้องประชุมได้ และอาจมีค่าใช้จ่ายในการใช้ห้อง</p>
                                 </div>
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div><!-- End Faq item-->
 
                             <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
                                 <i class="faq-icon bi bi-question-circle"></i>
-                                <h3> ต้องจองห้องล่วงหน้ากี่วัน?</h3>
+                                <h3> ต้องจองล่วงหน้ากี่วัน กี่ชั่วโมง ?</h3>
                                 <div class="faq-content">
-                                    <p>สามารถจองล่วงหน้าได้ตั้งแต่ 1-30 วัน
-                                        ขึ้นอยู่กับประเภทของห้องและวัตถุประสงค์การใช้งาน</p>
+                                    <p>ผู้จองควรทำการจองใช้งานล่วงหน้า อย่างน้อย 1 วัน
+                                        เพื่อความสะดวกในการปฏิบัติงานของผู้ดูแลประจำห้องนั้น ๆ
+                                        สำหรับบุคคลภายนอกคณะฯ ควรทำการจองล่วงหน้าอย่างน้อย 10 วัน
+                                        เพราะจำเป็นต้องใช้เวลาในการดำเนินการขออนุมัติจากผู้บริหาร</p>
                                 </div>
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div><!-- End Faq item-->
 
                             <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
                                 <i class="faq-icon bi bi-question-circle"></i>
-                                <h3>สามารถจองห้องได้นานที่สุดกี่ชั่วโมงต่อครั้ง?</h3>
+                                <h3>สามารถจองล่วงหน้า ของภาคการศึกษาถัดไปได้ไหม ?</h3>
                                 <div class="faq-content">
-                                    <p>โดยทั่วไปสามารถจองได้ครั้งละไม่เกิน 4 ชั่วโมง
-                                        หากต้องการใช้นานกว่านั้นต้องขออนุมัติพิเศษ</p>
+                                    <p>สามารถจองใช้งานห้องต่าง ๆ ได้ภายในภาคการศึกษาปัจจุบันได้เท่านั้น
+                                        ไม่สามารถจองใช้งานของภาคการศึกษาถัดไปได้</p>
                                 </div>
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div><!-- End Faq item-->
 
                             <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
                                 <i class="faq-icon bi bi-question-circle"></i>
-                                <h3>มีห้องประเภทไหนให้จองบ้าง?</h3>
+                                <h3>มีห้องประเภทไหนให้จองบ้าง ?</h3>
                                 <div class="faq-content">
                                     <p>: มีห้องเรียน ห้องประชุม ห้องปฏิบัติการ และห้องทำงานกลุ่ม
                                         ซึ่งแต่ละประเภทมีขนาดและอุปกรณ์แตกต่างกัน</p>
@@ -730,10 +656,12 @@
 
                             <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
                                 <i class="faq-icon bi bi-question-circle"></i>
-                                <h3>ขั้นตอนการจองห้องเป็นอย่างไร?</h3>
+                                <h3>สามารถยกเลิการจองได้ไหม ?</h3>
                                 <div class="faq-content">
-                                    <p>เข้าสู่ระบบด้วยบัญชีผู้ใช้ เลือกประเภทห้อง วันเวลาที่ต้องการ
-                                        กรอกรายละเอียดการใช้งาน และรอการอนุมัติ</p>
+                                    <p>หากการจองของท่านได้รับการอนุมัติแล้ว กรณีที่ท่านต้องการยกเลิกการจองดังกล่าว
+                                        สามารถทำการยกเลิกการจองนั้น
+                                        โดยการเข้าสู่ระบบของท่าน
+                                        และสามารถยกเลิกการจองที่ได้รับการอนุมัติแล้วได้ด้วยตัวท่านเอง</p>
                                 </div>
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div><!-- End Faq item-->
