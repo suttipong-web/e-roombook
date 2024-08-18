@@ -141,8 +141,7 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom1.png') }}" height="94">
-                            </div>
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3.png') }}" height="94"></div>
                             <h4><a href="" class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
                             <p>ห้องปฏิบัติการคอมพิวเตอร์มีทั้งหมด 5 ห้อง
                                 ใช้สำหรับการเรียนการสอน / อบรมการใช้งาน
@@ -165,7 +164,7 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
                         <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3.png') }}" height="94">
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom1.png') }}" height="94">
                             </div>
                             <h4><a href="" class="stretched-link">ห้องประชุม</a></h4>
                             <p>

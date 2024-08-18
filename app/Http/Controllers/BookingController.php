@@ -22,6 +22,12 @@ class BookingController extends Controller
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
             ->get();
+        
+       //ประเภทห้อง 
+        $roomType = DB::table('room_type')
+        ->select('id', 'roomtypeName')
+        ->get();
+
 
         //ข้อมูลห้อง ทั้งหมด join
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
@@ -31,11 +37,7 @@ class BookingController extends Controller
             ->where('is_open', '1')
             ->get();
 
-        //ประเภทห้อง 
-        $roomType = DB::table('room_type')
-            ->select('id', 'roomtypeName')
-            ->get();
-
+     
 
         // Load index  view and  data room        
         return view('/bookingroom/index')->with(
@@ -47,6 +49,41 @@ class BookingController extends Controller
 
         );
     }
+    public function indexType(Request $request){
+       
+        $typeId =  (!empty($request->typeId))? $request->typeId:'1';
+        $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
+            ->join('place', 'place.id', '=', 'rooms.placeId')
+            ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
+            ->where('roomTypeId',  $typeId)
+            ->where('is_open', '1')
+            ->get();
+        
+        //ข้อมูลห้อง Select option
+              $roomDataSlc = Rooms::orderby('id', 'asc')
+              ->select('id', 'roomFullName')
+              ->get();
+          
+        //ประเภทห้อง 
+          $roomType = DB::table('room_type')
+          ->select('id', 'roomtypeName')
+          ->get();
+
+         // Load index  view and  data room        
+         return view('/bookingroom/index')->with(
+            [
+                'roomSlc' => $roomDataSlc,
+                'getListRoom' => $getListRoom,
+                'getroomType' => $roomType
+            ]
+
+        );
+      
+
+
+    }
+
+
     public function filter(Request $request)
     {
         //ข้อมูลห้อง ตามประเภท

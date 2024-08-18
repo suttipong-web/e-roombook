@@ -43,6 +43,7 @@ Route::prefix('/room')->group(
 Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
+        Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');

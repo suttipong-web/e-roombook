@@ -108,6 +108,6 @@ class UserController extends Controller
         } else {
             User::create($setData);
         }
-        return "Updated Success.. ";
+        
     }
 }
