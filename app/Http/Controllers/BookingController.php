@@ -146,6 +146,8 @@ class BookingController extends Controller
             ->get();
 
 
+        $RoomtitleSearch = $roomData["roomFullName"];
+        $DateTitleSearch  = $dateNow ;
         //  $dateBooking = $request->search_date;
 
         $roomID = $request->slcRoom;
@@ -174,7 +176,8 @@ class BookingController extends Controller
         // Load index  view and  data room        
         return view('/bookingroom/search')->with(
             [
-                'titleSearch' => $titleSearch,
+                 'RoomtitleSearch' => $RoomtitleSearch,
+                'DateTitleSearch'=> $DateTitleSearch,
                 'getBookingList' => $searhResult,
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
