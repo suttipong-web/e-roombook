@@ -146,8 +146,7 @@ class BookingController extends Controller
             ->get();
 
 
-        $RoomtitleSearch = $roomData["roomFullName"];
-        $DateTitleSearch  = $dateNow ;
+   
         //  $dateBooking = $request->search_date;
 
         $roomID = $request->slcRoom;
@@ -173,6 +172,9 @@ class BookingController extends Controller
 
 
         $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateBooking . " ] ";
+
+             $RoomtitleSearch = $roomData["roomFullName"];
+        $DateTitleSearch  =$dateBooking ;
         // Load index  view and  data room        
         return view('/bookingroom/search')->with(
             [
