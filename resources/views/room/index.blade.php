@@ -10,6 +10,9 @@
     <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Favicons -->
+    <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 </head>
 
 <body>

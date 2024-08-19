@@ -26,6 +26,7 @@ class BookingController extends Controller
        //ประเภทห้อง 
         $roomType = DB::table('room_type')
         ->select('id', 'roomtypeName')
+         ->limit(3)
         ->get();
 
 
@@ -37,15 +38,15 @@ class BookingController extends Controller
             ->where('is_open', '1')
             ->get();
 
-     
+        $pageTitle ="ห้องประชุม";
 
         // Load index  view and  data room        
         return view('/bookingroom/index')->with(
             [
                 'roomSlc' => $roomDataSlc,
                 'getListRoom' => $getListRoom,
-                'getroomType' => $roomType
-            ]
+                'getroomType' => $roomType,
+                'pageTitle'=>$pageTitle            ]
 
         );
     }
@@ -60,13 +61,17 @@ class BookingController extends Controller
             ->get();
         
         //ข้อมูลห้อง Select option
-              $roomDataSlc = Rooms::orderby('id', 'asc')
+        $roomDataSlc = Rooms::orderby('id', 'asc')
               ->select('id', 'roomFullName')
+              ->where('roomTypeId',  $typeId)
               ->get();
+
+         $pageTitle =$getListRoom[0]->roomtypeName;
           
         //ประเภทห้อง 
           $roomType = DB::table('room_type')
           ->select('id', 'roomtypeName')
+          ->limit(3)
           ->get();
 
          // Load index  view and  data room        
@@ -74,13 +79,10 @@ class BookingController extends Controller
             [
                 'roomSlc' => $roomDataSlc,
                 'getListRoom' => $getListRoom,
-                'getroomType' => $roomType
+                'getroomType' => $roomType,
+                'pageTitle'=> $pageTitle
             ]
-
-        );
-      
-
-
+        );      
     }
 
 
@@ -209,22 +211,24 @@ class BookingController extends Controller
             ->orderBy('booking_time_start', 'ASC')
             ->get();
 
-        $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateNow . " ] ";
+        $RoomtitleSearch = $roomData["roomFullName"];
+        $DateTitleSearch  = $dateNow ;
         // Load index  view and  data room        
 
         //Select option ข้อมูลห้อง 
         $roomDataSlc = Rooms::orderby('id', 'asc')
-            ->select('id', 'roomFullName')
+            ->select('id', 'roomFullName')           
+            ->where('roomTypeId',$roomData->roomTypeId)
             ->get();
 
         return view('/bookingroom/search')->with(
             [
-                'titleSearch' => $titleSearch,
+                'RoomtitleSearch' => $RoomtitleSearch,
+                'DateTitleSearch'=> $DateTitleSearch,
                 'getBookingList' => $searhResult,
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
-                'searchDates' => $dateBooking,
-                'imgRoom' => $roomData->thumbnail,
+                'searchDates' => $dateBooking,               
                 'usertype' => $usertype
             ]
         );

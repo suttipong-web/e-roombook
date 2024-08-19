@@ -10,7 +10,9 @@
     <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-
+    <!-- Favicons -->
+    <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <!-- Vendor CSS Files -->
     <link href="{{ asset('theme_1/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme_1/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
@@ -139,14 +141,15 @@
                                     <div class="col-6 col-md-4"><i class="bi bi-calendar2-check-fill"></i> สถานะ</div>
                                 </div>
                             </div>
+
                             <br />
                             <div class="row mx-3 p-3"> {{ $getListRoom[0]->roomDetail }} </div>
                             <hr />
                             <h5> อุปกรณ์ภายในห้อง ( Room Services ) </h5>
-                            <div class="row px-3">
+                            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-3">
                                 @foreach ($listItemRoom as $rows)
-                                    <span class="d-flex"><i class="bi bi-check-circle"></i>
-                                        &nbsp;&nbsp; {{ $rows->item_name }} </span>
+                                    <div class="col"><i class="bi bi-check-circle"></i>
+                                        &nbsp;&nbsp; {{ $rows->item_name }} </div>
                                 @endforeach
 
                             </div>

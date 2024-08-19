@@ -2084,3 +2084,28 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+.bg-mycustom {
+  border-radius: 8px;
+  background-image: radial-gradient(circle, #ffffff, #fbfafb, #f6f6f6, #f2f1f2, #eeeded);
+}
+
+.formSlc {
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  padding: 15px;
+}
+
+.formSlc h5 {
+  text-align: center;
+}
+
+.btnCheckBooking {
+  background: #dab668;
+}
+
+.btn-Booking {
+  background-image: linear-gradient(to right top, #5170ff, #986af5, #c566e6, #e663d6, #ff66c4);
+}

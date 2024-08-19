@@ -75,12 +75,10 @@
         <div class=" main-header w-100" data-aos="zoom-in">
             <div class="row">
                 <div style="min-height:120px;margin-top:15px;">
-                    <img src="{{ asset('theme_1/img/banner.png') }}" style="width:100%;z-index:2;">
-                    <div style="position: relative;">
-                        <a href="/booking/"
-                            style="position: absolute;bottom: 80px;width:98%;height: 70px;z-index: 9999;"></a>
+                    <a href="/booking/">
+                        <img src="{{ asset('theme_1/img/banner.png') }}" style="width:100%;z-index:2;">
+                    </a>
 
-                    </div>
                 </div>
 
             </div>
@@ -136,37 +134,12 @@
             </div><!-- End Section Title -->
 
             <div class="container">
-
                 <div class="row gy-4 text-center justify-content-center">
-
-                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-                        <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3.png') }}" height="94"></div>
-                            <h4><a href="" class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
-                            <p>ห้องปฏิบัติการคอมพิวเตอร์มีทั้งหมด 5 ห้อง
-                                ใช้สำหรับการเรียนการสอน / อบรมการใช้งาน
-                                วัดคุณสมบัติพนักงาน</p>
-                        </div>
-                    </div><!-- End Service Item -->
-
-                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-                        <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom2.png') }}" height="94">
-                            </div>
-                            <h4><a href="" class="stretched-link">ห้องเรียน</a></h4>
-                            <p>ห้องเรียนทั้วไปใช้สำหรับการเรียนการสอน
-
-                                ในลักษณะการบรรยาย / การสอบทั้งภายใน
-
-                                และภายนอก และการใช้งานอื่นๆน</p>
-                        </div>
-                    </div><!-- End Service Item -->
-
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
                         <div class="service-item position-relative">
                             <div class="icon"><img src="{{ asset('theme_1/img/typeroom1.png') }}" height="94">
                             </div>
-                            <h4><a href="" class="stretched-link">ห้องประชุม</a></h4>
+                            <h4><a href="/booking/1/ห้องประชุม" class="stretched-link">ห้องประชุม</a></h4>
                             <p>
                                 ห้องประชุมใช้สำหรับประชุม / อบรมและบรรยาย /
 
@@ -177,6 +150,30 @@
                         </div>
                     </div><!-- End Service Item -->
 
+                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-item position-relative">
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom2.png') }}" height="94">
+                            </div>
+                            <h4><a href="/booking/2/ห้องเรียน" class="stretched-link">ห้องเรียน</a></h4>
+                            <p>ห้องเรียนทั้วไปใช้สำหรับการเรียนการสอน
+
+                                ในลักษณะการบรรยาย / การสอบทั้งภายใน
+
+                                และภายนอก และการใช้งานอื่นๆน</p>
+                        </div>
+                    </div><!-- End Service Item -->
+
+                    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-item position-relative">
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3.png') }}" height="94">
+                            </div>
+                            <h4><a href="/booking/3/ห้องปฏิบัติการคอมพิวเตอร์"
+                                    class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
+                            <p>ห้องปฏิบัติการคอมพิวเตอร์มีทั้งหมด 5 ห้อง
+                                ใช้สำหรับการเรียนการสอน / อบรมการใช้งาน
+                                วัดคุณสมบัติพนักงาน</p>
+                        </div>
+                    </div><!-- End Service Item -->
                 </div>
 
             </div>
@@ -603,13 +600,9 @@
             </div><!-- End Section Title -->
 
             <div class="container">
-
                 <div class="row justify-content-center">
-
                     <div class="col-lg-10">
-
                         <div class="faq-container">
-
                             <div class="faq-item faq-active" data-aos="fade-up" data-aos-delay="200">
                                 <i class="faq-icon bi bi-question-circle"></i>
                                 <h3>ใครที่สามารถจองห้องผ่านระบบนี้ได้บ้าง ?</h3>
@@ -620,7 +613,6 @@
                                 </div>
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div><!-- End Faq item-->
-
                             <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
                                 <i class="faq-icon bi bi-question-circle"></i>
                                 <h3> ต้องจองล่วงหน้ากี่วัน กี่ชั่วโมง ?</h3>

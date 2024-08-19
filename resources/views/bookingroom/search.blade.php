@@ -24,19 +24,19 @@
 
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/schedule2.css">
+    <!-- Favicons -->
+    <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 </head>
 
 <body>
-
     <header id="header" class="header d-flex align-items-center fixed-top">
         <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
             <a href="index.html" class="logo d-flex align-items-center me-auto">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
                 {{-- <h1 class="sitename">Arsha</h1> --}}
             </a>
-
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/#hero" class="active">หน้าแรก</a></li>
@@ -49,29 +49,27 @@
             </nav>
 
             <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
-
         </div>
     </header>
-
     <main class="main">
+        <section id="search" class="about section" style="padding: 70px 0px 100px 0px">
 
-        <section id="search" class="about section" style="padding: 160px 0px 100px 0px">
-
-            <!-- Section Title -->
+            <!-- Section Title
             <div class="container section-title" data-aos="fade-up">
                 <h2> รายการห้องประชุมคณะวิศวกรรมศาสตร์ </h2>
-            </div><!-- End Section Title -->
+            </div> -->
 
             <div class="container">
-
                 <div class="row">
-                    <div class="row g-0 text-center mt-5">
-
+                    <div class="row g-0 text-center mt-5 w-100">
                         <div class="col-md-9">
                             <div class="card">
-                                <h5 class="card-header">{{ $titleSearch }}</h5>
+                                <h5 class="card-header">ข้อมูลการใช้ {{ $RoomtitleSearch }} :
+                                    <span class="text-primary"> วันที่
+                                        {{ $getService->convertDateThai($DateTitleSearch, false, false) }}
+                                        <span>
+                                </h5>
                                 <div class="card-body">
-
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
@@ -86,7 +84,6 @@
                                                 aria-controls="profile-tab-pane"
                                                 aria-selected="false">ตารางการจองห้องประจำสัปดาห์</button>
                                         </li>
-
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
@@ -128,17 +125,13 @@
                                                             @endforeach
                                                         @else
                                                             <tr>
-                                                                <td colspan="4">
+                                                                <td colspan="5">
                                                                     <div class="p-2 mt-2 text-center">
-                                                                        <div class="alert alert-success"
-                                                                            role="alert">
-                                                                            <i class="bi bi-check2-circle"></i>
-
-                                                                            <br /> ไม่พบรายการจองห้องวันนี้
-                                                                            <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม "
-                                                                                ทำรายจองห้อง
-                                                                                "
-                                                                                และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
+                                                                        <div class="alert alert-info" role="alert">
+                                                                            <h4>
+                                                                                <i class="bi bi-check2-circle"></i>
+                                                                            </h4>
+                                                                            <p> ไม่มีรายการจองใช้งานในวันนี้</p>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -157,23 +150,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mt-3">
-                                <div class="card-header">
-                                    <h4> ระบุรายละเอียดการขอใช้ห้อง </h4>
-                                    @if (empty(Session::get('cmuitaccount')))
+                            <div class="card mt-3 mb-3">
+                                <div class="card-header p-3">
+                                    @if ($usertype == 'general')
+                                        <h5>
+                                            <span class="text-danger"> บุคคลภายนอกคณะฯ </span>
+                                            ให้กรอกข้อมูลการจองตามแบบฟอร์มด้านล่าง
+                                        </h5>
                                         <div class="text-center">
                                             <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
-                                                class="btn btn-warning " tabindex="-1" role="button"
+                                                class="btn btn-primary " tabindex="-1" role="button"
                                                 aria-disabled="true">
-                                                <h5 class="mb-1"> <i class="bi bi-gear-wide"></i> สำหรับบุคคลภายใน
-                                                    เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
+                                                <i class="bi bi-box-arrow-in-right"></i> บุคคลภายในคณะฯ
+                                                คลิกที่นี่
+
                                             </a>
                                         </div>
+                                    @else
+                                        <h5>
+                                            กรอกข้อมูลการจองตามแบบฟอร์มด้านล่าง
+                                        </h5>
                                     @endif
                                 </div>
 
                                 <div class="card-body justify-content-start text-start">
-                                    <form id="add_booking_form" class="row g-3 w-90 m-10-auto"
+                                    <form id="add_booking_form" class="row g-3 w-100 m-10-auto"
                                         enctype="multipart/form-data" action="/booking/insertBooking" method="post">
                                         @csrf
                                         <input type="hidden" name="roomID" id="roomID"
@@ -217,15 +218,16 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="booking_booker" class="form-label">ผู้ขอใช้ * </label>
+                                            <label for="booking_booker" class="form-label">ชื่อผู้จอง * </label>
                                             <input type="text" class="form-control" id="booking_booker"
                                                 name="booking_booker" placeholder=" ระบุชื่อผู้ทำรายการ "
                                                 value=" {{ Session::get('userfullname') }}" required />
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="booking_department" class="form-label">สังกัดหน่วยงาน /องค์กร
-                                                /บริษัท </label>
+                                            <label for="booking_department" class="form-label"> สังกัดหน่วยงาน /
+                                                องค์กร
+                                                / บริษัท </label>
                                             <input type="text" class="form-control" id="booking_department"
                                                 name="booking_department"
                                                 placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
@@ -233,15 +235,15 @@
 
                                         <div class="col-md-12">
                                             <label for="booking_subject" class="form-label">
-                                                เรื่องที่ขอใช้/โครงการกิจกรรม
-                                                *</label>
+                                                หัวข้อในการจอง *
+                                            </label>
                                             <input type="text" class="form-control" id="booking_subject"
                                                 name="booking_subject" required
                                                 placeholder=" ระบุเหตุผลการขอใช้ห้อง " />
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label for="booking_ofPeople" class="form-label">จำนวนผู้เข้าใช้</label>
+                                            <label for="booking_ofPeople" class="form-label">จำนวนผู้ใช้</label>
                                             <input type="number" class="form-control" id="booking_ofPeople"
                                                 name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน " />
                                         </div>
@@ -254,7 +256,7 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <label for="booking_phone" class="form-label">เบอร์โทรติดต่อ
+                                            <label for="booking_phone" class="form-label">โทรศัพท์
                                                 *</label>
                                             <input type="text" class="form-control" id="booking_phone"
                                                 name="booking_phone" placeholder=" 05394xxxx" />
@@ -262,15 +264,15 @@
 
                                         <div class="col-12">
                                             <label for="description" class="form-label">
-                                                ระบุรายละเอียดการขอใช้เพิ่มเติม </label>
+                                                ระบุรายละเอียดเพิ่มเติม </label>
                                             <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                         </div>
 
                                         @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
+                                            <div class="text-primary"> โปรดทำการแนบไฟล์เอกสารขอใช้งานจากหน่วยงานของท่าน
+                                                เพื่อใช้ประกอบการพิจารณาอนุมัติใช้งาน (ไฟล์ pdf เท่านั้น) * </div>
                                             <div class="mb-3">
                                                 <label for="formFile" class="form-label">*แนบไฟล์
-                                                    เอกสารการขอให้สถานที่ (.pdf
-                                                    เท่านั้น)
                                                 </label>
                                                 <input class="form-control" type="file" id="formFile"
                                                     accept="application/pdf" required name="pdf">
@@ -282,25 +284,24 @@
                                         <input type="hidden" name="booker_cmuaccount"
                                             value="{{ Session::get('cmuitaccount') }}">
 
-                                        <div class="p-2 text-center text-danger">
-                                            *** โปรดตรวจสอบข้อมูลของท่าน ก่อนยืนยันการทำรายการจองห้อง
+                                        <div class="p-2 text-center text-success fs-6">
+                                            @if ($usertype == 'general')
+                                                แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />
+                                                <span style="color: blueviolet"> สำหรับบุคคลภายในคณะฯ คลิกที่ปุ่ม
+                                                    <!--  <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"> -->
+                                                    “บุคคลภายในคณะฯคลิกที่นี่”
+                                                    <!--</a>-->
+                                                    ด้านบน </span> <br />
+                                            @endif
+                                            โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                         </div>
                                         <div class="text-center  justify-content-center  mb-3 ">
-                                            <button type="submit" id="add_btn" class="btn btn-success">
-                                                <i class="bi bi-calendar2-plus-fill"></i> ทำรายจองห้อง
+                                            <button type="submit" id="add_btn"
+                                                class="btn btn-success btn-Booking">
+                                                <i class="bi bi-vector-pen"></i> ทำรายจองห้อง
                                             </button>
                                         </div>
-                                        @if ($usertype == 'general')
-                                            <div class="text-center  ujstify-content-center  mb-3 ">
-                                                <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
-                                                    class="btn btn-warning " tabindex="-1" role="button"
-                                                    aria-disabled="true">
-                                                    <h5 class="mb-1"> <i class="bi bi-gear-wide"></i>
-                                                        สำหรับบุคคลภายใน
-                                                        เข้าสู้ระบบการจองด้วย @cmu.ac.th </h5>
-                                                </a>
-                                            </div>
-                                        @endif
+
                                     </form>
                                 </div>
                                 <br />
@@ -308,16 +309,11 @@
                             <br />
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="justify-content-center text-center w-90">
-                                <img src="/storage/images/{{ $imgRoom }}" class="img-fluid img-thumbnail">
-                            </div>
-                            <div class="formSlc  text-start w-90 mt-4">
-
-                                <h4>
-                                    <i class="bi bi-calendar2-plus-fill"></i>
-                                    ตรวจสอบการใช้ห้อง
-                                </h4>
+                        <div class="col-md-3 jstify-content-center">
+                            <div class="formSlc bg-mycustom text-start w-90 ">
+                                <h5 class="text-danger">
+                                    <img src="/theme_1/img/check-green.png" height="40">ตรวจสอบการใช้ห้อง
+                                </h5>
                                 <hr />
                                 <form id="serachBookingDate" method="post" action="/booking/search">
                                     @csrf
@@ -342,17 +338,15 @@
                                             name="search_date" required>
                                     </div>
                                     <div class="text-center d-flex justify-content-center">
-                                        <button type="submit" id="search_booking" class="btn btn-dark">
-                                            ตรวจสอบ
+                                        <button type="submit" id="search_booking "
+                                            class="btn btn-light btnCheckBooking  text-white">
+                                            คลิกตรวจสอบ
                                         </button>
                                     </div>
                                     <hr />
                                 </form>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
