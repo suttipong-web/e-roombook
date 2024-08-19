@@ -46,6 +46,7 @@ class booking_rooms extends Model
         'dean_action_acount',
         'booking_fileurl',
         'is_read',
-        'dean_appove_status'
+        'dean_appove_status',
+        'booking_code_cancel'
     ];
 }

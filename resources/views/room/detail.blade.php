@@ -147,11 +147,12 @@
                             <hr />
                             <h5> อุปกรณ์ภายในห้อง ( Room Services ) </h5>
                             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-3">
-                                @foreach ($listItemRoom as $rows)
-                                    <div class="col"><i class="bi bi-check-circle"></i>
-                                        &nbsp;&nbsp; {{ $rows->item_name }} </div>
-                                @endforeach
-
+                                @if(!empty($listItemRoom))
+                                    @foreach ($listItemRoom as $rows)
+                                        <div class="col"><i class="bi bi-check-circle"></i>
+                                            &nbsp;&nbsp; {{ $rows->item_name }} </div>
+                                    @endforeach
+                                @endif
                             </div>
                             <hr />
 
@@ -274,8 +275,8 @@
 
 
     <!-- Modol  Checkc บุคคลภายนอก/ภายใน  -->
-    <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel"
-        data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -342,13 +343,13 @@
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 
 
     <script>
-        $(function() {
+        $(function () {
             fetchAll('');
 
             function fetchAll($uts) {
@@ -362,19 +363,19 @@
                         getroomId: $("#hinden_roomID").val(),
                         _token: '{{ csrf_token() }}'
                     },
-                    success: function(response) {
+                    success: function (response) {
 
                         $(".showtable").html(response);
                     }
                 });
             }
 
-            $(document).on('click', '.btnUTS', function(e) {
+            $(document).on('click', '.btnUTS', function (e) {
                 var $uts = $(this).attr('valuts');
                 fetchAll($uts);
             });
 
-            $(document).on('click', '.sc-detail', function(e) {
+            $(document).on('click', '.sc-detail', function (e) {
                 var detail = $(this).attr('detail');
                 var titles = $(this).attr('htitle');
                 Swal.fire({
@@ -390,13 +391,13 @@
     </script>
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $('#select_date').datetimepicker({
                 useCurrent: false,
                 locale: 'th',
                 format: 'YYYY-MM-DD'
             });
-            $('#select_date').on('change.datetimepicker', function(e) {
+            $('#select_date').on('change.datetimepicker', function (e) {
                 window.location = 'demo_schedule.php?uts=' + e.date.format("X");
             });
         });

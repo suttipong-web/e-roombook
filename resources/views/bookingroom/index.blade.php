@@ -1,3 +1,4 @@
+@inject('getService', 'App\class\HelperService')
 <!doctype html>
 <html lang="en">
 
@@ -21,6 +22,7 @@
     <link href="{{ asset('theme_1/vendor/aos/aos.css" rel="stylesheet') }}">
     <link href="{{ asset('theme_1/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
 
     <!-- Main CSS File -->
     <link href="{{ asset('theme_1/css/main.css') }}" rel="stylesheet">
@@ -95,7 +97,7 @@
                                         <label for="search_date" class="form-label"> วันที่ </label>
                                         <input class="form-control dateScl" type="text" data-provide="datepicker"
                                             data-date-language="th" id="search_date" name="search_date"
-                                            value="{{ date('d/m/Y') }}">
+                                            data-date-format="dd/mm/yyyy" value="{{  $searchDates }}">
                                     </div>
                                     <div class="text-center d-flex justify-content-center">
                                         <button type="submit" id="search_booking"
@@ -112,18 +114,18 @@
                                 <div class="row  g-0 text-center ">
 
                                     @foreach ($getroomType as $item)
-                                        <?php
+                                                                        <?php
                                         $nameiCon = 'typeroom' . $item->id . '.png';
-                                        ?>
-                                        <div class="col  col-md-4    text-center mb-3">
-                                            <div class="p-1 tabRoomType justify-content-center">
-                                                <a href="/booking/{{ $item->id }}/{{ $item->roomtypeName }}">
-                                                    <img src="/theme_1/img/<?= $nameiCon ?>" height="45">
-                                                    <br />
-                                                    <h5> {{ $item->roomtypeName }} </h5>
-                                                </a>
-                                            </div>
-                                        </div>
+                                                                                                                ?>
+                                                                        <div class="col  col-md-4    text-center mb-3">
+                                                                            <div class="p-1 tabRoomType justify-content-center">
+                                                                                <a href="/booking/{{ $item->id }}/{{ $item->roomtypeName }}">
+                                                                                    <img src="/theme_1/img/<?= $nameiCon ?>" height="45">
+                                                                                    <br />
+                                                                                    <h5> {{ $item->roomtypeName }} </h5>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -374,28 +376,29 @@
         </div>
     </footer> --}}
     </div>
+
+
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
-    <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
+
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
-    <script type="text/javascript" src="js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
     <script>
-        $(function() {
+        $(function () {
 
-            $(".dateSlcPlan").datepicker({
-                /*    language:'th-th',*/
-                format: 'dd/mm/yyyy',
-                autoclose: true
+            $('#search_date').datepicker({
+                language: 'th',
+                format: 'dd/mm/yyyy'
             });
 
-
-            $(document).on('change', '#sclRoomtype', function(e) {
+            $(document).on('change', '#sclRoomtype', function (e) {
                 var typeID = $('#sclRoomtype').val();
                 $.ajax({
                     url: "/booking/filter",
@@ -404,7 +407,7 @@
                         typeID: typeID,
                         _token: '{{ csrf_token() }}',
                     },
-                    success: function(response) {
+                    success: function (response) {
                         $(".displayRooms").html(response);
                     }
                 });

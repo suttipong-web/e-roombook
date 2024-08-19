@@ -16,6 +16,7 @@ class BookingController extends Controller
     //
     public function index()
     {
+        date_default_timezone_set('Asia/Bangkok');   
         $class = new HelperService();
 
         //ข้อมูลห้อง Select option
@@ -40,18 +41,23 @@ class BookingController extends Controller
 
         $pageTitle ="ห้องประชุม";
 
+        $searchDates  = date('d/m/Y');
+
         // Load index  view and  data room        
         return view('/bookingroom/index')->with(
             [
                 'roomSlc' => $roomDataSlc,
                 'getListRoom' => $getListRoom,
                 'getroomType' => $roomType,
-                'pageTitle'=>$pageTitle            ]
+                'pageTitle'=>$pageTitle,
+                'searchDates'=> $searchDates
+                ]
 
         );
     }
     public function indexType(Request $request){
        
+        $searchDates  = date('d/m/Y');
         $typeId =  (!empty($request->typeId))? $request->typeId:'1';
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
@@ -80,7 +86,8 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'getListRoom' => $getListRoom,
                 'getroomType' => $roomType,
-                'pageTitle'=> $pageTitle
+                'pageTitle'=> $pageTitle,
+                 'searchDates'=> $searchDates
             ]
         );      
     }
@@ -145,8 +152,6 @@ class BookingController extends Controller
             ->select('id', 'roomFullName')
             ->get();
 
-
-   
         //  $dateBooking = $request->search_date;
 
         $roomID = $request->slcRoom;
@@ -364,8 +369,12 @@ class BookingController extends Controller
                 'booking_type' => $request->booking_type,
                 'booking_at' => Carbon::now(),
                 'booking_fileurl' => $fileName,
-                'booking_status' => $is_confirm
+                'booking_status' => $is_confirm,
+                'booking_code_cancel'=>$request->booking_code_cancel
             ];
+          
+            
+
             //echo print_r($setDataBooking);
 
             $result = booking_rooms::create($setDataBooking);

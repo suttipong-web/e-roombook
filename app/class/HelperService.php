@@ -4,6 +4,7 @@ namespace App\class;
 
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 
 class HelperService
@@ -19,7 +20,9 @@ class HelperService
         } else {
             $thai_months = [1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม', 4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน', 7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน', 10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม',];
         }
-        $date = Carbon::parse($arg);
+        
+        $date_ =  DateTime::createFromFormat('d/m/Y', $arg);
+        $date = Carbon::parse($date_);
         $month = $thai_months[$date->month];
         $year = $date->year + 543;
         if ($addtime) {

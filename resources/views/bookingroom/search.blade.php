@@ -152,7 +152,7 @@
                             </div>
                             <div class="card mt-3 mb-3">
                                 <div class="card-header p-3">
-                                    @if ($usertype == 'general')
+                                @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
                                         <h5>
                                             <span class="text-danger"> บุคคลภายนอกคณะฯ </span>
                                             ให้กรอกข้อมูลการจองตามแบบฟอร์มด้านล่าง
@@ -267,7 +267,12 @@
                                                 ระบุรายละเอียดเพิ่มเติม </label>
                                             <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                         </div>
-
+                                        <div class="col-md-12">
+                                            <label for="booking_code_cancel" class="form-label">รหัสยกเลิกรายการ
+                                                *</label>
+                                            <input type="password" class="form-control" id="booking_code_cancel"
+                                                name="booking_code_cancel" placeholder=" xxxx " />
+                                        </div>
                                         @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
                                             <div class="text-primary"> โปรดทำการแนบไฟล์เอกสารขอใช้งานจากหน่วยงานของท่าน
                                                 เพื่อใช้ประกอบการพิจารณาอนุมัติใช้งาน (ไฟล์ pdf เท่านั้น) * </div>
@@ -285,7 +290,7 @@
                                             value="{{ Session::get('cmuitaccount') }}">
 
                                         <div class="p-2 text-center text-success fs-6">
-                                            @if ($usertype == 'general')
+                                            @if ($usertype == 'general'||  (empty(Session::get('cmuitaccount'))))
                                                 แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />
                                                 <span style="color: blueviolet"> สำหรับบุคคลภายในคณะฯ คลิกที่ปุ่ม
                                                     <!--  <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"> -->
