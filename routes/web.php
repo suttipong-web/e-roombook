@@ -25,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/exp', function () {
+    return view('ex');
+});
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
@@ -44,6 +47,7 @@ Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
         Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
+        Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');

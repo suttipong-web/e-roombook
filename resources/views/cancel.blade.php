@@ -12,9 +12,7 @@
 <body>
     @includeIf('partials.header')
     <main class="main">
-
     </main>
-    @includeIf('partials.footer')
     @includeIf('partials.incJS')
     <script>
         $(function() {});

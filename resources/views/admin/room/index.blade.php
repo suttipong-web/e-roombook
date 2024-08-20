@@ -314,7 +314,7 @@
             $("#add_ROOMS_form").submit(function(e) {
                 e.preventDefault();
                 const fd = new FormData(this);
-                console.log(fd);
+                // console.log(fd);
                 $("#add_rooms_btn").text('Adding...');
                 $.ajax({
                     url: "/admin/room/store",
@@ -382,7 +382,7 @@
                                     'checked', false);
                                 if ($.trim(value) !== "") {
                                     var selectedValues = value.split(
-                                    ','); // ["1", "2", "3"]
+                                        ','); // ["1", "2", "3"]
                                     // ใช้ $.each() เพื่อวนลูปผ่านอาร์เรย์และตั้งค่า checkbox ที่มีค่าในอาร์เรย์นั้น
                                     $.each(selectedValues, function(index, vals) {
                                         $('input[name="room_itemlist[]"][value="' +

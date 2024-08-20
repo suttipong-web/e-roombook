@@ -83,6 +83,10 @@ class cmuOauthController extends Controller
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
             $users = User::where('email', $email)->first();
+            $getDepN = DB::table('department')
+             ->select('dep_name')
+             ->where('dep_id',$users["dep_id"])           
+             ->get();
             if (!empty($roomId)) {
                 $roomData = Rooms::find($roomId);
             }
@@ -110,6 +114,7 @@ class cmuOauthController extends Controller
                 $request->session()->put('last_activity', Carbon::now());
                 $request->session()->put('positionName', $users["positionName"]);
                 $request->session()->put('positionName2', $users["positionName2"]);
+                 $request->session()->put('dep_name',$getDepN[0]->dep_name);
 
                 //check Admin  
                 if ($page == "booking") {

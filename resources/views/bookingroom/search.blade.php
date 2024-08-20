@@ -6,52 +6,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ตรวจสอบการใช้ห้อง</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="/js/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="{{ asset('theme_1/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('theme_1/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('theme_1/vendor/aos/aos.css" rel="stylesheet') }}">
-    <link href="{{ asset('theme_1/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('theme_1/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-
-    <!-- Main CSS File -->
-    <link href="{{ asset('theme_1/css/main.css') }}" rel="stylesheet">
-
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/schedule2.css">
-    <!-- Favicons -->
-    <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
-    <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    @includeIf('partials.headtag')
+
 </head>
 
 <body>
-    <header id="header" class="header d-flex align-items-center fixed-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center">
-            <a href="index.html" class="logo d-flex align-items-center me-auto">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <img src="{{ asset('theme_1/img/engineering_CMU_Logo_02.png') }}" alt="" style="height: 36px;">
-                {{-- <h1 class="sitename">Arsha</h1> --}}
-            </a>
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li><a href="/#hero" class="active">หน้าแรก</a></li>
-                    <li><a href="/#about">เกี่ยวกับเรา</a></li>
-                    <li><a href="/#services">บริการของเรา</a></li>
-                    <li><a href="/#faq-2">คำถามที่พบบ่อย</a></li>
-                    <li><a href="#footer">ติดต่อเรา</a></li>
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
+    @includeIf('partials.header')
 
-            <a class="btn-getstarted" href="/booking">เริ่มต้นจองห้อง</a>
-        </div>
-    </header>
-    <main class="main">
+    <main class="main ">
         <section id="search" class="about section" style="padding: 70px 0px 100px 0px">
 
             <!-- Section Title
@@ -97,6 +61,7 @@
                                                             <th>ผู้จอง</th>
                                                             <th>สถานะ</th>
                                                             <th>หมายเหตุ</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -121,6 +86,14 @@
                                                                     </td>
 
                                                                     <td>{{ $rows->description }} </td>
+                                                                    <td>
+                                                                        <a href="#" data-bs-toggle="modal"
+                                                                            data-bs-target="#delModal"
+                                                                            class="btn btn-danger btn-sm clikDel"
+                                                                            id="{{ $rows->id }}">
+                                                                            <i class="bi bi-dash-circle-fill"></i>
+                                                                        </a>
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                         @else
@@ -150,9 +123,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mt-3 mb-3">
+                            <div class="card mt-5 mb-3">
                                 <div class="card-header p-3">
-                                @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
+                                    @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
                                         <h5>
                                             <span class="text-danger"> บุคคลภายนอกคณะฯ </span>
                                             ให้กรอกข้อมูลการจองตามแบบฟอร์มด้านล่าง
@@ -173,12 +146,11 @@
                                     @endif
                                 </div>
 
-                                <div class="card-body justify-content-start text-start">
+                                <div class="card-body justify-content-start text-start ">
                                     <form id="add_booking_form" class="row g-3 w-100 m-10-auto"
                                         enctype="multipart/form-data" action="/booking/insertBooking" method="post">
                                         @csrf
-                                        <input type="hidden" name="roomID" id="roomID"
-                                            value="{{ $searchRoomID }}">
+                                        <input type="hidden" name="roomID" id="roomID" value="{{ $searchRoomID }}">
                                         <input type="hidden" name="booking_type" id="booking_type"
                                             value="{{ $usertype }}">
                                         <div class="col-md-3 p-2">
@@ -227,10 +199,11 @@
                                         <div class="col-md-6">
                                             <label for="booking_department" class="form-label"> สังกัดหน่วยงาน /
                                                 องค์กร
-                                                / บริษัท </label>
+                                                / บริษัท *</label>
                                             <input type="text" class="form-control" id="booking_department"
                                                 name="booking_department"
-                                                placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท " />
+                                                placeholder=" สังกัดหน่วยงาน /องค์กร /บริษัท "
+                                                value="{{ Session::get('dep_name') }}" required />
                                         </div>
 
                                         <div class="col-md-12">
@@ -257,7 +230,7 @@
 
                                         <div class="col-md-4">
                                             <label for="booking_phone" class="form-label">โทรศัพท์
-                                                *</label>
+                                            </label>
                                             <input type="text" class="form-control" id="booking_phone"
                                                 name="booking_phone" placeholder=" 05394xxxx" />
                                         </div>
@@ -269,7 +242,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <label for="booking_code_cancel" class="form-label">รหัสยกเลิกรายการ
-                                                *</label>
+                                            </label>
                                             <input type="password" class="form-control" id="booking_code_cancel"
                                                 name="booking_code_cancel" placeholder=" xxxx " />
                                         </div>
@@ -290,7 +263,7 @@
                                             value="{{ Session::get('cmuitaccount') }}">
 
                                         <div class="p-2 text-center text-success fs-6">
-                                            @if ($usertype == 'general'||  (empty(Session::get('cmuitaccount'))))
+                                            @if ($usertype == 'general' || empty(Session::get('cmuitaccount')))
                                                 แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />
                                                 <span style="color: blueviolet"> สำหรับบุคคลภายในคณะฯ คลิกที่ปุ่ม
                                                     <!--  <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"> -->
@@ -301,8 +274,7 @@
                                             โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                         </div>
                                         <div class="text-center  justify-content-center  mb-3 ">
-                                            <button type="submit" id="add_btn"
-                                                class="btn btn-success btn-Booking">
+                                            <button type="submit" class="btn btn-success btn-Booking">
                                                 <i class="bi bi-vector-pen"></i> ทำรายจองห้อง
                                             </button>
                                         </div>
@@ -358,120 +330,90 @@
         </section>
     </main>
 
-    <footer id="footer" class="footer light-background">
 
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="index.html" class="d-flex align-items-center">
-                        <span class="sitename">คณะวิศวกรรมศาสตร์</span>
-                    </a>
-                    <div class="footer-contact pt-3">
-                        <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 00</p>
-                        <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
-                        <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
-                        <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
-                        <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
+
+    {{-- del modal start --}}
+    <div class="modal fade" id="delModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> ยืนยันการลบข้อมูล </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body  bg-light ">
+
+                    <div class="row col-12 ">
+                        <div class="mb-3">
+                            <label for="booking_password" class="form-label">รหัสยกเลิกของท่าน </label>
+                            <input type="password" class="form-control" id="booking_password"
+                                name="booking_password" placeholder=" รหัสยกเลิกของท่าน " required>
+
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>บริการสำคัญ</h4>
-                    <ul>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
-                                class="nav-link p-0 text-body-secondary">
-                                สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
-                            </a>
-                        </li>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://cmu.ac.th/Content/University/BrochureCMU-Map2017.pdf"
-                                class="nav-link p-0 text-body-secondary">
-                                แผนที่มหาวิทยาลัยเชียงใหม่
-                            </a>
-                        </li>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                                การบริจาค
-                            </a>
-                        </li>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
-                                CMU MAIL
-                            </a>
-                        </li>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                                CMU MIS
-                            </a>
-                        </li>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                                สำหรับเจ้าหน้าที่
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
-                    <ul>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://cmu.ac.th/360/" class="nav-link p-0 text-body-secondary">
-                                CMU 360 องศา
-                            </a>
-                        </li>
-                    </ul>
-                    <h4 class="mt-3">ช่องทางสื่อสาร</h4>
-                    <ul>
-                        <li><i class="bi bi-chevron-right"></i>
-                            <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4 col-md-12">
-                    <h4>ติดตามเรา</h4>
-                    <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
-                    <div class="social-links d-flex">
-                        <a href=""><i class="bi bi-twitter-x"></i></a>
-                        <a href=""><i class="bi bi-facebook"></i></a>
-                        <a href=""><i class="bi bi-instagram"></i></a>
-                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    <div class=" col-12 justify-content-center text-center">
+                        <hr />
+                        <input type="hidden" id="delBookingId" name="delBookingId">
+                        <button type="button" class="btn btn-danger btnDelConfirm"> ยืนยันการยกเลิกการจอง
+                        </button>
                     </div>
-                </div>
+                    <br />
 
+                </div>
             </div>
         </div>
+    </div>
+    {{-- edit modal end --}}
 
-        <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All
-                    rights reserved.</span></p>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you've purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </div>
-
-    </footer>
-
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
-    <script type="text/javascript" src="/js/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
+    @includeIf('partials.footer')
+    @includeIf('partials.incJS')
     <script>
         $(function() {
+            $(document).on('click', '.clikDel', function(e) {
+                var bookingId = $(this).attr('id');
+                $('#delBookingId').val(bookingId);
+                console.log('bid=>' + $('#delBookingId').val());
+            });
+
+
+            $(document).on('click', '.btnDelConfirm', function(e) {
+                console.log('start del');
+                $.ajax({
+                    url: "/booking/cancel",
+                    method: 'post',
+                    data: {
+                        bookingId: $('#delBookingId').val(),
+                        booking_code_cancel: $('#booking_password').val(),
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status == 200) {
+                            Swal.fire({
+                                title: 'Successfully!',
+                                text: ' ทำการยกเลิกรายการจองสำเร็จ ',
+                                icon: 'success'
+                            }).then((result) => {
+
+                                $("#delModal").modal('hide');
+                                NewfetchData();
+                            });
+
+                        } else {
+                            Swal.fire({
+                                title: ' fail !',
+                                text: ' ไม่สามารถยกเลิกรายการได้ กรุณาตรวจสอบรหัสของท่านอีกครั้ง ',
+                                icon: 'error'
+                            }).then((result) => {
+                                $('#booking_password').val('');
+                                $('#booking_password').focus();
+                            });
+
+                        }
+                    }
+                });
+            });
+
             //Add Data เพิ่มการจอง ใหม่
             // add new  ajax request
             $("#add_booking_form").submit(function(e) {
@@ -487,7 +429,7 @@
                     processData: false,
                     dataType: 'json',
                     success: function(response) {
-                        console.log(response)
+                        console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
                                 title: 'Booking Successfully!',
@@ -551,10 +493,12 @@
                     }
                 });
             }
+
             $(document).on('click', '.btnUTS', function(e) {
                 var $uts = $(this).attr('valuts');
                 fetchScheduleTable($uts);
             });
+
             $(document).on('click', '.sc-detail', function(e) {
                 var detail = $(this).attr('detail');
                 var titles = $(this).attr('htitle');
@@ -566,6 +510,8 @@
                     focusConfirm: false
                 });
             });
+
+
         });
     </script>
 </body>

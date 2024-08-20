@@ -22,6 +22,7 @@ class BookingController extends Controller
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
+             ->where('is_open', '1')
             ->get();
         
        //ประเภทห้อง 
@@ -70,6 +71,7 @@ class BookingController extends Controller
         $roomDataSlc = Rooms::orderby('id', 'asc')
               ->select('id', 'roomFullName')
               ->where('roomTypeId',  $typeId)
+               ->where('is_open', '1')
               ->get();
 
          $pageTitle =$getListRoom[0]->roomtypeName;
@@ -372,11 +374,7 @@ class BookingController extends Controller
                 'booking_status' => $is_confirm,
                 'booking_code_cancel'=>$request->booking_code_cancel
             ];
-          
-            
-
-            //echo print_r($setDataBooking);
-
+                      
             $result = booking_rooms::create($setDataBooking);
             if ($result) {
                 $roomData = Rooms::find($request->roomID);
@@ -412,4 +410,24 @@ class BookingController extends Controller
             ]);
         }
     }
+    public function cancelBooking(Request $request){    
+        $bookingID = $request->bookingId;
+        $booking_code_cancel = $request->booking_code_cancel;
+        $result = booking_rooms::find($bookingID);   
+        if($result) {        
+             $deletedRows =  DB::table('booking_rooms')
+                ->where('id', $bookingID)
+                ->where('booking_code_cancel', $booking_code_cancel)
+                ->delete();
+            if ($deletedRows > 0) {
+                // ลบสำเร็จ
+             return response()->json([
+                    'status' => 200
+              ]);
+            }
+        }
+        
+        return "No data found to delete."; 
+     }   
+     
 }
