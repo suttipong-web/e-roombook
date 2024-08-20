@@ -134,7 +134,7 @@
         </section>
     </main>
 
-    @includeIf('partials.footer')
+
 
     <!-- Modol  Checkc บุคคลภายนอก/ภายใน  -->
     <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
