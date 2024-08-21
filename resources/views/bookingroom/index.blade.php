@@ -5,10 +5,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Favicons -->
-    <link href="{{ asset('theme_1/img/favicon.png') }}" rel="icon">
-    <link href="{{ asset('theme_1/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <title>จองห้องประชุมคณะวิศวกรรมศาสตร์</title>
 
     @includeIf('partials.headtag')

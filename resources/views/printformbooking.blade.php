@@ -6,11 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>พิมพ์แบบฟอร์มการขอใช้ห้อง </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    @includeIf('partials.headtag')
 </head>
 <style type="text/css">
     body {
@@ -76,7 +72,7 @@
             <table>
                 <tr>
                     <td>เรื่อง &nbsp;&nbsp;</td>
-                    <td>ขอใช้สถานที่ {{$detailBooking[0]->roomFullName}}</td>
+                    <td>ขอใช้สถานที่ {{ $detailBooking[0]->roomFullName }}</td>
                 </tr>
                 <tr>
                     <td>เรียน &nbsp;&nbsp;</td>
@@ -84,28 +80,28 @@
                 </tr>
                 <tr>
                     <td>&nbsp;&nbsp;</td>
-                    <td>ข้าพเจ้า&nbsp;{{$detailBooking[0]->booking_booker }}&nbsp;&nbsp;&nbsp;สังกัด
-                        &nbsp;&nbsp;&nbsp;{{$detailBooking[0]->booking_department }}
-                        &nbsp;&nbsp;&nbsp;&nbsp;เบอร์โทร&nbsp;{{$detailBooking[0]->booking_phone }} </td>
+                    <td>ข้าพเจ้า&nbsp;{{ $detailBooking[0]->booking_booker }}&nbsp;&nbsp;&nbsp;สังกัด
+                        &nbsp;&nbsp;&nbsp;{{ $detailBooking[0]->booking_department }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;เบอร์โทร&nbsp;{{ $detailBooking[0]->booking_phone }} </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td>มีความประสงค์จะขอใช้ห้องเพื่อ {{$detailBooking[0]->booking_subject }} </td>
+                    <td>มีความประสงค์จะขอใช้ห้องเพื่อ {{ $detailBooking[0]->booking_subject }} </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div style="text-align: left;text-justify:auto ;">
                             ขอใช้ในวันที่
-                            &nbsp;&nbsp;{{$getService->convertDateThai($detailBooking[0]->schedule_startdate, false, false) }}
+                            &nbsp;&nbsp;{{ $getService->convertDateThai($detailBooking[0]->schedule_startdate, false, false) }}
                             &nbsp;&nbsp;&nbsp; ถึงวันที่ &nbsp;&nbsp;
-                            {{$getService->convertDateThai($detailBooking[0]->schedule_enddate, false, false) }}
+                            {{ $getService->convertDateThai($detailBooking[0]->schedule_enddate, false, false) }}
                             &nbsp;&nbsp;ตั้งแต่เวลา&nbsp;{{ Str::limit($detailBooking[0]->booking_time_start, 5, '') }}
                             น. &nbsp; ถึงเวลา
                             {{ Str::limit($detailBooking[0]->booking_time_finish, 5, '') }} น.
-                            โดยมีจำนวนผู้เข้าร่วม &nbsp;&nbsp;&nbsp; {{$detailBooking[0]->booking_ofPeople }}
+                            โดยมีจำนวนผู้เข้าร่วม &nbsp;&nbsp;&nbsp; {{ $detailBooking[0]->booking_ofPeople }}
                             &nbsp;&nbsp;&nbsp; คน &nbsp;&nbsp;&nbsp;
                             ประเภทผู้ใช้งาน
-                            @if ($detailBooking[0]->booking_type == "general")
+                            @if ($detailBooking[0]->booking_type == 'general')
                                 บุคคลภายนอก
                             @else
                                 บุคคลภายใน
@@ -131,19 +127,20 @@
 
                                             <td>
                                                 @if ($rowEmp->typeposition_id == 1)
-                                                    {{$prename = $rowEmp->position_work}}
+                                                    {{ $prename = $rowEmp->position_work }}
                                                 @else
-                                                    {{$prename = $rowEmp->prename_TH}}
+                                                    {{ $prename = $rowEmp->prename_TH }}
                                                 @endif
 
                                                 @if (!empty($rowEmp->firstname_TH))
-                                                    {{ $prename . $rowEmp->firstname_TH . ' ' . $rowEmp->lastname_TH}}
+                                                    {{ $prename . $rowEmp->firstname_TH . ' ' . $rowEmp->lastname_TH }}
                                                 @endif
 
                                             </td>
-                                            <td> @if (!empty($rowEmp->dep_name))
-                                                {{$rowEmp->dep_name }}
-                                            @endif
+                                            <td>
+                                                @if (!empty($rowEmp->dep_name))
+                                                    {{ $rowEmp->dep_name }}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -159,8 +156,10 @@
                 <tr>
                     <td></td>
                     <td>
-                        <div > <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == "approved" || ($detailBooking[0]->dean_appove_status)) checked @endif class="fs-5"> อนุญาต</div>
-                        <div > <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == "canceled" || ($detailBooking[0]->dean_appove_status == 2)) checked @endif class="fs-5"> ไม่อนุัมติ </div>
+                        <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == 'approved' || $detailBooking[0]->dean_appove_status) checked @endif class="fs-5">
+                            อนุญาต</div>
+                        <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == 'canceled' || $detailBooking[0]->dean_appove_status == 2) checked @endif class="fs-5">
+                            ไม่อนุัมติ </div>
                     </td>
                 </tr>
                 <!-- <tr>
@@ -183,7 +182,7 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 </body>
