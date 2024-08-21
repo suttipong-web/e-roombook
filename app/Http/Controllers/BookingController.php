@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Type\Integer;
 use App\class\HelperService;
-
+use App\Models\payments;
 class BookingController extends Controller
 {
     //
@@ -258,8 +258,6 @@ class BookingController extends Controller
         $schedule_startdate = $class->convertDateSqlInsert($request->schedule_startdate);
         $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
 
-
-
         // ตรวจสอบวันที่                 
         $startDate = Carbon::parse($schedule_startdate); // The start date
         $endDate = Carbon::parse($schedule_enddate); // The end date        
@@ -375,7 +373,29 @@ class BookingController extends Controller
                 'booking_code_cancel'=>$request->booking_code_cancel
             ];
                       
-            $result = booking_rooms::create($setDataBooking);
+        $result = booking_rooms::create($setDataBooking);      
+        if ($result) {
+            $lastInsertedId = $result->id;
+            // SET  Data Payment     
+                $setDataPayment = [
+                'customerName' => $request->fullname_receipt,
+                'customerEmail' => $request->email_receipt,
+                'customerPhone' => '',
+                'customerTaxid' => $request->taxpayer_receipt,
+                'customerAddress' => $request->address_receipt,
+                'totalAmount' => '0',
+                'payment_status' => '0',
+                'bookingID' => $lastInsertedId
+            ];
+            // insert table Payments 
+            $insert = payments::create($setDataPayment);           
+        } 
+
+
+
+
+             $msgreturn ="";
+
             if ($result) {
                 $roomData = Rooms::find($request->roomID);
                 // ส่ง LINE                  
@@ -395,10 +415,16 @@ class BookingController extends Controller
                     }
                 }
 
+                if ($request->booking_type == "general") {
+                    $msgreturn ="ท่านทำรายการสำเร็จ ทางทีมงานจะรีบดำเนินการตรวจสอบรายละเอียด และแจ้งผลให้ท่านทราบโดยด่วน ";
+                }else {
+                    $msgreturn ="ทำรายการจองสำเร็จ";
+                }
                 return response()->json([
                     'status' => 200,
                     'searchRoomID' => $request->roomID,
-                    'searchDates' => $request->schedule_startdate
+                    'searchDates' => $request->schedule_startdate,
+                    'msgreturn'=>$msgreturn
                 ]);
             }
 

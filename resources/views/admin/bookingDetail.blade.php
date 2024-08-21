@@ -94,7 +94,7 @@
             @else 
                 text-white bg-danger @endif                             
             ">
-                    <h3>รายละเอียดการขอใช้ห้อง</h3>
+                    <h4>รายละเอียดการขอใช้ห้อง</h4>
                 </div>
                 <div class="card-body">
 

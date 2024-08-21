@@ -71,7 +71,7 @@
 
                                     @foreach ($getroomType as $item)
                                         <?php
-                                        $nameiCon = 'typeroom' . $item->id . '.png';
+                                        $nameiCon = 'typeroom' . $item->id . '-' . $item->id . '.png';
                                         ?>
                                         <div class="col  col-md-4    text-center mb-3">
                                             <div class="p-1 tabRoomType justify-content-center">

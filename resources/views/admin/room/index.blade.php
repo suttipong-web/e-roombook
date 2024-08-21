@@ -288,7 +288,7 @@
                 <div class="col-lg-12">
                     <div class="card shadow">
                         <div class="card-header bg-primary d-flex justify-content-between align-items-center">
-                            <h3 class="text-light">ระบบจัดการข้อมูลห้อง</h3>
+                            <h4 class="text-light">ระบบจัดการข้อมูลห้อง</h4>
                             <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addModal"
                                 data-toggle="modal" data-target="#addModal"><i
                                     class="bi-plus-circle me-2"></i>เพิ่มข้อมูลห้อง</button>

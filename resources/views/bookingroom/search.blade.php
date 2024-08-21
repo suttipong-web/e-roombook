@@ -240,12 +240,14 @@
                                                 ระบุรายละเอียดเพิ่มเติม </label>
                                             <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label for="booking_code_cancel" class="form-label">รหัสยกเลิกรายการ
-                                            </label>
-                                            <input type="password" class="form-control" id="booking_code_cancel"
-                                                name="booking_code_cancel" placeholder=" xxxx " />
-                                        </div>
+                                        @if (!empty(Session::get('cmuitaccount')))
+                                            <div class="col-md-12">
+                                                <label for="booking_code_cancel" class="form-label">รหัสยกเลิกรายการ
+                                                </label>
+                                                <input type="password" class="form-control" id="booking_code_cancel"
+                                                    name="booking_code_cancel" placeholder=" xxxx " />
+                                            </div>
+                                        @endif
                                         @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
                                             <div class="text-primary"> โปรดทำการแนบไฟล์เอกสารขอใช้งานจากหน่วยงานของท่าน
                                                 เพื่อใช้ประกอบการพิจารณาอนุมัติใช้งาน (ไฟล์ pdf เท่านั้น) * </div>
@@ -255,15 +257,53 @@
                                                 <input class="form-control" type="file" id="formFile"
                                                     accept="application/pdf" required name="pdf">
                                                 <br />
-                                                <div> กรณีบุคคลภายนอกต้องแนบเอกสาร เพื่อขอใช้สถานที่ </div>
+                                            </div>
+                                            <hr />
+
+                                            <h6 class="text-decoration-underline"><i class="bi bi-gear-fill"></i>
+                                                โปรดระบุข้อมูลการออกใบเสรจรับเงิน</h6>
+
+                                            <div class="text-danger"> (การขอใช้สถานที่อาจมีค่าธรรมเนียบ
+                                                ซึ่งทางคณะวิศวกรรมศาสตร์
+                                                จะสรุปค่าธรรมเนียบการขอใช้สถานที่ให้ทราบหลังภายใน 1-3 วันทำการ)
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="fullname_receipt" class="form-label">
+                                                    ชื่อที่แสดงในใบเสร็จรับเงิน (Printed on the receipt)
+                                                </label>
+                                                <input type="text" class="form-control" id="fullname_receipt"
+                                                    name="fullname_receipt" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="taxpayer_receipt" class="form-label">
+                                                    เลขประจำตัวประชาชน/ประจำตัวผู้เสียภาษี (Tax ID)
+                                                </label>
+                                                <input type="text" class="form-control" id="taxpayer_receipt"
+                                                    name="taxpayer_receipt" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="email_receipt" class="form-label">
+                                                    Email ในการรับใบเสร็จและใบเสนอราคา
+                                                </label>
+                                                <input type="text" class="form-control" id="email_receipt"
+                                                    name="email_receipt" />
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="address_receipt" class="form-label">
+                                                    ที่อยู่ (Address)
+                                                </label>
+                                                <input type="text" class="form-control" id="address_receipt"
+                                                    name="address_receipt" />
                                             </div>
                                         @endif
 
                                         <input type="hidden" name="booker_cmuaccount"
                                             value="{{ Session::get('cmuitaccount') }}">
 
-                                        <div class="p-2 text-center text-success fs-6">
+                                        <div class="p-2 text-center text-success fs-5">
                                             @if ($usertype == 'general' || empty(Session::get('cmuitaccount')))
+                                                <hr />
                                                 แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />
                                                 <span style="color: blueviolet"> สำหรับบุคคลภายในคณะฯ คลิกที่ปุ่ม
                                                     <!--  <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"> -->
@@ -274,8 +314,9 @@
                                             โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                         </div>
                                         <div class="text-center  justify-content-center  mb-3 ">
-                                            <button type="submit" class="btn btn-success btn-Booking">
-                                                <i class="bi bi-vector-pen"></i> ทำรายจองห้อง
+                                            <button type="submit" class="btn btn-danger btn-Booking btn-lg">
+                                                &nbsp;&nbsp;&nbsp; <i class="bi bi-vector-pen"></i> ทำรายจองห้อง
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
                                             </button>
                                         </div>
 
@@ -433,7 +474,7 @@
                         if (response.status == 200) {
                             Swal.fire({
                                 title: 'Booking Successfully!',
-                                text: ' ทำรายการจองสำเร็จ ',
+                                text: response.msgreturn,
                                 icon: 'success'
                             }).then((result) => {
                                 $("#add_btn").text('เพิ่มข้อมูลห้อง');
