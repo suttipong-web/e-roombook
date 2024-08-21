@@ -85,7 +85,7 @@
                 <div class="row gy-4 text-center justify-content-center">
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
                         <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom1.png') }}" height="94">
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom1-1.png') }}" height="94">
                             </div>
                             <h4><a href="/booking/1/ห้องประชุม" class="stretched-link">ห้องประชุม</a></h4>
                             <p>
@@ -100,7 +100,7 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
                         <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom2.png') }}" height="94">
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom2-2.png') }}" height="94">
                             </div>
                             <h4><a href="/booking/2/ห้องเรียน" class="stretched-link">ห้องเรียน</a></h4>
                             <p>ห้องเรียนทั้วไปใช้สำหรับการเรียนการสอน
@@ -113,7 +113,7 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
-                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3.png') }}" height="94">
+                            <div class="icon"><img src="{{ asset('theme_1/img/typeroom3-3.png') }}" height="94">
                             </div>
                             <h4><a href="/booking/3/ห้องปฏิบัติการคอมพิวเตอร์"
                                     class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
