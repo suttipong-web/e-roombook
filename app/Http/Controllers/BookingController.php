@@ -57,7 +57,7 @@ class BookingController extends Controller
         );
     }
     public function indexType(Request $request){
-       
+        $pageTitle ="";
         $searchDates  = date('d/m/Y');
         $typeId =  (!empty($request->typeId))? $request->typeId:'1';
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
@@ -73,9 +73,9 @@ class BookingController extends Controller
               ->where('roomTypeId',  $typeId)
                ->where('is_open', '1')
               ->get();
-
+        if(!empty($getListRoom[0]->roomtypeName)){
          $pageTitle =$getListRoom[0]->roomtypeName;
-          
+        }
         //ประเภทห้อง 
           $roomType = DB::table('room_type')
           ->select('id', 'roomtypeName')

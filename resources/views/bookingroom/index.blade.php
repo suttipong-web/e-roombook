@@ -43,10 +43,12 @@
                                     <div class="mb-3">
                                         <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
                                         <select name="slcRoom" id="slcRoom" class="form-select ">
-                                            @foreach ($roomSlc as $item)
-                                                <option value='{{ $item->id }}'> {{ $item->roomFullName }}
-                                                </option>
-                                            @endforeach
+                                            @if ($roomSlc)
+                                                @foreach ($roomSlc as $item)
+                                                    <option value='{{ $item->id }}'> {{ $item->roomFullName }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3">
@@ -68,21 +70,22 @@
                         <div class="col-sm-6 col-md-9">
                             <div class="container justify-content-center">
                                 <div class="row  g-0 text-center ">
-
-                                    @foreach ($getroomType as $item)
-                                        <?php
-                                        $nameiCon = 'typeroom' . $item->id . '-' . $item->id . '.png';
-                                        ?>
-                                        <div class="col  col-md-4    text-center mb-3">
-                                            <div class="p-1 tabRoomType justify-content-center">
-                                                <a href="/booking/{{ $item->id }}/{{ $item->roomtypeName }}">
-                                                    <img src="/theme_1/img/<?= $nameiCon ?>" height="45">
-                                                    <br />
-                                                    <h5> {{ $item->roomtypeName }} </h5>
-                                                </a>
+                                    @if ($getroomType)
+                                        @foreach ($getroomType as $item)
+                                            <?php
+                                            $nameiCon = 'typeroom' . $item->id . '-' . $item->id . '.png';
+                                            ?>
+                                            <div class="col  col-md-4    text-center mb-3">
+                                                <div class="p-1 tabRoomType justify-content-center">
+                                                    <a href="/booking/{{ $item->id }}/{{ $item->roomtypeName }}">
+                                                        <img src="/theme_1/img/<?= $nameiCon ?>" height="45">
+                                                        <br />
+                                                        <h5> {{ $item->roomtypeName }} </h5>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <!-- Section Title -->

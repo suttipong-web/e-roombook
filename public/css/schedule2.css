@@ -78,9 +78,11 @@ div.table-responsive::-webkit-scrollbar {
     font-size: 10px;
     background-color: #2b3a5b;
     color: #FFFFFF;
+    border: #FFFFFF 1px solid;
+    padding: 2px;
 }
 
 .sc-detail a {
     color: #f88d5b;
-    font-size: 12px;
+    font-size: 10px;
 }

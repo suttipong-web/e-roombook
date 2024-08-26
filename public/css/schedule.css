@@ -67,7 +67,7 @@ div.table-responsive::-webkit-scrollbar {
 
 .diagonal-cross {
     border-bottom: 2px solid #dee2e6;
-   
+
     position: relative;
     top: -20px;
     left: 0;
@@ -78,9 +78,11 @@ div.table-responsive::-webkit-scrollbar {
     font-size: 12px;
     background-color: #2b3a5b;
     color: #FFFFFF;
+    border: #FFFFFF 1px solid;
+    padding: 2px;
 }
 
 .sc-detail a {
     color: #f88d5b;
-    font-size: 14px;
+    font-size: 12px;
 }

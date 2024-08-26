@@ -39,6 +39,8 @@ class setUserController extends Controller
                 }
                 elseif($profile["user_type"]=="major"){
                     return redirect()->intended('/major')->with('success', 'Login Successfull');
+                } elseif($profile["user_type"]=="adminroom"){
+                    return redirect()->intended('/major')->with('success', 'Login Successfull');
                 }else {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 }                
