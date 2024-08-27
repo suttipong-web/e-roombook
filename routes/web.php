@@ -51,6 +51,9 @@ Route::prefix('/booking')->group(
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');
+        Route::get('/form/{roomID}/{usertype}/{roomName}/{datesearch}', [BookingController::class, 'setform'])->name('setform');
+
+        
         Route::post('/insertBooking', [BookingController::class, 'insertBooking'])->name('insertBooking');
     }
 );
@@ -62,6 +65,7 @@ Route::prefix('/admin')->group(
         Route::post('/postLogin', [AutnController::class, 'postLogin'])->name('postLogin');
     }
 );
+
 
 
 Route::get('/admin/email/{email}', [setUserController::class, 'setUserbypass'])->name('setUserbypass');

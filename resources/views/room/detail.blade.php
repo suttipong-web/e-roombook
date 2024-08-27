@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>รายรเอียดห้อง : {{ $roomTitle }} </title>
+
+    <link rel="stylesheet" href="/css/app/views/demo.css" />
+    <link rel="stylesheet" href="/css/vendor/magic/magic.min.css">
+    <link rel="stylesheet" href="/css/vendor/animate/animate.min.css">
+    <link rel="stylesheet" href="/css/jquery.desoslide.css">
+
     @includeIf('partials.headtag')
-    <style type="text/css">
-        .slideImg {
-            padding: 5px;
-            margin: 5px auto;
-            width: 500px;
-            border: 1px solid #000;
-        }
-    </style>
+
+
     <link rel="stylesheet" href="/css/schedule.css">
 </head>
 
@@ -21,120 +21,116 @@
     @includeIf('partials.header')
     <main class="main">
 
-        <section id="room" class="about section" style="padding: 160px 0px 100px 0px">
-            <!-- Section Title -->
-            <div class="container section-title" data-aos="fade-up">
-                <h2> {{ $getListRoom[0]->roomFullName }} </h2>
-            </div><!-- End Section Title -->
+        <section id="room" class="about section" style="padding: 160px 0px 1000px 0px">
             <div class="container">
                 <div class="row g-0 text-start  justify-content-center">
                     <div class="col-sm-10 col-md-10 p-3 ">
-                        <div class="slideImg">
-                            <div id="carouselExampleDark" class="carousel carousel-dark slide">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
-                                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                                        aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                                        aria-label="Slide 3"></button>
-                                </div>
-                                <div class="carousel-inner">
 
-                                    <div class="carousel-item  active" data-bs-interval="5000">
-                                        <img src="/storage/images/{{ $getListRoom[0]->thumbnail }}"
-                                            class="d-block w-100" alt="{{ $getListRoom[0]->roomFullName }}">
-                                        <div class="carousel-caption d-none d-md-block">
+                        <!-- Section Title -->
+                        <div class="section-title" data-aos="fade-up">
+                            <h2> {{ $getListRoom[0]->roomFullName }} </h2>
+                        </div><!-- End Section Title -->
 
-                                        </div>
-                                    </div>
-                                    @foreach ($roomGallery as $rows)
-                                        <div class="carousel-item " data-bs-interval="3000">
-                                            <img src="/storage/images/{{ $rows->filename }}" class="d-block w-100"
-                                                alt="{{ $rows->roomFullName }}">
-                                            <div class="carousel-caption d-none d-md-block">
+                        <!-- Slide Images -->
 
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <button class="carousel-control-prev" type="button"
-                                    data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button"
-                                    data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
-                        </div>
-                        <!--End Slide Images -->
-                        <div class="col-lg-12 mt-5">
-                            <div class="container text-start mt-3 justify-content-center">
+
+                        <div class="row">
+                            <!-- Result 3 -->
+                            <article class="col-lg-11 col-md-11">
+
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <button class="btn btn-sm btn-light"> <i class="bi bi-gear-fill"></i></button>
-                                        ประเภท <br />
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $getListRoom[0]->roomtypeName }}
-                                    </div>
-                                    <div class=" col-md-2">
-                                        <button class="btn btn-sm btn-light"> <i
-                                                class="bi bi-geo-alt-fill"></i></button>
-                                        สถานที่ <br />
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $getListRoom[0]->placeName }}
-                                    </div>
+                                    <div id="slideshow3" class="col-lg-10 col-md-10"></div>
 
-                                    <div class="col-md-2">
-                                        <button class="btn btn-sm btn-light"> <i
-                                                class="bi bi-person-hearts"></i></button> ความจุ <br />
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;จำนวน
-                                        {{ $getListRoom[0]->roomSize }}
-                                        ที่นั่ง
-                                    </div>
-                                    <div class="col-md-6 justify-content-end text-end">
-                                        <button type="button" class="btn btn-primary   ml-3  btn-Booking"
-                                            data-bs-toggle="modal" data-bs-target="#caseBooker">
-                                            <i class="bi bi-vector-pen"></i> ทำรายการขอใช้ห้อง
-                                        </button>
+                                    <div class="col-lg-1 col-md-2 text-center">
+                                        <ul id="slideshow3_thumbs" class="desoslide-thumbs-vertical list-inline">
+                                            <li>
+                                                <?php
+                                                $fileroomMain = 'room' . $getListRoom[0]->id . '.jpg';
+                                                ?>
+                                                <a href="/storage/images/{{ $fileroomMain }}">
+                                                    <img src="/storage/images/{{ $fileroomMain }}"
+                                                        alt="{{ $getListRoom[0]->roomFullName }}" height="100">
+                                                </a>
+                                            </li>
+                                            @foreach ($roomGallery as $rows)
+                                                <li>
+                                                    <a href="/storage/images/{{ $rows->filename }}">
+                                                        <img src="/storage/images/{{ $rows->filename }}"
+                                                            alt="{{ $rows->roomFullName }}" height="100">
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </article>
 
-                            <br /> <br />
-                            <h5>รายละเอียด </h5>
-                            <div class="row mx-1 p-3 mt-2 fs-6"> {{ $getListRoom[0]->roomDetail }} </div>
-                            <hr />
-                            <h5> อุปกรณ์ภายในห้อง ( Room Services ) </h5>
-                            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-3">
-                                @if (!empty($listItemRoom))
-                                    @foreach ($listItemRoom as $rows)
-                                        <div class="col"><i class="bi bi-check-circle"></i>
-                                            &nbsp;&nbsp; {{ $rows->item_name }} </div>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <hr />
+                            <!-- Code 3 -->
 
                         </div>
                     </div>
+                    <!--End Slide Images -->
+                    <div class="col-lg-12 mt-1">
+                        <div class="container text-start mt-3 justify-content-center">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button class="btn btn-sm btn-light"> <i class="bi bi-gear-fill"></i></button>
+                                    ประเภท <br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $getListRoom[0]->roomtypeName }}
+                                </div>
+                                <div class=" col-md-2">
+                                    <button class="btn btn-sm btn-light"> <i class="bi bi-geo-alt-fill"></i></button>
+                                    สถานที่ <br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $getListRoom[0]->placeName }}
+                                </div>
 
-                    <div class="col-sm-10 col-md-10 p-3 ">
-                        <h5> ตารางการจองห้อง ( Room Availability) </h5>
-                        <div class="row">
-
+                                <div class="col-md-2">
+                                    <button class="btn btn-sm btn-light"> <i class="bi bi-person-hearts"></i></button>
+                                    ความจุ <br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;จำนวน
+                                    {{ $getListRoom[0]->roomSize }}
+                                    ที่นั่ง
+                                </div>
+                                <div class="col-md-6 justify-content-end text-center">
+                                    <a type="button" class="btn btn-primary  btn-Booking"
+                                        href="/booking/check/{{ $getListRoom[0]->id }}/showlist/{{ $getListRoom[0]->roomFullName }}">
+                                        <i class="bi bi-vector-pen"></i> ทำรายการขอใช้ห้อง
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="showtable">
 
+                        <br /> <br />
+                        <h5>รายละเอียด </h5>
+                        <div class="row mx-1 p-3 mt-2 fs-6"> {{ $getListRoom[0]->roomDetail }} </div>
+                        <hr />
+                        <h5> อุปกรณ์ภายในห้อง ( Room Services ) </h5>
+                        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 p-3">
+                            @if (!empty($listItemRoom))
+                                @foreach ($listItemRoom as $rows)
+                                    <div class="col"><i class="bi bi-check-circle"></i>
+                                        &nbsp;&nbsp; {{ $rows->item_name }} </div>
+                                @endforeach
+                            @endif
                         </div>
+                        <hr />
+
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 p-3 ">
+                    <h5> ตารางการจองห้อง ( Room Availability) </h5>
+                    <div class="row">
+
+                    </div>
+                    <div class="showtable">
+
                     </div>
                 </div>
             </div>
+            </div>
         </section>
     </main>
-
-
 
     <!-- Modol  Checkc บุคคลภายนอก/ภายใน  -->
     <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
@@ -201,6 +197,9 @@
     @includeIf('partials.footer')
     @includeIf('partials.incJS')
 
+    <script src="/js/slide/highlight.pack.js"></script>
+    <script src="/js/jquery.desoslide.min.js"></script>
+    <script src="/js/slide/demo.js"></script>
     <script>
         $(function() {
             fetchAll('');
@@ -214,6 +213,7 @@
                     data: {
                         uts: $uts,
                         getroomId: $("#hinden_roomID").val(),
+                        hindenBtnBooking: true,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

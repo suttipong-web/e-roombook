@@ -135,11 +135,12 @@ class BookingController extends Controller
             echo $output;
         }
     }
-
+ 
     public function search(Request $request)
     {
         $class = new HelperService();
         $search_date = $class->convertDateSqlInsert($request->search_date);
+        
         $dateBooking = $request->search_date;
         $usertype = $request->usertype;
         // $datenow = date('d/m/Y');
@@ -190,11 +191,44 @@ class BookingController extends Controller
                 'getBookingList' => $searhResult,
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
-                'searchDates' => $dateBooking,
+                'searchDates' => $dateBooking,         
                 'imgRoom' => $roomData->thumbnail,
                 'usertype' => $usertype
             ]
         );
+    }
+
+   public function setform(Request $request)
+    {
+        $roomID = $request->roomID;
+        
+        $roomData = Rooms::find($roomID);
+       
+        $RoomtitleSearch = $roomData["roomFullName"];
+        $dateNow = date('Y-m-d');
+        $usertype = $request->usertype;
+        $tempdateBooking =$request->datesearch;
+
+        $formattedDate = str_replace("-", "/", $tempdateBooking);
+        $dateBooking = implode("/", array_reverse(explode("/", $formattedDate)));
+
+        //Select option ข้อมูลห้อง 
+        $roomDataSlc = Rooms::orderby('id', 'asc')
+            ->select('id', 'roomFullName')           
+            ->where('roomTypeId',$roomData->roomTypeId)
+            ->get();
+
+        return view('/bookingroom/form')->with(
+            [
+                'RoomtitleSearch' => $RoomtitleSearch,  
+                'roomSlc' => $roomDataSlc,
+                'searchRoomID' => $roomID,
+                'searchDates' => $dateBooking,               
+                'usertype' => $usertype
+            ]
+        );
+
+
     }
 
     public function check(Request $request)

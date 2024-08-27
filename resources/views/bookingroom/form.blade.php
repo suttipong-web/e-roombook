@@ -27,141 +27,14 @@
                 <div class="row">
                     <div class="row g-0 text-center mt-5 w-100">
                         <div class="col-md-9">
-                            <input type="hidden" name="roomIDs" id="roomIDs" value="{{ $searchRoomID }}">
-                            @if ($usertype == 'showlist' || !empty($searchRoomID))
-                                <div class="card">
-                                    <h5 class="card-header">ข้อมูลการใช้ {{ $RoomtitleSearch }} :
-                                        <span class="text-primary"> วันที่
-                                            {{ $getService->convertDateThai($DateTitleSearch, false, false) }}
-                                            <span>
-                                    </h5>
-                                    <div class="card-body">
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#home-tab-pane" type="button" role="tab"
-                                                    aria-controls="home-tab-pane" aria-selected="true">
-                                                    แสดงรายการจองห้องประจำวัน
-                                                </button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                                    aria-controls="profile-tab-pane"
-                                                    aria-selected="false">ตารางการจองห้องประจำสัปดาห์</button>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
-                                                aria-labelledby="home-tab" tabindex="0">
-                                                <div class="show_all">
-                                                    <table class="table mt-2 table-sm">
-                                                        <thead class="table-light ">
-                                                            <tr class="text-start">
-                                                                <th>ช่วงเวลาที่ใช้งาน</th>
-                                                                <th>รายการ</th>
-                                                                <th>ผู้จอง</th>
-                                                                <th>หน่วยงาน</th>
-                                                                <th>สถานะ</th>
-
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if (count($getBookingList) > 0)
-                                                                @foreach ($getBookingList as $rows)
-                                                                    <tr class="text-start">
-                                                                        <td>{{ Str::limit($rows->booking_time_start, 5, '') }}-{{ Str::limit($rows->booking_time_finish, 5, '') }}
-                                                                        </td>
-                                                                        <td>{{ $rows->booking_subject }}</td>
-                                                                        <td>{{ $rows->booking_booker }}</td>
-                                                                        <td>{{ $rows->booking_department }} </td>
-                                                                        <td>
-                                                                            @if ((int) $rows->booking_status == 1)
-                                                                                <span class="badge text-bg-success"> <i
-                                                                                        class="bi bi-check-circle-fill"></i>
-                                                                                    อนุมัติ
-                                                                                </span>
-                                                                            @else
-                                                                                <span class="badge text-bg-warning"> <i
-                                                                                        class="bi bi-clock-history"></i>
-                                                                                    รอการอนุมัติ</span>
-                                                                            @endif
-                                                                        </td>
-
-
-                                                                        <td>
-                                                                            @if (empty(Session::get('cmuitaccount')))
-                                                                                <a href="#" data-bs-toggle="modal"
-                                                                                    data-bs-target="#delModal"
-                                                                                    class="btn btn-danger btn-sm clikDel"
-                                                                                    id="{{ $rows->id }}">
-                                                                                    <i
-                                                                                        class="bi bi-dash-circle-fill"></i>
-                                                                                </a>
-                                                                            @endif
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            @else
-                                                                <tr>
-                                                                    <td colspan="5">
-                                                                        <div class="p-2 mt-2 text-center">
-                                                                            <div class="alert alert-info"
-                                                                                role="alert">
-                                                                                <h4>
-                                                                                    <i class="bi bi-check2-circle"></i>
-                                                                                </h4>
-                                                                                <p> ไม่มีรายการจองใช้งานในวันนี้</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            @endif
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
-                                            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
-                                                aria-labelledby="profile-tab" tabindex="0">
-                                                <div class="showtable"> </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row mt-3 text-center justify-content-center">
-                                    <div class="col-md-6 justif y-content-end text-center">
-                                        <button type="button" class="btn btn-primary   ml-3  btn-Booking"
-                                            data-bs-toggle="modal" data-bs-target="#caseBooker">
-                                            <i class="bi bi-vector-pen"></i> ทำรายการจอง
-                                        </button>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="card mt-5 mb-3">
+                                <div class="card mt-0 mb-3">
                                     <div class="card-header p-3">
-                                        @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
-                                            <h5>
-                                                <span class="text-danger"> บุคคลภายนอกคณะฯ </span>
-                                                ให้กรอกข้อมูลการจองตามแบบฟอร์มด้านล่าง
-                                            </h5>
-                                            <div class="text-center">
-                                                <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"
-                                                    class="btn btn-primary " tabindex="-1" role="button"
-                                                    aria-disabled="true">
-                                                    <i class="bi bi-box-arrow-in-right"></i> บุคคลภายในคณะฯ
-                                                    คลิกที่นี่
-
-                                                </a>
+                                           <div class="col-md-12 p-2">
+                                               <h5  class="section_title">  กรอกแบบฟอร์มขอใช้ห้อง  : {{ $RoomtitleSearch }} </h5>
+                                               
                                             </div>
-                                        @else
-                                            <h5>
-                                                กรอกข้อมูลการจองตามแบบฟอร์มด้านล่าง
-                                            </h5>
-                                        @endif
+                                     
+                                         
                                     </div>
 
                                     <div class="card-body justify-content-start text-start ">
@@ -173,6 +46,12 @@
                                                 value="{{ $searchRoomID }}">
                                             <input type="hidden" name="booking_type" id="booking_type"
                                                 value="{{ $usertype }}">
+                                            <div>
+                                                   
+
+                                            </div>   
+                                        
+                                                
                                             <div class="col-md-3 p-2">
                                                 <label for="schedule_startdate" class="form-label"> วันที่เริ่ม
                                                     *</label>
@@ -350,7 +229,7 @@
                                     <br />
                                 </div>
                                 <br />
-                            @endif
+                       
                         </div>
 
                         <div class="col-md-3 jstify-content-center">
@@ -397,158 +276,15 @@
         </section>
     </main>
 
-
-
-    {{-- del modal start --}}
-    <div class="modal fade" id="delModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"> ยืนยันการลบข้อมูล </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body  bg-light ">
-
-                    <div class="row col-12 ">
-                        <div class="mb-3">
-                            <label for="booking_password" class="form-label">รหัสยกเลิกของท่าน </label>
-                            <input type="password" class="form-control" id="booking_password"
-                                name="booking_password" placeholder=" รหัสยกเลิกของท่าน " required>
-
-                        </div>
-                    </div>
-                    <div class=" col-12 justify-content-center text-center">
-                        <hr />
-                        <input type="hidden" id="delBookingId" name="delBookingId">
-                        <button type="button" class="btn btn-danger btnDelConfirm"> ยืนยันการยกเลิกการจอง
-                        </button>
-                    </div>
-                    <br />
-
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- edit modal end --}}
-
-    <!-- Modol  Checkc บุคคลภายนอก/ภายใน  -->
-    <div class="modal fade" id="caseBooker" tabindex="-1" aria-labelledby="exampleModalLabel"
-        data-bs-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> เลือกประเภทผู้ใช้งาน </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4 bg-light">
-                    <div class="list-group">
-                        <div class="list-group-item list-group-item-action " aria-current="true"
-                        
-                         style="background-color: #fff;color: #000000;" 
-                        >
-                        <?php 
-                            $dateUrl  =  $getService->convertDateSqlInsert($DateTitleSearch);
-                        ?>
-                            <div class="d-flex w-100 justify-content-between">
-                                <a href="/booking/form/{{ $searchRoomID }}/general/{{ $RoomtitleSearch }}/{{$dateUrl }}"
-                                    class="btn " tabindex="-1" role="button" aria-disabled="true">
-                                    <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> บุคคลภายนอกคณะฯ
-                                    </h5>
-                                </a>
-                            </div>
-                            <p class="mb-1">
-                            <ul>
-                                <li>คือบุคคลที่ไม่ได้สังกัดคณะวิศวกรรมศาสตร์ มหาวิทยาลับเชียงใหม่</li>
-                                <li>ต้องทำการแนบเอกสารการขอใช้ห้องประกอบการทำรายการจอง หากการขอใช้นั้นมีค่าใช้จ่าย 
-                                    ระบบจะทำการส่งรายละเอียดการชำระและผลการอนุมัติการใช้งานไปใน Email ของท่านภายใน 1-3 วันทำการ
-                                </li>
-                            </ul>
-
-
-                        </div>
-                    </div>
-                    <br />
-                    <div class="list-group">
-                        <div href="#" class="list-group-item list-group-item-action btn-light" aria-current="true"
-                            style="background-color: #0899fa;color: #fff;" 
-                            >
-                            <div class="d-flex w-100 justify-content-between active">
-                                <?php
-                                       $CMUOauth = $getService->geturlCMUOauth($searchRoomID);
-                                    
-                                ?>
-                                <a href="{{ $CMUOauth }}" class=" btn text-white" tabindex="-1" role="button"
-                                    aria-disabled="true">
-                                    <h5 class="mb-1 text-white"> <i class="bi bi-gear-wide text-white"></i> สำหรับบุคคลภายใน</h5>
-                                </a>
-                            </div>
-
-                            <p class="mb-1">
-                            <ul>
-                                <li>คือบุคคลหรือหน่วยงานที่อยู่ภายใต้สังกัดของคณะวิศวกรรมศาสตร์ มหาวิทยาลับเชียงใหม่
-                                </li>
-                                <li>ท่านสามารถทำรายการขอใช้สถานที่ โดยใช้ CMU Acount (xxx@cmu.ac.th)
-                                    ในการเข้าสู่ระบบการจองห้อง </li>
-                                <li>ขึั้นตอนนี้ไม่รวมการขอใช้ห้องในการจัดทำระบบตารางเรียนตารางสอน </li>
-                            </ul>
-                            </p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
     @includeIf('partials.footer')
     @includeIf('partials.incJS')
     <script>
         $(function() {
-            $(document).on('click', '.clikDel', function(e) {
-                var bookingId = $(this).attr('id');
-                $('#delBookingId').val(bookingId);
-                console.log('bid=>' + $('#delBookingId').val());
-            });
+ 
 
-
-            $(document).on('click', '.btnDelConfirm', function(e) {
-                console.log('start del');
-                $.ajax({
-                    url: "/booking/cancel",
-                    method: 'post',
-                    data: {
-                        bookingId: $('#delBookingId').val(),
-                        booking_code_cancel: $('#booking_password').val(),
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        if (response.status == 200) {
-                            Swal.fire({
-                                title: 'Successfully!',
-                                text: ' ทำการยกเลิกรายการจองสำเร็จ ',
-                                icon: 'success'
-                            }).then((result) => {
-
-                                $("#delModal").modal('hide');
-                                NewfetchData();
-                            });
-
-                        } else {
-                            Swal.fire({
-                                title: ' fail !',
-                                text: ' ไม่สามารถยกเลิกรายการได้ กรุณาตรวจสอบรหัสของท่านอีกครั้ง ',
-                                icon: 'error'
-                            }).then((result) => {
-                                $('#booking_password').val('');
-                                $('#booking_password').focus();
-                            });
-
-                        }
-                    }
-                });
-            });
+          
 
             //Add Data เพิ่มการจอง ใหม่
             // add new  ajax request
@@ -610,42 +346,6 @@
                 document.getElementById('home-tab').focus();
             }
 
-            fetchScheduleTable('');
-
-            function fetchScheduleTable($uts) {
-                var val = "";
-
-                $.ajax({
-                    url: "/fetchScheduleByRoom",
-                    method: 'get',
-                    data: {
-                        uts: $uts,
-                        getroomId: $("#roomIDs").val(),
-                        hindenBtnBooking: true,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        $(".showtable").html(response);
-                    }
-                });
-            }
-
-            $(document).on('click', '.btnUTS', function(e) {
-                var $uts = $(this).attr('valuts');
-                fetchScheduleTable($uts);
-            });
-
-            $(document).on('click', '.sc-detail', function(e) {
-                var detail = $(this).attr('detail');
-                var titles = $(this).attr('htitle');
-                Swal.fire({
-                    title: "<strong>" + titles + "</strong>",
-                    icon: "info",
-                    html: detail,
-                    showCloseButton: true,
-                    focusConfirm: false
-                });
-            });
 
 
         });

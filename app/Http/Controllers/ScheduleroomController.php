@@ -35,7 +35,7 @@ class ScheduleroomController extends Controller
 
         ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
         $sc_startTime = date("Y-m-d 08:00:00");  // กำหนดเวลาเริ่มต้ม เปลี่ยนเฉพาะเลขเวลา
-        $sc_endtTime = date("Y-m-d 20:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
+        $sc_endtTime = date("Y-m-d 21:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
         $sc_t_startTime = strtotime($sc_startTime);
         $sc_t_endTime = strtotime($sc_endtTime);
         $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
@@ -145,22 +145,23 @@ class ScheduleroomController extends Controller
                 }
             }
         }
+        
         $num_dayShow_in_schedule = $num_dayShow - 1;
         $output = '<div class="wrap_schedule_control mt-3">
-                        <div class="d-flex  justify-content-end">';
+                        <div class="d-flex  justify-content-start">';
         $output .= '            <div class="">
                                
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS mr-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
                                     <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button> ';
 
-        if (!$request->hindenBtnBooking) {
-            $output .= '       
-                                    <button type="button"  class="btn btn-primary btn-sm ml-3" data-bs-toggle="modal"
-                                     data-bs-target="#caseBooker">
-                                       <i class="bi bi-calendar-week-fill"></i> ทำรายการขอใช้ห้อง 
-                                    </button> ';
-        }
+       if (!$request->hindenBtnBooking) {
+        $output .= '       
+                                   <button type="button"  class="btn btn-primary btn-sm ml-3" data-bs-toggle="modal"
+                                   data-bs-target="#caseBooker">
+                                      <i class="bi bi-calendar-week-fill"></i> ทำรายการขอใช้ห้อง 
+                                 </button> ';
+       }
 
         $output .= '                           
                                 </div>
