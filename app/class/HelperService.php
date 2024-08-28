@@ -194,7 +194,21 @@ class HelperService
     }
     public function getlineTokenAdminRoom($roomID, $typeAdmin)
     {
+        $ListAdmin ="";
+        if((int)$typeAdmin==2) {
+         $sql = " 
+          SELECT
+            users.email,
+            users.lineToken
+            FROM `users`
+            WHERE
+            users.isAdmin = 1 AND
+            users.user_type = 'admin'
 
+        ";
+        $ListAdmin = DB::select(DB::raw($sql));
+
+        }else {
         $sql = " 
         SELECT
             admin_roooms.adminroom_type_id,
@@ -208,6 +222,8 @@ class HelperService
             admin_roooms.adminroom_type_id = '{$typeAdmin}'
         ";
         $ListAdmin = DB::select(DB::raw($sql));
+
+        }
         return $ListAdmin;
 
     }

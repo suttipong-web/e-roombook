@@ -442,10 +442,11 @@ class BookingController extends Controller
                 // ส่ง LINE                  
                 $bookingRoom = $roomData->roomFullName;
                 $ิbooker = $request->booking_booker;
-                $msgLine = "มีรายการใหม่!%0A";
-                $msgLine .= "จากคุณ" . $ิbooker . "%0A";
-                $msgLine .= "ห้องที่ขอใช้:" . $bookingRoom . "%0A";
-                $msgLine .= "ตรวจสอบข้อมูลได้ที่ E-roombook";
+                $msgLine = "รายการจองใหม่%0A";
+                $msgLine .= "เรื่อง:" .$request->booking_subject. "%0A";
+                $msgLine .= "วันที่:" .$request->schedule_startdate." เวลา ". $request->booking_time_start. "%0A";
+                $msgLine .= "จาก :" . $ิbooker." เวลา ". $request->booking_time_start. "%0A";              
+                $msgLine .= "(จัดการ/ตรวจสอบการจองที่ E-roombook)";
 
                 // get Token  Admin 
                 $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 2);

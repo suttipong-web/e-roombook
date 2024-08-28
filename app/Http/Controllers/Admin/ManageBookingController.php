@@ -255,7 +255,14 @@ class ManageBookingController extends Controller
                 if ($actionStatus == 'approved') {
                     $this->setAuthPayment($bookingId);
                     $msg = " TEST จองห้อง " . $bookingId . "...";
-                    $class->sendMessageTOline('mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX', $msg);
+
+                    
+
+
+
+
+
+                    //$class->sendMessageTOline('mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX', $msg);
                     // $listAdmin = $class->getlineTokenAdminRoom();            
                 }
                 return response()->json([
