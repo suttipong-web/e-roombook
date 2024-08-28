@@ -22,6 +22,8 @@ class ManageBookingController extends Controller
     }
     public function mbookingDetail(Request $request)
     {
+  
+     
         //ข้อมูลหนักงาน Select option
         $sclEmployee = DB::table('tbl_members')
             ->select('tbl_members.*')
@@ -260,18 +262,14 @@ class ManageBookingController extends Controller
             if ($updated) {
                 if ($actionStatus == 'approved') {
                     $this->setAuthPayment($bookingId);
-
-
-
-
                     //ห้อง xxx ที่ท่านดูแล ได้อนุมัติใช้งาน เรื่อง "xxx" วัน xxx เวลา xxx จาก xxx (ดูตารางการใช้งานของห้อง xxx ที่ xxx)
-                    $msgLine = " ห้อง".$ResultBooking->roomFullName." ที่ท่านดูแลได้อนุมัติใช้งาน";              
-                    $msgLine .= "เรื่อง:" .$ResultBooking->booking_subject. "%0A";
-                    $msgLine .= "วันที่:" .$ResultBooking->schedule_startdate." เวลา ". $ResultBooking->booking_time_start. "%0A";
-                    $msgLine .= "จาก :" . $ResultBooking->booking_booker."%0A";              
+               $msgLine = " ห้อง".$ResultBooking[0]->roomFullName." ที่ท่านดูแลได้อนุมัติใช้งาน";              
+                    $msgLine .= "เรื่อง:" .$ResultBooking[0]->booking_subject. "%0A";
+                    $msgLine .= "วันที่:" .$ResultBooking[0]->schedule_startdate." เวลา ". $ResultBooking[0]->booking_time_start. "%0A";
+                    $msgLine .= "จาก :" . $ResultBooking[0]->booking_booker."%0A";              
                     $msgLine .= "(จัดการ/ตรวจสอบการจองที่ E-roombook)";
                     // get Token  Admin 
-                    $tokenUSer = $class->getlineTokenAdminRoom($ResultBooking->roomID, 1);
+                    $tokenUSer = $class->getlineTokenAdminRoom($ResultBooking[0]->roomID, 1);
                     if ($tokenUSer) {
                         // lop หากมี Admin หลายคน                
                         foreach ($tokenUSer as $admins) {
