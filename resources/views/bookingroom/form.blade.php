@@ -143,7 +143,7 @@
                                                     ระบุรายละเอียดเพิ่มเติม </label>
                                                 <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                             </div>
-                                            @if (!empty(Session::get('cmuitaccount')))
+                                            @if ($usertype == 'eng')
                                                 <div class="col-md-12">
                                                     <label for="booking_code_cancel"
                                                         class="form-label">รหัสยกเลิกรายการ
@@ -153,7 +153,7 @@
                                                         placeholder=" xxxx " />
                                                 </div>
                                             @endif
-                                            @if (empty(Session::get('cmuitaccount')) || $usertype == 'general')
+                                            @if ($usertype == 'general')
                                                 <div class="text-primary">
                                                     โปรดทำการแนบไฟล์เอกสารขอใช้งานจากหน่วยงานของท่าน
                                                     เพื่อใช้ประกอบการพิจารณาอนุมัติใช้งาน (ไฟล์ pdf เท่านั้น) * </div>
@@ -208,7 +208,7 @@
                                                 value="{{ Session::get('cmuitaccount') }}">
 
                                             <div class="p-2 text-center text-success fs-5">
-                                                @if ($usertype == 'general' || empty(Session::get('cmuitaccount')))
+                                                @if ($usertype == 'general')
                                                     <hr />
                                                     แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />
                                                     <span style="color: blueviolet"> สำหรับบุคคลภายในคณะฯ คลิกที่ปุ่ม
