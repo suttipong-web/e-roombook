@@ -180,8 +180,13 @@
                                         <tr>
                                             <td class="tdTitle"> ไฟล์แนบ </td>
                                             <td class="text-start" colspan="3">
-                                                <a href="/storage/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                    target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a>
+                                                
+                                               <!-- <a href="/storage/app/public/upload/{{ $detailBooking[0]->booking_fileurl }} "
+                                                    target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
+
+                                             <a href="{{ asset('storage/upload/' .$detailBooking[0]->booking_fileurl) }}" 
+                                                target="_blank" class="btn btn-primary">  {{ $detailBooking[0]->booking_fileurl}}
+        </a>
                                             </td>
                                         </tr>
                                     @endif
