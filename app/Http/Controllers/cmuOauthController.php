@@ -16,9 +16,10 @@ class cmuOauthController extends Controller
         $roomId = 0;
         $code = $request->code;
         $state = $request->state;
-        $temp = explode('-', $state);
-        if (!empty($temp[1]))
-            $roomId = $temp[1];
+
+        $temp = explode('_', $state);
+        if (!empty($temp[1]))$roomId = $temp[1];
+        if (!empty($temp[2]))$dates = $temp[2];
         $page = $temp[0];
         $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
@@ -118,7 +119,7 @@ class cmuOauthController extends Controller
 
                 //check Admin  
                 if ($page == "booking") {
-                    return redirect()->intended('/booking/check/' . $roomId . '/eng/' . $roomData->roomFullName)->with('success', 'Login Successfull');
+                    return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
                 } else if ($page == "admin") {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 } else {

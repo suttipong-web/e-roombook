@@ -44,6 +44,8 @@
                                             @csrf
                                             <input type="hidden" name="roomID" id="roomID"
                                                 value="{{ $searchRoomID }}">
+                                                  <input type="hidden" id="roomTitle"
+                                                value="{{ $RoomtitleSearch }}">
                                             <input type="hidden" name="booking_type" id="booking_type"
                                                 value="{{ $usertype }}">
                                             <div>
@@ -119,7 +121,7 @@
                                             <div class="col-md-4">
                                                 <label for="booking_ofPeople" class="form-label">จำนวนผู้ใช้</label>
                                                 <input type="number" class="form-control" id="booking_ofPeople"
-                                                    name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน " />
+                                                    name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน "  max="999"  maxlength="3"/>
                                             </div>
 
                                             <div class="col-md-4">
@@ -311,7 +313,9 @@
                                 $("#add_btn").text('เพิ่มข้อมูลห้อง');
                                 $("#add_booking_form")[0].reset();
                                 $("#addModal").modal('hide');
-                                NewfetchData();
+                                //NewfetchData();
+                                var reurl = "/booking/check/"+$("#roomID").val()+"/showlist/"+$("#roomTitle").val();
+                              window.location.href =reurl;
                             });
                         } else if (response.status == 209) {
                             // แนบไฟล์ไม่สำเร็จ 
