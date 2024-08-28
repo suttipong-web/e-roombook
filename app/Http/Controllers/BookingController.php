@@ -445,7 +445,7 @@ class BookingController extends Controller
                 $msgLine = "รายการจองใหม่%0A";
                 $msgLine .= "เรื่อง:" .$request->booking_subject. "%0A";
                 $msgLine .= "วันที่:" .$request->schedule_startdate." เวลา ". $request->booking_time_start. "%0A";
-                $msgLine .= "จาก :" . $ิbooker." เวลา ". $request->booking_time_start. "%0A";              
+                $msgLine .= "จาก :" . $ิbooker." ". $request->booking_department. "%0A";              
                 $msgLine .= "(จัดการ/ตรวจสอบการจองที่ E-roombook)";
 
                 // get Token  Admin 

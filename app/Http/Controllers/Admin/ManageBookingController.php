@@ -208,6 +208,12 @@ class ManageBookingController extends Controller
         $bookingId = $request->hinden_bookingID;
         $actionStatus = $request->chkStatus;
 
+          $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
+                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+                ->where('booking_rooms.id', $bookingId)
+                ->get();
+
+
         // update Step  สถานะส่งต่อผู้บริหาร  :  Admin อนุมัติเอง 
         $isStatus = ($actionStatus == 'ForwardDean') ? 2 : 1;
         // เก็บประวัติการยกเลิกรายการจอง
@@ -254,12 +260,24 @@ class ManageBookingController extends Controller
             if ($updated) {
                 if ($actionStatus == 'approved') {
                     $this->setAuthPayment($bookingId);
-                    $msg = " TEST จองห้อง " . $bookingId . "...";
-
-                    
 
 
 
+
+                    //ห้อง xxx ที่ท่านดูแล ได้อนุมัติใช้งาน เรื่อง "xxx" วัน xxx เวลา xxx จาก xxx (ดูตารางการใช้งานของห้อง xxx ที่ xxx)
+                    $msgLine = " ห้อง".$ResultBooking->roomFullName." ที่ท่านดูแลได้อนุมัติใช้งาน";              
+                    $msgLine .= "เรื่อง:" .$ResultBooking->booking_subject. "%0A";
+                    $msgLine .= "วันที่:" .$ResultBooking->schedule_startdate." เวลา ". $ResultBooking->booking_time_start. "%0A";
+                    $msgLine .= "จาก :" . $ResultBooking->booking_booker."%0A";              
+                    $msgLine .= "(จัดการ/ตรวจสอบการจองที่ E-roombook)";
+                    // get Token  Admin 
+                    $tokenUSer = $class->getlineTokenAdminRoom($ResultBooking->roomID, 1);
+                    if ($tokenUSer) {
+                        // lop หากมี Admin หลายคน                
+                        foreach ($tokenUSer as $admins) {
+                            $class->sendMessageTOline($admins->lineToken, $msgLine);
+                        }
+                    }
 
 
                     //$class->sendMessageTOline('mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX', $msg);
