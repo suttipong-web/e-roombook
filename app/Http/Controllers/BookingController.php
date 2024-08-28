@@ -325,8 +325,9 @@ class BookingController extends Controller
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
                // $file->storeAs('public/upload', $fileName);
 
-                $request->file('pdf')->storeAs('upload', $fileName , 'public');
-          
+              //  $request->file('pdf')->storeAs('upload', $fileName , 'public');
+                $file->move(public_path('upload'), $fileName);
+
 
 
 

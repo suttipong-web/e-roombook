@@ -110,7 +110,7 @@ class cmuOauthController extends Controller
                 $request->session()->put('cmuitaccount', $email);
                 $request->session()->put('userfullname', $fullname);
                 $request->session()->put('dep_id', $users["dep_id"]);
-                $request->session()->put('isAdmin', 1);
+                $request->session()->put('isAdmin', $users["isAdmin"]);
                 $request->session()->put('isDean', $users["isDean"]);
                 $request->session()->put('last_activity', Carbon::now());
                 $request->session()->put('positionName', $users["positionName"]);
@@ -120,7 +120,7 @@ class cmuOauthController extends Controller
                 //check Admin  
                 if ($page == "booking") {
                     return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
-                } else if ($page == "admin") {
+                } else if ((int)$users["isAdmin"]== "admin" ) {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
                 } else {
                     return redirect()->intended('/booking')->with('success', 'Login Successfull');
