@@ -323,7 +323,13 @@ class BookingController extends Controller
             if ($request->hasFile('pdf')) {
                 $file = $request->file('pdf');
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('public/upload', $fileName);
+               // $file->storeAs('public/upload', $fileName);
+
+                $request->file('pdf')->storeAs('upload', $fileName , 'public');
+          
+
+
+
                 // Return a response
                 $error = true;
             } else {
