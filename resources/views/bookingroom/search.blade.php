@@ -131,12 +131,21 @@
                                 </div>
 
                             </div>
+
+                             <?php //$dateUrl =$searchDates;
+                            $dateUrl = $getService->convertDateSqlInsert($searchDates);
+                            ?>
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
+                                    @if (!empty(Session::get('cmuitaccount')))
+                                        <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}" class="btn btn-primary   ml-3  btn-Booking" ><i class="bi bi-vector-pen"></i> ทำรายการจอง</a>
+                                    @else
                                     <button type="button" class="btn btn-primary   ml-3  btn-Booking"
                                         data-bs-toggle="modal" data-bs-target="#caseBooker">
                                         <i class="bi bi-vector-pen"></i> ทำรายการจอง
                                     </button>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -234,9 +243,7 @@
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action " aria-current="true"
                             style="background-color: #fff;color: #000000;">
-                            <?php //$dateUrl =$searchDates;
-                            $dateUrl = $getService->convertDateSqlInsert($searchDates);
-                            ?>
+                           
                             <div class="d-flex w-100 justify-content-between">
                                 <a href="/booking/form/{{ $searchRoomID }}/general/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                     class="btn " tabindex="-1" role="button" aria-disabled="true">

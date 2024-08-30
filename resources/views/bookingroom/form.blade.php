@@ -219,13 +219,14 @@
                                                 @endif
                                                 โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                             </div>
+                                         
                                             <div class="text-center  justify-content-center  mb-3 ">
                                                 <button type="submit" class="btn btn-danger btn-Booking btn-lg">
                                                     &nbsp;&nbsp;&nbsp; <i class="bi bi-vector-pen"></i> ทำรายจองห้อง
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                                 </button>
                                             </div>
-
+                                            
                                         </form>
                                     </div>
                                     <br />
@@ -283,10 +284,7 @@
     @includeIf('partials.footer')
     @includeIf('partials.incJS')
     <script>
-        $(function() {
- 
-
-          
+        $(function() {          
 
             //Add Data เพิ่มการจอง ใหม่
             // add new  ajax request

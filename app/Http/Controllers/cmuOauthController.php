@@ -115,7 +115,7 @@ class cmuOauthController extends Controller
                 $request->session()->put('last_activity', Carbon::now());
                 $request->session()->put('positionName', $users["positionName"]);
                 $request->session()->put('positionName2', $users["positionName2"]);
-                 $request->session()->put('dep_name',$getDepN[0]->dep_name);
+                $request->session()->put('dep_name',$getDepN[0]->dep_name);
 
                 //check Admin  
                 if ($page == "booking") {
