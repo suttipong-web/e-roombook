@@ -269,8 +269,9 @@
                             aria-current="true" style="background-color: #0899fa;color: #fff;">
                             <div class="d-flex w-100 justify-content-between active">
                                 <?php
-                                $CMUOauth = $getService->geturlCMUOauth($searchRoomID);
-                                $CMUOauth = $CMUOauth."_".$dateUrl;
+                                $state =  "booking_".$searchRoomID."_".$dateUrl;
+                                $CMUOauth = $getService->geturlCMUOauth( $state);
+                            
                                 ?>
                                 <a href="{{ $CMUOauth }}" class=" btn text-white" tabindex="-1" role="button"
                                     aria-disabled="true">

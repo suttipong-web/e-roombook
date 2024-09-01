@@ -120,9 +120,11 @@ class cmuOauthController extends Controller
                 //check Admin  
                 if ($page == "booking") {
                     return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
-                } else if ((int)$users["isAdmin"]== "admin" ) {
+                } elseif ($users["user_type"]== "admin" ) {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
-                } else {
+                }  elseif($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
+                    return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
+                }else {
                     return redirect()->intended('/booking')->with('success', 'Login Successfull');
                 }
             }

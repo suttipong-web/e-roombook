@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\class\HelperService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,16 +15,21 @@ class AutnController extends Controller
     //
     public function getlogin()
     {
+        $getService = new HelperService();
         // get CMU APIKEY clientID,clientSecret
         $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
-        $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=admin-0';
-
+        $reurl =  "";
+        $state =  "admin_-_-";
+        $CMUOauth = $getService->geturlCMUOauth($state);
+    
+        //$signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=admin-0';
+       
         return view('admin.auth.login')->with(
             [
-                'urlCMUOauth' => $signwithCmu,
+                'urlCMUOauth' =>  $CMUOauth ,
             ]
         );
     }

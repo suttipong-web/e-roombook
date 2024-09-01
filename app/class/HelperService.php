@@ -156,13 +156,13 @@ class HelperService
     }
 
     public function geturlCMUOauth($state)
-    {
+     {
         $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
 
-        $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=booking_' . $state;
+        $signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=' . $state;
         return $signwithCmu;
     }
 
