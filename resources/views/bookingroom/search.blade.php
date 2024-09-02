@@ -90,13 +90,13 @@
                                                                     </td>
 
 
-                                                                    <td>
-                                                                        @if (!empty(Session::get('cmuitaccount')))
+                                                                    <td style="font-size: 10px;width: 100px;">
+                                                                        @if ((!empty(Session::get('cmuitaccount'))) && (Session::get('cmuitaccount')==  $rows->booking_email))
                                                                             <a href="#" data-bs-toggle="modal"
                                                                                 data-bs-target="#delModal"
                                                                                 class="btn btn-danger btn-sm clikDel"
-                                                                                id="{{ $rows->id }}">
-                                                                                <i class="bi bi-dash-circle-fill"></i>
+                                                                                id="{{ $rows->id }}" style="font-size: 12px;">
+                                                                               CANCEL<i class="bi bi-x-circle-fill"></i>
                                                                             </a>
                                                                         @endif
                                                                     </td>
@@ -203,19 +203,22 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"> ยืนยันการลบข้อมูล </h5>
+                    <h5 class="modal-title"> ยืนยันการยกเลิกการจอง </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body  bg-light ">
 
-                    <div class="row col-12 ">
+                    <!--<div class="row col-12 ">
                         <div class="mb-3">
                             <label for="booking_password" class="form-label">รหัสยกเลิกของท่าน </label>
                             <input type="password" class="form-control" id="booking_password"
                                 name="booking_password" placeholder=" รหัสยกเลิกของท่าน " required>
 
                         </div>
-                    </div>
+                    </div>-->
+                    <p class="text-danger text-center fs-6"> 
+                        <b> การยกเลิกการจองจะมีผลทันที  หากท่านต้องการยกเลิกการจองนี้ ให้กดยืนยันเพื่อดำเนินการ  </b>
+                    </p>
                     <div class=" col-12 justify-content-center text-center">
                         <hr />
                         <input type="hidden" id="delBookingId" name="delBookingId">
@@ -276,7 +279,7 @@
                                 <a href="{{ $CMUOauth }}" class=" btn text-white" tabindex="-1" role="button"
                                     aria-disabled="true">
                                     <h5 class="mb-1 text-white"> <i class="bi bi-gear-wide text-white"></i>
-                                        สำหรับบุคคลภายใน</h5>
+                                        บุคคลภายในคณะฯ</h5>
                                 </a>
                             </div>
 
@@ -314,8 +317,7 @@
                     url: "/booking/cancel",
                     method: 'post',
                     data: {
-                        bookingId: $('#delBookingId').val(),
-                        booking_code_cancel: $('#booking_password').val(),
+                        bookingId: $('#delBookingId').val(),                       
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

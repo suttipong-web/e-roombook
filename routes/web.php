@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\stepApporveController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\engApporveController;
 use App\Http\Controllers\major\majorController;
+use App\Http\Controllers\profile\profileController as ProfileProfileController;
 use App\Http\Controllers\ScheduleroomController;
 use App\Http\Controllers\setUserController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
 Route::get('/exp', function () {
     return view('ex');
 });
@@ -40,6 +43,15 @@ Route::prefix('/room')->group(
         Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
     }
 );
+Route::prefix('/profile')->group(
+    function () {
+        Route::get('/', [ProfileProfileController::class, 'index'])->name('profile.index');
+    }
+);
+Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profile.logout');
+
+
+
 
 
 // Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
@@ -50,6 +62,7 @@ Route::prefix('/booking')->group(
         Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
+        Route::get('/search', [BookingController::class, 'linksearch'])->name('get.search');
         Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');
         Route::get('/form/{roomID}/{usertype}/{roomName}/{datesearch}', [BookingController::class, 'setform'])->name('setform');
 

@@ -33,8 +33,8 @@
              <ul class="dropdown-menu text-small shadow">
                 <li class="text-center">{{  Session::get('userfullname')}}</li>
                 <li><hr class="dropdown-divider"></li>
-                 <li><a class="dropdown-item" href="#">รายการการจอง</a></li>      
-                 <li><a class="dropdown-item" href="#">ออกจากระบบ</a></li>
+                 <li><a class="dropdown-item" href="/profile/">รายการการจอง</a></li>      
+                 <li><a class="dropdown-item" href="/logout">ออกจากระบบ</a></li>
              </ul>
          </div>
          @endif

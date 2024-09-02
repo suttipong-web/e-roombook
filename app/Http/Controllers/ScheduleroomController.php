@@ -243,7 +243,7 @@ class ScheduleroomController extends Controller
                         $subjectTitle = $row_day['title'];
                     }
 
-                    $details = '<div> ช่วงเวลา : ' . $row_day['start_time'] . '-' . $row_day['end_time'] . ' <br/> ผู้ขอใช้ :' . $row_day["sec"] . '</div>';
+                    $details = '<div> ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ :' . $row_day["sec"] . '</div>';
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"

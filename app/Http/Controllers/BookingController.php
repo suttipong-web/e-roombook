@@ -23,6 +23,7 @@ class BookingController extends Controller
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
              ->where('is_open', '1')
+              ->where('roomTypeId', '1')
             ->get();
         
        //ประเภทห้อง 
@@ -56,6 +57,14 @@ class BookingController extends Controller
 
         );
     }
+
+
+    public function linksearch(Request $request){
+     return redirect()->intended('/booking')->with('success', '');
+        
+    }
+
+
     public function indexType(Request $request){
         $pageTitle ="";
         $searchDates  = date('d/m/Y');
@@ -416,11 +425,12 @@ class BookingController extends Controller
                       
         $result = booking_rooms::create($setDataBooking);      
         if ($result) {
+            $email_receipt = $request->booking_email;
             $lastInsertedId = $result->id;
             // SET  Data Payment     
                 $setDataPayment = [
                 'customerName' => $request->fullname_receipt,
-                'customerEmail' => $request->email_receipt,
+                'customerEmail' => $email_receipt,
                 'customerPhone' => '',
                 'customerTaxid' => $request->taxpayer_receipt,
                 'customerAddress' => $request->address_receipt,
@@ -480,14 +490,16 @@ class BookingController extends Controller
     }
     public function cancelBooking(Request $request){    
         $bookingID = $request->bookingId;
-        $booking_code_cancel = $request->booking_code_cancel;
+        //$booking_code_cancel = $request->booking_code_cancel;
         $result = booking_rooms::find($bookingID);   
+       // Session Login
+        $cmuitaccount = $request->session()->get('cmuitaccount');
         if($result) {        
              $deletedRows =  DB::table('booking_rooms')
                 ->where('id', $bookingID)
-                ->where('booking_code_cancel', $booking_code_cancel)
+                ->where('booking_email',$cmuitaccount)
                 ->delete();
-            if ($deletedRows > 0) {
+            if ($deletedRows) {
                 // ลบสำเร็จ
              return response()->json([
                     'status' => 200

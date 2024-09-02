@@ -40,7 +40,7 @@
                                     <div class="card-body justify-content-start text-start ">
                                         <form id="add_booking_form" class="row g-3 w-100 m-10-auto"
                                             enctype="multipart/form-data" action="/booking/insertBooking"
-                                            method="post">
+                                            method="post" style="font-weight: 700">
                                             @csrf
                                             <input type="hidden" name="roomID" id="roomID"
                                                 value="{{ $searchRoomID }}">
@@ -55,15 +55,16 @@
                                         
                                                 
                                             <div class="col-md-3 p-2">
-                                                <label for="schedule_startdate" class="form-label"> วันที่เริ่ม
-                                                    *</label>
+                                                <label for="schedule_startdate" class="form-label"> 
+                                                      <span style="color: blueviolet;font-weight: 700"> วันที่เริ่ม *</span>
+                                                    </label>
                                                 <input class="form-control dateScl" type="text"
                                                     data-provide="datepicker" data-date-language="th"
                                                     value="{{ $searchDates }}" id="schedule_startdate"
                                                     name="schedule_startdate" required>
                                             </div>
                                             <div class="col-md-3 p-2">
-                                                <label for="schedule_enddate" class="form-label"> วันที่สิ้นสุด
+                                                <label for="schedule_enddate" class="form-label"> <span style="color: blueviolet;font-weight: 700"> วันที่สิ้นสุด * </span>
                                                 </label>
                                                 <input class="form-control dateScl" type="text"
                                                     data-provide="datepicker" data-date-language="th"
@@ -72,19 +73,19 @@
                                             </div>
 
                                             <div class="col-md-6 p-2">
-                                                <label for="booking_time_start" class="form-label">ช่วงเวลาที่ใช้งาน
-                                                    *</label>
+                                                <label for="booking_time_start" class="form-label">  <span style="color: blueviolet;font-weight: 700"> ช่วงเวลาที่ใช้งาน *</span>
+                                                    </label>
                                                 <br />
                                                 <select name="booking_time_start" class="form-control-2" required
                                                     id="booking_time_start">
-                                                    <option value=""> เวลาเริ่ม* </option>
+                                                    <option value=""> เวลาเริ่ม </option>
                                                     @foreach ($getService->getALlTimes() as $item)
                                                         <option value="{{ $item }}">{{ $item }}
                                                         </option>
                                                     @endforeach
                                                 </select> :
                                                 <select name="booking_time_finish" class="form-control-2" required>
-                                                    <option value="">เวลาสิ้นสุด*</option>
+                                                    <option value="">เวลาสิ้นสุด</option>
                                                     @foreach ($getService->getALlTimes() as $item)
                                                         <option value="{{ $item }}">{{ $item }}
                                                         </option>
@@ -143,7 +144,7 @@
                                                     ระบุรายละเอียดเพิ่มเติม </label>
                                                 <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                             </div>
-                                            @if ($usertype == 'eng')
+                                            <!-- @if ($usertype == 'eng')
                                                 <div class="col-md-12">
                                                     <label for="booking_code_cancel"
                                                         class="form-label">รหัสยกเลิกรายการ
@@ -152,7 +153,7 @@
                                                         id="booking_code_cancel" name="booking_code_cancel"
                                                         placeholder=" xxxx " />
                                                 </div>
-                                            @endif
+                                            @endif -->
                                             @if ($usertype == 'general')
                                                 <div class="text-primary">
                                                     โปรดทำการแนบไฟล์เอกสารขอใช้งานจากหน่วยงานของท่าน
@@ -169,9 +170,7 @@
                                                 <h6 class="text-decoration-underline"><i class="bi bi-gear-fill"></i>
                                                     โปรดระบุข้อมูลการออกใบเสรจรับเงิน</h6>
 
-                                                <div class="text-danger"> (การขอใช้สถานที่อาจมีค่าธรรมเนียบ
-                                                    ซึ่งทางคณะวิศวกรรมศาสตร์
-                                                    จะสรุปค่าธรรมเนียบการขอใช้สถานที่ให้ทราบหลังภายใน 1-3 วันทำการ)
+                                                <div class="text-danger"> (ในการขอใช้ห้องสำหรับบุคคลภายนอกคณะวิศวกรรมศาสตร์ อาจมีค่าธรรมเนียมในการใช้ ทางคณะฯจะจัดส่งผลการขอใช้ห้องและอัตราค่าธรรมเนียม ที่ท่านอาจต้องชำระ ไปใน Email ที่ท่านระบุ)
                                                 </div>
 
                                                 <div class="col-md-6">
@@ -188,14 +187,15 @@
                                                     <input type="text" class="form-control" id="taxpayer_receipt"
                                                         name="taxpayer_receipt" />
                                                 </div>
+                                                <!--
                                                 <div class="col-md-6">
                                                     <label for="email_receipt" class="form-label">
                                                         Email ในการรับใบเสร็จและใบเสนอราคา
                                                     </label>
                                                     <input type="text" class="form-control" id="email_receipt"
                                                         name="email_receipt" />
-                                                </div>
-                                                <div class="col-md-6 mb-3">
+                                                </div>-->
+                                                <div class="col-md-12 mb-3">
                                                     <label for="address_receipt" class="form-label">
                                                         ที่อยู่ (Address)
                                                     </label>
@@ -207,7 +207,7 @@
                                             <input type="hidden" name="booker_cmuaccount"
                                                 value="{{ Session::get('cmuitaccount') }}">
 
-                                            <div class="p-2 text-center text-success fs-5">
+                                            <div class="p-2 text-center text-success "  style="font-weight: 800">
                                                 @if ($usertype == 'general')
                                                     <hr />
                                                     แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />

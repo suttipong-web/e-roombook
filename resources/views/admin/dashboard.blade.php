@@ -150,7 +150,6 @@
                         <thead class="table-secondary ">
                             <tr style="text-align: left;">
                                 <th width="15%">วันที่ขอ</th>
-                                <th width="15%">วันที่ขอ</th>
                                 <th width="12%">ช่วงเวลาขอใช้</th>
                                 <th width="25%">ห้องที่ขอใช้</th>
                                 <th width="25%">เรื่อง</th>
@@ -171,13 +170,7 @@
                                             @endif
                                             {{ $getService->convertDateThai($rows->booking_at, false, true) }}
                                         </td>
-                                        <td>
-                                            @if (!empty($rows->dean_action_date))
-                                                {{ $getService->convertDateThai($rows->dean_action_date, false, true) }}
-                                            @else
-                                                {{ $getService->convertDateThai($rows->admin_action_date, false, true) }}
-                                            @endif
-                                        </td>
+                                        
                                         <td class="text-center">
                                             {{ $getService->convertDateThai($rows->schedule_startdate, false, true) }}
                                             <br />
@@ -187,15 +180,15 @@
                                         <td>{{ $rows->roomFullName }} </td>
                                         <td>{{ $rows->booking_subject }} </td>
                                         <td>{{ $rows->booking_booker }}
-                                            <br />
-                                            @if ($rows->booking_type == 'general')
+                                      
+                                            
+                                        </td>
+                                        <td class="text-center">
+@if ($rows->booking_type == 'general')
                                                 ภายนอก
                                             @else
                                                 ภายใน
                                             @endif
-
-                                        </td>
-                                        <td class="text-center">
 
                                         </td>
                                         <td>

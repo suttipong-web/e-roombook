@@ -1,0 +1,249 @@
+@inject('getService', 'App\class\HelperService')
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>รายการการจอง</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/schedule2.css">
+    @includeIf('partials.headtag')
+
+</head>
+
+<body>
+    @includeIf('partials.header')
+    <main class="main ">
+        <section id="search" class="about section" style="padding: 70px 0px 100px 0px">
+            <!-- Section Title
+            <div class="container section-title" data-aos="fade-up">
+                <h2> รายการห้องประชุมคณะวิศวกรรมศาสตร์ </h2>
+            </div> -->
+
+            <div class="container">
+                <div class="row">
+                    <div class="row g-0 text-center mt-5 w-100">
+                        <div class="col-md-12">
+                            <div class="card mt-0 mb-3">
+                                <div class="card-header">
+                                    <div class="col-md-12  ">
+                                        <h5 class="section_title"> รายการการจองโดย   
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                     class="bi bi-person-circle" viewBox="0 0 16 16">
+                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                     <path fill-rule="evenodd"
+                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                 </svg>  {{  Session::get('userfullname')}} ({{Session::get('cmuitaccount')}}) </h5>
+                                    </div>
+                                </div>
+                                <div class="card-body justify-content-start text-start ">
+                                    <div class="card-body  disPlayTableBooking">
+                                        <table class="table table-sm mt-2" id="tableListbooking">
+                                            <thead class="table-secondary ">
+                                                <tr style="text-align: left;">
+                                                    <th width="10%">วันที่ขอ</th>
+                                                    <th width="10%">ช่วงเวลาขอใช้</th>
+                                                    <th width="20%">ห้อง</th>
+                                                    <th width="20%">เรื่อง</th>
+                                                    <th width="15%">ชื่อผู้ขอใช้</th>
+                                                    <th width="10%">จำนวนผู้เข้าใช้</th>
+                                                    <th width="15%">รายละเอียดเพิ่มเติม</th>
+                                                    <th> สถานะ </th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (count($getBookingList) > 0)
+                                                    @foreach ($getBookingList as $rows)
+                                                        <tr style="text-align: left;">
+
+                                                            <td>
+                                                                @if (!empty($rows->dean_action_date))
+                                                                    {{ $getService->convertDateThai($rows->dean_action_date, false, true) }}
+                                                                @else
+                                                                    {{ $getService->convertDateThai($rows->admin_action_date, false, true) }}
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">
+                                                                {{ $getService->convertDateThai($rows->schedule_startdate, false, true) }}
+                                                                <br />
+                                                                {{ Str::limit($rows->booking_time_start, 5, '') }} -
+                                                                {{ Str::limit($rows->booking_time_finish, 5, '') }}
+                                                            </td>
+                                                            <td>{{ $rows->roomFullName }} </td>
+                                                            <td>{{ $rows->booking_subject }} </td>
+                                                            <td>{{ $rows->booking_booker }}</td>
+                                                            <td>{{ $rows->booking_ofPeople }}</td>
+                                                            <td class="text-center">
+                                                                {{ $rows->description }} </td>
+                                                            <td>
+                                                                @if ($rows->booking_AdminAction == 'approved')
+                                                                    <span class="badge text-bg-success"> <i
+                                                                            class="bi bi-check-circle-fill"></i>
+                                                                        อนุมัติ
+                                                                    </span>
+                                                                @elseif ($rows->booking_AdminAction == 'canceled')
+                                                                    <span class="badge text-bg-warning"> <i
+                                                                            class="bi bi-clock-history"></i>
+                                                                        ยกเลิกรายการ</span>
+                                                                @else 
+                                                                    <span class="badge text-bg-warning"> <i
+                                                                            class="bi bi-clock-history"></i>
+                                                                        รอการอนุมัติ</span>
+                                                                @endif
+
+
+
+                                                            </td>
+
+                                                            <td style="font-size: 10px;width: 100px;">
+                                                                        @if ((!empty(Session::get('cmuitaccount'))) && (Session::get('cmuitaccount')==  $rows->booking_email))
+                                                                            <a href="#" data-bs-toggle="modal"
+                                                                                data-bs-target="#delModal"
+                                                                                class="btn btn-danger btn-sm clikDel"
+                                                                                id="{{ $rows->id }}">
+                                                                              <i class="bi bi-x-circle-fill"></i>
+                                                                            </a>
+                                                                        @endif
+                                                                    </td>    
+
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <div class="p-2 mt-2 text-center">
+                                                                <div class="alert alert-success" role="alert">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                        width="36" height="16"
+                                                                        fill="currentColor" class="bi bi-check2-circle"
+                                                                        viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+                                                                        <path
+                                                                            d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                    </svg>
+                                                                    <br /> ไม่พบรายการจองห้องวันนี้
+                                                                    <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม "
+                                                                        ทำรายจองห้อง "
+                                                                        และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+
+                                </div>
+                                <br />
+                            </div>
+                            <br />
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+ {{-- del modal start --}}
+    <div class="modal fade" id="delModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> ยืนยันการยกเลิกการจอง </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body  bg-light ">
+
+                    <!--<div class="row col-12 ">
+                        <div class="mb-3">
+                            <label for="booking_password" class="form-label">รหัสยกเลิกของท่าน </label>
+                            <input type="password" class="form-control" id="booking_password"
+                                name="booking_password" placeholder=" รหัสยกเลิกของท่าน " required>
+
+                        </div>
+                    </div>-->
+                    <p class="text-danger text-center fs-6"> 
+                        <b> การยกเลิกการจองจะมีผลทันที  หากท่านต้องการยกเลิกการจองนี้ ให้กดยืนยันเพื่อดำเนินการ  </b>
+                    </p>
+                    <div class=" col-12 justify-content-center text-center">
+                        <hr />
+                        <input type="hidden" id="delBookingId" name="delBookingId">
+                        <button type="button" class="btn btn-danger btnDelConfirm"> ยืนยันการยกเลิกการจอง
+                        </button>
+                    </div>
+                    <br />
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- edit modal end --}}
+
+    @includeIf('partials.footer')
+    @includeIf('partials.incJS')
+    <script>
+        $(function() {
+            $("#tableListbooking").DataTable({
+                order: [0, 'desc']
+            }); 
+
+             $(document).on('click', '.clikDel', function(e) {
+                var bookingId = $(this).attr('id');
+                $('#delBookingId').val(bookingId);
+                console.log('bid=>' + $('#delBookingId').val());
+            });
+
+
+            $(document).on('click', '.btnDelConfirm', function(e) {
+                console.log('start del');
+                $.ajax({
+                    url: "/booking/cancel",
+                    method: 'post',
+                    data: {
+                        bookingId: $('#delBookingId').val(),                       
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response.status == 200) {
+                            Swal.fire({
+                                title: 'Successfully!',
+                                text: ' ทำการยกเลิกรายการจองสำเร็จ ',
+                                icon: 'success'
+                            }).then((result) => {
+
+                                $("#delModal").modal('hide');
+                                window.location.reload();
+                            });
+
+                        } else {
+                            Swal.fire({
+                                title: ' fail !',
+                                text: ' ไม่สามารถยกเลิกรายการได้ กรุณาตรวจสอบรหัสของท่านอีกครั้ง ',
+                                icon: 'error'
+                            }).then((result) => {
+                                $('#booking_password').val('');
+                                $('#booking_password').focus();
+                            });
+
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>
