@@ -1,16 +1,16 @@
 <footer id="footer" class="footer">
     <div class="container footer-top">
         <div class="row gy-4">
-            <div class="col-lg-4 col-md-6 footer-about">
+                   <div class="col-lg-4 col-md-6 footer-about">
                 <a href="index.html" class="d-flex align-items-center">
                     <span class="sitename">คณะวิศวกรรมศาสตร์</span>
                 </a>
                 <div class="footer-contact pt-3">
-                    <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว</p>
-                    <p>ต.สุเทพ อ.เมือง จ.เชียงใหม่ 502</p>
-                    <p class="mt-3"><strong>โทรศัพท์:</strong> <span>+66 5394 1300</span></p>
-                    <p class="mt-3"><strong>โทรสาร:</strong> <span>+66 5321 7143</span></p>
-                    <p><strong>อีเมล:</strong> <span>contacts@cmu.ac.th</span></p>
+                    <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </p>
+                    <p>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</p>
+                    <p class="mt-3"><strong>โทรศัพท์:</strong> <span>0-539-44175</span></p>
+                    <p class="mt-3"><strong>โทรสาร:</strong> <span>0-5394-2044</span></p>
+                    <p><strong>อีเมล:</strong> <span>webmaster@eng.cmu.ac.th</span></p>
                 </div>
             </div>
             <div class="col-lg-2 col-md-3 footer-links">
@@ -83,14 +83,13 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">2024 Chiang Mai University,</strong> <span> All
-                rights reserved.</span></p>
-        <div class="credits">
+        <p style="font-weight: 800"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </p>
+        <div class="credits" style="color: #ffffff">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you've purchased the pro version. -->
             <!-- Licensing information: https://bootstrapmade.com/license/ -->
             <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            Designed by <a href="https://bootstrapmade.com/" style="color: #ffffff">BootstrapMade</a>
         </div>
     </div>
 
