@@ -196,14 +196,13 @@
     </main>
 
 
-
-    {{-- del modal start --}}
+ {{-- del modal start --}}
     <div class="modal fade" id="delModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"> ยืนยันการยกเลิกการจอง </h5>
+                    <h5 class="modal-title text-danger"> คำเตือน </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body  bg-light ">
@@ -216,8 +215,11 @@
 
                         </div>
                     </div>-->
-                    <p class="text-danger text-center fs-6"> 
-                        <b> การยกเลิกการจองจะมีผลทันที  หากท่านต้องการยกเลิกการจองนี้ ให้กดยืนยันเพื่อดำเนินการ  </b>
+                    <p class="text-danger text-center fs-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+</svg>   <br/>
+                        <b class="text-dark"> แน่ใจหรือไม่!!..ในการยกเลิกการจองนี้ของท่าน</b>
                     </p>
                     <div class=" col-12 justify-content-center text-center">
                         <hr />

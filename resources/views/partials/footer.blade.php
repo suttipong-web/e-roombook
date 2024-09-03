@@ -6,11 +6,11 @@
                     <span class="sitename">คณะวิศวกรรมศาสตร์</span>
                 </a>
                 <div class="footer-contact pt-2 text-dark" style="font-size: 14px;">
-                    <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </p>
-                    <p>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</p>
-                    <p class="mt-3"><strong>โทรศัพท์:</strong> <span>0-539-44175</span></p>
-                    <p class="mt-3"><strong>โทรสาร:</strong> <span>0-5394-2044</span></p>
-                    <p><strong>อีเมล:</strong> <span>webmaster@eng.cmu.ac.th</span></p>
+                    <div> มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </div>
+                    <div>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</div>
+                    <div class="mt-3"><strong>โทรศัพท์:</strong> <span>0-539-44175</span></div>
+                    <div class="mt-3"><strong>โทรสาร:</strong> <span>0-5394-2044</span></div>
+                    <div><strong>อีเมล:</strong> <span>webmaster@eng.cmu.ac.th</span></div>
                 </div>
             </div>
             <div class="col-lg-2 col-md-3 footer-links text-dark">
@@ -75,7 +75,7 @@
 
             <div class="col-lg-4 col-md-12  text-dark">
                 <h4>ติดตามเรา</h4>
-                <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
+                ติดตามเราผ่านสื่อต่างที่นี่
                 <div class="social-links d-flex">
                     <a href=""><i class="bi bi-twitter-x"></i></a>
                     <a href=""><i class="bi bi-facebook"></i></a>
@@ -88,7 +88,7 @@
     </div>
 
     <div class="container copyright text-center mt-4  text-dark">
-        <p style="font-weight: 800;color: black"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </p>
+        <div style="font-weight: 800;color: black"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </div>
         <div class="credits" style="color: #f5f6f8">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you've purchased the pro version. -->
