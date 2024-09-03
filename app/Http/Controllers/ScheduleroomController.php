@@ -104,6 +104,7 @@ class ScheduleroomController extends Controller
                     "end_time" => $row->booking_time_finish,
                     "repeat_day" => $repeat_day,
                     "title" => $row->booking_subject,
+                    "depName" => $row->booking_department,
                     "sec" => $row->booking_booker,
                     "room" => $row->roomFullName,
                     "isroomID" => $row->roomID,
@@ -137,6 +138,7 @@ class ScheduleroomController extends Controller
                                     "room" => $row['room'],
                                     "roomId" => $row['isroomID'],
                                     "sec" => $row['sec'],
+                                    "depName" => $row['depName'],
                                     'UserChkDay' => $row['repeat_day']
                                 ];
                             }
@@ -243,7 +245,7 @@ class ScheduleroomController extends Controller
                         $subjectTitle = $row_day['title'];
                     }
 
-                    $details = '<div> ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ :' . $row_day["sec"] . '</div>';
+                    $details = '<div> ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ :' . $row_day["sec"] .' <br/> '.$row_day["depName"] .' </div>';
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"

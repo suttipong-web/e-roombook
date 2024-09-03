@@ -28,13 +28,15 @@
                             <div class="card mt-0 mb-3">
                                 <div class="card-header">
                                     <div class="col-md-12  ">
-                                        <h5 class="section_title"> รายการการจองโดย   
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                     class="bi bi-person-circle" viewBox="0 0 16 16">
-                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                     <path fill-rule="evenodd"
-                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                 </svg>  {{  Session::get('userfullname')}} ({{Session::get('cmuitaccount')}}) </h5>
+                                        <h5 class="section_title"> รายการการจองโดย
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                                fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                                <path fill-rule="evenodd"
+                                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                            </svg> {{ Session::get('userfullname') }}
+                                            ({{ Session::get('cmuitaccount') }})
+                                        </h5>
                                     </div>
                                 </div>
                                 <div class="card-body justify-content-start text-start ">
@@ -59,14 +61,11 @@
                                                         <tr style="text-align: left;">
 
                                                             <td>
-                                                                @if (!empty($rows->dean_action_date))
-                                                                    {{ $getService->convertDateThai($rows->dean_action_date, false, true) }}
-                                                                @else
-                                                                    {{ $getService->convertDateThai($rows->admin_action_date, false, true) }}
-                                                                @endif
+                                                                {{ $getService->convertDateThaiWithTime($rows->booking_at, false,true) }}
                                                             </td>
                                                             <td class="text-center">
-                                                                {{ $getService->convertDateThai($rows->schedule_startdate, false, true) }}
+                                                        
+                                                                {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, true) }}
                                                                 <br />
                                                                 {{ Str::limit($rows->booking_time_start, 5, '') }} -
                                                                 {{ Str::limit($rows->booking_time_finish, 5, '') }}
@@ -87,7 +86,7 @@
                                                                     <span class="badge text-bg-warning"> <i
                                                                             class="bi bi-clock-history"></i>
                                                                         ยกเลิกรายการ</span>
-                                                                @else 
+                                                                @else
                                                                     <span class="badge text-bg-warning"> <i
                                                                             class="bi bi-clock-history"></i>
                                                                         รอการอนุมัติ</span>
@@ -98,15 +97,15 @@
                                                             </td>
 
                                                             <td style="font-size: 10px;width: 100px;">
-                                                                        @if ((!empty(Session::get('cmuitaccount'))) && (Session::get('cmuitaccount')==  $rows->booking_email))
-                                                                            <a href="#" data-bs-toggle="modal"
-                                                                                data-bs-target="#delModal"
-                                                                                class="btn btn-danger btn-sm clikDel"
-                                                                                id="{{ $rows->id }}">
-                                                                              <i class="bi bi-x-circle-fill"></i>
-                                                                            </a>
-                                                                        @endif
-                                                                    </td>    
+                                                                @if (!empty(Session::get('cmuitaccount')) && Session::get('cmuitaccount') == $rows->booking_email)
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#delModal"
+                                                                        class="btn btn-danger btn-sm clikDel"
+                                                                        id="{{ $rows->id }}">
+                                                                        <i class="bi bi-x-circle-fill"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </td>
 
                                                         </tr>
                                                     @endforeach
@@ -154,7 +153,7 @@
         </section>
     </main>
 
- {{-- del modal start --}}
+    {{-- del modal start --}}
     <div class="modal fade" id="delModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog ">
@@ -173,8 +172,8 @@
 
                         </div>
                     </div>-->
-                    <p class="text-danger text-center fs-6"> 
-                        <b> การยกเลิกการจองจะมีผลทันที  หากท่านต้องการยกเลิกการจองนี้ ให้กดยืนยันเพื่อดำเนินการ  </b>
+                    <p class="text-danger text-center fs-6">
+                        <b> การยกเลิกการจองจะมีผลทันที หากท่านต้องการยกเลิกการจองนี้ ให้กดยืนยันเพื่อดำเนินการ </b>
                     </p>
                     <div class=" col-12 justify-content-center text-center">
                         <hr />
@@ -196,9 +195,9 @@
         $(function() {
             $("#tableListbooking").DataTable({
                 order: [0, 'desc']
-            }); 
+            });
 
-             $(document).on('click', '.clikDel', function(e) {
+            $(document).on('click', '.clikDel', function(e) {
                 var bookingId = $(this).attr('id');
                 $('#delBookingId').val(bookingId);
                 console.log('bid=>' + $('#delBookingId').val());
@@ -211,7 +210,7 @@
                     url: "/booking/cancel",
                     method: 'post',
                     data: {
-                        bookingId: $('#delBookingId').val(),                       
+                        bookingId: $('#delBookingId').val(),
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

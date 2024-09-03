@@ -66,6 +66,9 @@ class BookingController extends Controller
 
 
     public function indexType(Request $request){
+           date_default_timezone_set('Asia/Bangkok');   
+       
+
         $pageTitle ="";
         $searchDates  = date('d/m/Y');
         $typeId =  (!empty($request->typeId))? $request->typeId:'1';
@@ -106,6 +109,7 @@ class BookingController extends Controller
 
     public function filter(Request $request)
     {
+         date_default_timezone_set('Asia/Bangkok'); 
         //ข้อมูลห้อง ตามประเภท
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
@@ -147,6 +151,7 @@ class BookingController extends Controller
  
     public function search(Request $request)
     {
+         date_default_timezone_set('Asia/Bangkok'); 
         $class = new HelperService();
         $search_date = $class->convertDateSqlInsert($request->search_date);
         
@@ -174,24 +179,28 @@ class BookingController extends Controller
         } else {
             $img = '/storage/images/noimage.png';
         }
-
-
         // Query Booking room Table 
-        $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
-            ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+                 $sql= "SELECT
+                    booking_rooms.*,
+                    rooms.roomFullName,
+                    rooms.roomDetail,rooms.roomSize
+                    FROM
+                    booking_rooms
+                    INNER JOIN rooms ON booking_rooms.roomID = rooms.id
+                    WHERE
+                    booking_rooms.roomID = '{$roomID}' AND
+                    (
+                    booking_rooms.schedule_startdate = '{$DateScl}' OR
+                    booking_rooms.schedule_enddate = '{$DateScl}'
+                    )
+                    ORDER BY
+                    booking_rooms.booking_time_start ASC";
+         $searhResult = DB::select(DB::raw($sql));
 
-            ->where('booking_rooms.roomID', $roomID)
-            /*->where('booking_rooms.booking_status', '<>', 0)*/
-            ->where('booking_rooms.schedule_startdate', '>=', $DateScl)
-            ->where('booking_rooms.schedule_enddate', '<=', $DateScl)
-            ->orderBy('booking_time_start', 'ASC')
-            ->get();
+         $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateBooking . " ] ";
 
-
-        $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateBooking . " ] ";
-
-             $RoomtitleSearch = $roomData["roomFullName"];
-        $DateTitleSearch  =$dateBooking ;
+         $RoomtitleSearch = $roomData["roomFullName"];
+         $DateTitleSearch  =$dateBooking ;
         // Load index  view and  data room        
         return view('/bookingroom/search')->with(
             [
@@ -257,14 +266,24 @@ class BookingController extends Controller
         }
 
         // Query Booking room Table 
-        $searhResult = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
-            ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('booking_rooms.roomID', $roomID)
-            /*->where('booking_rooms.booking_status', '<>', 0)*/
-            ->where('booking_rooms.schedule_startdate', '>=', $dateNow)
-            ->where('booking_rooms.schedule_enddate', '<=', $dateNow)
-            ->orderBy('booking_time_start', 'ASC')
-            ->get();
+               $sql= "SELECT
+                    booking_rooms.*,
+                    rooms.roomFullName,
+                    rooms.roomDetail,rooms.roomSize
+                    FROM
+                    booking_rooms
+                    INNER JOIN rooms ON booking_rooms.roomID = rooms.id
+                    WHERE
+                    booking_rooms.roomID = '{$roomID}' AND
+                    (
+                    booking_rooms.schedule_startdate = '{$dateNow}' OR
+                    booking_rooms.schedule_enddate = '{$dateNow}'
+                    )
+                    ORDER BY
+                    booking_rooms.booking_time_start ASC";
+         $searhResult = DB::select(DB::raw($sql));     
+
+
 
         $RoomtitleSearch = $roomData["roomFullName"];
         $DateTitleSearch  = $dateNow ;

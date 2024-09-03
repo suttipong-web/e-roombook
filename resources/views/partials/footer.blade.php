@@ -6,8 +6,7 @@
                     <span class="sitename">คณะวิศวกรรมศาสตร์</span>
                 </a>
                 <div class="footer-contact pt-3">
-                    <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว 
- </p>
+                    <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </p>
                     <p>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</p>
                     <p class="mt-3"><strong>โทรศัพท์:</strong> <span>0-539-44175</span></p>
                     <p class="mt-3"><strong>โทรสาร:</strong> <span>0-5394-2044</span></p>

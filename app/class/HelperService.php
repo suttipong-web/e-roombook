@@ -9,6 +9,55 @@ use Illuminate\Support\Facades\DB;
 
 class HelperService
 {
+
+
+   public static function convertDateThaiWithTime($arg,$addtime ,$short)
+    {
+          //2024-06-25 07:01:07
+        $tempDateTime = explode(" ", $arg);
+        $tempDate = explode("-",  $tempDateTime[0]);
+        $istime = " " . substr($arg, 10, 6);
+
+        if ($short) {
+            $thai_months = [1 => 'ม.ค.', 2 => 'ก.พ.', 3 => 'มี.ค.', 4 => 'เม.ย.', 5 => 'พ.ค.', 6 => 'มิ.ย.', 7 => 'ก.ค.', 8 => 'ส.ค.', 9 => 'ก.ย.', 10 => 'ต.ค.', 11 => 'พ.ย.', 12 => 'ธ.ค.',];
+        } else {
+            $thai_months = [1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม', 4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน', 7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน', 10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม',];
+        }
+
+        $dates =  $tempDate[2];
+        $month = $thai_months[(int)$tempDate[1]];
+        $year = $tempDate[0] + 543;
+        $setdate =  $dates." ". $month." ". $year;
+
+        if ($addtime) {
+            $setdate = $setdate." ".$istime;
+        }
+
+        return $setdate;
+    }
+
+
+     public static function convertDateThaiNoTime($arg,  $short)
+    {
+          //2024-06-25 07:01:07
+        $tempinput = explode("-", $arg);
+   
+    
+        if ($short) {
+            $thai_months = [1 => 'ม.ค.', 2 => 'ก.พ.', 3 => 'มี.ค.', 4 => 'เม.ย.', 5 => 'พ.ค.', 6 => 'มิ.ย.', 7 => 'ก.ค.', 8 => 'ส.ค.', 9 => 'ก.ย.', 10 => 'ต.ค.', 11 => 'พ.ย.', 12 => 'ธ.ค.',];
+        } else {
+            $thai_months = [1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม', 4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน', 7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน', 10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม',];
+        }
+
+        $dates =  $tempinput[2];
+        $month = $thai_months[(int)$tempinput[1]];
+        $year = $tempinput[0] + 543;
+      
+      $setdate =  $dates." ". $month." ". $year;
+        return $setdate;
+    }
+
+    
     public static function convertDateThai($arg, $addtime, $short)
     {
         //2024-06-25 07:01:07
