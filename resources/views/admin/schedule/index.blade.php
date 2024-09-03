@@ -89,7 +89,7 @@
                                 <tr class="<?php if ($rows->is_duplicate) {
                                     echo 'bg-danger text-white';
                                 } ?>">
-                                    <td> {{ $getService->convertDateThai($rows->updated_at, true, true) }}</td>
+                                    <td> {{ $getService->convertDateThaiWithTime($rows->updated_at, true, true) }}</td>
                                     <td>{{ $rows->courseNO }} </td>
                                     <td>{{ $rows->courseTitle }}</td>
                                     <td>{{ $rows->courseSec }}</td>
