@@ -70,7 +70,7 @@
                                                             </td>
                                                             <td>{{ $rows->roomFullName }} </td>
                                                             <td>{{ $rows->booking_subject }} </td>
-                                                            <td>{{ $rows->description }} &nbsp;</td>
+                                                            <td>{{ $rows->description }}  </td>
                                                             <td>
                                                                 @if ($rows->booking_AdminAction == 'approved')
                                                                     <span class="badge text-bg-success"> <i
@@ -91,7 +91,7 @@
 
                                                             </td>
 
-                                                            <!--<td>
+                                                            <td>
                                                                 @if (!empty(Session::get('cmuitaccount')) && Session::get('cmuitaccount') == $rows->booking_email)
                                                                     <a href="#" data-bs-toggle="modal"
                                                                         data-bs-target="#delModal"
@@ -101,7 +101,7 @@
                                                                         CANCEL<i class="bi bi-x-circle-fill"></i>
                                                                     </a>
                                                                 @endif
-                                                            </td>-->
+                                                            </td>
 
                                                         </tr>
                                                     @endforeach
