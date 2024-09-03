@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>รายรเอียดห้อง : {{ $roomTitle }} </title>
+    <title>รายละเอียดห้อง : {{ $roomTitle }} </title>
 
     <link rel="stylesheet" href="/css/app/views/demo.css" />
     <link rel="stylesheet" href="/css/vendor/magic/magic.min.css">
@@ -23,7 +23,7 @@
 
         <section id="room" class="about section" style="padding: 110px 0px 40px 0px">
             <div class="container">
-                <div class="row g-0 text-start  justify-content-center">
+                <div class="row g-0 text-start  justify-content-center displayDataroom">
                     <div class="col-sm-10 col-md-10 p-3 ">
 
                         <!-- Section Title -->
@@ -118,8 +118,8 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 p-3 ">
-                    <h5> ตารางการจองห้อง ( Room Availability) </h5>
+                <div class="col-sm-12 col-md-12 p-3 " id="popshowtable">
+                    <h5>ตารางการใช้ห้อง ( Room Availability)</h5>
                     <div class="row">
 
                     </div>
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </section>
     </main>
 
@@ -226,6 +226,26 @@
             $(document).on('click', '.btnUTS', function(e) {
                 var $uts = $(this).attr('valuts');
                 fetchAll($uts);
+            });
+
+            $(document).on('click', '.btnPrint', function(e) {
+           // var thePopup = window.open('', "ตารางการใช้ห้อง",
+              //      "menubar=0,location=0,,width=100%");
+             //  $('#popshowtable').clone().appendTo(thePopup.document.body);
+                //thePopup.print();
+            //Copy the element you want to print to the print-me div.
+            $("#popshowtable").clone().appendTo("#print-me");
+            //Apply some styles to hide everything else while printing.
+            $("body").addClass('<link rel="stylesheet" href="/css/schedule.css">');
+            //Print the window.
+            window.print();
+            //Restore the styles.
+            $("body").removeClass("printing");
+            //Clear up the div.
+            $("#print-me").empty();
+
+
+
             });
 
             $(document).on('click', '.sc-detail', function(e) {

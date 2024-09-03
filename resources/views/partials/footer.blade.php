@@ -75,7 +75,7 @@
 
             <div class="col-lg-4 col-md-12  text-dark">
                 <h4>ติดตามเรา</h4>
-                ติดตามเราผ่านสื่อต่างที่นี่
+                ติดตามเราผ่านสื่อต่าง ๆ ที่นี่
                 <div class="social-links d-flex">
                     <a href=""><i class="bi bi-twitter-x"></i></a>
                     <a href=""><i class="bi bi-facebook"></i></a>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ตรวจสอบการใช้ห้อง</title>
+    <title>ข้อมูลการใช้ห้อง</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/schedule2.css">
     @includeIf('partials.headtag')
@@ -319,7 +319,7 @@
                                 text: response.msgreturn,
                                 icon: 'success'
                             }).then((result) => {
-                                $("#add_btn").text('เพิ่มข้อมูลห้อง');
+                                $("#add_btn").text('ทำรายการจอง');
                                 $("#add_booking_form")[0].reset();
                                 $("#addModal").modal('hide');
                                 //NewfetchData();
@@ -330,21 +330,21 @@
                         } else if (response.status == 209) {
                             // แนบไฟล์ไม่สำเร็จ 
                             Swal.fire({
-                                title: 'Booking fail !',
+                                title: 'ไม่สามารถทำรายการจองได้!.',
                                 text: response.errortext,
                                 icon: 'error'
                             }).then((result) => {
-                                $("#add_btn").text('เพิ่มข้อมูลห้อง');
+                                $("#add_btn").text('ทำรายการจอง');
                                 $("#addModal").modal('hide');
                             });
                         } else {
                             //จองไม่ได้
                             Swal.fire({
-                                title: 'Booking fail !',
-                                text: ' ไม่สามารถจองห้องในเวลานี้ได้ โปรดตรวจสอบ วันที่และเวลา ใหม่อีกครั้ง ',
+                                title: 'ไม่สามารถทำรายการจองได้!.',
+                                text: ' วันหรือเวลาที่ท่านเลือก มีรายการการใช้งานแล้ว โปรดทำการเลือกวันและเวลาของท่านใหม่อีกครั้ง ',
                                 icon: 'error'
                             }).then((result) => {
-                                $("#add_btn").text('เพิ่มข้อมูลห้อง');
+                                $("#add_btn").text('ทำรายการจอง');
                                 $("#addModal").modal('hide');
                                 $("#booking_time_start").focus();
                             });

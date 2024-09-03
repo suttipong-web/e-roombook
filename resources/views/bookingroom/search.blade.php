@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ตรวจสอบการใช้ห้อง</title>
+    <title>ข้อมูลการใช้ห้อง</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/schedule2.css">
     @includeIf('partials.headtag')

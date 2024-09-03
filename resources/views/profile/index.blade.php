@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>รายการการจอง</title>
+    <title>รายการการจองห้อง</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/schedule2.css">
     @includeIf('partials.headtag')
@@ -41,17 +41,22 @@
                                 </div>
                                 <div class="card-body justify-content-start text-start ">
                                     <div class="card-body  disPlayTableBooking">
-                                        <table class="table table-sm mt-2" id="tableListbooking"
+                                        <table class="table table-sm mt-2" 
+                                        
+                                        
+                                          @if (count($getBookingList) > 0)
+                                           id="tableListbooking"
+                                         @endif
                                             style="font-size: 14px;">
                                             <thead class="table-secondary ">
-                                                <tr style="text-align: left;">
-                                                    <th width="10%">วันที่ทำรายการ</th>
-                                                    <th width="10%">ช่วงเวลาที่ใช้</th>
-                                                    <th width="20%">ห้อง</th>
-                                                    <th width="30%">รายการ</th>
-                                                    <th width="12%"> รายละเอียด </th>
-                                                    <th width="9%"> สถานะการจอง </th>
-                                                    <th width="8%"></th>
+                                                <tr style="text-align: center;">
+                                                    <th width="10%" style="text-align: center;">วันที่ทำรายการ</th>
+                                                    <th width="10%"style="text-align: center;">ช่วงเวลาที่ใช้</th>
+                                                    <th width="20%" style="text-align: center;">ห้อง</th>
+                                                    <th width="30%" style="text-align: center;">รายการ</th>
+                                                    <th width="12%" style="text-align: center;"> รายละเอียด </th>
+                                                    <th width="9%" style="text-align: center;"> สถานะการจอง </th>
+                                                    <th width="8%" style="text-align: center;"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,12 +64,12 @@
                                                     @foreach ($getBookingList as $rows)
                                                         <tr style="text-align: left;">
 
-                                                            <td>
+                                                            <td style="text-align: center;">
 
-                                                                {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, true) }}
+                                                               {{ $getService->convertDateThaiWithTime($rows->booking_at, false,true) }}
                                                             </td>
-                                                            <td class="text-center">
-
+                                                            <td class="text-center" style="text-align: center;">
+   {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, true) }}  <br/>
                                                                 {{ Str::limit($rows->booking_time_start, 5, '') }} -
                                                                 {{ Str::limit($rows->booking_time_finish, 5, '') }}
                                                             </td>
@@ -106,23 +111,14 @@
                                                         </tr>
                                                     @endforeach
                                                 @else
-                                                    <tr>
-                                                        <td colspan="4">
+                                                    <tr>                                                   
+                                                        <td colspan="7">
                                                             <div class="p-2 mt-2 text-center">
                                                                 <div class="alert alert-success" role="alert">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        width="36" height="16"
-                                                                        fill="currentColor" class="bi bi-check2-circle"
-                                                                        viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
-                                                                        <path
-                                                                            d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
-                                                                    </svg>
-                                                                    <br /> ไม่พบรายการจองห้องวันนี้
-                                                                    <p> ท่านสามารถทำรายการจอง นี้ได้โดยกดปุ่ม "
-                                                                        ทำรายจองห้อง "
-                                                                        และระบุรายละเอียดการขอใช้ให้ครบถ้วน </p>
+                                                                    
+                                                                    <p > <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+</svg>  ไม่มีประวัติรายการจองใช้ห้องของท่าน</p>
                                                                 </div>
                                                             </div>
                                                         </td>
