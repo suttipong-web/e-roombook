@@ -41,18 +41,17 @@
                                 </div>
                                 <div class="card-body justify-content-start text-start ">
                                     <div class="card-body  disPlayTableBooking">
-                                        <table class="table table-sm mt-2" id="tableListbooking">
+                                        <table class="table table-sm mt-2" id="tableListbooking"
+                                            style="font-size: 14px;">
                                             <thead class="table-secondary ">
                                                 <tr style="text-align: left;">
-                                                    <th width="10%">วันที่ขอ</th>
-                                                    <th width="10%">ช่วงเวลาขอใช้</th>
+                                                    <th width="10%">วันที่ทำรายการ</th>
+                                                    <th width="10%">ช่วงเวลาที่ใช้</th>
                                                     <th width="20%">ห้อง</th>
-                                                    <th width="20%">เรื่อง</th>
-                                                    <th width="15%">ชื่อผู้ขอใช้</th>
-                                                    <th width="10%">จำนวนผู้เข้าใช้</th>
-                                                    <th width="15%">รายละเอียดเพิ่มเติม</th>
-                                                    <th> สถานะ </th>
-                                                    <th></th>
+                                                    <th width="30%">รายการ</th>
+                                                    <th width="12%"> รายละเอียด </th>
+                                                    <th width="9%"> สถานะการจอง </th>
+                                                    <th width="8%"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -61,21 +60,18 @@
                                                         <tr style="text-align: left;">
 
                                                             <td>
-                                                                {{ $getService->convertDateThaiWithTime($rows->booking_at, false,true) }}
+
+                                                                {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, true) }}
                                                             </td>
                                                             <td class="text-center">
-                                                        
-                                                                {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, true) }}
-                                                                <br />
+
                                                                 {{ Str::limit($rows->booking_time_start, 5, '') }} -
                                                                 {{ Str::limit($rows->booking_time_finish, 5, '') }}
                                                             </td>
                                                             <td>{{ $rows->roomFullName }} </td>
                                                             <td>{{ $rows->booking_subject }} </td>
-                                                            <td>{{ $rows->booking_booker }}</td>
-                                                            <td>{{ $rows->booking_ofPeople }}</td>
-                                                            <td class="text-center">
-                                                                {{ $rows->description }} </td>
+                                                            <td>
+                                                                {{ $rows->description }}  </td>
                                                             <td>
                                                                 @if ($rows->booking_AdminAction == 'approved')
                                                                     <span class="badge text-bg-success"> <i
@@ -96,13 +92,14 @@
 
                                                             </td>
 
-                                                            <td style="font-size: 10px;width: 100px;">
+                                                            <td>
                                                                 @if (!empty(Session::get('cmuitaccount')) && Session::get('cmuitaccount') == $rows->booking_email)
                                                                     <a href="#" data-bs-toggle="modal"
                                                                         data-bs-target="#delModal"
                                                                         class="btn btn-danger btn-sm clikDel"
-                                                                        id="{{ $rows->id }}">
-                                                                        <i class="bi bi-x-circle-fill"></i>
+                                                                        id="{{ $rows->id }}"
+                                                                        style="font-size: 12px;">
+                                                                        CANCEL<i class="bi bi-x-circle-fill"></i>
                                                                     </a>
                                                                 @endif
                                                             </td>
@@ -159,7 +156,7 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"> ยืนยันการยกเลิกการจอง </h5>
+                    <h5 class="modal-title text-danger"> คำเตือน </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body  bg-light ">
@@ -173,7 +170,10 @@
                         </div>
                     </div>-->
                     <p class="text-danger text-center fs-6">
-                        <b> การยกเลิกการจองจะมีผลทันที หากท่านต้องการยกเลิกการจองนี้ ให้กดยืนยันเพื่อดำเนินการ </b>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+</svg>   <br/>
+                        <b class="text-dark"> แน่ใจหรือไม่!!..ในการยกเลิกการจองนี้ของท่าน</b>
                     </p>
                     <div class=" col-12 justify-content-center text-center">
                         <hr />

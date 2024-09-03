@@ -40,7 +40,7 @@
 :root {
   --nav-color: #ffffff;
   /* The default color of the main navmenu links */
-  --nav-hover-color: #020c3a;
+  --nav-hover-color: #adff3c;
   /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff;
   /* Used as the background color for mobile navigation menu */
@@ -162,13 +162,23 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  /*--background-color: #3d4d6a;
-  --heading-color: #ffffff;
-  color: var(--default-color);
-  background-color: var(--background-color);*/
-  /*background-image: linear-gradient(to right top, #0097b2, #00acb3, #00bea3, #24ce82, #7ed957);*/
-  background-image: linear-gradient(to right top, #0097b2, #00acb3, #00bea3, #24ce82, #7ed957);
-  padding: 5px 0;
+/*
+background: rgb(22, 156, 165);
+  background: linear-gradient(152deg, rgba(22, 156, 165, 1) 0%, rgba(68, 179, 174, 1) 29%, rgba(98, 196, 108, 0.8603816526610644) 93%);
+  */
+ /* background: rgb(22, 156, 165);
+    background: linear-gradient(143deg, rgba(22, 156, 165, 1) 0%, rgba(68, 179, 174, 1) 29%, rgba(98, 196, 98, 0.8323704481792717) 93%);
+  
+  */
+  /*background: rgb(22, 156, 165);
+    background: linear-gradient(143deg, rgba(22, 156, 165, 1) 0%, rgba(68, 179, 174, 1) 29%, rgba(98, 196, 98, 0.7847514005602241) 89%);
+    */
+   /* background: rgb(22, 156, 165);
+      background: linear-gradient(143deg, rgba(22, 156, 165, 0.76234243697479) 0%, rgba(68, 179, 174, 1) 29%, rgba(98, 196, 98, 0.7847514005602241) 89%);
+   */
+  background: rgb(22, 156, 165);
+    background: linear-gradient(150deg, rgba(22, 156, 165, 0.7399334733893557) 0%, rgba(68, 179, 174, 1) 29%, rgba(98, 196, 98, 0.7679446778711485) 81%);
+    padding: 5px 0;
   transition: all 0.5s;
   z-index: 100;
 }
@@ -665,6 +675,7 @@ h6 {
 
 .footer .footer-contact p {
   margin-bottom: 5px;
+  color: #000;
 }
 
 .footer .copyright {
@@ -822,7 +833,7 @@ section,
 --------------------------------------------------------------*/
 .section-title {
   text-align: center;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
   position: relative;
 }
 
@@ -830,7 +841,7 @@ section,
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   text-transform: uppercase;
   position: relative;
 }

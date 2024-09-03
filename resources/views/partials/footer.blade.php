@@ -1,11 +1,11 @@
 <footer id="footer" class="footer light-background">
     <div class="container footer-top">
         <div class="row gy-4">
-            <div class="col-lg-4 col-md-6 footer-about">
+            <div class="col-lg-4 col-md-6 footer-about text-dark">
                 <a href="index.html" class="d-flex align-items-center">
                     <span class="sitename">คณะวิศวกรรมศาสตร์</span>
                 </a>
-                <div class="footer-contact pt-3">
+                <div class="footer-contact pt-2 text-dark" style="font-size: 14px;">
                     <p>มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </p>
                     <p>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</p>
                     <p class="mt-3"><strong>โทรศัพท์:</strong> <span>0-539-44175</span></p>
@@ -13,7 +13,7 @@
                     <p><strong>อีเมล:</strong> <span>webmaster@eng.cmu.ac.th</span></p>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 footer-links">
+            <div class="col-lg-2 col-md-3 footer-links text-dark">
                 <h4>บริการสำคัญ</h4>
                 <ul>
                     <li><i class="bi bi-chevron-right"></i>
@@ -33,25 +33,30 @@
                             การบริจาค
                         </a>
                     </li>
-                    <li><i class="bi bi-chevron-right"></i>
+                    <li><i class="bi bi-chevron-right  text-dark"></i>
                         <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
                             CMU MAIL
                         </a>
                     </li>
-                    <li><i class="bi bi-chevron-right"></i>
+                    <li><i class="bi bi-chevron-right  text-dark"></i>
                         <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
                             CMU MIS
                         </a>
                     </li>
                     <li><i class="bi bi-chevron-right"></i>
-                        <a href="https://cmubackoffice.mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                        <a href="/admin/" class="nav-link p-0 text-body-secondary">
                             สำหรับเจ้าหน้าที่
+                        </a>
+                    </li>
+                    <li><i class="bi bi-chevron-right"></i>
+                        <a href="/booking/" class="nav-link p-0 text-body-secondary">
+                            สำหรับบุคคลภายในคณะฯ
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div class="col-lg-2 col-md-3 footer-links">
+            <div class="col-lg-2 col-md-3 footer-links  text-dark">
                 <h4>เยี่ยมชมมหาวิทยาลัยเชียงใหม่</h4>
                 <ul>
                     <li><i class="bi bi-chevron-right"></i>
@@ -68,7 +73,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-4 col-md-12  text-dark">
                 <h4>ติดตามเรา</h4>
                 <p>ติดตามเราผ่านสื่อต่างที่นี่</p>
                 <div class="social-links d-flex">
@@ -82,8 +87,8 @@
         </div>
     </div>
 
-    <div class="container copyright text-center mt-4">
-        <p style="font-weight: 800"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </p>
+    <div class="container copyright text-center mt-4  text-dark">
+        <p style="font-weight: 800;color: black"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </p>
         <div class="credits" style="color: #f5f6f8">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you've purchased the pro version. -->

@@ -24,7 +24,7 @@
             <div class="row">
                 <div style="min-height:120px;margin-top:15px;">
                     <a href="/booking/">
-                        <img src="{{ asset('theme_1/img/banner.png') }}" style="width:100%;z-index:2;">
+                        <img src="{{ asset('theme_1/img/banner2.jpg') }}" style="width:100%;z-index:2;">
                     </a>
 
                 </div>

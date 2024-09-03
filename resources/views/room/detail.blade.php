@@ -10,18 +10,18 @@
     <link rel="stylesheet" href="/css/vendor/magic/magic.min.css">
     <link rel="stylesheet" href="/css/vendor/animate/animate.min.css">
     <link rel="stylesheet" href="/css/jquery.desoslide.css">
-
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/schedule.css">
     @includeIf('partials.headtag')
 
 
-    <link rel="stylesheet" href="/css/schedule.css">
 </head>
 
 <body>
     @includeIf('partials.header')
     <main class="main">
 
-        <section id="room" class="about section" style="padding: 160px 0px 1000px 0px">
+        <section id="room" class="about section" style="padding: 110px 0px 40px 0px">
             <div class="container">
                 <div class="row g-0 text-start  justify-content-center">
                     <div class="col-sm-10 col-md-10 p-3 ">
@@ -94,7 +94,7 @@
                                 <div class="col-md-6 justify-content-end text-center">
                                     <a type="button" class="btn btn-primary  btn-Booking"
                                         href="/booking/check/{{ $getListRoom[0]->id }}/showlist/{{ $getListRoom[0]->roomFullName }}">
-                                        <i class="bi bi-vector-pen"></i> ทำรายการขอใช้ห้อง
+                                        <i class="bi bi-vector-pen"></i> ทำรายการจอง
                                     </a>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+            
         </section>
     </main>
 
