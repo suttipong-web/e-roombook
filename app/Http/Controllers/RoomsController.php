@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\class\HelperService;
 use App\Models\adminRooom;
 use App\Models\room_gallery;
 use App\Models\Rooms;
@@ -362,4 +363,77 @@ class RoomsController extends Controller
             ]);
         }
     }
+
+
+   // TV  SCINET
+    public function displayTvSciNet(Request $request)
+    {  
+        date_default_timezone_set('Asia/Bangkok');   
+        //$class = new HelperService();
+        // GET ROOMID 
+        if ($request->roomId) {
+            $roomId = $request->roomId;
+            $dataroom = Rooms::find($roomId);      
+
+            // NOW DATE
+            $dateNow = date('Y-m-d');
+            $timeNow = date('Y/m/d H:i:s');	
+            $temptimes = 	explode(" ",$timeNow);
+            $timeNow =$temptimes[1];
+		
+            $is_time =   $this->get_TimenowConvert($timeNow);
+         
+            $MONTH = array("","January","February" ,"March","April","May","June", "July", "August" , "September", "October","November","December");
+
+            // convert  to Date  Display
+            //04 September 2024
+            $tempdate =  explode("-",$dateNow);
+            $DateTitlePage = $tempdate[2]." ". $MONTH[(int)$tempdate[1]]." ".((int)$tempdate[0]);   
+          
+
+            //วันที่ปัจจุบัน
+            $datenowQry = date('Y-m-d');
+
+             // Query Booking room Table 
+                 $sql= "SELECT
+                    booking_rooms.*,
+                    rooms.roomFullName
+                  
+                    FROM
+                    booking_rooms
+                    INNER JOIN rooms ON booking_rooms.roomID = rooms.id
+                    WHERE
+                    booking_rooms.roomID = '{$roomId}' AND
+                    (
+                    booking_rooms.schedule_startdate = '{$datenowQry}'                    
+                    )
+                    AND  ( booking_status = 1 OR  booking_status = 3 )
+
+                    ORDER BY
+                    booking_rooms.booking_time_start ASC";
+                    $listBooking = DB::select(DB::raw($sql));
+            
+   
+            $roomTitle = $dataroom->roomFullName;
+            return view("room/scinet")->with([
+                'DateTitlePage' => $DateTitlePage,  
+                'getTimeNow' =>$is_time,
+                'RoomTitle' =>$roomTitle,
+                'listBookingRoom' => $listBooking
+            ]);
+
+        }
+    }
+               
+	public  function  get_TimenowConvert($dt) {
+
+				$timenow =  explode(":",$dt);
+				if((int)$timenow[1]<10)  {
+				 $is_time =$timenow[0]."0".(int)$timenow[1]; 	
+				}else {
+				 $is_time =$timenow[0].$timenow[1] ; 	
+				 }
+				return    (int)$is_time;
+	  }
+
 }

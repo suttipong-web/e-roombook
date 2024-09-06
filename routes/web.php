@@ -26,8 +26,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+// TV SciNet
+Route::get('/scinet/{roomId}', [RoomsController::class, 'displayTvSciNet'])->name('displayTvSciNet');
 
-
+// Simple Page
 Route::get('/exp', function () {
     return view('ex');
 });
@@ -41,8 +43,12 @@ Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchSchedul
 Route::prefix('/room')->group(
     function () {
         Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
+        
     }
 );
+
+
+
 Route::prefix('/profile')->group(
     function () {
         Route::get('/', [ProfileProfileController::class, 'index'])->name('profile.index');
