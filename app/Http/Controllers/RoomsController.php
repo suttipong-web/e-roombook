@@ -368,8 +368,9 @@ class RoomsController extends Controller
    // TV  SCINET
     public function displayTvSciNet(Request $request)
     {  
+  
         date_default_timezone_set('Asia/Bangkok');   
-        //$class = new HelperService();
+       $class = new HelperService();
         // GET ROOMID 
         if ($request->roomId) {
             $roomId = $request->roomId;
@@ -381,7 +382,7 @@ class RoomsController extends Controller
             $temptimes = 	explode(" ",$timeNow);
             $timeNow =$temptimes[1];
 		
-            $is_time =   $this->get_TimenowConvert($timeNow);
+            $is_time =   $class->get_TimenowConvert($timeNow);
          
             $MONTH = array("","January","February" ,"March","April","May","June", "July", "August" , "September", "October","November","December");
 
@@ -414,6 +415,8 @@ class RoomsController extends Controller
                     $listBooking = DB::select(DB::raw($sql));
             
    
+
+                   
             $roomTitle = $dataroom->roomFullName;
             return view("room/scinet")->with([
                 'DateTitlePage' => $DateTitlePage,  
@@ -425,15 +428,6 @@ class RoomsController extends Controller
         }
     }
                
-	public  function  get_TimenowConvert($dt) {
 
-				$timenow =  explode(":",$dt);
-				if((int)$timenow[1]<10)  {
-				 $is_time =$timenow[0]."0".(int)$timenow[1]; 	
-				}else {
-				 $is_time =$timenow[0].$timenow[1] ; 	
-				 }
-				return    (int)$is_time;
-	  }
 
 }

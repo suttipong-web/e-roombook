@@ -1,3 +1,4 @@
+@inject('getService', 'App\class\HelperService')
 <!doctype html>
 <html lang="en">
 
@@ -199,35 +200,26 @@
         <div class="divMaintime">
             <div class="roomeDate"> {{ $DateTitlePage }} </div>
             @if (count($listBookingRoom) > 0)
-                @foreach
                 @foreach ($listBookingRoom as $rows)
                     <div class="row_table">
                         <div class="displayNow">
                             <?php
-                            //if((int)$rows['booking_time_start']>= 1000) {
-                            //$timesstart = ((int)$rows['booking_time_start'] /10);
-                            //	$endtimes  = ((int)$rows['booking_time_finish'] /10);
-                            //}else {
-                            $timesstart = ((int) $rows['booking_time_start']);
-                            $endtimes = ((int) $rows['booking_time_finish']);
-                            //}
-                            ?>
-                            <?php if ($is_time >= $timesstart && $is_time <= $endtimes) {
-                                echo '<img src="img/now.gif">';
-                            } elseif ($is_time <= $timesstart) {
-                                echo '<img src="img/next.png">';
+                            $timesstart = $getService->get_TimenowConvert($rows->booking_time_start);
+                            $endtimes = $getService->get_TimenowConvert($rows->booking_time_finish);            
+                            if ($getTimeNow >= $timesstart && $getTimeNow <= $endtimes) {
+                                echo '<img src="/img/now.gif">';
+                            } elseif ($getTimeNow <= $timesstart) {
+                                echo '<img src="/img/next.png">';
                             }
-                            
                             ?>
-
                         </div>
                         <div
-                            style="background-image:url(img/bar.png);width:734px;height:74px;margin-left:195px;position:relative">
+                            style="background-image:url(/img/bar.png);width:734px;height:74px;margin-left:195px;position:relative">
 
 
 
 
-                            <div style="position:absolute;right:17px;top:15px;">{{ $rows['booking_booker'] }}</div>
+                            <div style="position:absolute;right:17px;top:15px;">{{ $rows->booking_booker }}</div>
                             <div class="Htitle">
                                 {{ Str::limit($rows->booking_time_start, 5, '') }}-{{ Str::limit($rows->booking_time_finish, 5, '') }}
                             </div>

@@ -36,6 +36,16 @@ class HelperService
         return $setdate;
     }
 
+    public  function  get_TimenowConvert($dt) {
+
+				$timenow =  explode(":",$dt);
+				if((int)$timenow[1]<10)  {
+				 $is_time =$timenow[0]."0".(int)$timenow[1]; 	
+				}else {
+				 $is_time =$timenow[0].$timenow[1] ; 	
+				 }
+				return    (int)$is_time;
+	}
 
      public static function convertDateThaiNoTime($arg,  $short)
     {
