@@ -185,7 +185,7 @@
                                             <hr />
 
                                             <h6 class="text-decoration-underline"><i class="bi bi-gear-fill"></i>
-                                                โปรดระบุข้อมูลการออกใบเสรจรับเงิน</h6>
+                                                โปรดระบุข้อมูลการออกใบเสร็จรับเงิน</h6>
 
                                             <div class="text-danger"> (ในการขอใช้ห้องสำหรับบุคคลภายนอกคณะวิศวกรรมศาสตร์
                                                 อาจมีค่าธรรมเนียมในการใช้
@@ -230,14 +230,9 @@
                                         <div class="p-2 text-center text-success " style="font-weight: 800">
                                             @if ($usertype == 'general')
                                                 <hr />
-                                                แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น <br />
-                                                <span style="color: blueviolet"> สำหรับบุคคลภายในคณะฯ คลิกที่ปุ่ม
-                                                    <!--  <a href="{{ $getService->geturlCMUOauth($searchRoomID) }}"> -->
-                                                    “บุคคลภายในคณะฯคลิกที่นี่”
-                                                    <!--</a>-->
-                                                    ด้านบน </span> <br />
+                                                แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น<br />                                              
                                             @endif
-                                            โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
+                                          โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                         </div>
 
                                         <div class="text-center  justify-content-center  mb-3  ">
@@ -324,8 +319,8 @@
                         console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
-                                title: 'Booking Successfully!',
-                                text: response.msgreturn,
+                                title: 'Booking Successful',
+                                text:'ระบบทำรายการจองสำเร็จ',
                                 icon: 'success'
                             }).then((result) => {
                                 $("#add_btn").text('ทำรายการจอง');

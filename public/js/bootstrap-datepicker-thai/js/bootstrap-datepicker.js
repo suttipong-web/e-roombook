@@ -68,7 +68,7 @@
 						.toggleClass('icon-arrow-left icon-arrow-right');
 		}
 
-		this.autoclose = false;
+		this.autoclose = true;
 		if ('autoclose' in options) {
 			this.autoclose = options.autoclose;
 		} else if ('dateAutoclose' in this.element.data()) {

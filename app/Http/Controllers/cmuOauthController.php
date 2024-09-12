@@ -118,7 +118,9 @@ class cmuOauthController extends Controller
                 $request->session()->put('dep_name',$getDepN[0]->dep_name);
 
                 //check Admin  
-                if ($page == "booking") {
+                if ($page == "bookingindex") {
+                    return redirect()->intended('/booking')->with('success', 'Login Successfull');
+                }elseif ($page == "booking") {
                     return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
                 } elseif ($users["user_type"]== "admin" ) {
                     return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');

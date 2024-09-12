@@ -182,7 +182,7 @@
                                             <td class="text-start" colspan="3">
 
                                                 <!-- <a href="/storage/app/public/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                            target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
+                                                                        target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
 
                                                 <a href="{{ asset('/upload/' . $detailBooking[0]->booking_fileurl) }}"
                                                     target="_blank" class="btn btn-primary">
@@ -250,6 +250,26 @@
                                             </div>
                                         </div>
 
+                                        <br />
+                                        <div class="form-row">
+                                            <div class="text-primary form-group col-md-12">
+                                                <h5 class="setFn">แนบเอกสารเพิ่มเติม/ใบเสนอราคา (ไฟล์ pdf เท่านั้น) *
+                                                </h5>
+                                                <hr>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label for="formFile" class="form-label">แนบไฟล์ </label>
+                                                <input class="form-control" type="file" id="formFile1"
+                                                    accept="application/pdf"  name="addfile1">
+                                                <br />
+                                                <input class="form-control" type="file" id="formFile2"
+                                                    accept="application/pdf"  name="addfile2">
+
+                                            </div>
+                                        </div>
+                                        <hr />
+
+
                                         <div class="col-12 mt-3 text-center justify-content-center">
                                             <input type="hidden" id="hinden_bookingID" name="hinden_bookingID"
                                                 value="{{ $detailBooking[0]->id }}">
@@ -258,17 +278,12 @@
                                             @if ($getStatus != 'approved')
                                                 <button type="submit" name="submitPayment" id="submitPayment"
                                                     class=" btn btn-primary">
-                                                    <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระ และออกใบเสร็จรับเงิน
+                                                    <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระเงิน
 
                                                 </button>
                                             @endif
 
                                         </div>
-
-                                        
-
-
-
 
                                     </div>
                                 </form>
@@ -353,6 +368,12 @@
                                             </div>
                                         </div>
                                         <div class="p-2 text-left">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1"> ข้อความ </label>
+                                                <textarea class="form-control" id="msgSend" name="msgSend" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 text-left">
                                             <hr />
                                             * หมายเหตุ
                                             <div class="text-danger">* การ "ไม่อนุมติ" คือการยกเลิกรายการจองห้อง
@@ -419,7 +440,7 @@
                                             @else
                                                 อนุมติโดย :
                                                 <span id="admin_action_acount">
-                                               
+
                                                     @if (!empty($detailBooking[0]->admin_action_acount))
                                                         {{ $getService->getFullNameCmuAcount($detailBooking[0]->admin_action_acount) }}
                                                     @endif

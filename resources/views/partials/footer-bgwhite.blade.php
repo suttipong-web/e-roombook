@@ -45,14 +45,17 @@
                     </li>
                        <li><i class="bi bi-chevron-right"></i>
                         <a href="/admin/" class="nav-link p-0 text-body-secondary">
-                            สำหรับเจ้าหน้าที่
+                            สำหรับผู้ดูแลระบบ
                         </a>
                     </li>
                     <li><i class="bi bi-chevron-right"></i>
-                        <a href="/booking/" class="nav-link p-0 text-body-secondary">
+                        <?php 
+                          $dates = date("Y-m-d");
+                          $CMUOauth_ = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM&redirect_uri=https://e-roombook.eng.cmu.ac.th/callback_booking&scope=cmuitaccount.basicinfo&state=bookingindex_1'.$dates;    
+                        ?>
+                        <a href="{{ $CMUOauth_ }}" class="nav-link p-0 text-body-secondary">
                             สำหรับบุคคลภายในคณะฯ
                         </a>
-                    </li>
                 </ul>
             </div>
 
@@ -75,7 +78,7 @@
 
             <div class="col-lg-4 col-md-12">
                 <h4>ติดตามเรา</h4>
-                <div>ติดตามเราผ่านสื่อต่างที่นี่</div>
+                <div>ติดตามเราผ่านสื่อต่าง ๆ ที่นี่</div>
                 <div class="social-links d-flex">
                     <a href=""><i class="bi bi-twitter-x"></i></a>
                     <a href=""><i class="bi bi-facebook"></i></a>

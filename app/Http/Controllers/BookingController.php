@@ -475,10 +475,10 @@ class BookingController extends Controller
                 $bookingRoom = $roomData->roomFullName;
                 $ิbooker = $request->booking_booker;
                 $msgLine = "รายการจองใหม่%0A";
-                $msgLine .= "เรื่อง:" .$request->booking_subject. "%0A";
-                $msgLine .= "วันที่:" .$request->schedule_startdate." เวลา ". $request->booking_time_start. "%0A";
-                $msgLine .= "จาก :" . $ิbooker." ". $request->booking_department. "%0A";              
-                $msgLine .= "(จัดการ/ตรวจสอบการจองที่ E-roombook)";
+                $msgLine .= "เรื่อง : " .$request->booking_subject. "%0A";
+                $msgLine .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start. "%0A";
+                $msgLine .= "จาก : " . $ิbooker." ". $request->booking_department. "%0A";              
+                $msgLine .= "(จัดการ/ตรวจสอบการจองที่ https://e-roombook.eng.cmu.ac.th/admin/)";
 
                 // get Token  Admin 
               /*  $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 2);*/
@@ -499,7 +499,7 @@ class BookingController extends Controller
                 if ($request->booking_type == "general") {
                     $msgreturn ="ท่านทำรายการสำเร็จ ทางทีมงานจะรีบดำเนินการตรวจสอบรายละเอียด และแจ้งผลให้ท่านทราบโดยด่วน ";
                 }else {
-                    $msgreturn ="ทำรายการจองสำเร็จ";
+                    $msgreturn ="ระบบทำรายการจองสำเร็จ";
                 }
                 return response()->json([
                     'status' => 200,

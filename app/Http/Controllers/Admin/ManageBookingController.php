@@ -69,7 +69,9 @@ class ManageBookingController extends Controller
         payments.is_confirm,
         payments.payment_date,
         payments.customerToken,
-         payments.urlPayment,
+        payments.urlPayment,
+        payments.addfile1,
+        payments.addfile2,
         rooms.roomFullName,
         rooms.roomSize,
         rooms.thumbnail,
@@ -168,6 +170,22 @@ class ManageBookingController extends Controller
     public function setdataPayment(Request $request)
     {
         $bookingId = $request->hinden_bookingID;
+
+            $fileNameAddFile1="";
+            $fileNameAddFile2="";
+            // Handle the file upload
+            if ($request->hasFile('addfile1')) {
+                $file = $request->file('addfile1');
+                $fileNameAddFile1 = time() . '.' . $file->getClientOriginalExtension();
+               $file->move(public_path('upload'), $fileNameAddFile1);
+            }
+
+            if ($request->hasFile('addfile2')) {
+                $file = $request->file('addfile2');
+                $fileNameAddFile12 = time() . '.' . $file->getClientOriginalExtension();
+               $file->move(public_path('upload'), $fileNameAddFile12);
+            }
+
         $setData = [
             'customerName' => $request->customerName,
             'customerEmail' => $request->customerEmail,
@@ -176,8 +194,11 @@ class ManageBookingController extends Controller
             'customerAddress' => $request->customerAddress,
             'totalAmount' => $request->totalAmount,
             'payment_status' => '0',
+            'addfile1' => $fileNameAddFile1,
+            'addfile2' => $fileNameAddFile2,
             'bookingID' => $bookingId
         ];
+
         if (empty($request->hinden_paymentid)) {
             // insert 
             $insert = payments::create($setData);
@@ -263,7 +284,7 @@ class ManageBookingController extends Controller
                 if ($actionStatus == 'approved') {
                     $this->setAuthPayment($bookingId);
                     //ห้อง xxx ที่ท่านดูแล ได้อนุมัติใช้งาน เรื่อง "xxx" วัน xxx เวลา xxx จาก xxx (ดูตารางการใช้งานของห้อง xxx ที่ xxx)
-               $msgLine = " ห้อง".$ResultBooking[0]->roomFullName." ที่ท่านดูแลได้อนุมัติใช้งาน";              
+                  /* $msgLine = " ห้อง".$ResultBooking[0]->roomFullName." ที่ท่านดูแลได้อนุมัติใช้งาน";              
                     $msgLine .= "เรื่อง:" .$ResultBooking[0]->booking_subject. "%0A";
                     $msgLine .= "วันที่:" .$ResultBooking[0]->schedule_startdate." เวลา ". $ResultBooking[0]->booking_time_start. "%0A";
                     $msgLine .= "จาก :" . $ResultBooking[0]->booking_booker."%0A";              
@@ -275,7 +296,7 @@ class ManageBookingController extends Controller
                         foreach ($tokenUSer as $admins) {
                             $class->sendMessageTOline($admins->lineToken, $msgLine);
                         }
-                    }
+                    }*/
 
 
                     //$class->sendMessageTOline('mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX', $msg);
