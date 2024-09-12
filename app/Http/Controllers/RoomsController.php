@@ -238,6 +238,7 @@ class RoomsController extends Controller
         }
     }
 
+
     public function fetchAdmin(Request $request)
     {
         // $id = $request->id;
@@ -428,6 +429,20 @@ class RoomsController extends Controller
         }
     }
                
+    public function print_schedule (Request $request)
+    {    
+         date_default_timezone_set('Asia/Bangkok');   
+         $class = new HelperService();
 
+         if ($request->roomId) {
+            $roomID =$request->roomId;
+            $dataroom = Rooms::find($roomID);
+         }
+
+        return view("/room/print_schedule")->with([
+            'dataroom' => $dataroom ,
+            'getust' => $request->uts
+        ]);
+    }
 
 }

@@ -23,12 +23,18 @@ class ScheduleroomController extends Controller
         $monthTH_brev = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
         $roomId = 0;
+        
+        $roomTitle =  "";
+
         if ($request->getroomId) {
             $roomID = $request->getroomId;
+           $dataroom = Rooms::find($roomID);
+            $roomTitle = $dataroom->roomFullName;
             $tableRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
                 ->join('place', 'place.id', '=', 'rooms.placeId')
                 ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
                 ->get();
+
         }
 
         $roomIdDisplay = 0;
@@ -148,19 +154,22 @@ class ScheduleroomController extends Controller
             }
         }
         
+        $linkPrint = '/room/print/'. $roomID.'/'. $uts.'/'.$roomTitle ;
         $num_dayShow_in_schedule = $num_dayShow - 1;
         $output = '<div class="wrap_schedule_control mt-3">
                         <div class="d-flex  justify-content-start">';
+        
+        if (!$request->hindenBtnALL) {
         $output .= '            <div class="">
                                
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS mr-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
                                     <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button> 
-                                     <button type="button" class="btn btn-danger btn-sm btnPrint ml-2" valuts ="" ><i class="bi bi-printer"></i></button> 
+                                     <a class="btn btn-danger btn-sm btnPrint- ml-2" href='.$linkPrint.'  target="_blank"><i class="bi bi-printer"></i></a> 
                                     
                                     ';
                                     
-
+        }
        if (!$request->hindenBtnBooking) {
         $output .= '       
                                    <button type="button"  class="btn btn-primary btn-sm ml-3" data-bs-toggle="modal"

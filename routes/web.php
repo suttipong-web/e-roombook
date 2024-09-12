@@ -38,12 +38,13 @@ Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])-
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
 
 
+
 Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchScheduleByRoom'])->name('fetchScheduleByRoom');
 
 Route::prefix('/room')->group(
     function () {
         Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
-        
+        Route::get('/print/{roomId}/{uts}/{roomTitle}', [RoomsController::class, 'print_schedule'])->name('print_schedule');
     }
 );
 
@@ -117,8 +118,6 @@ Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll
 Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
 Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
 
-
-
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 
 Route::group(['middleware' => ['admin_auth']], function () {
@@ -128,8 +127,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/admin/user/viewprifile/{userId}', [UserController::class, 'viewprifile'])->name('users.viewprifile');
     Route::post('/admin/user/save', [UserController::class, 'saved'])->name('users.saved');
-    
-
+   
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
     
     //Route  ระบบจัดการห้อง RoomsController
@@ -158,8 +156,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
     Route::post('/admin/payment/setdata', [ManageBookingController::class, 'setdataPayment'])->name('setdataPayment');
     Route::post('/admin/approveBooking', [ManageBookingController::class, 'approveBooking'])->name('approveBooking');
-   
-    
+       
     Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
     Route::get('/admin/report', [ReportController::class, 'index'])->name('index');
     Route::get('/admin/report/bookingtable', [ReportController::class, 'bookingtable'])->name('bookingtable');
