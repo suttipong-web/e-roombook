@@ -75,14 +75,21 @@ div.table-responsive::-webkit-scrollbar {
 }
 
 .sc-detail {
-    font-size: 10px;
-    background-color: #2b3a5b;
-    color: #FFFFFF;
-    border: #FFFFFF 1px solid;
+    font-size: 12px;
+    background-color: #85cb8e;
+    color: #080000;
+    border: #ffffff 1px solid;
     padding: 2px;
 }
 
 .sc-detail a {
-    color: #f88d5b;
-    font-size: 10px;
+    color: #181818;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sc-detail a:hover {
+    color: #db1111;
+    font-size: 11px;
+    font-weight: 600;
 }

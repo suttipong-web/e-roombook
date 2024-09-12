@@ -61,7 +61,7 @@
                                         </div>
 
 
-                                        <div class="col-md-3 p-2">
+                                        <div class="col-md-3 ">
                                             <label for="schedule_startdate" class="form-label">
                                                 <span style="color: blueviolet;font-weight: 700"> วันที่เริ่ม *</span>
                                             </label>
@@ -69,7 +69,7 @@
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_startdate" name="schedule_startdate" required>
                                         </div>
-                                        <div class="col-md-3 p-2">
+                                        <div class="col-md-3">
                                             <label for="schedule_enddate" class="form-label"> <span
                                                     style="color: blueviolet;font-weight: 700"> วันที่สิ้นสุด * </span>
                                             </label>
@@ -78,7 +78,7 @@
                                                 id="schedule_enddate" name="schedule_enddate" required>
                                         </div>
 
-                                        <div class="col-md-6 p-2">
+                                        <div class="col-md-6 ">
                                             <label for="booking_time_start" class="form-label"> <span
                                                     style="color: blueviolet;font-weight: 700"> ช่วงเวลาที่ใช้งาน
                                                     *</span>
@@ -99,6 +99,14 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+
+                                        <div class="col-md-12 text-danger fst-italic">
+                                             @if ($usertype == 'eng')
+                                             หมายเหตุ : สำหรับการจองห้องช่วงเวลาเสาร์-อาทิตย์ หรือวันหยุด ต้องทำการแนบเอกสารการขอใช้ห้องด้วย 
+                                             @else
+                                             หมายเหตุ : สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14 วันทำการ
+                                             @endif
                                         </div>
 
                                         <div class="col-md-6">
@@ -152,17 +160,18 @@
                                                 ระบุรายละเอียดเพิ่มเติม </label>
                                             <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                         </div>
-                                        <!-- @if ($usertype == 'eng')
-<div class="col-md-12">
-                                                    <label for="booking_code_cancel"
-                                                        class="form-label">รหัสยกเลิกรายการ
-                                                    </label>
-                                                    <input type="password" class="form-control"
-                                                        id="booking_code_cancel" name="booking_code_cancel"
-                                                        placeholder=" xxxx " />
-                                                </div>
-@endif -->
-                                        @if ($usertype == 'general')
+                                        @if ($usertype == 'eng')
+                                          <div class="text-primary">
+                                               แนบเอกสารขอใช้ห้อง กรณีจองช่วงเวลาเสาร์-อาทิตย์ หรือวันหยุด (ไฟล์ pdf เท่านั้น)  </div>
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">แนบไฟล์
+                                                </label>
+                                                <input class="form-control" type="file" id="formFile"
+                                                    accept="application/pdf"  name="pdf">
+                                                <br />
+                                            </div>
+                                            <hr />
+                                        @elseif($usertype == 'general')
                                             <div class="text-primary">
                                                 โปรดทำการแนบไฟล์เอกสารขอใช้งานจากหน่วยงานของท่าน
                                                 เพื่อใช้ประกอบการพิจารณาอนุมัติใช้งาน (ไฟล์ pdf เท่านั้น) * </div>

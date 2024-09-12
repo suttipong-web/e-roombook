@@ -382,7 +382,7 @@ class BookingController extends Controller
             ->get();
 
         // ยืนยันการจอง
-        $is_confirm = true;
+        $is_confirm = 1;
         $error = true;
         foreach ($ChkTimeBookig as $row_chk) {
             if (
@@ -398,9 +398,7 @@ class BookingController extends Controller
                 ]);
                 $error = 0;
                 $is_confirm = 0;
-            } else {
-                $is_confirm = 3;
-            }
+            } 
         }
       //  $is_confirm =3;
         if ($error) {
@@ -411,7 +409,8 @@ class BookingController extends Controller
 
             //บุคคลภายใน รอการอนุมัติ
             if (!empty($request->booker_cmuaccount)) {
-                $is_confirm = 3;
+               // $is_confirm = 3;
+                $is_confirm = 1;
             }
 
             if ($request->booking_type == "general") {
@@ -478,13 +477,19 @@ class BookingController extends Controller
                 $msgLine .= "(จัดการ/ตรวจสอบการจองที่ E-roombook)";
 
                 // get Token  Admin 
-                $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 2);
-                if ($tokenUSer) {
+              /*  $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 2);*/
+               /* if ($tokenUSer) {
                     // lop หากมี Admin หลายคน                
                     foreach ($tokenUSer as $admins) {
                         $class->sendMessageTOline($admins->lineToken, $msgLine);
                     }
-                }
+                }*/
+
+                 // แจ้งข้อความเข้ากลุมผู้ดูแลห้อง 
+                 //jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9  ใช้จริง
+                 $GrouplineToken ="mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX";
+                  $class->sendMessageTOline($GrouplineToken, $msgLine);
+
 
                 if ($request->booking_type == "general") {
                     $msgreturn ="ท่านทำรายการสำเร็จ ทางทีมงานจะรีบดำเนินการตรวจสอบรายละเอียด และแจ้งผลให้ท่านทราบโดยด่วน ";
