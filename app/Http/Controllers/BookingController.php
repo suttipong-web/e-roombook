@@ -487,7 +487,7 @@ class BookingController extends Controller
 
                  // แจ้งข้อความเข้ากลุมผู้ดูแลห้อง 
                  //jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9  ใช้จริง
-                 $GrouplineToken ="mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX";
+                 $GrouplineToken ="jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9";
                   $class->sendMessageTOline($GrouplineToken, $msgLine);
 
 
