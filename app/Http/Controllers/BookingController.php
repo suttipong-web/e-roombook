@@ -346,30 +346,34 @@ class BookingController extends Controller
         }
 
         //ตรวจสอบบุคคลภายนอก
-        if ($request->booking_type == "general") {
+       if ($request->booking_type == "general") {
+             if (!$request->hasFile('pdf')) {
+                  return response()->json([
+                    'status' => 209,
+                    'errortext' => 'บุคคลภายนอกต้องทำการแนบไฟล์ เพื่อขอใช้สถานที่และต้องเป็นเอกสาร ชนิดไฟล์ .pdf เท่านั้น'
+                ]);
+             }
+       }
             // Handle the file upload
             if ($request->hasFile('pdf')) {
                 $file = $request->file('pdf');
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
                // $file->storeAs('public/upload', $fileName);
-
               //  $request->file('pdf')->storeAs('upload', $fileName , 'public');
                 $file->move(public_path('upload'), $fileName);
-
-
-
-
-                // Return a response
+               // Return a response
                 $error = true;
-            } else {
+            }
+            
+            /*else {
                 return response()->json([
                     'status' => 209,
                     'errortext' => 'บุคคลภายนอกต้องทำการแนบไฟล์ เพื่อขอใช้สถานที่และต้องเป็นเอกสาร ชนิดไฟล์ .pdf เท่านั้น'
                 ]);
-            }
+            }*/
             // Validate the request
             $is_confirm = 0;
-        }
+       // }
 
         //ตรวจสอบว่าจองเวลานี้ได้ไหม 
 
@@ -486,6 +490,7 @@ class BookingController extends Controller
                 }*/
 
                  // แจ้งข้อความเข้ากลุมผู้ดูแลห้อง 
+                 //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
                  //jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9  ใช้จริง
                  $GrouplineToken ="jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9";
                   $class->sendMessageTOline($GrouplineToken, $msgLine);

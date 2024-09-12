@@ -77,12 +77,12 @@
                                                             <td>{{ $rows->booking_subject }} </td>
                                                             <td>{{ $rows->description }}  </td>
                                                             <td>
-                                                                @if ($rows->booking_AdminAction == 'approved')
+                                                                @if ($rows->booking_AdminAction == 'approved' || (int)$rows->booking_status==1 ) 
                                                                     <span class="badge text-bg-success"> <i
                                                                             class="bi bi-check-circle-fill"></i>
                                                                         อนุมัติ
                                                                     </span>
-                                                                @elseif ($rows->booking_AdminAction == 'canceled')
+                                                                @elseif ($rows->booking_status == '2')
                                                                     <span class="badge text-bg-warning"> <i
                                                                             class="bi bi-clock-history"></i>
                                                                         ยกเลิกรายการ</span>
