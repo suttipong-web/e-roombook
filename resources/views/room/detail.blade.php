@@ -229,23 +229,20 @@
             });
 
             $(document).on('click', '.btnPrint', function(e) {
-           // var thePopup = window.open('', "ตารางการใช้ห้อง",
-              //      "menubar=0,location=0,,width=100%");
-             //  $('#popshowtable').clone().appendTo(thePopup.document.body);
-                //thePopup.print();
-            //Copy the element you want to print to the print-me div.
-            $("#popshowtable").clone().appendTo("#print-me");
-            //Apply some styles to hide everything else while printing.
-            $("body").addClass('<link rel="stylesheet" href="/css/schedule.css">');
-            //Print the window.
-            window.print();
-            //Restore the styles.
-            $("body").removeClass("printing");
-            //Clear up the div.
-            $("#print-me").empty();
-
-
-
+            // var thePopup = window.open('', "ตารางการใช้ห้อง",
+                //      "menubar=0,location=0,,width=100%");
+                //  $('#popshowtable').clone().appendTo(thePopup.document.body);
+                    //thePopup.print();
+                //Copy the element you want to print to the print-me div.
+                $("#popshowtable").clone().appendTo("#print-me");
+                //Apply some styles to hide everything else while printing.
+                $("body").addClass('<link rel="stylesheet" href="/css/schedule.css">');
+                //Print the window.
+                window.print();
+                //Restore the styles.
+                $("body").removeClass("printing");
+                //Clear up the div.
+                $("#print-me").empty();
             });
 
             $(document).on('click', '.sc-detail', function(e) {

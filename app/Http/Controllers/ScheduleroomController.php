@@ -44,11 +44,15 @@ class ScheduleroomController extends Controller
         $sc_endtTime = date("Y-m-d 21:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
         $sc_t_startTime = strtotime($sc_startTime);
         $sc_t_endTime = strtotime($sc_endtTime);
-        $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
+       
         $num_dayShow = 7;  // จำนวนวันที่โชว์ 1 - 7
         $sc_timeStep = array();
         $sc_numCol = 0;
-        $hour_block_width = 90;
+          $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
+          $hour_block_width = 90;      
+       
+  
+
         ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
         $uts = "";
         if ($request->uts) {
@@ -56,7 +60,7 @@ class ScheduleroomController extends Controller
         }
         // ส่วนของการกำหนดวัน สามารถนำไปประยุกต์กรณีทำตารางเวลาแบบ เลื่อนดูแต่ละสัปดาห์ได้
         $now_day = date("Y-m-d"); // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
-        if (isset($uts) && $uts != "") { // เมื่อมีการเปลี่ยนสัปดาห์
+        if (isset($uts) && $uts != "" && $uts !=0) { // เมื่อมีการเปลี่ยนสัปดาห์
             $now_day = date("Y-m-d", trim($uts)); // เปลี่ยนวันที่ แปลงจากค่าวันจันทร์ที่ส่งมา
             $now_day = date("Y-m-d", strtotime($now_day . " monday this week"));
         }
@@ -154,7 +158,7 @@ class ScheduleroomController extends Controller
             }
         }
         
-        $linkPrint = '/room/print/'. $roomID.'/'. $uts.'/'.$roomTitle ;
+        $linkPrint = '/room/print/'. $roomID.'/'. (int)$uts.'/'.$roomTitle ;
         $num_dayShow_in_schedule = $num_dayShow - 1;
         $output = '<div class="wrap_schedule_control mt-3">
                         <div class="d-flex  justify-content-start">';
@@ -164,10 +168,16 @@ class ScheduleroomController extends Controller
                                
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS mr-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
-                                    <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button> 
-                                     <a class="btn btn-danger btn-sm btnPrint- ml-2" href='.$linkPrint.'  target="_blank"><i class="bi bi-printer"></i></a> 
+                                    <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" > Home </button> ';
+        if($request->hindenPrint) {
+             $output .= '   <button type="button" class="btn btn-danger btn-sm btnPrint ml-2" > <i class="bi bi-printer"></i> </button> '; 
+
+        }else{
+                 $output .= '     <a class="btn btn-danger btn-sm btnPrint- ml-2" href='.$linkPrint.'  target="_blank"><i class="bi bi-printer"></i></a> 
                                     
                                     ';
+        }
+                                 
                                     
         }
        if (!$request->hindenBtnBooking) {
