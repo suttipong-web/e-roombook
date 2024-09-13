@@ -141,6 +141,7 @@ class ScheduleroomController extends Controller
                             if (strtotime($start_weekDay . " +" . $i . "day") >= strtotime($row['start_date']) && strtotime($start_weekDay . " +" . $i . " day") <= strtotime($row['end_date'])) {
                                 $dayKey = date("D", strtotime($start_weekDay . " +" . $i . " day"));
                                 $data_day_schedule[$dayKey][] = [
+                                    "start_date"=>$row['start_date'],
                                     "start_time" => $row['start_time'],
                                     "end_time" => $row['end_time'],
                                     "duration" => $class->getduration(strtotime($row['start_time']), strtotime($row['end_time'])),
@@ -270,7 +271,7 @@ class ScheduleroomController extends Controller
                         $subjectTitle = $row_day['title'];
                     }
 
-                    $details = '<div> ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
+                    $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"
