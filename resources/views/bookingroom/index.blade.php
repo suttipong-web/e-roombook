@@ -77,11 +77,21 @@
                                             ?>
                                             <div class="col  col-md-4    text-center mb-3">
                                                 <div class="p-1 tabRoomType justify-content-center">
-                                                    <a href="/booking/{{ $item->id }}/{{ $item->roomtypeName }}">
+                                                    <!-- เปิดการจองเฉพาะห้องประชุม --> 
+                                                    @if ($item->id == 1)
+                                                        <a
+                                                            href="/booking/{{ $item->id }}/{{ $item->roomtypeName }}">
+                                                            <img src="/theme_1/img/<?= $nameiCon ?>" height="45">
+                                                            <br />
+                                                            <h5> {{ $item->roomtypeName }} </h5>
+                                                        </a>
+                                                    @else
+                                                    <a href="#">
                                                         <img src="/theme_1/img/<?= $nameiCon ?>" height="45">
                                                         <br />
                                                         <h5> {{ $item->roomtypeName }} </h5>
                                                     </a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endforeach

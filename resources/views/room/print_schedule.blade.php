@@ -22,7 +22,7 @@
             }
 
             body {
-                transform: scale(0.95);
+                transform: scale(0.90);
                 /* ปรับขนาดเนื้อหาให้พอดีกับหน้า */
                 transform-origin: top left;
             }

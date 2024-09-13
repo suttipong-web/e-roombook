@@ -45,6 +45,9 @@ class BookingController extends Controller
 
         $searchDates  = date('d/m/Y');
 
+
+
+
         // Load index  view and  data room        
         return view('/bookingroom/index')->with(
             [
@@ -68,6 +71,8 @@ class BookingController extends Controller
     public function indexType(Request $request){
            date_default_timezone_set('Asia/Bangkok');   
        
+
+           
 
         $pageTitle ="";
         $searchDates  = date('d/m/Y');
@@ -153,6 +158,7 @@ class BookingController extends Controller
     {
          date_default_timezone_set('Asia/Bangkok'); 
         $class = new HelperService();
+
         $search_date = $class->convertDateSqlInsert($request->search_date);
         
         $dateBooking = $request->search_date;
@@ -254,6 +260,7 @@ class BookingController extends Controller
 
         $roomID = $request->roomID;
         $roomData = Rooms::find($roomID);
+   
         $dateNow = date('Y-m-d');
         $usertype = $request->usertype;
         // 25/06/2024
@@ -346,6 +353,7 @@ class BookingController extends Controller
         }
 
         //ตรวจสอบบุคคลภายนอก
+     
        if ($request->booking_type == "general") {
              if (!$request->hasFile('pdf')) {
                   return response()->json([
@@ -417,7 +425,9 @@ class BookingController extends Controller
                 $is_confirm = 1;
             }
 
+            $txtTypeUser = "(บุคคลภายในคณะฯ)";
             if ($request->booking_type == "general") {
+                $txtTypeUser = "(บุคคลภายนอกคณะฯ) ";
                 $is_confirm = 0;
             }
 
@@ -471,29 +481,47 @@ class BookingController extends Controller
 
             if ($result) {
                 $roomData = Rooms::find($request->roomID);
+                    if($roomData->roomTypeId==3){
+                        $roomtypeName="ห้องคอมพิวเตอร์";
+                    }elseif($roomData->roomTypeId==2) {
+                        $roomtypeName="ห้องเรียน";
+                    }else {
+                        $roomtypeName="ห้องประชุม";
+                    }
                 // ส่ง LINE                  
                 $bookingRoom = $roomData->roomFullName;
-                $ิbooker = $request->booking_booker;
-                $msgLine = "รายการจองใหม่%0A";
+                $booker = $request->booking_booker;
+                $msgLine = "รายการจองใหม่ ".$txtTypeUser." %0A";
                 $msgLine .= "เรื่อง : " .$request->booking_subject. "%0A";
-                $msgLine .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start. "%0A";
-                $msgLine .= "จาก : " . $ิbooker." ". $request->booking_department. "%0A";              
+                $msgLine .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "%0A";
+                $msgLine .= "ห้อง : ".$roomData->roomFullName. "%0A";
+                $msgLine .= "ประเภทห้อง : ".$roomtypeName. "%0A";
+                $msgLine .= "จาก : " . $booker." ". $request->booking_department. "%0A";              
                 $msgLine .= "(จัดการ/ตรวจสอบการจองที่ https://e-roombook.eng.cmu.ac.th/admin/)";
 
-                // get Token  Admin 
-              /*  $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 2);*/
-               /* if ($tokenUSer) {
+
+                $uts = 0;
+                $msgLineAdminRoom =   "รายการจองใหม่ %0A";
+                $msgLineAdminRoom .= "ห้อง ".$roomData->roomFullName. " ที่ท่านดูแลได้อนุมัติใช้งาน%0A";
+                $msgLineAdminRoom .= "เรื่อง : " .$request->booking_subject. "%0A";
+                $msgLineAdminRoom .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "%0A";
+                $msgLineAdminRoom .= "จาก : " . $booker." ". $request->booking_department. "%0A";              
+                $msgLineAdminRoom .= "(ดูตารางการใช้งานของห้อง https://e-roombook.eng.cmu.ac.th/room/print/".$request->roomID."/".$uts."/".$roomData->roomFullName.")";
+
+                //แจ้งข้อความเข้าผู้ดูแลห้อง
+               $tokenUSer = $class->getlineTokenAdminRoom($request->roomID, 1);
+               if ($tokenUSer) {
                     // lop หากมี Admin หลายคน                
                     foreach ($tokenUSer as $admins) {
-                        $class->sendMessageTOline($admins->lineToken, $msgLine);
+                        $class->sendMessageTOline($admins->lineToken, $msgLineAdminRoom);
                     }
-                }*/
+                }
 
-                 // แจ้งข้อความเข้ากลุมผู้ดูแลห้อง 
+                 // แจ้งข้อความเข้ากลุ่มผู้ดูแลห้อง 
                  //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
-                 //jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9  ใช้จริง
-                 $GrouplineToken ="jkEdOCBYUfAvPOUkjF6hSKNbWxUu9v3H8H0MKZ3hsH9";
-                  $class->sendMessageTOline($GrouplineToken, $msgLine);
+                 //C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi  ใช้จริง
+                 $GrouplineToken ="C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi";
+                 $class->sendMessageTOline($GrouplineToken, $msgLine);
 
 
                 if ($request->booking_type == "general") {
