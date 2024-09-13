@@ -93,7 +93,8 @@
                         <div class="service-item position-relative">
                             <div class="icon"><img src="{{ asset('theme_1/img/typeroom2-2.png') }}" height="94">
                             </div>
-                            <h4><a href="/booking/2/ห้องเรียน" class="stretched-link">ห้องเรียน</a></h4>
+                            <!--/booking/2/ห้องเรียน-->
+                            <h4><a href="/booking/1/ห้องประชุม" class="stretched-link">ห้องเรียน</a></h4>
                             <p>ห้องเรียนทั้วไปใช้สำหรับการเรียนการสอน
 
                                 ในลักษณะการบรรยาย / การสอบทั้งภายใน
@@ -106,7 +107,8 @@
                         <div class="service-item position-relative">
                             <div class="icon"><img src="{{ asset('theme_1/img/typeroom3-3.png') }}" height="94">
                             </div>
-                            <h4><a href="/booking/3/ห้องปฏิบัติการคอมพิวเตอร์"
+                             <!--/booking/2/ห้องเรียน-->
+                            <h4><a href="/booking/1/ห้องประชุม"
                                     class="stretched-link">ห้องปฏิบัติการคอมพิวเตอร์</a></h4>
                             <p>ห้องปฏิบัติการคอมพิวเตอร์มีทั้งหมด 5 ห้อง
                                 ใช้สำหรับการเรียนการสอน / อบรมการใช้งาน
