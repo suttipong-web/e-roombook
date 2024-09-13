@@ -1,0 +1,15 @@
+=LEFT(A2,FIND(" - ",A2)-1)
+=RIGHT(A2,LEN(A2)-FIND(" - ",A2)-2)
+
+=MID(B2,1,2)&":"&MID(B2,3,2)&":00"
+
+
+=MID(C2,1,2)&":"&MID(C2,3,2)&":00"
+
+=TEXT(DATE(YEAR(G2)-543,MONTH(G2),DAY(G2)),"yyyy-mm-dd")
+
+=RANDBETWEEN(100000,999999)
+
+
+
+="INSERT INTO `booking_rooms` VALUES ('0', '"&K2&"', '"&C2&"', '"&B22&"', '"&B2&"', '"&B2&"', '"&D2&"', '"&E2&"', '"&F2&"', '', '', '"&H2&"', '"&L2&"', '"&G2&"', '0', '0', '0',0,'"&K2&"',1, 'eng', 'approved', '', '', NOW(), 0,'webmaster@eng.cmu.ac.th',0,0,'webmaster@eng.cmu.ac.th' , '"&I2&"', NOW(), '', 'webmaster@eng.cmu.ac.th','','', 1, '', '"&J2&"',NOW(), NOW());"

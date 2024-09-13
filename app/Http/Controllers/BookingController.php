@@ -513,7 +513,7 @@ class BookingController extends Controller
                if ($tokenUSer) {
                     // lop หากมี Admin หลายคน                
                     foreach ($tokenUSer as $admins) {
-                        $class->sendMessageTOline($admins->lineToken, $msgLineAdminRoom);
+                      //  $class->sendMessageTOline($admins->lineToken, $msgLineAdminRoom);
                     }
                 }
 
@@ -521,7 +521,7 @@ class BookingController extends Controller
                  //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
                  //C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi  ใช้จริง
                  $GrouplineToken ="C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi";
-                 $class->sendMessageTOline($GrouplineToken, $msgLine);
+               //  $class->sendMessageTOline($GrouplineToken, $msgLine);
 
 
                 if ($request->booking_type == "general") {

@@ -146,7 +146,11 @@
                         </a></h4>
                 </div>
                 <div class="card-body  disPlayTableBooking">
-                    <table class="table table-sm mt-2" id="tableListbooking">
+                    <table class="table table-sm mt-2" 
+                     @if (count($getBookingList) > 0)
+                    id="tableListbooking"
+                    @endif
+                    >
                         <thead class="table-secondary ">
                             <tr style="text-align: left;">      
                                  <th width="6">รหัส</th>          
@@ -156,8 +160,7 @@
                                 <th width="25%">ห้องที่ขอใช้</th>
                                 <th width="25%">เรื่อง</th>
                                 <th width="13%">ผู้จอง</th>
-                                <th width="10%" class="text-center">บุคคล</th>
-                                <th width="20">*หมายเหตุ</th>
+                                <th width="10%" class="text-center">บุคคล</th>                         
                                 <th></th>
                             </tr>
                         </thead>
@@ -181,30 +184,17 @@
                                             {{ Str::limit($rows->booking_time_finish, 5, '') }}</td>
                                         <td>{{ $rows->roomFullName }} </td>
                                         <td>{{ $rows->booking_subject }} </td>
-                                        <td>{{ $rows->booking_booker }}
-                                            <br />
-                                            @if ($rows->booking_type == 'general')
+                                        <td>{{ $rows->booking_booker }}                                        
+
+                                        </td>
+                                        <td class="text-center">
+  @if ($rows->booking_type == 'general')
                                                 ภายนอก
                                             @else
                                                 ภายใน
                                             @endif
-
                                         </td>
-                                        <td class="text-center">
-
-                                        </td>
-                                        <td>
-                                            @if ($rows->dean_appove_status)
-                                                อนุมัติรายการโดยผู้บริหาร
-                                            @endif
-                                       
-                                            @if (!empty($rows->dean_action_date))
-                                                 <br/>
-                                                {{ $getService->convertDateThai($rows->dean_action_date, false, true) }}
-                                            @else
-                                                {{ $getService->convertDateThai($rows->admin_action_date, false, true) }}
-                                            @endif 
-                                        </td>
+                                     
 
                                         <td class="text-center">
 
@@ -223,7 +213,16 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="9">
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td></tr>    
+                                <tr>
+                                    <td colspan="8">
                                         <div class="p-2 mt-2 text-center">
                                             <div class="alert alert-success" role="alert">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="16"
