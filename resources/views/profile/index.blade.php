@@ -212,8 +212,8 @@
                         console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
-                                title: 'Successfully!',
-                                text: ' ทำการยกเลิกรายการจองสำเร็จ ',
+                                title: 'Cancel Successful',
+                                text: ' ยกเลิกรายการจองสำเร็จ ',
                                 icon: 'success'
                             }).then((result) => {
 

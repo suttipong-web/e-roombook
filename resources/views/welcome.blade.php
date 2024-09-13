@@ -175,7 +175,7 @@
 
                             <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
                                 <i class="faq-icon bi bi-question-circle"></i>
-                                <h3>สามารถยกเลิการจองได้ไหม ?</h3>
+                                <h3>สามารถยกเลิกการจองได้ไหม ?</h3>
                                 <div class="faq-content">
                                     <p>หากการจองของท่านได้รับการอนุมัติแล้ว กรณีที่ท่านต้องการยกเลิกการจองดังกล่าว
                                         สามารถทำการยกเลิกการจองนั้น

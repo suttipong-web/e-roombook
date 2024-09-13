@@ -494,18 +494,18 @@ class BookingController extends Controller
                 $msgLine = "รายการจองใหม่ ".$txtTypeUser." %0A";
                 $msgLine .= "เรื่อง : " .$request->booking_subject. "%0A";
                 $msgLine .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "%0A";
-                $msgLine .= "ห้อง : ".$roomData->roomFullName. "%0A";
+                $msgLine .= $roomData->roomFullName. "%0A";
                 $msgLine .= "ประเภทห้อง : ".$roomtypeName. "%0A";
-                $msgLine .= "จาก : " . $booker." ". $request->booking_department. "%0A";              
+                $msgLine .= "จาก : " . $booker." ". $request->booking_department. " (". $request->booking_phone .") %0A";             
                 $msgLine .= "(จัดการ/ตรวจสอบการจองที่ https://e-roombook.eng.cmu.ac.th/admin/)";
 
 
                 $uts = 0;
                 $msgLineAdminRoom =   "รายการจองใหม่ %0A";
-                $msgLineAdminRoom .= "ห้อง ".$roomData->roomFullName. " ที่ท่านดูแลได้อนุมัติใช้งาน%0A";
+                $msgLineAdminRoom .= $roomData->roomFullName. " ที่ท่านดูแลได้อนุมัติใช้งาน%0A";
                 $msgLineAdminRoom .= "เรื่อง : " .$request->booking_subject. "%0A";
                 $msgLineAdminRoom .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "%0A";
-                $msgLineAdminRoom .= "จาก : " . $booker." ". $request->booking_department. "%0A";              
+                $msgLineAdminRoom .= "จาก : " . $booker." ". $request->booking_department. " (". $request->booking_phone .") %0A";              
                 $msgLineAdminRoom .= "(ดูตารางการใช้งานของห้อง https://e-roombook.eng.cmu.ac.th/room/print/".$request->roomID."/".$uts."/".$roomData->roomFullName.")";
 
                 //แจ้งข้อความเข้าผู้ดูแลห้อง
