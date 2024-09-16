@@ -142,7 +142,7 @@
         top: 15px;
 
         color: #FFFFFF;
-        font-size: 54px;
+        font-size: 50px;
         font-weight: 600;
         width: 650px;
 

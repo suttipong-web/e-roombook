@@ -418,7 +418,8 @@ class RoomsController extends Controller
    
 
                    
-            $roomTitle = $dataroom->roomFullName;
+            //$roomTitle = $dataroom->roomFullName;
+            $roomTitle= ($roomId==6) ? "ห้องประชุม(ข้างห้อง วสท.)":$dataroom->roomFullName;
             return view("room/scinet")->with([
                 'DateTitlePage' => $DateTitlePage,  
                 'getTimeNow' =>$is_time,
