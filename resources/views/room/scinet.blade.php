@@ -102,15 +102,12 @@
             color: #000000;
 
         }
-
         30%,
         60% {
             opacity: 1;
             transform: translate3d(0, 0, 0);
             color: #990000;
-
         }
-
         61%,
         80% {
             opacity: 1;
@@ -140,18 +137,14 @@
         position: absolute;
         right: 20px;
         top: 15px;
-
         color: #FFFFFF;
         font-size: 50px;
         font-weight: 600;
         width: 650px;
-
         text-align: right
     }
 
     .divMaintime {
-
-
         /*	border:1px red solid ;*/
         width: 100%;
         min-height: 1000px;
@@ -161,7 +154,6 @@
 
     .roomeDate {
         background-color: #000000;
-
         width: 390px;
         color: #FFFFFF;
         margin-left: 255px;
@@ -184,7 +176,6 @@
         font-weight: 900;
         font-size: 42px;
     }
-
     .displayNow {
         position: absolute;
         left: 8px;
@@ -193,8 +184,6 @@
 </style>
 
 <body>
-
-
     <div class="containers">
         <div class="roomeName">{{ $RoomTitle }}</div>
         <div class="divMaintime">
@@ -215,15 +204,10 @@
                         </div>
                         <div
                             style="background-image:url(/img/bar.png);width:734px;height:74px;margin-left:195px;position:relative">
-
-
-
-
                             <div style="position:absolute;right:17px;top:15px;">{{ $rows->booking_booker }}</div>
                             <div class="Htitle">
                                 {{ Str::limit($rows->booking_time_start, 5, '') }}-{{ Str::limit($rows->booking_time_finish, 5, '') }}
                             </div>
-
                             <div
                                 style="background-color:#990000;color:#FFFFFF;min-height:80px;width:672px;margin-left:62px;margin-top:8px;padding:15px">
                                 {{ $rows->booking_subject }}

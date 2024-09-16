@@ -84,14 +84,17 @@ class cmuOauthController extends Controller
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
             $users = User::where('email', $email)->first();
-            $getDepN = DB::table('department')
-             ->select('dep_name')
-             ->where('dep_id',$users["dep_id"])           
-             ->get();
-            if (!empty($roomId)) {
-                $roomData = Rooms::find($roomId);
-            }
+      
             if ($users) {
+
+                $getDepN = DB::table('department')
+                        ->select('dep_name')
+                        ->where('dep_id',$users["dep_id"])           
+                        ->get();
+                        if (!empty($roomId)) {
+                            $roomData = Rooms::find($roomId);
+                        }
+
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
                     'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
@@ -130,13 +133,15 @@ class cmuOauthController extends Controller
                     return redirect()->intended('/booking')->with('success', 'Login Successfull');
                 }
             }
+
+
             //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
-            return view('error')->with([
-                'displayError' => true
+            return view('errorLogin')->with([
+                'displayError' => 'cmu Acount not found'
             ]);
         }
-        return view('error')->with([
-            'displayError' => ' '
+        return view('errorLogin')->with([
+            'displayError' => 'cmu Acount not found '
         ]);
     }
 }

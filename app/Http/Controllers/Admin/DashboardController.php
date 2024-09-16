@@ -25,7 +25,8 @@ class DashboardController extends Controller
 
         $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('booking_AdminAction', '')
+            ->where('booking_subject', '0')
+            ->orWhere('booking_rooms.is_read', '0')
             ->get();
 
         return view('admin.dashboard')->with([
@@ -53,7 +54,8 @@ class DashboardController extends Controller
         if ($getStatus == 'Newinbox') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-                ->where('booking_AdminAction', '')
+               ->where('booking_subject', '0')
+               ->orWhere('booking_rooms.is_read', '0')
                 ->get();
             $titlesCard = "รายการขอใช้ห้องมาใหม่ ";
         }
@@ -77,7 +79,8 @@ class DashboardController extends Controller
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')               
                 ->where(function($query) {
                     $query->where('dean_appove_status', 1)
-                          ->orWhere('booking_AdminAction', 'approved');
+                          ->orWhere('booking_AdminAction', 'approved')
+                          ->orWhere('booking_status', '1');
                 })
                 ->get();
             $titlesCard = "รายการขอใช้ห้องที่ทำการอนมุัติ";
@@ -99,8 +102,9 @@ class DashboardController extends Controller
     // return   จำนวนการจอง ที่ยังไม่ได้อนุมัติ
     public function getCountNewBooking()
     {
-        $Count = booking_rooms::where('booking_AdminAction', '')
-            ->count();
+        $Count = booking_rooms:: where('booking_subject', '0')
+               ->orWhere('booking_rooms.is_read', '0')
+              ->count();
         return $Count;
     }
 
@@ -121,7 +125,11 @@ class DashboardController extends Controller
     // return   จำนวนการจองที่ approved
     public function getCountBooking_Approve()
     {
-        $Count = booking_rooms::where('booking_AdminAction', '=', 'approved')->OrWhere('dean_appove_status', 1)->count();
+        $Count = booking_rooms::
+        where('booking_AdminAction', '=', 'approved')
+        ->OrWhere('dean_appove_status', 1)
+        ->orWhere('booking_status', '1')
+        ->count();
         return $Count;
     }
 

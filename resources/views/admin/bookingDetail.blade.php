@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <hr />
-                    @if ($getStatus == 'approved' || $getStatus == 'Newinbox')
+                    @if ( ($getStatus == 'approved' || $getStatus == 'Newinbox') &&   ($detailBooking[0]->booking_subject==0))
                         <div id="accordion">
                             <h3> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h3>
                             <div>
