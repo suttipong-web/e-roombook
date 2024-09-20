@@ -80,13 +80,11 @@ class cmuOauthController extends Controller
         $cmuitaccount = json_decode($responseInfo, true);
         curl_close($curlStep2);
         if (!empty($cmuitaccount["cmuitaccount"])) {
-
             // ตรวจสอบสิทธิของผู้ใช้ ว่าสามาถเข้า Admin ได้ไหม หรือ ประเภท             
             $email = $cmuitaccount["cmuitaccount"];
             $users = User::where('email', $email)->first();
       
             if ($users) {
-
                 $getDepN = DB::table('department')
                         ->select('dep_name')
                         ->where('dep_id',$users["dep_id"])           
@@ -133,7 +131,6 @@ class cmuOauthController extends Controller
                     return redirect()->intended('/booking')->with('success', 'Login Successfull');
                 }
             }
-
 
             //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
             return view('errorLogin')->with([

@@ -9,7 +9,7 @@
                     <div> มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </div>
                     <div>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</div>
                     <div class="mt-3"><strong>โทรศัพท์:</strong> <span>0-539-44175</span></div>
-                    <div class="mt-3"><strong>โทรสาร:</strong> <span>0-5394-2044</span></div>
+                    <div class="mt-3"><strong>โทรสาร:</strong> <span>0-539-44120</span></div>
                     <div><strong>อีเมล:</strong> <span>webmaster@eng.cmu.ac.th</span></div>
                 </div>
             </div>
