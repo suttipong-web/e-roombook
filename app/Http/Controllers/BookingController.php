@@ -222,6 +222,52 @@ class BookingController extends Controller
         );
     }
 
+
+   public function listall(Request $request){
+    $roomID =0;
+    date_default_timezone_set('Asia/Bangkok'); 
+    $class = new HelperService();
+      $datenow = date('Y-m-d');
+     $sql= "SELECT
+                    booking_rooms.*,
+                    rooms.roomFullName,
+                    rooms.roomDetail,rooms.roomSize
+                    FROM
+                    booking_rooms
+                    INNER JOIN rooms ON booking_rooms.roomID = rooms.id
+                    WHERE           
+                    (
+                    booking_rooms.schedule_startdate >= '{$datenow}' 
+                    )
+                    ORDER BY
+                    booking_rooms.booking_time_start ASC";
+         $getBookingList = DB::select(DB::raw($sql));
+
+
+     return view('/room/listAll')->with(
+            [
+                'bookingall' =>$getBookingList
+            ]
+        );
+
+   } 
+
+    public function listallByRoom(Request $request){
+    $roomID =0;
+     date_default_timezone_set('Asia/Bangkok'); 
+      $class = new HelperService();
+      
+     return view('/booking/listall/0')->with(
+            [
+
+            ]
+        );
+
+   } 
+
+
+
+
    public function setform(Request $request)
     {
         $roomID = $request->roomID;

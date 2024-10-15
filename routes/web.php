@@ -33,6 +33,7 @@ Route::get('/scinet/{roomId}', [RoomsController::class, 'displayTvSciNet'])->nam
 Route::get('/exp', function () {
     return view('ex');
 });
+
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
@@ -65,6 +66,10 @@ Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profil
 Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
+
+        Route::get('/listall', [BookingController::class, 'listall'])->name('listall');
+        Route::get('/listall/roomId/', [BookingController::class, 'listall'])->name('listallByRoom');
+
         Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
         Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
