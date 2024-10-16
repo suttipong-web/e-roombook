@@ -112,9 +112,7 @@
         $(function() {
             $("#tableListbooking").DataTable({
                 order: [0, 'ASC']
-            })
-
-
+            });
 
         });
     </script>
