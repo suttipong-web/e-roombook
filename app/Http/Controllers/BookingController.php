@@ -213,7 +213,7 @@ class BookingController extends Controller
         // Load index  view and  data room        
         return view('/bookingroom/search')->with(
             [
-                 'RoomtitleSearch' => $RoomtitleSearch,
+                'RoomtitleSearch' => $RoomtitleSearch,
                 'DateTitleSearch'=> $DateTitleSearch,
                 'getBookingList' => $searhResult,
                 'roomSlc' => $roomDataSlc,
@@ -391,9 +391,13 @@ class BookingController extends Controller
         }
         // ตรวจสอบวันที่เวลา 
         // เวลาเริ่ม 
-        $bkstart = $request->booking_time_start;
+        $bkstart_ = $request->booking_time_start;
         // เวลาสิ้สสุด
-        $bkfinish = $request->booking_time_finish;
+        $bkfinish_ = $request->booking_time_finish;
+
+        $bkstart  =  str_replace(':', '', substr($bkstart_, 0, 5));
+        $bkfinish  =  str_replace(':', '', substr($bkfinish_, 0, 5));
+
 
         $startTime = Carbon::parse($bkstart);
         $endTime = Carbon::parse($bkfinish);
@@ -447,19 +451,25 @@ class BookingController extends Controller
             ->get();
 
         // ยืนยันการจอง
-        $is_confirm = 1;
+        $is_confirm = 1; $text ="";
         $error = true;
         foreach ($ChkTimeBookig as $row_chk) {
+
+            $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5)); 
+            $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5)); 
+
             if (
-                ($bkstart >= $row_chk->booking_time_start && $bkstart < $row_chk->booking_time_finish)
+                ($bkstart >=  $rowchkStart  && $bkstart <  $rowchkEnd)
                 ||
-                ($bkfinish > $row_chk->booking_time_start && $bkfinish <= $row_chk->booking_time_finish)
+                ($bkfinish > $rowchkStart  && $bkfinish <=  $rowchkEnd)
                 ||
-                ($bkstart < $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
-            ) {
+                ($bkstart <  $rowchkStart && $bkfinish >  $rowchkEnd)
+            ) {  
+        
+                $text = 'มีรายการจองของวันนี้แล้ว'.$bkstart.'_'.$bkfinish.'_'.$rowchkStart.'_'.$rowchkEnd;
                 return response()->json([
                     'status' => 208,
-                    'text' => 'มีรายการจองของวันนี้แล้ว'
+                    'text' => ''
                 ]);
                 $error = 0;
                 $is_confirm = 0;

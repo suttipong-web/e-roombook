@@ -102,11 +102,13 @@
                                         </div>
 
                                         <div class="col-md-12 text-danger fst-italic">
-                                             @if ($usertype == 'eng')
-                                             หมายเหตุ : สำหรับการจองห้องช่วงเวลาเสาร์-อาทิตย์ หรือวันหยุด ต้องทำการแนบเอกสารการขอใช้ห้องด้วย 
-                                             @else
-                                             หมายเหตุ : สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14 วันทำการ
-                                             @endif
+                                            @if ($usertype == 'eng')
+                                                หมายเหตุ : สำหรับการจองห้องช่วงเวลาเสาร์-อาทิตย์ หรือวันหยุด
+                                                ต้องทำการแนบเอกสารการขอใช้ห้องด้วย
+                                            @else
+                                                หมายเหตุ : สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14
+                                                วันทำการ
+                                            @endif
                                         </div>
 
                                         <div class="col-md-6">
@@ -138,7 +140,7 @@
                                             <label for="booking_ofPeople" class="form-label">จำนวนผู้ใช้ *</label>
                                             <input type="number" class="form-control" id="booking_ofPeople"
                                                 name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน "
-                                                max="999" maxlength="3"  required/>
+                                                max="999" maxlength="3" required />
                                         </div>
 
                                         <div class="col-md-4">
@@ -152,7 +154,7 @@
                                             <label for="booking_phone" class="form-label">โทรศัพท์ *
                                             </label>
                                             <input type="text" class="form-control" id="booking_phone"
-                                                name="booking_phone" placeholder=" 05394xxxx"  required />
+                                                name="booking_phone" placeholder=" 05394xxxx" required />
                                         </div>
 
                                         <div class="col-12">
@@ -161,13 +163,14 @@
                                             <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
                                         </div>
                                         @if ($usertype == 'eng')
-                                          <div class="text-primary">
-                                               แนบเอกสารขอใช้ห้อง กรณีจองช่วงเวลาเสาร์-อาทิตย์ หรือวันหยุด (ไฟล์ pdf เท่านั้น)  </div>
+                                            <div class="text-primary">
+                                                แนบเอกสารขอใช้ห้อง กรณีจองช่วงเวลาเสาร์-อาทิตย์ หรือวันหยุด (ไฟล์ pdf
+                                                เท่านั้น) </div>
                                             <div class="mb-3">
                                                 <label for="formFile" class="form-label">แนบไฟล์
                                                 </label>
                                                 <input class="form-control" type="file" id="formFile"
-                                                    accept="application/pdf"  name="pdf">
+                                                    accept="application/pdf" name="pdf">
                                                 <br />
                                             </div>
                                             <hr />
@@ -217,7 +220,7 @@
                                                 </div>-->
                                             <div class="col-md-12 mb-3">
                                                 <label for="address_receipt" class="form-label">
-                                                    ที่อยู่ 
+                                                    ที่อยู่
                                                 </label>
                                                 <input type="text" class="form-control" id="address_receipt"
                                                     name="address_receipt" />
@@ -230,9 +233,9 @@
                                         <div class="p-2 text-center text-success " style="font-weight: 800">
                                             @if ($usertype == 'general')
                                                 <hr />
-                                                แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น<br />                                              
+                                                แบบฟอร์มการจองนี้สำหรับบุคคลภายนอกคณะฯ เท่านั้น<br />
                                             @endif
-                                          โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
+                                            โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                         </div>
 
                                         <div class="text-center  justify-content-center  mb-3  ">
@@ -320,7 +323,7 @@
                         if (response.status == 200) {
                             Swal.fire({
                                 title: 'Booking Successful',
-                                text:'ระบบทำรายการจองสำเร็จ',
+                                text: 'ระบบทำรายการจองสำเร็จ',
                                 icon: 'success'
                             }).then((result) => {
                                 $("#add_btn").text('ทำรายการจอง');
@@ -345,7 +348,8 @@
                             //จองไม่ได้
                             Swal.fire({
                                 title: 'ไม่สามารถทำรายการจองได้!.',
-                                text: ' วันหรือเวลาที่ท่านเลือก มีรายการการใช้งานแล้ว โปรดทำการเลือกวันและเวลาของท่านใหม่อีกครั้ง ',
+                                text: ' วันหรือเวลาที่ท่านเลือก มีรายการการใช้งานแล้ว โปรดทำการเลือกวันและเวลาของท่านใหม่อีกครั้ง ' +
+                                    response.text,
                                 icon: 'error'
                             }).then((result) => {
                                 $("#add_btn").text('ทำรายการจอง');
