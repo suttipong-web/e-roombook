@@ -348,12 +348,13 @@ class BookingController extends Controller
 
         $typeId =  (!empty($roomData->roomTypeId))? $request->typeId:'1';
           //ข้อมูลห้อง Select option
+
+        //Select option ข้อมูลห้อง 
         $roomDataSlc = Rooms::orderby('id', 'asc')
-              ->select('id', 'roomFullName')
-              ->where('roomTypeId',  $typeId)
-               ->where('is_open', '1')
-              ->get();
-     
+            ->select('id', 'roomFullName')           
+            ->where('roomTypeId',$roomData->roomTypeId)
+            ->where('is_open', '1')
+            ->get();
 
         return view('/bookingroom/search')->with(
             [
