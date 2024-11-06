@@ -176,7 +176,8 @@ class BookingController extends Controller
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
-            ->where('roomTypeId',1)
+            ->where('roomTypeId', '1')
+            ->where('is_open', '1')
             ->get();
 
         //  $dateBooking = $request->search_date;
