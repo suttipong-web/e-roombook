@@ -484,13 +484,15 @@
                                 _token: csrf
                             },
                             success: function(response) {
-                                console.log(response);
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success'
-                                )
-                                fetchAll();
+                                if (response.status == "deleted") {
+
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
+                                    fetchAll();
+                                }
                             }
                         });
                     }

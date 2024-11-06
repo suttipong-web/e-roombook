@@ -321,9 +321,20 @@ class RoomsController extends Controller
     {
         $id = $request->id;
         $result = Rooms::find($id);
-        if (Storage::delete('public/images/' . $result->thumbnail)) {
-            Rooms::destroy($id);
+        if($result){
+             Rooms::destroy($id);
+             Storage::delete('public/images/' . $result->thumbnail);
+               
+             
+        return response()->json([
+            'status' =>"deleted"      
+        ]); 
+        }else{
+              return response()->json([
+            'status' =>"error"      
+        ]); 
         }
+      
     }
 
     public function detail(Request $request)
@@ -413,11 +424,8 @@ class RoomsController extends Controller
 
                     ORDER BY
                     booking_rooms.booking_time_start ASC";
-                    $listBooking = DB::select(DB::raw($sql));
-            
-   
-
-                   
+                    $listBooking = DB::select(DB::raw($sql));          
+                  
             //$roomTitle = $dataroom->roomFullName;
             $roomTitle= ($roomId==6) ? "ห้องประชุม(ข้างห้อง วสท.)":$dataroom->roomFullName;
             return view("room/scinet")->with([

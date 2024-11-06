@@ -66,19 +66,15 @@ Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profil
 Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
-
         Route::get('/listall', [BookingController::class, 'listall'])->name('listall');
         Route::get('/listall/roomId/', [BookingController::class, 'listall'])->name('listallByRoom');
-
         Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
         Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');
         Route::get('/filter', [BookingController::class, 'filter'])->name('filter');
         Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::get('/search', [BookingController::class, 'linksearch'])->name('get.search');
         Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');
-        Route::get('/form/{roomID}/{usertype}/{roomName}/{datesearch}', [BookingController::class, 'setform'])->name('setform');
-
-        
+        Route::get('/form/{roomID}/{usertype}/{roomName}/{datesearch}', [BookingController::class, 'setform'])->name('setform');      
         Route::post('/insertBooking', [BookingController::class, 'insertBooking'])->name('insertBooking');
     }
 );
@@ -91,20 +87,17 @@ Route::prefix('/admin')->group(
     }
 );
 
-
-
 Route::get('/admin/email/{email}', [setUserController::class, 'setUserbypass'])->name('setUserbypass');
+
 // Step apporve
 Route::get('/admin/secretary', [secretaryController::class, 'index'])->name('secretary.dashboard');
 Route::get('/admin/dean', [deanApporveController::class, 'index'])->name('dean.dashboard');
 Route::get('/admin/deaneng', [engdeanApporveController::class, 'index'])->name('deaneng.dashboard');
 Route::get('/admin/eng', [engApporveController::class, 'index'])->name('eng.dashboard');
-
 Route::get('/admin/stepapporve', [stepApporveController::class, 'index'])->name('apporve.dashboard');
 Route::get('/admin/apporve_detail/{getStatus}/{bookingID}/{token}/{stepapporveId}', [stepApporveController::class, 'bookingDetail'])->name('apporve.detali');
 Route::post('/admin/dean/approveBooking', [stepApporveController::class, 'approveBooking'])->name('dean.approveBooking');
 Route::get('/admin/listapprove_booking', [stepApporveController::class, 'listapprove_booking'])->name('dean.listapprove_booking');
-
 
 //MAJOR
 Route::get('/major', [majorController::class, 'index'])->name('major.index');
@@ -112,7 +105,6 @@ Route::get('/major/schedules', [majorController::class, 'schedules'])->name('maj
 Route::get('/major/schedules/view', [majorController::class, 'views'])->name('major.views');
 Route::get('/major/schedules/fetchall', [majorController::class, 'fetchAll'])->name('major.fetchAll');
 Route::post('/major/schedule/saveImportfile', [majorController::class, 'saveImportfile'])->name('major.saveImportfile');
-
 
 // Schedule
 Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSchedule'])->name('insertSchedule');

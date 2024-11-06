@@ -145,7 +145,7 @@ class ScheduleDepController extends Controller
             SELECT room_schedules.roomID , rooms.roomFullName,rooms.roomTitle ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id
-            WHERE (room_schedules.straff_account = '" . $Byuser . "')  AND  (room_schedules.is_duplicate =0)  ";
+            WHERE (room_schedules.straff_account = '{$Byuser}')  AND  (room_schedules.is_duplicate =0)  ";
         if ($roomId > 0) {
             $sql .= " AND ( room_schedules.roomID ='{$roomId}' ) ";
         }
@@ -211,7 +211,7 @@ class ScheduleDepController extends Controller
                         WHERE 
                         (room_schedules.roomID  = '" . $tableRoom->roomID . "') AND   
                         (room_schedules.is_duplicate =0)  AND 
-                        (room_schedules.straff_account = '" . $Byuser . "') AND 
+                        (room_schedules.straff_account = '{$Byuser}') AND 
                         (                       
                             (room_schedules.schedule_startdate  >= '" . $start_weekDay . "' AND schedule_startdate <  '" . $end_weekDay . "') OR
                             ('" . $start_weekDay . "' > schedule_startdate  AND schedule_enddate <  '" . $end_weekDay . "'  AND schedule_enddate >= '" . $start_weekDay . "' )  OR
