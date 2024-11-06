@@ -89,7 +89,10 @@
                                 <tr class="<?php if ($rows->is_duplicate) {
                                     echo 'bg-danger text-white';
                                 } ?>">
-                                    <td> {{ $getService->convertDateThaiWithTime($rows->updated_at, true, true) }}</td>
+                                    <td> {{ $rows->updated_at }}
+                                        <!--
+                                                    {{ $getService->convertDateThaiWithTime($rows->updated_at, true, true) }} -->
+                                    </td>
                                     <td>{{ $rows->courseNO }} </td>
                                     <td>{{ $rows->courseTitle }}</td>
                                     <td>{{ $rows->courseSec }}</td>
@@ -420,12 +423,12 @@
 
                         <div class="col-md-4 mt-2 p-2">
                             <!-- <div class="input-group">
-                                                                                                                                                                                                                                                                                        <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
-                                                                                                                                                                                                                                                                                        @foreach ($getService->getAllDayName() as $k => $day_value)
+                                                                                                                                                                                                                                                                                                                            <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
+                                                                                                                                                                                                                                                                                                                            @foreach ($getService->getAllDayName() as $k => $day_value)
     <div class="form-check ml-3">
-                                                                                                                                                                                                                                                                          </div>
+                                                                                                                                                                                                                                                                                                              </div>
     @endforeach
-                                                                                                                                                                                                                                                   -->
+                                                                                                                                                                                                                                                                                       -->
                             <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน </label>
                             <select id="schedule_repeatday" class="form-control" name="schedule_repeatday" required>
                                 <option value="0">--- เลือก --- </option>
