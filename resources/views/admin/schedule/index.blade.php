@@ -91,7 +91,7 @@
                                 } ?>">
                                     <td> {{ $rows->updated_at }}
                                         <!--
-                                                    {{ $getService->convertDateThaiWithTime($rows->updated_at, true, true) }} -->
+                                                                {{ $getService->convertDateThaiWithTime($rows->updated_at, true, true) }} -->
                                     </td>
                                     <td>{{ $rows->courseNO }} </td>
                                     <td>{{ $rows->courseTitle }}</td>
@@ -119,6 +119,12 @@
                         @endif
                     </tbody>
                 </table>
+                <form action="/admin/confirmtable" method="post">
+                    <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
+                        <button type="button" class="btn btn-secondary">ยกเลิก</button>
+                        <button type="submit" id="" class="btn btn-primary"> ยืนยันเพิ่มตารางเรียน </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -423,12 +429,12 @@
 
                         <div class="col-md-4 mt-2 p-2">
                             <!-- <div class="input-group">
-                                                                                                                                                                                                                                                                                                                            <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
-                                                                                                                                                                                                                                                                                                                            @foreach ($getService->getAllDayName() as $k => $day_value)
+                                                                                                                                                                                                                                                                                                                                        <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
+                                                                                                                                                                                                                                                                                                                                        @foreach ($getService->getAllDayName() as $k => $day_value)
     <div class="form-check ml-3">
-                                                                                                                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                                                                                                                                          </div>
     @endforeach
-                                                                                                                                                                                                                                                                                       -->
+                                                                                                                                                                                                                                                                                                   -->
                             <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน </label>
                             <select id="schedule_repeatday" class="form-control" name="schedule_repeatday" required>
                                 <option value="0">--- เลือก --- </option>

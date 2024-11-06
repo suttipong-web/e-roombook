@@ -114,8 +114,13 @@
                                 </tr>
                             @endforeach
                         @endif
+
                     </tbody>
                 </table>
+                <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
+                    <button type="button" class="btn btn-secondary">ยกเลิก</button>
+                    <button type="submit" id="edit_btn" class="btn btn-primary"> ยืนยัน </button>
+                </div>
             </div>
         </div>
     </div>

@@ -13,6 +13,7 @@ class HelperService
 
    public static function convertDateThaiWithTime($arg,$addtime ,$short)
     {
+        if(!empty($arg)) {
           //2024-06-25 07:01:07
         $tempDateTime = explode(" ", $arg);
         $tempDate = explode("-",  $tempDateTime[0]);
@@ -34,6 +35,7 @@ class HelperService
         }
 
         return $setdate;
+      }
     }
 
     public  function  get_TimenowConvert($dt) {
