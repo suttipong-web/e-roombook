@@ -106,30 +106,13 @@ class ScheduleroomController extends Controller
                 $day2 = "";
                 //$repeat_day = '2';
                 // $repeat_day = ($row['schedule_repeatday'] != "") ? explode(",", $row['schedule_repeatday']) : [];
-
-                $repeat_day = ($row->schedule_repeatday != "") ? $row->schedule_repeatday : '';
-                        $day1 = "";
-                        $day2 = "";
-                        $list = DB::table('listdays')->where('dayTitle', $row->schedule_repeatday)->first();
-                        if ($list) {
-                            if ($list->id < 8) {
-                                $day1 = $list->dayList;
-                            } else {
-                                $temp = explode(",", $list->dayList);
-                                $day1 = $temp[0];
-                                $day2 = $temp[1];
-                            }
-                        }
-
-                
                 $data_schedule[] = array(
                     "id" => $row->id,
                     "start_date" => $row->schedule_startdate,
                     "end_date" => $row->schedule_enddate,
                     "start_time" => $row->booking_time_start,
                     "end_time" => $row->booking_time_finish,
-                    "repeat_day" => $day1,
-                   "repeat_day2" => $day2,
+                    "repeat_day" => $repeat_day,
                     "title" => $row->booking_subject,
                     "depName" => $row->booking_department,
                     "sec" => $row->booking_booker,
@@ -138,7 +121,6 @@ class ScheduleroomController extends Controller
                      "booking_phone" => $row->booking_phone,
                     "building" => $row->roomTitle
                 );
-          
             }
         }
         // var_dump($data_schedule);
@@ -170,8 +152,7 @@ class ScheduleroomController extends Controller
                                     "sec" => $row['sec'],
                                     "depName" => $row['depName'],
                                     "booking_phone" => $row['booking_phone'],                                    
-                                    'UserChkDay' => $row['repeat_day'],
-                                    'UserChkDay2' => $row['repeat_day2']
+                                    'UserChkDay' => $row['repeat_day']
                                 ];
                             }
                         }
@@ -291,16 +272,12 @@ class ScheduleroomController extends Controller
                     }
 
                     $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
-                 
-                    if (($dayKeyChk == $row_day['UserChkDay'] || $dayKeyChk == $row_day['UserChkDay2']) ) {
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
                                     <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . '</a></div>';
                 }
-
-            }
                 //$outputBody .= "" . $strLop;
             }
             $outputBody .= ' </div></td></tr>';
