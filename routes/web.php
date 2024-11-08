@@ -107,6 +107,8 @@ Route::get('/major/schedules/fetchall', [majorController::class, 'fetchAll'])->n
 Route::post('/major/schedule/saveImportfile', [majorController::class, 'saveImportfile'])->name('major.saveImportfile');
 
 // Schedule
+
+Route::get('/admin/confirmtable', [ScheduleDepController::class, 'insertCorusetoTablebooking'])->name('insertCorusetoTablebooking');
 Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSchedule'])->name('insertSchedule');
 Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
 Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');
@@ -115,8 +117,10 @@ Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll
 Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
 Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
 
-Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 
+
+
+Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/admin/bookingDetail', [DashboardController::class, 'bookingDetail'])->name('bookingDetail');

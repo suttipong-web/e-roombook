@@ -430,6 +430,110 @@ class ScheduleDepController extends Controller
         // return $output;
     }
     
+    // insertCorusetoTablebooking  นำข้อมูลไปลงในตาราง table จริงๆ 
+
+    public function insertCorusetoTablebooking(Request $request){
+        
+        $Byuser =  $request->session()->get('cmuitaccount');
+         ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
+         $sql= "
+                    SELECT
+                        room_schedules.*,
+                        rooms.roomFullName,
+                        rooms.roomTitle,
+                        rooms.roomToken
+                        FROM
+                        room_schedules
+                        INNER JOIN rooms ON room_schedules.roomID = rooms.id
+                        WHERE                        
+                        (room_schedules.is_duplicate =0)  AND 
+                        (room_schedules.straff_account = '{$Byuser}')                     
+                        ORDER BY  schedule_startdate ASC  
+                    " ;
+                $resultBooking = DB::select(DB::raw($sql));
+               echo $sql ;
+                $data_schedule = array();
+                if ($resultBooking) {
+                   //  echo print_r($resultBooking);
+                /* room_schedules.id,
+                room_schedules.courseNO,
+                room_schedules.courseTitle,
+                room_schedules.courseSec,
+                room_schedules.Stdamount,
+                room_schedules.schedule_startdate,
+                room_schedules.schedule_enddate,
+                room_schedules.booking_time_start,
+                room_schedules.booking_time_finish,
+                room_schedules.roomNo,
+                room_schedules.roomID,
+                room_schedules.lecturer,
+                room_schedules.description,
+                room_schedules.is_confirm,
+                room_schedules.admin_confirm,
+                room_schedules.is_confirm_date,
+                room_schedules.admin_confirm_date,
+                room_schedules.staffupdated,
+                room_schedules.straff_account,
+                room_schedules.schedule_repeatday,
+                room_schedules.courseofyear,
+                room_schedules.terms,
+                room_schedules.is_import_excel,
+                room_schedules.is_duplicate,
+                room_schedules.created_at,
+                room_schedules.updated_at */
+                    foreach ($resultBooking as $row) {
+                        // insert 
+                        $roomID = $row->roomID;
+                   
+
+                    }
+                }       
+                
+        return view('admin.schedule.importconfirm')->with([
+            'getBookingList' => $resultBooking
+         
+        ]);
+    }
+
+    // ฟังก์ชันแปลงวันที่พุทธศักราชเป็นคริสต์ศักราช
+    function convertThaiDateToGregorian($thai_date) {
+        $date_parts = explode('/', $thai_date);
+        $date_parts[2] -= 543; // แปลงเป็นปีคริสต์ศักราช
+        return implode('/', $date_parts);
+    }
+
+
+    function getDateofday ($start_date, $end_date) {
+        $dates = [];
+
+        // แปลงวันที่เริ่มต้นและสิ้นสุดให้เป็น DateTime
+        $current_date = new DateTime($start_date);
+        $end_date = new DateTime($end_date);
+
+        // ลูปจนถึงวันที่สิ้นสุด
+        while ($current_date <= $end_date) {
+            // ตรวจสอบว่าเป็นวันอังคาร (2) หรือวันศุกร์ (5)
+            if (in_array($current_date->format('N'), [2, 5])) {
+                $dates[] = $current_date->format('d/m/Y');
+            }
+            $current_date->modify('+1 day'); // เลื่อนวันไปข้างหน้า
+        }
+
+        return $dates;
+}
+
+
+     
+
+
+
+
+
+
+
+
+
+
     public function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();
