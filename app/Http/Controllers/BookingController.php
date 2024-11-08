@@ -578,7 +578,7 @@ class BookingController extends Controller
                if ($tokenUSer) {
                     // lop หากมี Admin หลายคน                
                     foreach ($tokenUSer as $admins) {
-                        $class->sendMessageTOline($admins->lineToken, $msgLineAdminRoom);
+                       // $class->sendMessageTOline($admins->lineToken, $msgLineAdminRoom);
                     }
                 }
 
