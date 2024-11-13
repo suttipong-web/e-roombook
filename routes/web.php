@@ -59,9 +59,6 @@ Route::prefix('/profile')->group(
 Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profile.logout');
 
 
-
-
-
 // Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
 Route::prefix('/booking')->group(
     function () {

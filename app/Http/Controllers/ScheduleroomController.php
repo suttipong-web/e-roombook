@@ -48,11 +48,10 @@ class ScheduleroomController extends Controller
         $num_dayShow = 7;  // จำนวนวันที่โชว์ 1 - 7
         $sc_timeStep = array();
         $sc_numCol = 0;
-          $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
-          $hour_block_width = 90;      
+        $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
+        $hour_block_width = 90;      
        
-  
-
+       
         ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
         $uts = "";
         if ($request->uts) {

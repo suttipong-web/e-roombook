@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\ScheduleImport;
+use App\Models\booking_rooms;
 use App\Models\Listday;
 use App\Models\Rooms;
 use App\Models\roomSchedule;
@@ -451,7 +452,7 @@ class ScheduleDepController extends Controller
                         ORDER BY  schedule_startdate ASC  
                     " ;
                 $resultBooking = DB::select(DB::raw($sql));
-               echo $sql ;
+                //echo $sql ;
                 $data_schedule = array();
                 if ($resultBooking) {
                    //  echo print_r($resultBooking);
@@ -481,11 +482,51 @@ class ScheduleDepController extends Controller
                 room_schedules.is_duplicate,
                 room_schedules.created_at,
                 room_schedules.updated_at */
+                $booking_subject ="";
                     foreach ($resultBooking as $row) {
+                        //echo $row->schedule_repeatday;
+                        
+                       $numofday  =  $this->getListNumOfDay($row->schedule_repeatday);
+                      //  echo "<br/>".$numofday;
+                       $loopdate  =$this->getDateofday($row->schedule_startdate,$row->schedule_enddate,$numofday);
+                      // echo print_r($loopdate);
                         // insert 
-                        $roomID = $row->roomID;
-                   
+                        $roomID = $row->roomID;   
+                      
 
+                        $booking_subject =   $row->courseNO." (".$row->courseSec.")". $row->courseTitle;
+                        $booking_department ="";
+                       
+                        foreach ($loopdate as  $is_date) {
+                              //  echo "is_date=>".$is_date;
+                    
+                            $no = time(); 
+                            $bookingToken = md5(time());
+                            $setDataBooking = [
+                                    'booking_no' => $no,
+                                    'bookingToken' => $bookingToken,
+                                    'roomID' => $row->roomID,
+                                    'booking_date' => $is_date,
+                                    'booking_time_start' => $row->booking_time_start,
+                                    'booking_time_finish' => $row->booking_time_finish,
+                                    'booking_subject' => $booking_subject,
+                                    'booking_booker' => $request->booking_booker,
+                                    'booking_ofPeople' => $row->Stdamount,
+                                    'booking_department' =>  $booking_department,
+                                    'schedule_startdate' =>  $is_date,
+                                    'schedule_enddate' => $is_date,
+                                    'booking_phone' => '',
+                                    'booking_email' => '',
+                                    'booker_cmuaccount' => $Byuser,
+                                    'description' => '', 
+                                    'booking_type' => 'eng',
+                                    'booking_at' => Carbon::now(),
+                                    'booking_fileurl' => '',
+                                    'booking_status' => '1',
+                                    'booking_code_cancel'=>'aodengit'
+                                ];      
+                              $result = booking_rooms::create($setDataBooking);   
+                        } 
                     }
                 }       
                 
@@ -502,39 +543,65 @@ class ScheduleDepController extends Controller
         return implode('/', $date_parts);
     }
 
+function getDatebyday($startDate, $endDate,$days) {
+    // สร้าง DateTime objects สำหรับวันที่เริ่มต้นและสิ้นสุด
+    $start =   Carbon::parse($startDate);
+    $end =  Carbon::parse($endDate);
 
-    function getDateofday ($start_date, $end_date) {
-        $dates = [];
+    $days =  2;
 
-        // แปลงวันที่เริ่มต้นและสิ้นสุดให้เป็น DateTime
-        $current_date = new DateTime($start_date);
-        $end_date = new DateTime($end_date);
+    // อาร์เรย์เพื่อเก็บผลลัพธ์
+    $result = [];
 
-        // ลูปจนถึงวันที่สิ้นสุด
-        while ($current_date <= $end_date) {
-            // ตรวจสอบว่าเป็นวันอังคาร (2) หรือวันศุกร์ (5)
-            if (in_array($current_date->format('N'), [2, 5])) {
-                $dates[] = $current_date->format('d/m/Y');
-            }
-            $current_date->modify('+1 day'); // เลื่อนวันไปข้างหน้า
+    // Loop จนกระทั่งถึงวันที่สิ้นสุด
+    while ($start <= $end) {
+        // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
+        if ($start->format('N') == 2) {
+            $result[] = $start->format('Y-m-d');
+        } elseif ($start->format('N') == 5) {
+            $result[] = $start->format('Y-m-d');
         }
 
-        return $dates;
+        // เพิ่มวันที่ทีละหนึ่งวัน
+        $start->modify('+1 day');
+    }
+
+    return $result;
+}
+ public  function getDateofday ($start_date, $end_date,$days) {
+       // สร้าง Carbon objects สำหรับวันที่เริ่มต้นและสิ้นสุด
+        $start = Carbon::parse($start_date);
+        $end = Carbon::parse($end_date);
+
+        // อาร์เรย์เพื่อเก็บผลลัพธ์
+         $result = [];
+
+        // Loop จนกระทั่งถึงวันที่สิ้นสุด
+        while ($start->lte($end)) {
+            // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
+            if ($start->dayOfWeek == Carbon::TUESDAY) {
+                $result[] = $start->toDateString();
+            } elseif ($start->dayOfWeek == Carbon::FRIDAY) {
+                $result[] = $start->toDateString();
+            }
+            // เพิ่มวันที่ทีละหนึ่งวัน
+            $start->addDay();
+        }
+        return $result;
 }
 
+public function getListNumOfDay($days) {
+    $sql = "SELECT
+            listdays.numofday
+            FROM `listdays`
+            WHERE
+            listdays.dayTitle = 'TuF' ";
+            $resultlistdays = DB::select(DB::raw($sql));
 
-     
-
-
-
-
-
-
-
-
-
-
-    public function getListDay($days)
+        $result = $resultlistdays[0]->numofday;
+        return $result;
+}
+public function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();
 

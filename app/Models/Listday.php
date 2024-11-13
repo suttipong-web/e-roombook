@@ -10,6 +10,7 @@ class Listday extends Model
     use HasFactory;
     protected $fillable = [
             'dayTitle',
-            'dayList'
+            'dayList',
+            'numofday'
     ];
 } 
