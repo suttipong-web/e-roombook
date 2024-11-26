@@ -182,7 +182,7 @@
                                             <td class="text-start" colspan="3">
 
                                                 <!-- <a href="/storage/app/public/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                                                                                target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
+                                                                                                                            target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
 
                                                 <a href="{{ asset('/upload/' . $detailBooking[0]->booking_fileurl) }}"
                                                     target="_blank" class="btn btn-primary">
@@ -382,21 +382,21 @@
                                                     <label for="formFile" class="form-label">1. แนบไฟล์
                                                     </label>
                                                     <input class="form-control" type="file" id="formFile"
-                                                        accept="application/pdf" required name="pdf1">
+                                                        accept="application/pdf" name="pdf1">
                                                     <br />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="formFile" class="form-label">2. แนบไฟล์
                                                     </label>
                                                     <input class="form-control" type="file" id="formFile"
-                                                        accept="application/pdf" required name="pdf2">
+                                                        accept="application/pdf" name="pdf2">
                                                     <br />
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="formFile" class="form-label">3. แนบไฟล์
                                                     </label>
                                                     <input class="form-control" type="file" id="formFile"
-                                                        accept="application/pdf" required
+                                                        accept="application/pdf"
                                                         name="pdf3>
                                                     <br />
                                                 </div>
