@@ -182,7 +182,7 @@
                                             <td class="text-start" colspan="3">
 
                                                 <!-- <a href="/storage/app/public/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                                        target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
+                                                                                                                target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
 
                                                 <a href="{{ asset('/upload/' . $detailBooking[0]->booking_fileurl) }}"
                                                     target="_blank" class="btn btn-primary">
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <hr />
-                    @if ( ($getStatus == 'approved' || $getStatus == 'Newinbox') &&   ($detailBooking[0]->booking_subject==0))
+                    @if (($getStatus == 'approved' || $getStatus == 'Newinbox') && $detailBooking[0]->booking_subject == 0)
                         <div id="accordion">
                             <h3> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h3>
                             <div>
@@ -260,10 +260,10 @@
                                             <div class="form-group col-md-12">
                                                 <label for="formFile" class="form-label">แนบไฟล์ </label>
                                                 <input class="form-control" type="file" id="formFile1"
-                                                    accept="application/pdf"  name="addfile1">
+                                                    accept="application/pdf" name="addfile1">
                                                 <br />
                                                 <input class="form-control" type="file" id="formFile2"
-                                                    accept="application/pdf"  name="addfile2">
+                                                    accept="application/pdf" name="addfile2">
 
                                             </div>
                                         </div>
@@ -369,91 +369,123 @@
                                         </div>
                                         <div class="p-2 text-left">
                                             <div class="form-group">
-                                                <label for="exampleFormControlTextarea1"> ข้อความ </label>
+                                                <label for="exampleFormControlTextarea1"> ข้อความ / หมายเหตุ </label>
                                                 <textarea class="form-control" id="msgSend" name="msgSend" rows="3"></textarea>
                                             </div>
                                         </div>
                                         <div class="p-2 text-left">
-                                            <hr />
-                                            * หมายเหตุ
-                                            <div class="text-danger">* การ "ไม่อนุมติ" คือการยกเลิกรายการจองห้อง
-                                                โดยจะถูกลบออกและจะมีผลทันที กรุณาตรวจสอบก่อนยกเลิก </div>
-                                            <div class="text-danger">* การ "ส่งต่อผู้บริหาร" คือ
-                                                การส่งให้ผู้บริหารอนุมัติรายการขอใช้ห้อง
-                                                และท่านจะไม่สามารถทำการอนุมัติรายการนี้ได้อีก </div>
+                                            <div class="form-group">
+                                                <div class="text-primary">
+                                                    การแนบไฟล์เอกสารขอใช้
+                                                    เพื่อใช้ประกอบการพิจารณาอนุมัติใช้งาน (ไฟล์ pdf เท่านั้น) * </div>
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">1. แนบไฟล์
+                                                    </label>
+                                                    <input class="form-control" type="file" id="formFile"
+                                                        accept="application/pdf" required name="pdf1">
+                                                    <br />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">2. แนบไฟล์
+                                                    </label>
+                                                    <input class="form-control" type="file" id="formFile"
+                                                        accept="application/pdf" required name="pdf2">
+                                                    <br />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">3. แนบไฟล์
+                                                    </label>
+                                                    <input class="form-control" type="file" id="formFile"
+                                                        accept="application/pdf" required
+                                                        name="pdf3>
+                                                    <br />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <input type="hidden" name="hinden_bookingID"
-                                            value="{{ $detailBooking[0]->id }}">
-                                        <button type="submit" id="btnActionssubmit" class="btn btn-primary mx-3">
-                                            ดำเนินการ
-                                        </button>
+                                        <div class="p-2
+                                                        text-left">
+                                                    <hr />
+                                                    * หมายเหตุ
+                                                    <div class="text-danger">* การ "ไม่อนุมติ" คือการยกเลิกรายการจองห้อง
+                                                        โดยจะถูกลบออกและจะมีผลทันที กรุณาตรวจสอบก่อนยกเลิก </div>
+                                                    <div class="text-danger">* การ "ส่งต่อผู้บริหาร" คือ
+                                                        การส่งให้ผู้บริหารอนุมัติรายการขอใช้ห้อง
+                                                        และท่านจะไม่สามารถทำการอนุมัติรายการนี้ได้อีก </div>
+                                                </div>
+                                                <input type="hidden" name="hinden_bookingID"
+                                                    value="{{ $detailBooking[0]->id }}">
+                                                <button type="submit" id="btnActionssubmit"
+                                                    class="btn btn-primary mx-3">
+                                                    ดำเนินการ
+                                                </button>
 
 
-                                    </div>
-                                @elseif ($getStatus == 'ForwardDean')
-                                    <div class="alert alert-info d-flex- align-items-center text-center" role="alert">
-                                        <div>
-                                            <h1><i class="bi bi-skip-forward-circle"></i></h1>
-                                            <h3>รายการถูกส่งต่อให้ผู้บริหาร </h3>
-                                        </div>
-                                        <div>
+                                            </div>
+                                        @elseif ($getStatus == 'ForwardDean')
+                                            <div class="alert alert-info d-flex- align-items-center text-center"
+                                                role="alert">
+                                                <div>
+                                                    <h1><i class="bi bi-skip-forward-circle"></i></h1>
+                                                    <h3>รายการถูกส่งต่อให้ผู้บริหาร </h3>
+                                                </div>
+                                                <div>
 
-                                        </div>
-                                    </div>
-                                @elseif ($getStatus == 'canceled')
-                                    <div class="alert alert-warning d-flex- align-items-center text-center"
-                                        role="alert">
-                                        <div>
-                                            <h1><i class="bi bi-slash-circle"></i></h1>
-                                            <h3>ยกเลิกรายการแล้ว</h3>
-                                        </div>
-                                        <div>
+                                                </div>
+                                            </div>
+                                        @elseif ($getStatus == 'canceled')
+                                            <div class="alert alert-warning d-flex- align-items-center text-center"
+                                                role="alert">
+                                                <div>
+                                                    <h1><i class="bi bi-slash-circle"></i></h1>
+                                                    <h3>ยกเลิกรายการแล้ว</h3>
+                                                </div>
+                                                <div>
 
-                                            ถูกยกเลิกโดย : <span id="admin_action_acount">
-                                                {{ $getService->getFullNameCmuAcount($detailBooking[0]->admin_action_acount) }}
-                                            </span> <br />
-                                            เมื่อ : <span id="admin_action_date">
-                                                {{ $getService->convertDateThai($detailBooking[0]->admin_action_date, '', true) }}
-                                            </span>
-                                            <hr />
-                                        </div>
-                                    </div>
-                                @elseif ($getStatus == 'approved')
-                                    <div class="alert alert-success d-flex- align-items-center text-center"
-                                        role="alert">
-                                        <div>
-                                            <h1><i class="bi bi-check-circle-fill"></i></h1>
-                                            <h3>รายการอนุมัติแล้ว</h3>
-                                        </div>
-                                        <div class="">
-                                            @if (!empty($detailBooking[0]->dean_action_date))
-                                                อนุมติโดย :
-                                                <span id="admin_action_acount">
-                                                    @if (!empty($detailBooking[0]->dean_action_acount))
-                                                        {{ $getService->getFullNameCmuAcount($detailBooking[0]->dean_action_acount) }}
-                                                    @endif
-                                                </span>
-                                                <br />
-                                                เมื่อ : <span id="admin_action_date">
-                                                    {{ $getService->convertDateThai($detailBooking[0]->dean_action_date, true, true) }}
-                                                </span>
-                                            @else
-                                                อนุมติโดย :
-                                                <span id="admin_action_acount">
-
-                                                    @if (!empty($detailBooking[0]->admin_action_acount))
+                                                    ถูกยกเลิกโดย : <span id="admin_action_acount">
                                                         {{ $getService->getFullNameCmuAcount($detailBooking[0]->admin_action_acount) }}
+                                                    </span> <br />
+                                                    เมื่อ : <span id="admin_action_date">
+                                                        {{ $getService->convertDateThai($detailBooking[0]->admin_action_date, '', true) }}
+                                                    </span>
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                        @elseif ($getStatus == 'approved')
+                                            <div class="alert alert-success d-flex- align-items-center text-center"
+                                                role="alert">
+                                                <div>
+                                                    <h1><i class="bi bi-check-circle-fill"></i></h1>
+                                                    <h3>รายการอนุมัติแล้ว</h3>
+                                                </div>
+                                                <div class="">
+                                                    @if (!empty($detailBooking[0]->dean_action_date))
+                                                        อนุมติโดย :
+                                                        <span id="admin_action_acount">
+                                                            @if (!empty($detailBooking[0]->dean_action_acount))
+                                                                {{ $getService->getFullNameCmuAcount($detailBooking[0]->dean_action_acount) }}
+                                                            @endif
+                                                        </span>
+                                                        <br />
+                                                        เมื่อ : <span id="admin_action_date">
+                                                            {{ $getService->convertDateThai($detailBooking[0]->dean_action_date, true, true) }}
+                                                        </span>
+                                                    @else
+                                                        อนุมติโดย :
+                                                        <span id="admin_action_acount">
+
+                                                            @if (!empty($detailBooking[0]->admin_action_acount))
+                                                                {{ $getService->getFullNameCmuAcount($detailBooking[0]->admin_action_acount) }}
+                                                            @endif
+                                                        </span>
+                                                        <br />
+                                                        เมื่อ : <span id="admin_action_date">
+                                                            {{ $getService->convertDateThai($detailBooking[0]->admin_action_date, true, true) }}
+                                                        </span>
                                                     @endif
-                                                </span>
-                                                <br />
-                                                เมื่อ : <span id="admin_action_date">
-                                                    {{ $getService->convertDateThai($detailBooking[0]->admin_action_date, true, true) }}
-                                                </span>
-                                            @endif
 
 
-                                        </div>
-                                    </div>
+                                                </div>
+                                            </div>
                                 @endif
                             </div>
                         </div>
