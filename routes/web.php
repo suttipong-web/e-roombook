@@ -106,6 +106,7 @@ Route::post('/major/schedule/saveImportfile', [majorController::class, 'saveImpo
 // Schedule
 
 Route::get('/admin/confirmtable', [ScheduleDepController::class, 'insertCorusetoTablebooking'])->name('insertCorusetoTablebooking');
+Route::get('/admin/report_confirmtable', [ScheduleDepController::class, 'insertCorusetoTablebooking'])->name('insertCorusetoTablebooking');
 Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSchedule'])->name('insertSchedule');
 Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
 Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');

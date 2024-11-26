@@ -442,8 +442,7 @@ class BookingController extends Controller
             $is_confirm = 0;
        // }
 
-        //ตรวจสอบว่าจองเวลานี้ได้ไหม 
-
+        //ตรวจสอบว่าจองเวลานี้ได้ไหม         
         $ChkTimeBookig = DB::table('booking_rooms')
             ->select('booking_time_start', 'booking_time_finish')
             ->where('booking_rooms.roomID', $request->roomID)
@@ -451,7 +450,7 @@ class BookingController extends Controller
             ->where('booking_rooms.schedule_startdate', '>=', $schedule_startdate)
             ->where('booking_rooms.schedule_enddate', '<=', $schedule_enddate)
             ->get();
-
+            
         // ยืนยันการจอง
         $is_confirm = 1; $text ="";
         $error = true;

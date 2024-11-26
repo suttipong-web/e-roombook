@@ -47,6 +47,10 @@ class booking_rooms extends Model
         'booking_fileurl',
         'is_read',
         'dean_appove_status',
-        'booking_code_cancel'
+        'booking_code_cancel',
+        'courseofyear',
+        'terms',
+        'is_import_excel',
+        'courseNo'
     ];
 }

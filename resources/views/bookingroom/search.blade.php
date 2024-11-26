@@ -91,12 +91,14 @@
 
 
                                                                     <td style="font-size: 10px;width: 100px;">
-                                                                        @if ((!empty(Session::get('cmuitaccount'))) && (Session::get('cmuitaccount')==  $rows->booking_email))
+                                                                        @if (!empty(Session::get('cmuitaccount')) && Session::get('cmuitaccount') == $rows->booking_email)
                                                                             <a href="#" data-bs-toggle="modal"
                                                                                 data-bs-target="#delModal"
                                                                                 class="btn btn-danger btn-sm clikDel"
-                                                                                id="{{ $rows->id }}" style="font-size: 12px;">
-                                                                               CANCEL<i class="bi bi-x-circle-fill"></i>
+                                                                                id="{{ $rows->id }}"
+                                                                                style="font-size: 12px;">
+                                                                                CANCEL<i
+                                                                                    class="bi bi-x-circle-fill"></i>
                                                                             </a>
                                                                         @endif
                                                                     </td>
@@ -132,18 +134,20 @@
 
                             </div>
 
-                             <?php //$dateUrl =$searchDates;
+                            <?php //$dateUrl =$searchDates;
                             $dateUrl = $getService->convertDateSqlInsert($searchDates);
                             ?>
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
                                     @if (!empty(Session::get('cmuitaccount')))
-                                        <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}" class="btn btn-primary   ml-3  btn-Booking" ><i class="bi bi-vector-pen"></i> ทำรายการจอง</a>
+                                        <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
+                                            class="btn btn-primary   ml-3  btn-Booking"><i class="bi bi-vector-pen"></i>
+                                            ทำรายการจอง</a>
                                     @else
-                                    <button type="button" class="btn btn-primary   ml-3  btn-Booking"
-                                        data-bs-toggle="modal" data-bs-target="#caseBooker">
-                                        <i class="bi bi-vector-pen"></i> ทำรายการจอง
-                                    </button>
+                                        <button type="button" class="btn btn-primary   ml-3  btn-Booking"
+                                            data-bs-toggle="modal" data-bs-target="#caseBooker">
+                                            <i class="bi bi-vector-pen"></i> ทำรายการจอง
+                                        </button>
                                     @endif
 
                                 </div>
@@ -161,7 +165,7 @@
                                     <input type="hidden" name="booking_type" id="booking_type"
                                         value="{{ $usertype }}">
                                     <div class="mb-3">
-                               
+
                                         <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
                                         <select name="slcRoom" id="slcRoom" class="form-select " required>
                                             <option value="0">-- เลือก --</option>
@@ -196,7 +200,7 @@
     </main>
 
 
- {{-- del modal start --}}
+    {{-- del modal start --}}
     <div class="modal fade" id="delModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog ">
@@ -216,9 +220,11 @@
                         </div>
                     </div>-->
                     <p class="text-danger text-center fs-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-</svg>   <br/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+                        </svg> <br />
                         <b class="text-dark"> แน่ใจหรือไม่!!..ในการยกเลิกการจองนี้ของท่าน</b>
                     </p>
                     <div class=" col-12 justify-content-center text-center">
@@ -248,20 +254,24 @@
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action " aria-current="true"
                             style="background-color: #fff;color: #000000;">
-                           
+
                             <div class="d-flex w-100 justify-content-between">
                                 <a href="/booking/form/{{ $searchRoomID }}/general/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                     class="btn " tabindex="-1" role="button" aria-disabled="true">
-                                    <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> บุคคลภายนอกคณะฯ
+                                    <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> บุคคลภายนอกคณะฯ และ
+                                        บุคคลที่ไม่ใด้สังกัดสำนักงานคณะฯ
                                     </h5>
                                 </a>
                             </div>
                             <p class="mb-1">
                             <ul>
-                                <li>คือบุคคลที่ไม่ได้สังกัดคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่</li>
-                                <li class="text-danger"><b>สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14 วันทำการ</b></li>
-                                <li>ต้องทำการแนบเอกสารการขอใช้ห้องประกอบการทำรายการจอง </li>
-                                <li>หากการขอใช้นั้นมีค่าใช้จ่าย ระบบจะทำการส่งรายละเอียดการชำระเงินและผลการอนุมัติการใช้งานไปใน Email ของท่าน</li>
+                                <li>คือบุคคลที่ไม่ได้สังกัดสำนักงานคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่</li>
+                                <li class="text-danger"><b>สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14
+                                        วันทำการ</b></li>
+                                <li>ต้องทำการแนบเอกาใช้จ่าย
+                                    ระบบจะทำการส่งราสารการขอใช้ห้องประกอบการทำรายการจอง </li>
+                                <li>หากการขอใช้นั้นมีค่ยละเอียดการชำระเงินและผลการอนุมัติการใช้งานไปใน Email ของท่าน
+                                </li>
                             </ul>
 
 
@@ -273,9 +283,9 @@
                             aria-current="true" style="background-color: #0899fa;color: #fff;">
                             <div class="d-flex w-100 justify-content-between active">
                                 <?php
-                                $state =  "booking_".$searchRoomID."_".$dateUrl;
-                                $CMUOauth = $getService->geturlCMUOauth( $state);
-                            
+                                $state = 'booking_' . $searchRoomID . '_' . $dateUrl;
+                                $CMUOauth = $getService->geturlCMUOauth($state);
+                                
                                 ?>
                                 <a href="{{ $CMUOauth }}" class=" btn text-white" tabindex="-1" role="button"
                                     aria-disabled="true">
@@ -318,7 +328,7 @@
                     url: "/booking/cancel",
                     method: 'post',
                     data: {
-                        bookingId: $('#delBookingId').val(),                       
+                        bookingId: $('#delBookingId').val(),
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

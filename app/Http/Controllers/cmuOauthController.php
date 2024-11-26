@@ -85,6 +85,7 @@ class cmuOauthController extends Controller
             $users = User::where('email', $email)->first();
       
             if ($users) {
+                if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28) {
                 $getDepN = DB::table('department')
                         ->select('dep_name')
                         ->where('dep_id',$users["dep_id"])           
@@ -131,6 +132,7 @@ class cmuOauthController extends Controller
                     return redirect()->intended('/booking')->with('success', 'Login Successfull');
                 }
             }
+           }
 
             //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
             return view('errorLogin')->with([

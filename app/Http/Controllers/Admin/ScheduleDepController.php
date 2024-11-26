@@ -436,6 +436,7 @@ class ScheduleDepController extends Controller
     public function insertCorusetoTablebooking(Request $request){
         
         $Byuser =  $request->session()->get('cmuitaccount');
+        $strerror=[];
          ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
          $sql= "
                     SELECT
@@ -452,56 +453,59 @@ class ScheduleDepController extends Controller
                         ORDER BY  schedule_startdate ASC  
                     " ;
                 $resultBooking = DB::select(DB::raw($sql));
-                //echo $sql ;
+               // echo $sql ;
                 $data_schedule = array();
                 if ($resultBooking) {
-                   //  echo print_r($resultBooking);
-                /* room_schedules.id,
-                room_schedules.courseNO,
-                room_schedules.courseTitle,
-                room_schedules.courseSec,
-                room_schedules.Stdamount,
-                room_schedules.schedule_startdate,
-                room_schedules.schedule_enddate,
-                room_schedules.booking_time_start,
-                room_schedules.booking_time_finish,
-                room_schedules.roomNo,
-                room_schedules.roomID,
-                room_schedules.lecturer,
-                room_schedules.description,
-                room_schedules.is_confirm,
-                room_schedules.admin_confirm,
-                room_schedules.is_confirm_date,
-                room_schedules.admin_confirm_date,
-                room_schedules.staffupdated,
-                room_schedules.straff_account,
-                room_schedules.schedule_repeatday,
-                room_schedules.courseofyear,
-                room_schedules.terms,
-                room_schedules.is_import_excel,
-                room_schedules.is_duplicate,
-                room_schedules.created_at,
-                room_schedules.updated_at */
-                $booking_subject ="";
+              
+                $booking_subject ="";    
                     foreach ($resultBooking as $row) {
                         //echo $row->schedule_repeatday;
                         
                        $numofday  =  $this->getListNumOfDay($row->schedule_repeatday);
                       //  echo "<br/>".$numofday;
                        $loopdate  =$this->getDateofday($row->schedule_startdate,$row->schedule_enddate,$numofday);
-                      // echo print_r($loopdate);
+                       // echo print_r($loopdate);
                         // insert 
                         $roomID = $row->roomID;   
-                      
+                   
 
-                        $booking_subject =   $row->courseNO." (".$row->courseSec.")". $row->courseTitle;
-                        $booking_department ="";
-                       
-                        foreach ($loopdate as  $is_date) {
+                        $booking_subject =   $row->courseNO." ( ".$row->courseSec.") ". $row->courseTitle;
+                        $booking_department ="";                       
+                        foreach ($loopdate as  $is_date) {                          
+                            
+                            //ตรวจสอบว่าจองเวลานี้ได้ไหม         
+                            $ChkTimeBookig = DB::table('booking_rooms')
+                                ->select('booking_time_start', 'booking_time_finish')
+                                ->where('booking_rooms.roomID', $roomID )
+                                ->where('booking_rooms.booking_status', '<>', 2)
+                                ->where('booking_rooms.schedule_startdate', '>=',$is_date)
+                                ->where('booking_rooms.schedule_enddate', '<=', $is_date)
+                                ->get();
+                                
+                            // ยืนยันการจอง
+                            $is_confirm = 1; $text ="";
+                            $error = 1;
+                            foreach ($ChkTimeBookig as $row_chk) {
+
+                                $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5)); 
+                                $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5)); 
+
+                                if (
+                                    ($row->booking_time_start >=  $rowchkStart  && $row->booking_time_start<  $rowchkEnd)
+                                    ||
+                                    ( $row->booking_time_finish > $rowchkStart  &&  $row->booking_time_finish <=  $rowchkEnd)
+                                    ||
+                                    ($row->booking_time_start <  $rowchkStart &&  $row->booking_time_finish >  $rowchkEnd)
+                                ) {  
+                                    $error = 0;
+                                    $is_confirm = 0;
+                                } 
+                            }
+
+                            if($error) {
                               //  echo "is_date=>".$is_date;
-                    
                             $no = time(); 
-                            $bookingToken = md5(time());
+                            $bookingToken = md5(time());                       
                             $setDataBooking = [
                                     'booking_no' => $no,
                                     'bookingToken' => $bookingToken,
@@ -523,16 +527,27 @@ class ScheduleDepController extends Controller
                                     'booking_at' => Carbon::now(),
                                     'booking_fileurl' => '',
                                     'booking_status' => '1',
-                                    'booking_code_cancel'=>'aodengit'
+                                    'booking_code_cancel'=>'engit',
+                                    'courseofyear'=> $row->courseofyear,
+                                    'terms'=>$row->terms,
+                                    'is_import_excel'=>'1',
+                                    'courseNo'=>$row->courseNO
                                 ];      
-                              $result = booking_rooms::create($setDataBooking);   
-                        } 
+
+                             $result = booking_rooms::create($setDataBooking);   
+
+
+                            } else {
+                              $strerror[]=$booking_subject." | " . $is_date." |". $row->booking_time_start." - ".$row->booking_time_finish;
+                            }
+                        }
+                     }       
                     }
-                }       
-                
+                  $deletedRows =  DB::table('room_schedules')              
+                ->where('straff_account', $Byuser)
+                ->delete();
         return view('admin.schedule.importconfirm')->with([
-            'getBookingList' => $resultBooking
-         
+                      'strerror'=> $strerror        
         ]);
     }
 
@@ -568,7 +583,7 @@ function getDatebyday($startDate, $endDate,$days) {
 
     return $result;
 }
- public  function getDateofday ($start_date, $end_date,$days) {
+   function getDateofday ($start_date, $end_date,$days) {
        // สร้าง Carbon objects สำหรับวันที่เริ่มต้นและสิ้นสุด
         $start = Carbon::parse($start_date);
         $end = Carbon::parse($end_date);
@@ -590,7 +605,7 @@ function getDatebyday($startDate, $endDate,$days) {
         return $result;
 }
 
-public function getListNumOfDay($days) {
+ function getListNumOfDay($days) {
     $sql = "SELECT
             listdays.numofday
             FROM `listdays`
@@ -601,7 +616,7 @@ public function getListNumOfDay($days) {
         $result = $resultlistdays[0]->numofday;
         return $result;
 }
-public function getListDay($days)
+ function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();
 
