@@ -337,6 +337,7 @@ class BookingController extends Controller
                     booking_rooms.schedule_startdate = '{$dateNow}' OR
                     booking_rooms.schedule_enddate = '{$dateNow}'
                     )
+                    
                     ORDER BY
                     booking_rooms.booking_time_start ASC";
          $searhResult = DB::select(DB::raw($sql));     

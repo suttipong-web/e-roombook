@@ -56,7 +56,7 @@ class ScheduleDepController extends Controller
             $bkstart = $rows->booking_time_start;
             $bkfinish = $rows->booking_time_finish;
 
-            //ตรวจสอบหาวัน /เวลานี้ว่ามีรายการซื้อไหม 
+            //ตรวจสอบหาวัน /เวลานี้ว่ามีรายการซื้ำไหม 
             $sql = " SELECT * FROM `room_schedules` WHERE
                     room_schedules.roomID ='" . $rows->roomID . "'  AND
                     room_schedules.schedule_startdate >= '" . $rows->schedule_startdate . "' AND 
@@ -85,6 +85,51 @@ class ScheduleDepController extends Controller
                                 'is_duplicate' => 1
                             ]);
                     }
+
+                    // ตรวจสอบในตารางจริง
+                         $numofday  =  $this->getListNumOfDay($rows->schedule_repeatday);
+                     //  echo "<br/>".$numofday;
+                         $loopdate  =$this->getDateofday($rows->schedule_startdate,$rows->schedule_enddate,$numofday);
+                    //   echo print_r($loopdate);                                            
+                           $error = 1;            
+                        foreach ($loopdate as  $is_date) {                     
+                            //ตรวจสอบว่าจองเวลานี้ได้ไหม         
+                            $ChkTimeBookig = DB::table('booking_rooms')
+                                ->select('booking_time_start', 'booking_time_finish')
+                                ->where('booking_rooms.roomID', $rows->roomID  )
+                                ->where('booking_rooms.booking_status', '<>', 2)
+                                ->where('booking_rooms.schedule_startdate', '>=',$is_date)
+                                ->where('booking_rooms.schedule_enddate', '<=', $is_date)
+                                ->get();                                
+                            // ยืนยันการจอง
+                            $is_confirm = 1; $text ="";
+                       
+                            foreach ($ChkTimeBookig as $row_chk) {
+                                
+                                $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5)); 
+                                $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5)); 
+                                if (
+                                    ($rows->booking_time_start >=  $rowchkStart  && $rows->booking_time_start<  $rowchkEnd)
+                                    ||
+                                    ( $rows->booking_time_finish > $rowchkStart  &&  $rows->booking_time_finish <=  $rowchkEnd)
+                                    ||
+                                    ($rows->booking_time_start <  $rowchkStart &&  $rows->booking_time_finish >  $rowchkEnd)
+                                ) {                                      
+                                    $error =0;                                   
+                                } 
+                            }
+                        }
+
+                        if($error) {
+                               //เวลาซ้ำ    
+                                    $result = DB::table('room_schedules')
+                                        /*       ->where('id', $rows->id)*/
+                                        ->where('id', $rows->id)
+                                        ->update([
+                                            'is_duplicate' => 1
+                                        ]);
+                         }
+
                 }
             }
         }
@@ -449,6 +494,8 @@ class ScheduleDepController extends Controller
                         INNER JOIN rooms ON room_schedules.roomID = rooms.id
                         WHERE                        
                         (room_schedules.is_duplicate =0)  AND 
+                        (room_schedules.is_public =0)  AND 
+                        (room_schedules.admin_confirm= 0)  AND 
                         (room_schedules.straff_account = '{$Byuser}')                     
                         ORDER BY  schedule_startdate ASC  
                     " ;
@@ -535,7 +582,9 @@ class ScheduleDepController extends Controller
                                 ];      
 
                              $result = booking_rooms::create($setDataBooking);   
-
+                            
+                              //  UPDATE  status id complete insert table 
+                              DB::table('room_schedules')->where('id', $row->id)->update(['is_public' => 1 ,'is_public_date' => Carbon::now()]);        
 
                             } else {
                               $strerror[]=$booking_subject." | " . $is_date." |". $row->booking_time_start." - ".$row->booking_time_finish;
@@ -543,9 +592,13 @@ class ScheduleDepController extends Controller
                         }
                      }       
                     }
-                  $deletedRows =  DB::table('room_schedules')              
-                ->where('straff_account', $Byuser)
-                ->delete();
+                // $deletedRows =  DB::table('room_schedules')              
+                //->where('straff_account', $Byuser)
+                //->delete();
+
+            
+
+
         return view('admin.schedule.importconfirm')->with([
                       'strerror'=> $strerror        
         ]);

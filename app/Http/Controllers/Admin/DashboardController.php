@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
         $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('booking_subject', '0')
+            ->where('booking_status', '0')
             ->orWhere('booking_rooms.is_read', '0')
             ->get();
 
@@ -54,7 +54,7 @@ class DashboardController extends Controller
         if ($getStatus == 'Newinbox') {
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-               ->where('booking_subject', '0')
+               ->where('booking_status', '0')
                ->orWhere('booking_rooms.is_read', '0')
                 ->get();
             $titlesCard = "รายการขอใช้ห้องมาใหม่ ";
@@ -102,7 +102,7 @@ class DashboardController extends Controller
     // return   จำนวนการจอง ที่ยังไม่ได้อนุมัติ
     public function getCountNewBooking()
     {
-        $Count = booking_rooms:: where('booking_subject', '0')
+        $Count = booking_rooms:: where('booking_status', '0')
                ->orWhere('booking_rooms.is_read', '0')
               ->count();
         return $Count;

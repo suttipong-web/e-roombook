@@ -258,14 +258,13 @@
                             <div class="d-flex w-100 justify-content-between">
                                 <a href="/booking/form/{{ $searchRoomID }}/general/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                     class="btn " tabindex="-1" role="button" aria-disabled="true">
-                                    <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> บุคคลภายนอกคณะฯ และ
-                                        บุคคลที่ไม่ใด้สังกัดสำนักงานคณะฯ
+                                    <h5 class="mb-1"><i class="bi bi-person-bounding-box"></i> บุคคลภายนอกคณะฯ
                                     </h5>
                                 </a>
                             </div>
                             <p class="mb-1">
                             <ul>
-                                <li>คือบุคคลที่ไม่ได้สังกัดสำนักงานคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่</li>
+                                <li>คือบุคคลที่ไม่ได้สังกัดคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่</li>
                                 <li class="text-danger"><b>สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14
                                         วันทำการ</b></li>
                                 <li>ต้องทำการแนบเอกาใช้จ่าย
@@ -290,7 +289,7 @@
                                 <a href="{{ $CMUOauth }}" class=" btn text-white" tabindex="-1" role="button"
                                     aria-disabled="true">
                                     <h5 class="mb-1 text-white"> <i class="bi bi-gear-wide text-white"></i>
-                                        บุคคลที่สังกัดสำนักงานคณะฯ</h5>
+                                        บุคคลหรือหน่วยงานภายใต้คณะวิศวกรรมศาสตร์</h5>
                                 </a>
                             </div>
 

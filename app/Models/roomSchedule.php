@@ -30,8 +30,8 @@ class roomSchedule extends Model
         'straff_account',
         'schedule_repeatday',
         'is_import_excel',
-        'is_duplicate'
-
-
+        'is_duplicate',
+        'is_public',
+        'is_public_date'
     ];
 }

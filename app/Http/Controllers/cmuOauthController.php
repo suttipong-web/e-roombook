@@ -85,8 +85,8 @@ class cmuOauthController extends Controller
             $users = User::where('email', $email)->first();
       
             if ($users) {
-                if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28) {
-                $getDepN = DB::table('department')
+                //if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28) {
+                     $getDepN = DB::table('department')
                         ->select('dep_name')
                         ->where('dep_id',$users["dep_id"])           
                         ->get();
@@ -94,43 +94,51 @@ class cmuOauthController extends Controller
                             $roomData = Rooms::find($roomId);
                         }
 
-                // UPDATE  ข้อมูลในตาราง Table  user 
-                $setData = [
-                    'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
-                    'prename_TH' => $cmuitaccount["prename_TH"],
-                    'firstname_TH' => $cmuitaccount["firstname_TH"],
-                    'lastname_TH' => $cmuitaccount["lastname_TH"],
-                    'itaccounttype_id' => $cmuitaccount["itaccounttype_id"],
-                    'itaccounttype_TH' => $cmuitaccount["itaccounttype_TH"],
-                    'updated_at' => Carbon::now(),
-                    'last_activity' => Carbon::now()
-                ];
-                $users->update($setData);
-                // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
-                //$request->session()->put('user', $users, 120);
-                $fullname = $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
-                $request->session()->put('cmuitaccount', $email);
-                $request->session()->put('userfullname', $fullname);
-                $request->session()->put('dep_id', $users["dep_id"]);
-                $request->session()->put('isAdmin', $users["isAdmin"]);
-                $request->session()->put('isDean', $users["isDean"]);
-                $request->session()->put('last_activity', Carbon::now());
-                $request->session()->put('positionName', $users["positionName"]);
-                $request->session()->put('positionName2', $users["positionName2"]);
-                $request->session()->put('dep_name',$getDepN[0]->dep_name);
-                //check Admin  
-                if ($page == "bookingindex") {
-                    return redirect()->intended('/booking')->with('success', 'Login Successfull');
-                }elseif ($page == "booking") {
-                    return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
-                } elseif ($users["user_type"]== "admin" ) {
-                    return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
-                }  elseif($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
-                    return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
-                }else {
-                    return redirect()->intended('/booking')->with('success', 'Login Successfull');
-                }
-            }
+                        // UPDATE  ข้อมูลในตาราง Table  user 
+                        $setData = [
+                            'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
+                            'prename_TH' => $cmuitaccount["prename_TH"],
+                            'firstname_TH' => $cmuitaccount["firstname_TH"],
+                            'lastname_TH' => $cmuitaccount["lastname_TH"],
+                            'itaccounttype_id' => $cmuitaccount["itaccounttype_id"],
+                            'itaccounttype_TH' => $cmuitaccount["itaccounttype_TH"],
+                            'updated_at' => Carbon::now(),
+                            'last_activity' => Carbon::now()
+                        ];
+                        $users->update($setData);
+                        // สร้าง session พร้อมกำหนดเวลาหมดอายุ (2 ชั่วโมง)
+                        //$request->session()->put('user', $users, 120);
+                        $fullname = $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
+                        
+                        if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28) {
+                            $request->session()->put('depTypeBooking','ENG');
+                        }else {
+                            $request->session()->put('depTypeBooking','ENG_MAJOR');
+                        }
+    
+                        $request->session()->put('cmuitaccount', $email);
+                        $request->session()->put('userfullname', $fullname);
+                        $request->session()->put('dep_id', $users["dep_id"]);
+                        $request->session()->put('isAdmin', $users["isAdmin"]);
+                        $request->session()->put('isDean', $users["isDean"]);
+                        $request->session()->put('last_activity', Carbon::now());
+                        $request->session()->put('positionName', $users["positionName"]);
+                        $request->session()->put('positionName2', $users["positionName2"]);
+                        $request->session()->put('dep_name',$getDepN[0]->dep_name);
+                        //check Admin  
+                        
+                        if ($page == "bookingindex") {
+                            return redirect()->intended('/booking')->with('success', 'Login Successfull');
+                        }elseif ($page == "booking") {
+                            return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
+                        } elseif ($users["user_type"]== "admin" ) {
+                            return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
+                        }  elseif($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
+                            return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
+                        }else {
+                            return redirect()->intended('/booking')->with('success', 'Login Successfull');
+                        }
+                //}
            }
 
             //return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
