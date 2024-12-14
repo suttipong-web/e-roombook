@@ -149,12 +149,12 @@ class HelperService
     public function getFullNameCmuAcount($email)
     {
         $result = User::where('email', $email)->first();
-        if ($result->typeposition_id) {
-            $prename = $result->positionName;
+        if (!empty($result->positionName2)) {
+            $prename = $result->positionName2;
         } else {
             $prename = $result->prename_TH;
         }
-        $fullNames = $prename . "" . $result->firstname_TH . " " . $result->lastname_TH;
+        $fullNames = $prename . "  " . $result->firstname_TH . " " . $result->lastname_TH;
         return $fullNames;
     }
 

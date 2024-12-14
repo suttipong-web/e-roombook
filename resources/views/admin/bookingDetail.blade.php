@@ -129,6 +129,7 @@
                                         <td class="text-start ">
                                             <span id="booking_subject">
                                                 {{ $detailBooking[0]->booking_subject }}
+
                                             </span>
                                         </td>
                                         <td class="tdTitle"> ประเภทผู้ขอใช้ </td>
@@ -146,6 +147,8 @@
                                         <td class="text-start tddetail">
                                             <span id="booking_booker">
                                                 {{ $detailBooking[0]->booking_booker }}
+                                                <br />
+                                                {{ $detailBooking[0]->booking_department }}
                                             </span>
                                         </td>
                                         <td class="tdTitle">จำนวนคน </td>
@@ -182,7 +185,7 @@
                                             <td class="text-start" colspan="3">
 
                                                 <!-- <a href="/storage/app/public/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                                                                                            target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
+                                                                                                                                                        target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
 
                                                 <a href="{{ asset('/upload/' . $detailBooking[0]->booking_fileurl) }}"
                                                     target="_blank" class="btn btn-primary">
@@ -402,8 +405,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="p-2
-                                                        text-left">
+                                        <div class="p-2text-left">
                                                     <hr />
                                                     * หมายเหตุ
                                                     <div class="text-danger">* การ "ไม่อนุมติ" คือการยกเลิกรายการจองห้อง

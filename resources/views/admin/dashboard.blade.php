@@ -146,21 +146,17 @@
                         </a></h4>
                 </div>
                 <div class="card-body  disPlayTableBooking">
-                    <table class="table table-sm mt-2" 
-                     @if (count($getBookingList) > 0)
-                    id="tableListbooking"
-                    @endif
-                    >
+                    <table class="table table-sm mt-2" @if (count($getBookingList) > 0) id="tableListbooking" @endif>
                         <thead class="table-secondary ">
-                            <tr style="text-align: left;">      
-                                 <th width="6">รหัส</th>          
+                            <tr style="text-align: left;">
+                                <th width="6">รหัส</th>
                                 <th width="15%">วันที่รายการ</th>
-                                 <th width="12%">วันที่ขอใช้</th>
+                                <th width="12%">วันที่ขอใช้</th>
                                 <th width="12%">ช่วงเวลา</th>
                                 <th width="25%">ห้องที่ขอใช้</th>
                                 <th width="25%">เรื่อง</th>
                                 <th width="13%">ผู้จอง</th>
-                                <th width="10%" class="text-center">บุคคล</th>                         
+                                <th width="10%" class="text-center">บุคคล</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -168,59 +164,69 @@
                             @if (count($getBookingList) > 0)
                                 @foreach ($getBookingList as $rows)
                                     <tr style="text-align: left;">
-                                         <td class="text-center"> {{ $rows->id }} </td>
-                                      <td>
-                                        @if (!$rows->is_read)
+                                        <td class="text-center"> {{ $rows->id }} </td>
+                                        <td>
+                                            @if (!$rows->is_read)
                                                 <span class="text-danger"><i
                                                         class="bi bi-envelope-exclamation-fill"></i></span>
                                             @endif
-                                      {{ $getService->convertDateThaiWithTime($rows->booking_at, false,true) }}
-                                            
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, false, true) }}                                                                            
-                                        </td>
-                                           <td class="text-center">  {{ Str::limit($rows->booking_time_start, 5, '') }} -
-                                            {{ Str::limit($rows->booking_time_finish, 5, '') }}</td>
-                                        <td>{{ $rows->roomFullName }} </td>
-                                        <td>{{ $rows->booking_subject }} </td>
-                                        <td>{{ $rows->booking_booker }}                                        
+                                            {{ $getService->convertDateThaiWithTime($rows->booking_at, false, true) }}
 
                                         </td>
                                         <td class="text-center">
-  @if ($rows->booking_type == 'general')
+                                            {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, false, true) }}
+                                        </td>
+                                        <td class="text-center"> {{ Str::limit($rows->booking_time_start, 5, '') }} -
+                                            {{ Str::limit($rows->booking_time_finish, 5, '') }}</td>
+                                        <td>{{ $rows->roomFullName }} </td>
+                                        <td>{{ $rows->booking_subject }} </td>
+                                        <td>{{ $rows->booking_booker }}
+
+                                        </td>
+                                        <td class="text-center">
+                                            @if ($rows->booking_type == 'general')
                                                 ภายนอก
                                             @else
                                                 ภายใน
                                             @endif
                                         </td>
-                                     
+
 
                                         <td class="text-center">
-
-                                            <a class="btn btn-primary btn-sm"
-                                                href="/admin/bookingDetail/{{ $getStatus }}/{{ $rows->id }}/{{ $rows->bookingToken }}"
-                                                role="button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                    height="16" fill="currentColor" class="bi bi-gear-fill"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                                                </svg></a>
-
+                                            @if ($rows->booking_status)
+                                                <a class="btn btn-primary btn-sm"
+                                                    href="/admin/bookingDetail/approved/{{ $rows->id }}/{{ $rows->bookingToken }}"
+                                                    role="button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                        height="16" fill="currentColor" class="bi bi-gear-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                                                    </svg></a>
+                                            @else
+                                                <a class="btn btn-primary btn-sm"
+                                                    href="/admin/bookingDetail/{{ $getStatus }}/{{ $rows->id }}/{{ $rows->bookingToken }}"
+                                                    role="button"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                        height="16" fill="currentColor" class="bi bi-gear-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                                                    </svg></a>
+                                            @endif
                                         </td>
 
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td></tr>    
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                                 <tr>
                                     <td colspan="8">
                                         <div class="p-2 mt-2 text-center">

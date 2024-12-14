@@ -113,7 +113,7 @@ class cmuOauthController extends Controller
                         if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28) {
                             $request->session()->put('depTypeBooking','ENG');
                         }else {
-                            $request->session()->put('depTypeBooking','ENG_MAJOR');
+                            $request->session()->put('depTypeBooking','MAJOR');
                         }
     
                         $request->session()->put('cmuitaccount', $email);

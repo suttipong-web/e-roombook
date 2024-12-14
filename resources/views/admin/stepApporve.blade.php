@@ -61,7 +61,9 @@
                                         </td>
                                         <td>{{ $rows->roomFullName }} </td>
                                         <td>{{ $rows->booking_subject }} </td>
-                                        <td>{{ $rows->booking_booker }} </td>
+                                        <td>{{ $rows->booking_booker }} <br />
+                                            {{ $rows->booking_department }}
+                                        </td>
                                         <td class="text-center">
                                             @if ($rows->booking_type == 'general')
                                                 ภายนอก
@@ -88,7 +90,7 @@
                                 <tr>
                                     <td colspan="4">
                                         <div class="p-2 mt-2 text-center">
-                                            
+
                                         </div>
                                     </td>
                                 </tr>

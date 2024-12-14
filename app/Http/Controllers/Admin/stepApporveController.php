@@ -148,7 +148,7 @@ class stepApporveController extends Controller
         if ($actionStatus == 1) {
             $actionDetail = 'ส่งต่อผู้บริหาร';
         } elseif ($actionStatus == 3) {
-            $actionDetail = 'อนุมัติรายการ โดยคณบดี';
+            $actionDetail = 'อนุมัติรายการ';
         } else {
             $actionDetail = 'ไม่อนุมติรายการ';
         }
@@ -213,6 +213,8 @@ class stepApporveController extends Controller
                 }
                 $updated = DB::table('booking_rooms')->where('id', $bookingId)
                     ->update([
+                        'booking_status' => 1,
+                        'booking_AdminAction'=>'approved',
                         'dean_appove_status' => $dean_appove_status,
                         'dean_action_date' => Carbon::now(),
                         'dean_action_acount' => $request->session()->get('cmuitaccount'),

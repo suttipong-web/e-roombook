@@ -189,6 +189,7 @@ class BookingController extends Controller
             $img = '/storage/images/' . $roomData->thumbnail;
         } else {
             $img = '/storage/images/noimage.png';
+
         }
         // Query Booking room Table 
                  $sql= "SELECT
@@ -207,9 +208,7 @@ class BookingController extends Controller
                     ORDER BY
                     booking_rooms.booking_time_start ASC";
          $searhResult = DB::select(DB::raw($sql));
-
          $titleSearch = " รายการใช้  [ " . $roomData["roomFullName"] . " ]    ในวันที่   [ " . $dateBooking . " ] ";
-
          $RoomtitleSearch = $roomData["roomFullName"];
          $DateTitleSearch  =$dateBooking ;
         // Load index  view and  data room        
@@ -483,11 +482,15 @@ class BookingController extends Controller
             $filenames = "";
             $no = time();
             $result = "";
-
+            $bookingtype = $request->booking_type;
             //บุคคลภายใน รอการอนุมัติ
             if (!empty($request->booker_cmuaccount)) {
                // $is_confirm = 3;
                 $is_confirm = 1;
+               if($request->session()->get('depTypeBooking')=="MAJOR"){
+                 $is_confirm = 0;
+                  $bookingtype = "major";
+               }               
             }
 
             $txtTypeUser = "(บุคคลภายในคณะฯ)";
@@ -513,7 +516,7 @@ class BookingController extends Controller
                 'booking_email' => $request->booking_email,
                 'booker_cmuaccount' => $request->booker_cmuaccount,
                 'description' => $request->description,
-                'booking_type' => $request->booking_type,
+                'booking_type' =>  $bookingtype,
                 'booking_at' => Carbon::now(),
                 'booking_fileurl' => $fileName,
                 'booking_status' => $is_confirm,
