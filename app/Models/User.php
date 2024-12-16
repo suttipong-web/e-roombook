@@ -40,7 +40,8 @@ class User extends Authenticatable
         'is_step_secretary',
         'is_step_dean',
         'is_step_eng',
-        'user_type'
+        'user_type',
+        'is_case'
 
     ];
 

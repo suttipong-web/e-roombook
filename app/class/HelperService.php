@@ -157,6 +157,14 @@ class HelperService
         $fullNames = $prename . "  " . $result->firstname_TH . " " . $result->lastname_TH;
         return $fullNames;
     }
+    public function  chkAddminRoomType($email){
+        $case =0;
+         $result = User::where('email', $email)->first();
+         if($result){
+            $case = (int)$result->is_case;            
+         }
+        return $case;
+    }
 
     public function getListDay($days)
     {
