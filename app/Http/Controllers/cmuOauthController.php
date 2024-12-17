@@ -42,13 +42,12 @@ class cmuOauthController extends Controller
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded'
             ),
-        )
+            )
         );
 
         $responseAuthCode = curl_exec($curl);
         curl_close($curl);
         $callback_dataAuthCode = json_decode($responseAuthCode, true);
-
         if (empty($callback_dataAuthCode['access_token'])) {
             return view('admin.auth.error')->with([
                 'displayError' => true
@@ -110,7 +109,7 @@ class cmuOauthController extends Controller
                         //$request->session()->put('user', $users, 120);
                         $fullname = $cmuitaccount["firstname_TH"] . ' ' . $cmuitaccount["lastname_TH"];
                         
-                        if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28) {
+                        if((int)$users["dep_id"] < 14 || (int)$users["dep_id"]==29 || (int)$users["dep_id"]==28 || (int)$users["dep_id"]==31) {
                             $request->session()->put('depTypeBooking','ENG');
                         }else {
                             $request->session()->put('depTypeBooking','MAJOR');
