@@ -185,7 +185,7 @@
                                             <td class="text-start" colspan="3">
 
                                                 <!-- <a href="/storage/app/public/upload/{{ $detailBooking[0]->booking_fileurl }} "
-                                                                                                                                                        target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
+                                                                                                                                                                        target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> เปิดไฟล์</a> -->
 
                                                 <a href="{{ asset('/upload/' . $detailBooking[0]->booking_fileurl) }}"
                                                     target="_blank" class="btn btn-primary">
@@ -423,7 +423,7 @@
 
 
                                             </div>
-                                        @elseif ($getStatus == 'ForwardDean')
+                                        @elseif ($detailBooking[0]->booking_status == 2)
                                             <div class="alert alert-info d-flex- align-items-center text-center"
                                                 role="alert">
                                                 <div>
@@ -452,7 +452,7 @@
                                                     <hr />
                                                 </div>
                                             </div>
-                                        @elseif ($getStatus == 'approved')
+                                        @elseif ($detailBooking[0]->booking_status == 1)
                                             <div class="alert alert-success d-flex- align-items-center text-center"
                                                 role="alert">
                                                 <div>

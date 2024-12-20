@@ -82,7 +82,7 @@ class ScheduleroomController extends Controller
         $sql = " SELECT booking_rooms.*,rooms.roomFullName,rooms.roomTitle
                     FROM booking_rooms
                     INNER JOIN rooms ON booking_rooms.roomID = rooms.id
-                    WHERE booking_rooms.roomID = '{$roomID}' AND  booking_rooms.booking_status <> 0
+                    WHERE booking_rooms.roomID = '{$roomID}' AND  booking_rooms.booking_status =1
                     
                          /* (booking_rooms.booking_status >=1)  AND */
                          AND (
