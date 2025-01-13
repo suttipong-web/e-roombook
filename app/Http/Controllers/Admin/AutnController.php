@@ -140,7 +140,7 @@ class AutnController extends Controller
                 $request->session()->put('is_step_dean', $users["is_step_dean"]);
                 $request->session()->put('is_step_eng', $users["is_step_eng"]); 
                 $request->session()->put('user_type', $users["user_type"]);
-
+                //11
                 if($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
                     return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
                 }else {
