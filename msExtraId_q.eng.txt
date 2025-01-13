@@ -1,0 +1,14 @@
+MS Extra ID 
+https://q.eng.cmu.ac.th/
+
+$MSconfig=array(
+   "AUTH_URL"=>"https://login.microsoftonline.com/cf81f1df-de59-4c29-91da-a2dfd04aa751/oauth2/v2.0/authorize",  
+   "TOKEN_URL"=>"https://login.microsoftonline.com/cf81f1df-de59-4c29-91da-a2dfd04aa751/oauth2/v2.0/token", 
+   "CALLBACK_URL"=>"https://q.eng.cmu.ac.th/callback",   
+   "CLIENT_ID"=>"4c68b739-d802-46ae-9d74-66c2efe11a94", 
+   "CLIENT_SECRET"=>"krk8Q~G1jeDRigzGRC-L.J~o_vcJL4JswB1vjb-j",
+   "SCOPE"=>"api://cmu/Mis.Account.Read.Me.Basicinfo",
+   "BASICINFO_URL"=>"api://cmu/Mis.Account.Read.Me.Basicinfo",
+   "LOGOUT_URL"=>'https://q.eng.cmu.ac.th/logout'
+);
+

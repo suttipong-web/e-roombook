@@ -110,7 +110,7 @@ class AutnController extends Controller
 
 
 
-            if ($users["isAdmin"]) {
+            if (!empty($users["user_type"])) {
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
                     'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
