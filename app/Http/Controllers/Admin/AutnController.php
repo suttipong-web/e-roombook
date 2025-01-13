@@ -108,9 +108,10 @@ class AutnController extends Controller
              ->where('dep_id',$users["dep_id"])           
              ->get();
 
-
-
-            if (!empty($users["user_type"])) {
+           
+              return back()->withErrors(['email' => 'ข้อมูลไม่ถูกต้อง']);
+             //exit;
+            if ($users["user_type"]) {
                 // UPDATE  ข้อมูลในตาราง Table  user 
                 $setData = [
                     'cmuitaccount_name' => $cmuitaccount["cmuitaccount_name"],
@@ -141,6 +142,9 @@ class AutnController extends Controller
                 $request->session()->put('is_step_eng', $users["is_step_eng"]); 
                 $request->session()->put('user_type', $users["user_type"]);
                 //11
+                    
+              
+
                 if($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
                     return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
                 }else {

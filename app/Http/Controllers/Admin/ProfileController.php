@@ -37,6 +37,6 @@ class ProfileController extends Controller
                 Session::forget('userfullname');
                 Session::flush();        
         
-        return redirect()->route('Admin/getLogin')->with('success', 'You have been successfully logged out');
+        return redirect()->route('admin/')->with('success', 'You have been successfully logged out');
     }
 }

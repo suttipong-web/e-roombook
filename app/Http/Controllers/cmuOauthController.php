@@ -126,6 +126,14 @@ class cmuOauthController extends Controller
                         $request->session()->put('dep_name',$getDepN[0]->dep_name);
                         //check Admin  
                         
+                        if(!empty($users["user_type"])) {
+                            $request->session()->put('is_step_secretary', $users["is_step_secretary"]);
+                            $request->session()->put('is_step_dean', $users["is_step_dean"]);
+                            $request->session()->put('is_step_eng', $users["is_step_eng"]); 
+                            $request->session()->put('user_type', $users["user_type"]);
+                        }
+
+
                         if ($page == "bookingindex") {
                             return redirect()->intended('/booking')->with('success', 'Login Successfull');
                         }elseif ($page == "booking") {
