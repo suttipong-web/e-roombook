@@ -51,10 +51,10 @@
                                                 <span class="text-danger"><i
                                                         class="bi bi-envelope-exclamation-fill"></i></span>
                                             @endif
-                                            {{ $getService->convertDateThai($rows->booking_at, true, true) }}
+                                            {{ $getService->convertDateThaiWithTime($rows->booking_at, false, true) }}
                                         </td>
                                         <td class="text-center">
-                                            {{ $getService->convertDateThai($rows->schedule_startdate, true, true) }}
+                                            {{ $getService->convertDateThaiNoTime($rows->schedule_startdate, false, true) }}
                                             <br />
                                             {{ Str::limit($rows->booking_time_start, 5, '') }} -
                                             {{ Str::limit($rows->booking_time_finish, 5, '') }}

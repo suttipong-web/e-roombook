@@ -244,8 +244,8 @@
                                                 <div class="form-check form-check-inline">
                                                     <label class="form-check-label" for="action2">
                                                         @if (session('user_type') == 'dean')
-                                                            <input class="form-check-input" type="radio" name="chkStatus"
-                                                                id="action2" value="3" checked />
+                                                            <inpgit ut class="form-check-input" type="radio"
+                                                                name="chkStatus" id="action2" value="3" checked />
                                                             อนุมัติรายการ
                                                         @else
                                                             @if ($detailBooking[0]->booking_type == 'major' || session('user_type') == 'eng')
@@ -304,10 +304,10 @@
 
                         </form>
                         <!-- <div class="text-center m-3"><a
-                                                                                                                                                                                                                                href="/print/form/booking/{{ $detailBooking[0]->id }}/{{ $detailBooking[0]->bookingToken }}"
-                                                                                                                                                                                                                                class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
-                                                                                                                                                                                                                                พิมพ์แบบฟอร์มการขอใช้ห้อง </a>
-                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                        href="/print/form/booking/{{ $detailBooking[0]->id }}/{{ $detailBooking[0]->bookingToken }}"
+                                                                                                                                                                                                                                        class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
+                                                                                                                                                                                                                                        พิมพ์แบบฟอร์มการขอใช้ห้อง </a>
+                                                                                                                                                                                                                                </div> -->
                     </div>
                 </div>
 

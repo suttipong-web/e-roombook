@@ -17,8 +17,7 @@
     <div class="row">
         <div class="container-fluid">
             <div class="card  mt-3 w-100">
-                <div
-                    class="card-header bg-success">
+                <div class="card-header bg-success">
                     <a href="#" style="color: aliceblue">
                         <i class="bi bi-tags"></i> {{ $titlesCard }}
                     </a>
@@ -46,10 +45,12 @@
                                                 <span class="text-danger"><i
                                                         class="bi bi-envelope-exclamation-fill"></i></span>
                                             @endif
-                                            {{ $getService->convertDateThai($rows->booking_at, true, true) }}
+
+                                            {{ $getService->convertDateThaiWithTime($rows->booking_at, false, true) }}
                                         </td>
                                         <td class="text-center">
-                                            {{ $getService->convertDateThai($rows->schedule_startdate, true, true) }}
+                                            {{ $getService->convertDateThaiWithTime($rows->schedule_startdate, false, true) }}
+
                                             <br />
                                             {{ Str::limit($rows->booking_time_start, 5, '') }} -
                                             {{ Str::limit($rows->booking_time_finish, 5, '') }}
@@ -65,13 +66,16 @@
                                             @endif
                                         </td>
                                         <td align="center">
-                                        @if($rows->is_status==1)
-                                          <span class="text-info"><i class="bi bi-check-circle"></i><br/> ส่งต่อ</span>
-                                        @elseif($rows->is_status==2)
-                                        <span class="text-danger"><i class="bi bi-x-circle-fill"></i><br/> ยกเลิก</span>
-                                        @elseif($rows->is_status==3)
-                                        <span class="text-succsess"><i class="bi bi-check-circle-fill"></i><br/> อนุมัติ</span>
-                                        @endif
+                                            @if ($rows->is_status == 1)
+                                                <span class="text-info"><i class="bi bi-check-circle"></i><br />
+                                                    ส่งต่อ</span>
+                                            @elseif($rows->is_status == 2)
+                                                <span class="text-danger"><i class="bi bi-x-circle-fill"></i><br />
+                                                    ยกเลิก</span>
+                                            @elseif($rows->is_status == 3)
+                                                <span class="text-succsess"><i class="bi bi-check-circle-fill"></i><br />
+                                                    อนุมัติ</span>
+                                            @endif
 
                                         </td>
                                         <td class="text-center">
@@ -93,7 +97,7 @@
                                 <tr>
                                     <td colspan="4">
                                         <div class="p-2 mt-2 text-center">
-                                            
+
                                         </div>
                                     </td>
                                 </tr>
