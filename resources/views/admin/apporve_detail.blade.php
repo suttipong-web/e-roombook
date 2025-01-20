@@ -304,10 +304,10 @@
 
                         </form>
                         <!-- <div class="text-center m-3"><a
-                                                                                                                                                                                                                                        href="/print/form/booking/{{ $detailBooking[0]->id }}/{{ $detailBooking[0]->bookingToken }}"
-                                                                                                                                                                                                                                        class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
-                                                                                                                                                                                                                                        พิมพ์แบบฟอร์มการขอใช้ห้อง </a>
-                                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                                            href="/print/form/booking/{{ $detailBooking[0]->id }}/{{ $detailBooking[0]->bookingToken }}"
+                                                                                                                                                                                                                                            class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
+                                                                                                                                                                                                                                            พิมพ์แบบฟอร์มการขอใช้ห้อง </a>
+                                                                                                                                                                                                                                    </div> -->
                     </div>
                 </div>
 
