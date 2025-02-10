@@ -46,6 +46,7 @@ Route::prefix('/room')->group(
     function () {
         Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
         Route::get('/print/{roomId}/{uts}/{roomTitle}', [RoomsController::class, 'print_schedule'])->name('print_schedule');
+       
     }
 );
 
@@ -56,6 +57,7 @@ Route::prefix('/profile')->group(
         Route::get('/', [ProfileProfileController::class, 'index'])->name('profile.index');
     }
 );
+
 Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profile.logout');
 
 
@@ -63,7 +65,8 @@ Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profil
 Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
-        Route::get('/listall', [BookingController::class, 'listall'])->name('listall');
+        Route::get('/listall', [BookingController::class, 'listall'])->name('listall');     
+        Route::post('/Searchlist', [BookingController::class, 'listallSearch'])->name('listallSearch');         
         Route::get('/listall/roomId/', [BookingController::class, 'listall'])->name('listallByRoom');
         Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
         Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');

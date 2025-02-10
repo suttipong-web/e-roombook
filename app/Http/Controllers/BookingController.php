@@ -226,13 +226,73 @@ class BookingController extends Controller
         );
     }
 
+    public function listallSearch(Request $request){
+        $roomID =0;
+        date_default_timezone_set('Asia/Bangkok'); 
+        $class = new HelperService();
+      
+        $search_date = $class->convertDateSqlInsert($request->search_date);
+    
+            //ข้อมูลห้อง Select option
+            $roomDataSlc = Rooms::orderby('id', 'asc')
+                ->select('id', 'roomFullName')
+                 ->where('is_open', '1')
+                  ->where('roomTypeId', '1')
+                ->get();
+    
+    
+                $sql= "SELECT
+                        booking_rooms.*,
+                        rooms.roomFullName,
+                        rooms.roomDetail,rooms.roomSize
+                        FROM
+                        booking_rooms
+                        INNER JOIN rooms ON booking_rooms.roomID = rooms.id
+                        WHERE           
+                        (
+                        DATE(booking_rooms.schedule_startdate) = DATE('{$search_date}')
+                     
+                        )
+                        AND (
+                            rooms.roomTypeId =1
+                        )
+                        AND  
+                        booking_status =1
+                        ORDER BY
+                        booking_rooms.roomID ASC,
+                        booking_rooms.booking_time_start ASC
+                        ";
+           
+            $getBookingList = DB::select(DB::raw($sql));
+            $dateTitle = $class->convertDateThaiNoTime($search_date,0) ;
+    
+         return view('/room/listAll')->with(
+                [
+                    'bookingall' =>$getBookingList,
+                    'dateTitle'=>$dateTitle,
+                    'roomSlc'=> $roomDataSlc,
+                    'searchDates' => $request->search_date, 
+    
+                ]
+            );
+    }
 
    public function listall(Request $request){
     $roomID =0;
     date_default_timezone_set('Asia/Bangkok'); 
     $class = new HelperService();
-      $datenow = date('Y-m-d');
-     $sql= "SELECT
+    $datenow = date('Y-m-d');
+    $dateBooking  = date('d/m/Y');
+
+        //ข้อมูลห้อง Select option
+        $roomDataSlc = Rooms::orderby('id', 'asc')
+            ->select('id', 'roomFullName')
+             ->where('is_open', '1')
+              ->where('roomTypeId', '1')
+            ->get();
+
+
+            $sql= "SELECT
                     booking_rooms.*,
                     rooms.roomFullName,
                     rooms.roomDetail,rooms.roomSize
@@ -242,15 +302,27 @@ class BookingController extends Controller
                     WHERE           
                     (
                     booking_rooms.schedule_startdate >= '{$datenow}' 
+                 
                     )
+                    AND (
+                        rooms.roomTypeId =1
+                    )
+                    AND  
+                    booking_status =1
                     ORDER BY
-                    booking_rooms.booking_time_start ASC";
+                    booking_rooms.roomID ASC,
+                    booking_rooms.booking_time_start ASC
+                    ";
          $getBookingList = DB::select(DB::raw($sql));
-
+        $dateTitle = $class->convertDateThaiNoTime($datenow,0) ;
 
      return view('/room/listAll')->with(
             [
-                'bookingall' =>$getBookingList
+                'bookingall' =>$getBookingList,
+                'dateTitle'=>$dateTitle,
+                'roomSlc'=> $roomDataSlc,
+                'searchDates' => $dateBooking, 
+
             ]
         );
 
@@ -636,3 +708,4 @@ class BookingController extends Controller
      }   
      
 }
+

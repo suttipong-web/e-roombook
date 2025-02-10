@@ -17,6 +17,13 @@
                 <h4>บริการสำคัญ</h4>
                 <ul>
                     <li><i class="bi bi-chevron-right"></i>
+                        <a href=" /booking/listall"
+                            class="nav-link p-0 text-body-secondary">
+                            รายการจองห้องประชุม
+                        </a>
+                    </li>
+               
+                    <li><i class="bi bi-chevron-right"></i>
                         <a href="https://cmu.ac.th/Content/University/CMUPhoneBook.pdf"
                             class="nav-link p-0 text-body-secondary">
                             สมุดโทรศัพท์มหาวิทยาลัยเชียงใหม่
@@ -33,16 +40,7 @@
                             การบริจาค
                         </a>
                     </li>
-                    <li><i class="bi bi-chevron-right  text-dark"></i>
-                        <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
-                            CMU MAIL
-                        </a>
-                    </li>
-                    <li><i class="bi bi-chevron-right  text-dark"></i>
-                        <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                            CMU MIS
-                        </a>
-                    </li>
+                   
                     <li><i class="bi bi-chevron-right"></i>
                         <a href="/admin/" class="nav-link p-0 text-body-secondary">
                             สำหรับผู้ดูแลระบบ
@@ -73,6 +71,16 @@
                 <ul>
                     <li><i class="bi bi-chevron-right"></i>
                         <a href="https://www.cmu.ac.th/">https://www.cmu.ac.th.</a>
+                    </li>
+                    <li><i class="bi bi-chevron-right  text-dark"></i>
+                        <a href="https://portal.office.com/" class="nav-link p-0 text-body-secondary">
+                            CMU MAIL
+                        </a>
+                    </li>
+                    <li><i class="bi bi-chevron-right  text-dark"></i>
+                        <a href="https://mis.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
+                            CMU MIS
+                        </a>
                     </li>
                 </ul>
             </div>
