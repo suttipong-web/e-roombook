@@ -63,7 +63,7 @@
             </div>
             <div class="col-md-12   mt-3 displayTable">
 
-                <table class="table table-hover  table-sm " id="tableListbooking">
+                <table class="table table-hover   " id="tableListbooking">
                     <thead class="table">
                         <tr style="text-align: left;">
                             <th>วันเวลาที่ทำรายการ</th>
@@ -71,7 +71,8 @@
                             <th>ภาคการศึกษา</th>
                             <th>จำนวนรายการทั้งหมด</th>
                             <th>จำนวนที่อนุมัติ</th>
-                            <th>จำนวนที่ไม่อนุมัติ</th>                     
+                            <th>จำนวนที่ไม่อนุมัติ</th>     
+                            <th></th>                
                             <th width="100">จัดการ</th>
                         </tr>
                     </thead>
@@ -79,14 +80,19 @@
                         @if (count($getBookingList) > 0)
                             @foreach ($getBookingList as $rows)
                                 <tr >
-                                    <td> {{ $rows->updated_at }}
-
-                                    </td>
+                                    <td> {{ $rows->updated_at }}</td>
                                     <td>{{ $rows->dep_title }} </td>
                                     <td>{{ $rows->terms }}/{{ $rows->courseofyear }}</td>
                                     <td class="text-center">{{$rows->countCourse}}</td>
                                     <td class="text-center">{{$rows->countPublic}}</td>
                                     <td class="text-center">{{$rows->countError}}</td>
+                                    <td>
+                                        @if ($rows->is_public)
+                                        <span class="badge badge-success">ยืนยันแล้ว</span>
+                                        @else
+                                        <span class="badge badge-warning">รอยืนยัน</span>
+                                        @endif
+                                    </td>
                                     <td class="bg-light text-dark">
                                   
                                             <a href="/admin/schedules/views/{{ $rows->is_group_session }}" id="{{ $rows->id }}" class="text-success mx-1">

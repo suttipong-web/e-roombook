@@ -70,7 +70,7 @@ class ScheduleDepController extends Controller
                     ORDER BY booking_time_start ASC
                     ";
 
-          echo  "<br/><hr/>".$sql;
+         //  echo  "<br/><hr/>".$sql;
             $qresult = DB::select(DB::raw($sql));
             if ($qresult) {
                 foreach ($qresult as $row_chk) {
