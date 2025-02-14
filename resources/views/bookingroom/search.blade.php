@@ -192,6 +192,37 @@
                                     <hr />
                                 </form>
                             </div>
+                            <br/>
+                            <div class="formSlc bg-mycustom text-start w-90 mx-3 ">
+                                <h5 class="text-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-calendar-week" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                                    </svg> ตรวจสอบการใช้ห้องรายวัน
+                                </h5>
+                                <hr />
+                                
+                                <form id="serachBookingDate" method="post" action="/booking/Searchlist">
+                                    @csrf
+                               
+                                    <div class="mb-3">
+                                        <label for="search_date" class="form-label"> วันที่ </label>
+                                        <input class="form-control dateScl" type="text" data-provide="datepicker"
+                                            data-date-language="th" id="search_date" name="search_date"
+                                            data-date-format="dd/mm/yyyy" value="{{ $searchDates }}">
+                                    </div>
+                                    <div class="text-center d-flex justify-content-center">
+                                        <button type="submit" id="search_booking"
+                                            class="btn btn-light btnCheckBooking text-white">
+                                            คลิกตรวจสอบ
+                                        </button>
+                                    </div>
+                                    <hr />
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

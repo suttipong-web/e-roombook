@@ -163,8 +163,9 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/report', [ReportController::class, 'index'])->name('index');
     Route::get('/admin/report/bookingtable', [ReportController::class, 'bookingtable'])->name('bookingtable');
 
-    Route::get('/admin/schedules', [ScheduleDepController::class, 'index'])->name('index');
-
+    Route::get('/admin/schedules/{step}/{ses_id}', [ScheduleDepController::class, 'index'])->name('index');
+    Route::get('/admin/schedules', [ScheduleDepController::class, 'listimport'])->name('listimport');
+    Route::delete('/admin/schedule/delete_import', [ScheduleDepController::class, 'delete_import'])->name('delete_import');
 });
 
 

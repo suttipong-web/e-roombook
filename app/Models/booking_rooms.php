@@ -51,6 +51,7 @@ class booking_rooms extends Model
         'courseofyear',
         'terms',
         'is_import_excel',
-        'courseNo'
+        'courseNo',
+        'import_sid'
     ];
 }

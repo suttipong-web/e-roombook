@@ -22,6 +22,8 @@ class ScheduleImport implements ToModel, WithHeadingRow
 
             // ห่า User  Upload 
             $cmuitaccount = Session::get('cmuitaccount');
+            
+            $sessionId = session()->getId();           
 
             //ตรวจสอบหาอ ID ห้อง
            if(!empty($row["roomno"])){
@@ -30,9 +32,7 @@ class ScheduleImport implements ToModel, WithHeadingRow
               $getRoomID = DB::select(DB::raw($sql));
               $roomId = $getRoomID[0]->roomID;
             }
-                   
-
-            return new roomSchedule([
+        return new roomSchedule([
                     'courseNO' => $row["courseno"],
                     'courseTitle' => $row["coursetitle"],
                     'courseSec' => $row["sec"],
@@ -49,8 +49,8 @@ class ScheduleImport implements ToModel, WithHeadingRow
                     'description' => $row["description"],
                     'straff_account' => $cmuitaccount,
                     'roomID'=>$roomId,
-                    'is_import_excel'=>1
-
+                    'is_import_excel'=>1,
+                    'is_group_session'=>$sessionId
             ]);
         }
     }

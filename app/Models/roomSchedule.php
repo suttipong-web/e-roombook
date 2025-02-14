@@ -32,6 +32,7 @@ class roomSchedule extends Model
         'is_import_excel',
         'is_duplicate',
         'is_public',
-        'is_public_date'
+        'is_public_date',
+        'is_group_session'
     ];
 }

@@ -272,8 +272,7 @@ class BookingController extends Controller
                     'dateTitle'=>$dateTitle,
                     'roomSlc'=> $roomDataSlc,
                     'searchDates' => $request->search_date, 
-    
-                ]
+                    ]
             );
     }
 
@@ -301,8 +300,7 @@ class BookingController extends Controller
                     INNER JOIN rooms ON booking_rooms.roomID = rooms.id
                     WHERE           
                     (
-                    booking_rooms.schedule_startdate >= '{$datenow}' 
-                 
+                     DATE(booking_rooms.schedule_startdate) = DATE('{$datenow}')                 
                     )
                     AND (
                         rooms.roomTypeId =1
