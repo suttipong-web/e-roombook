@@ -22,20 +22,17 @@
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @if (session('user_type') == 'major')
+        @if (session('user_type') == 'major' || session('user_type') == 'admin' )
             @include('admin.partials.left_major_menu')
         @endif
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
-
                 @include('admin.partials.navbar')
                 @yield('content-header')
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     @yield('body')
 
                 </div>

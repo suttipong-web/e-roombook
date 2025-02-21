@@ -155,6 +155,7 @@
                                 <th width="25%">ห้องที่ขอใช้</th>
                                 <th width="25%">เรื่อง</th>
                                 <th width="13%">ผู้จอง</th>
+                                <th width="15%">หน่วยงาน</th>
                                 <th width="10%" class="text-center">บุคคล</th>
                                 <th></th>
                             </tr>
@@ -179,9 +180,8 @@
                                             {{ Str::limit($rows->booking_time_finish, 5, '') }}</td>
                                         <td>{{ $rows->roomFullName }} </td>
                                         <td>{{ $rows->booking_subject }} </td>
-                                        <td>{{ $rows->booking_booker }}
-
-                                        </td>
+                                        <td>{{ $rows->booking_booker }}</td>
+                                        <td>{{ $rows->booking_department }}</td>
                                         <td class="text-center">
                                             @if ($rows->booking_type == 'general')
                                                 ภายนอก
@@ -189,8 +189,6 @@
                                                 ภายใน
                                             @endif
                                         </td>
-
-
                                         <td class="text-center">
                                             @if ($rows->booking_status == 1)
                                                 <a class="btn btn-primary btn-sm"

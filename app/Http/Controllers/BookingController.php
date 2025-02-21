@@ -564,7 +564,7 @@ class BookingController extends Controller
             }
 
             $txtTypeUser = "(บุคคลภายในคณะฯ)";
-            if ($request->booking_type == "general") {
+            if ($request->booking_type == "general" && $bookingtype  ) {
                 $txtTypeUser = "(บุคคลภายนอกคณะฯ) ";
                 $is_confirm = 0;
             }

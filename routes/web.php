@@ -14,12 +14,14 @@ use App\Http\Controllers\Admin\ScheduleDepController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\secretaryController;
 use App\Http\Controllers\Admin\stepApporveController;
+use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\engApporveController;
 use App\Http\Controllers\major\majorController;
 use App\Http\Controllers\profile\profileController as ProfileProfileController;
 use App\Http\Controllers\ScheduleroomController;
 use App\Http\Controllers\setUserController;
+use App\Models\Terms;
 use Illuminate\Support\Facades\Route;
 
 // Route Home Page
@@ -166,6 +168,10 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/schedules/{step}/{ses_id}', [ScheduleDepController::class, 'index'])->name('index');
     Route::get('/admin/schedules', [ScheduleDepController::class, 'listimport'])->name('listimport');
     Route::delete('/admin/schedule/delete_import', [ScheduleDepController::class, 'delete_import'])->name('delete_import');
+
+    Route::get('/admin/term', [TermController::class, 'index'])->name('index');
+    Route::get('/admin/term/add/', [TermController::class, 'pageAdd'])->name('pageAdd');
+    
 });
 
 

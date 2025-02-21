@@ -13,10 +13,8 @@
         <div class="card-body">
             <h5 class="card-title">คำอธิบาย</h5>
             <p class="card-text">
-             
-            <ul>
+               <ul>
                 <li>เจ้าหน้าที่หน่วยงานสามารถจัดการตารางเรียนของแต่ละเทอมได้ โดยจะแบ่งช่วงเวลาในการลงข้อมูลตามลําดับ</li>
-
                 <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel โดยกรอกข้อมูลตามรูปแบบไฟล์ตัวอย่างที่ให้นี้เท่านั้น 
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download << </a>
                 </li>
