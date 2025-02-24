@@ -125,7 +125,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'ยืนยัน, ลบข้อมูลนี้ !'
+                confirmButtonText: 'ยืนยัน, ลบข้อมูลนี้!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
@@ -138,7 +138,7 @@
                         success: function (response) {                           
                             Swal.fire(
                                 'Deleted!',
-                                'Your file has been deleted.',
+                                'ทำการลบข้อมูลเรียบร้อยแล้ว.',
                                 'success'
                             ).then((result) => {
                                 window.location.reload(true);   
