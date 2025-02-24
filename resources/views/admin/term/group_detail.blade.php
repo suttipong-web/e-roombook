@@ -51,7 +51,7 @@
             <table class="table table-sm mt-2" @if (count($ListAdmin)> 0) id="tableList" @endif>
                 <thead class="table-secondary ">
                     <tr style="text-align: left;">
-                        <th>ปรับปรุง</th>
+                        <th  style="text-align: left;"> ปรับปรุง </th>
                         <th>ชื่อ - นามสกุล </th>
                         <th>หน่วยงาน </th>
                         <th>Email </th>
@@ -62,7 +62,7 @@
                     @if (count($ListAdmin) > 0)
                     @foreach ($ListAdmin as $rows)
                     <tr style="text-align: left;">
-                        <td>{{$rows->updated_at}}</td>
+                        <td  style="text-align: left;"> {{$rows->updated_at}} </td>
                         <td>{{$rows->prename_TH}} {{$rows->firstname_TH}} {{$rows->lastname_TH}}</td>
                         <td>{{$rows->dep_title}}</td>
                         <td>{{$rows->cmuitaccount}}</td>
@@ -86,7 +86,10 @@
 
 <script>
     $(function() {
-       
+        
+        $("#tableList").DataTable({
+            order: [0, 'desc']
+        });
          // Add Admin 
          $(document).on('click', '.btnAddAdmin', function (e) {
             $.ajax({

@@ -30,7 +30,7 @@
                 <table class="table table-sm mt-2" @if (count($courseGroups)> 0) id="tableList" @endif>
                     <thead class="table-secondary ">
                         <tr style="text-align: left;">
-                            <th>ปรับปรุง</th>
+                            <th  style="text-align: left;">ปรับปรุง </th>
                             <th>กลุ่มกระบวนวิชา </th>
                            
                             <th></th>
@@ -40,7 +40,7 @@
                         @if (count($courseGroups) > 0)
                         @foreach ($courseGroups as $rows)
                         <tr style="text-align: left;">
-                            <td>{{$rows->updated_at}}</td>
+                            <td  style="text-align: left;">{{$rows->updated_at}} </td>
                             <td>{{$rows->group_title}}</td>                           
                             <td>
                         
@@ -68,6 +68,9 @@
 
 <script>
     $(function() {
+        $("#tableList").DataTable({
+            order: [0, 'desc']
+        });
         // add new  ajax request
         $("#add_form").submit(function(e) {
             e.preventDefault();

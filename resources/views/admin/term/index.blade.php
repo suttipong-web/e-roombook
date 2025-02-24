@@ -36,7 +36,7 @@
                 <table class="table table-sm mt-2" @if (count($listAllTerms)> 0) id="tableList" @endif>
                     <thead class="table-secondary ">
                         <tr style="text-align: left;">
-                            <th>ปรับปรุง</th>
+                            <th  style="text-align: left;">ปรับปรุง </th>
                             <th>ภาคการศึกษา</th>
                             <th>ช่วงวันเปิด-ปิดภาคการศึกษา</th>
                             <th></th>
@@ -46,7 +46,7 @@
                         @if (count($listAllTerms) > 0)
                         @foreach ($listAllTerms as $rows)
                         <tr style="text-align: left;">
-                            <td>{{$rows->updated_at}}</td>
+                            <td  style="text-align: left;">{{$rows->updated_at}}</td>
                             <td>{{$rows->title}}</td>
                             <td>{{$rows->start_date}} - {{$rows->end_date}}</td>
                             <td>
@@ -199,7 +199,7 @@
                         </tr>
                         @foreach ($courseGroups as $row)
                         <tr>
-                            <td>{{$row->group_title}}</td>
+                            <td align="left">{{$row->group_title}}</td>
                             <td> <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_schedule_startdate" name="group{{$row->id}}_start"
                                     data-date-format="yyyy-mm-dd" required
@@ -237,6 +237,9 @@
 
 <script>
     $(function() {
+        $("#tableList").DataTable({
+            order: [0, 'desc']
+        });
         // add new  ajax request
         $("#add_form").submit(function(e) {
             e.preventDefault();
