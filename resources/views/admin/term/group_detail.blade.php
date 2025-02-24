@@ -9,48 +9,38 @@
 
 <div class="row">
     <div class="container-fluid">
-        <!-- <div class="d-sm-flex align-items-end justify-content-end mb-4">
-            <button href="/admin/term/add/" class="btn  btn-primary"
-                data-bs-toggle="modal" data-bs-target="#addModal"
-                data-toggle="modal" data-target="#addModal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                </svg> เพิ่มรายการใหม่
-            </button>
-        </div> -->
+        <div class="d-sm-flex align-items-end justify-content-start mb-4">
+       <h4> <a href="/admin/groupCourse">กลุ่มกระบวนวิชา </a>/ 
+        {{$coursetitle}}
+        </h4>
+        </div>  
         <div class="card  mt-3">
             <div class="card-header">
-                <h4> <a href="#">
+                <h5> 
                         <i class="bi bi-tags"></i>
-                        ผู้ใช้ในกลุ่มกระบวนวิชา 
-                    </a></h4>
+                        ผู้ใช้ในกลุ่มกระบวนวิชา  : {{$coursetitle}}
+                    </h5>
             </div>
             <div class="card-body  disPlayTable">
-                <table class="table table-sm mt-2" @if (count($courseGroups)> 0) id="tableList" @endif>
+                <table class="table table-sm mt-2" @if (count($ListAdmin)> 0) id="tableList" @endif>
                     <thead class="table-secondary ">
                         <tr style="text-align: left;">
                             <th>ปรับปรุง</th>
-                            <th>กลุ่มกระบวนวิชา </th>
-                           
+                            <th>ชื่อ - นามสกุล </th>
+                            <th>หน่วยงาน </th>
+                            <th>Email </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (count($courseGroups) > 0)
-                        @foreach ($courseGroups as $rows)
+                        @if (count($ListAdmin) > 0)
+                        @foreach ($ListAdmin as $rows)
                         <tr style="text-align: left;">
                             <td>{{$rows->updated_at}}</td>
-                            <td>{{$rows->group_title}}</td>                           
-                            <td>
-                        
-                                <a href="/admin/groupCourse/assign/{{$rows->id}}/{{$rows->group_title}}" class="text-success mx-1 ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                                    </svg>
-                                </a>
-                           
-                            </td>
+                            <td>{{$rows->prename_TH}} {{$rows->firstname_TH}} {{$rows->lastname_TH}}</td>                           
+                            <td>{{$rows->dep_title}}</td>
+                            <td>{{$rows->email}}</td>
+                            <td> <a href="#" id="{{$rows->id}}" class="text-danger mx-1 deleteIcon"><i class="bi-trash h5"></i></a></td>
                         </tr>
                         @endforeach
                         @endif

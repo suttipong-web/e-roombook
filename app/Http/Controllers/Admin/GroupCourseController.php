@@ -44,7 +44,7 @@ class GroupCourseController extends Controller
         " ;
         $ListAdmin = DB::select(DB::raw($sql));
         
-        return view('admin.term.group_corse')->with([
+        return view('admin.term.group_detail')->with([
             'coursetitle' => $courseGroups[0]->group_title,
             'ListAdmin'=> $ListAdmin,
         ]);
