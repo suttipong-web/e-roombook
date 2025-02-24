@@ -107,7 +107,10 @@
 
                                     <td class="bg-light text-dark">
                                         @if ($rows->is_public)
-                                            <button type="button" class="btn btn-success">
+                                           @php
+                                            $hiddbtn =1;
+                                            @endphp
+                                            <button type="button" class="btn btn-success btn-sm">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
                                                     <path
@@ -117,6 +120,7 @@
                                                 สำเร็จ
                                             </button>
                                         @else
+                                        $hiddbtn =0;
                                             <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
                                                 <i class="bi-pencil-square h6"></i></a>
                                             <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">
@@ -134,8 +138,10 @@
                 </table>
 
                 <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
-
+              
+                
                     <button type="button" id="btn-confirm-submit" class="btn btn-primary "> ยืนยันเพิ่มตารางเรียน </button>
+                 
                 </div>
 
 

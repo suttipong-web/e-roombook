@@ -29,12 +29,13 @@
                 <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel โดยกรอกข้อมูลตามรูปแบบไฟล์ตัวอย่างที่ให้นี้เท่านั้น 
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download << </a>
                 </li>
-                <li> 
+              <!--  <li> 
                     <a href="/storage/download/schedule1.xlsx" target="_blank"> >>TEST FILE  Download << </a>
                 </li>
                 <li> 
                     <a href="/storage/download/schedule3.xlsx" target="_blank"> >>TEST FILE  Download << </a>
                 </li>
+    -->
                 <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว
                     </span> </li>
                 <li> เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะ้ต้องทำการลบข้อมูลรายการนั้น แล้วทำรายการใหม่</li>
@@ -94,9 +95,9 @@
                                     <td class="text-center">{{$rows->countError}}</td>
                                     <td>
                                         @if ($rows->is_public)
-                                        <span class="badge badge-success">ยืนยันแล้ว</span>
+                                        <span class="badge badge-success">ส่งข้อมูลแล้ว</span>
                                         @else
-                                        <span class="badge badge-warning">รอยืนยัน</span>
+                                        <span class="badge badge-warning">ยังไม่ได้ส่งข้อมูล</span>
                                         @endif
                                     </td>
                                     <td class="bg-light text-dark">

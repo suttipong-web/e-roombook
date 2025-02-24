@@ -7,6 +7,7 @@ use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\Admin\AutnController;
 use App\Http\Controllers\Admin\deanApporveController;
 use App\Http\Controllers\Admin\engdeanApporveController;
+use App\Http\Controllers\Admin\GroupCourseController;
 use App\Http\Controllers\Admin\ManageBookingController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Admin\stepApporveController;
 use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\engApporveController;
+
 use App\Http\Controllers\major\majorController;
 use App\Http\Controllers\profile\profileController as ProfileProfileController;
 use App\Http\Controllers\ScheduleroomController;
@@ -169,8 +171,17 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/schedules', [ScheduleDepController::class, 'listimport'])->name('listimport');
     Route::delete('/admin/schedule/delete_import', [ScheduleDepController::class, 'delete_import'])->name('delete_import');
 
-    Route::get('/admin/term', [TermController::class, 'index'])->name('index');
+    Route::get('/admin/term', [TermController::class, 'index'])->name('indexterm');
     Route::get('/admin/term/add/', [TermController::class, 'pageAdd'])->name('pageAdd');
+    Route::post('/admin/term/saved', [TermController::class, 'saved'])->name('saved');
+    Route::post('/admin/term/update', [TermController::class, 'updated'])->name('updated');
+    Route::delete('/admin/term/delete', [TermController::class, 'deleteTerm'])->name('deleteTerm');
+    Route::get('/admin/term/getDataedit', [TermController::class, 'getTermEdit'])->name('getTermEdit');
+
+
+    Route::get('/admin/groupCourse', [GroupCourseController ::class, 'index']);
+    Route::get('/admin/groupCourse/assign/{id}/{group_title}', [GroupCourseController ::class, 'assigngroup']);
+
     
 });
 
