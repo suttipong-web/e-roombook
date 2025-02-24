@@ -178,10 +178,12 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::delete('/admin/term/delete', [TermController::class, 'deleteTerm'])->name('deleteTerm');
     Route::get('/admin/term/getDataedit', [TermController::class, 'getTermEdit'])->name('getTermEdit');
 
-
+    // หนดผู้ใช้งานลงตารางเรียน
     Route::get('/admin/groupCourse', [GroupCourseController ::class, 'index']);
     Route::get('/admin/groupCourse/assign/{id}/{group_title}', [GroupCourseController ::class, 'assigngroup']);
-
+    Route::post('/admin/groupCourse/AddAdmin', [GroupCourseController::class, 'AddAdmin'])->name('AddAdmin');
+    Route::delete('/admin/groupCourse/delete', [GroupCourseController::class, 'deleteAdmin']);
+    
     
 });
 
