@@ -62,12 +62,22 @@
             </div>
             <hr />
 
+            @if($getService->getUserStatusImportdata())
             <div class="align-self-end" style="text-align: right">
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
                         class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
                 <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
                     <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
             </div>
+            @else
+            <div class="text-center mb-2 p-2 text-center text-danger" style="text-align: center">
+                 
+                 <div class="alert alert-danger" role="alert">
+                 ***  ยังไม่เปิดให้ลงตารางเรียน  ***
+                </div>
+            </div>
+            @endif
+
             <div class="col-md-12   mt-3 displayTable">
 
                 <table class="table table-hover   " id="tableListbooking">

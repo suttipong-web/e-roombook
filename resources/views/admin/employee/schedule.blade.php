@@ -57,12 +57,21 @@
             </div>
             <hr />
 
+            @if($getService->getUserStatusImportdata())
             <div class="align-self-end" style="text-align: right">
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
                         class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
                 <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
                     <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
             </div>
+            @else
+            <div class="text-center mb-2 p-2 text-center text-danger" style="text-align: center">
+                 
+                 <div class="alert alert-danger" role="alert">
+                 ***  ยังไม่เปิดให้ลงตารางเรียน  ***
+                </div>
+            </div>
+            @endif
             <div class="col-md-12   mt-3 displayTable">
 
                 <table class="table table-hover  table-sm " id="tableListbooking">
@@ -115,10 +124,12 @@
 
                     </tbody>
                 </table>
-                <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
-                    <button type="button" class="btn btn-secondary">ยกเลิก</button>
-                    <button type="submit" id="edit_btn" class="btn btn-primary"> ยืนยัน </button>
+                @if($getService->getUserStatusImportdata())
+                <div class="col-md-12 modal-footer   mt-2 p-3 text-end">             
+                  <!--  <button type="submit" id="edit_btn" class="btn btn-primary"> ยืนยัน </button> -->
+                    <button type="button" id="btn-confirm-submit" class="btn btn-primary "> ยืนยันเพิ่มตารางเรียน </button>
                 </div>
+                @endif
             </div>
         </div>
     </div>
