@@ -22,6 +22,7 @@ class ScheduleDepController extends Controller
     // 
     public function index(Request $request)
     {   
+	  $class = new HelperService();
         $sesid = $request->ses_id;
         $nowYear = (date('Y')) + 543;
         $Byuser = $request->session()->get('cmuitaccount');
@@ -67,8 +68,8 @@ class ScheduleDepController extends Controller
                     DATE(room_schedules.schedule_startdate) >=  DATE('" . $rows->schedule_startdate . "') AND 
                     DATE(room_schedules.schedule_enddate) <= DATE('" . $rows->schedule_enddate . "')  AND   
                     room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "' AND 
-                    ( room_schedules.is_public =1 OR  room_schedules.is_duplicate =0 )   AND                 
-                    ( room_schedules.id <> '" . $rows->id . "')                      
+                    ( room_schedules.is_public =1 OR  room_schedules.is_duplicate =0 )          
+                                      
                     ORDER BY booking_time_start ASC
                     ";
 
@@ -87,7 +88,8 @@ class ScheduleDepController extends Controller
                         $result = DB::table('room_schedules')                           
                             ->where('id',  $rows->id)
                             ->update([
-                                'is_duplicate' => 1
+                                'is_duplicate' => 1,
+								'is_error' => 'ไม่สามารถลงเวลานี้ได้'
                             ]);
                     }                
 
@@ -96,9 +98,9 @@ class ScheduleDepController extends Controller
 
             //ตรวจสอบในตารางการจองหลัก 
               // ตรวจสอบในตารางจริง
-              $numofday  =  $this->getListNumOfDay($rows->schedule_repeatday);
+              $numofday  =  $class->getListNumOfDay($rows->schedule_repeatday);
               //echo "<br/>".$numofday;
-                $loopdate  =$this->getDateofday($rows->schedule_startdate,$rows->schedule_enddate,$numofday);
+                $loopdate  =$class->getDateofday($rows->schedule_startdate,$rows->schedule_enddate,$numofday);
              // echo print_r($loopdate);                                            
                 $error =1 ;            
                foreach ($loopdate as  $is_date) {                     
@@ -536,7 +538,7 @@ class ScheduleDepController extends Controller
     // insertCorusetoTablebooking  นำข้อมูลไปลงในตาราง table จริงๆ 
 
     public function insertCorusetoTablebooking(Request $request){
-        
+         $class = new HelperService();
         $Byuser =  $request->session()->get('cmuitaccount');
         $strerror=[];
         $sessionId = session()->getId();  
@@ -569,9 +571,9 @@ class ScheduleDepController extends Controller
                     foreach ($resultBooking as $row) {
                         //echo $row->schedule_repeatday;
                         
-                       $numofday  =  $this->getListNumOfDay($row->schedule_repeatday);
+                       $numofday  =  $class->getListNumOfDay($row->schedule_repeatday);
                       //  echo "<br/>".$numofday;
-                       $loopdate  =$this->getDateofday($row->schedule_startdate,$row->schedule_enddate,$numofday);
+                       $loopdate  =$class->getDateofday($row->schedule_startdate,$row->schedule_enddate,$numofday);
                        // echo print_r($loopdate);
                         // insert 
                         $roomID = $row->roomID;   
@@ -693,39 +695,8 @@ function getDatebyday($startDate, $endDate,$days) {
 
     return $result;
 }
-   function getDateofday ($start_date, $end_date,$days) {
-       // สร้าง Carbon objects สำหรับวันที่เริ่มต้นและสิ้นสุด
-        $start = Carbon::parse($start_date);
-        $end = Carbon::parse($end_date);
 
-        // อาร์เรย์เพื่อเก็บผลลัพธ์
-         $result = [];
 
-        // Loop จนกระทั่งถึงวันที่สิ้นสุด
-        while ($start->lte($end)) {
-            // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
-            if ($start->dayOfWeek == Carbon::TUESDAY) {
-                $result[] = $start->toDateString();
-            } elseif ($start->dayOfWeek == Carbon::FRIDAY) {
-                $result[] = $start->toDateString();
-            }
-            // เพิ่มวันที่ทีละหนึ่งวัน
-            $start->addDay();
-        }
-        return $result;
-}
-
- function getListNumOfDay($days) {
-    $sql = "SELECT
-            listdays.numofday
-            FROM `listdays`
-            WHERE
-            listdays.dayTitle = 'TuF' ";
-            $resultlistdays = DB::select(DB::raw($sql));
-
-        $result = $resultlistdays[0]->numofday;
-        return $result;
-}
  function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();

@@ -77,6 +77,7 @@
                             <th align="center" class="text-center">เวลา</th>
                             <th>ห้องเรียน</th>
                             <th>ผู้สอน</th>
+                            <th>หมายเหตุ</th>
                             <th>จัดการ</th>
                         </tr>
                     </thead>
@@ -98,7 +99,7 @@
                                     </td>
                                     <td>{{ $rows->roomFullName }}</td>
                                     <td>{{ $rows->lecturer }}</td>
-
+                                    <td>{{ $rows->is_error }}</td>
                                     <td class="bg-light text-dark"> <a href="#" id="{{ $rows->id }}"
                                             class="text-success mx-1 editIcon">
                                             <i class="bi-pencil-square h6"></i></a>
@@ -632,10 +633,10 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "{{ url('/admin/schedule/delete') }}",
+                            url: "{{ url('/admin/employee/delete_import') }}",
                             method: 'delete',
                             data: {
-                                id: id,
+                                sid: id,
                                 _token: csrf
                             },
                             success: function(response) {

@@ -328,4 +328,39 @@ class HelperService
         return $latestTerm;
     }
 
+    function getListNumOfDay($days) {
+        $sql = "SELECT
+                listdays.numofday
+                FROM `listdays`
+                WHERE
+                ( listdays.dayTitle = '{$days}'  OR listdays.dayList = '{$days}' )  ";
+                $resultlistdays = DB::select(DB::raw($sql));
+    
+            $result = $resultlistdays[0]->numofday;
+            return $result;
+    }
+
+    function getDateofday ($start_date, $end_date,$days) {
+        // สร้าง Carbon objects สำหรับวันที่เริ่มต้นและสิ้นสุด
+         $start = Carbon::parse($start_date);
+         $end = Carbon::parse($end_date);
+ 
+         // อาร์เรย์เพื่อเก็บผลลัพธ์
+          $result = [];
+ 
+         // Loop จนกระทั่งถึงวันที่สิ้นสุด
+         while ($start->lte($end)) {
+             // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
+             if ($start->dayOfWeek == Carbon::TUESDAY) {
+                 $result[] = $start->toDateString();
+             } elseif ($start->dayOfWeek == Carbon::FRIDAY) {
+                 $result[] = $start->toDateString();
+             }
+             // เพิ่มวันที่ทีละหนึ่งวัน
+             $start->addDay();
+         }
+         return $result;
+ }
+ 
+
 }

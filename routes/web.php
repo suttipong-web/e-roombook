@@ -105,7 +105,13 @@ Route::get('/admin/listapprove_booking', [stepApporveController::class, 'listapp
 
 //MAJOR
 Route::get('/major', [majorController::class, 'index'])->name('major.index');
-Route::get('/major/schedules', [majorController::class, 'schedules'])->name('major.schedules');
+//Route::get('/major/schedules', [majorController::class, 'schedules'])->name('major.schedules');
+Route::get('/major/schedules', [majorController::class, 'listimport'])->name('major.listimport');
+Route::get('/major/schedules/{step}/{ses_id}', [majorController::class, 'schedules'])->name('major.schedules');
+Route::delete('/admin/employee/delete_import', [majorController::class, 'delete_import'])->name('delete_import');
+
+
+
 Route::get('/major/schedules/view', [majorController::class, 'views'])->name('major.views');
 Route::get('/major/schedules/fetchall', [majorController::class, 'fetchAll'])->name('major.fetchAll');
 Route::post('/major/schedule/saveImportfile', [majorController::class, 'saveImportfile'])->name('major.saveImportfile');
