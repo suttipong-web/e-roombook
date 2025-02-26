@@ -33,6 +33,7 @@ class roomSchedule extends Model
         'is_duplicate',
         'is_public',
         'is_public_date',
-        'is_group_session'
+        'is_group_session',
+        'is_error'
     ];
 }

@@ -65,7 +65,9 @@
                                             <label for="schedule_startdate" class="form-label">
                                                 <span style="color: blueviolet;font-weight: 700"> วันที่เริ่ม *</span>
                                             </label>
-                                            <input class="form-control dateScl" type="text" data-provide="datepicker"
+                                            <input class="form-control 
+                                             @if($roomtype > 1) dateMaxScl @else datescl @endif                                           
+                                            " type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_startdate" name="schedule_startdate" required>
                                         </div>
@@ -73,9 +75,12 @@
                                             <label for="schedule_enddate" class="form-label"> <span
                                                     style="color: blueviolet;font-weight: 700"> วันที่สิ้นสุด * </span>
                                             </label>
-                                            <input class="form-control dateScl" type="text" data-provide="datepicker"
+                                            <input class="form-control @if($roomtype > 1) dateMaxScl @else datescl @endif " type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
-                                                id="schedule_enddate" name="schedule_enddate" required>
+                                                id="schedule_enddate" name="schedule_enddate" required
+                                                
+                                                                                              
+                                                >
                                         </div>
 
                                         <div class="col-md-6 ">
@@ -279,7 +284,10 @@
                                         <label for="search_date" class="form-label"> วันที่ </label>
                                         <input class="form-control dateScl" type="text" data-provide="datepicker"
                                             data-date-language="th" value="{{ $searchDates }}" id="search_date"
-                                            name="search_date" required>
+                                            name="search_date" required
+                                            
+                                            
+                                            >
                                     </div>
                                     <div class="text-center d-flex justify-content-center">
                                         <button type="submit" id="search_booking "
@@ -366,8 +374,15 @@
                 location.reload();
                 document.getElementById('home-tab').focus();
             }
-
-
+            //หาค่าวันล่าสุดที่สามารถเข้าจองได้ 
+            let finalBookingDate = "{{ $getService->getendDateBooking() }}";
+            $('.dateMaxScl').datepicker({
+              //  27/02/2025
+                format: 'dd/mm/yyyy', // กำหนดรูปแบบวันที่
+                language: 'th', // ใช้ภาษาไทย
+                startDate: new Date(), 
+                endDate: new Date(finalBookingDate) // เดือนใน JavaScript เริ่มจาก 0 -> พฤษภาคมคือ 4
+            });
 
         });
     </script>

@@ -62,7 +62,7 @@
     <li class="nav-item">
         <a href="/admin/term" class="nav-link {{ $current_route == 'admin.term' ? 'active' : '' }}">
         <i class="bi bi-list-check"></i>
-            <span>กำหนดการลงตารางเรียน</span></a>
+            <span>กำหนดการลงตารางเรียน/สอบ</span></a>
     </li>
 
     <li class="nav-item">

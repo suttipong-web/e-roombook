@@ -313,6 +313,19 @@ class HelperService
     }
 
 
+    public function getendDateBooking(){
+        $latestTerm = DB::table('terms')
+        ->orderBy('id', 'desc') // เรียงลำดับจากมากไปน้อย
+        ->first(); // ดึงแค่ 1 รายการ
+        return $latestTerm->end_date;
+    }
 
+    // start_date / end_date
+    public function getfinalBookingDate(){
+        $latestTerm = DB::table('terms')
+        ->orderBy('id', 'desc') // เรียงลำดับจากมากไปน้อย
+        ->first(); // ดึงแค่ 1 รายการ
+        return $latestTerm;
+    }
 
 }

@@ -134,7 +134,8 @@ class ScheduleDepController extends Controller
                            $result = DB::table('room_schedules')                                     
                                ->where('id', $rows->id)
                                ->update([
-                                   'is_duplicate' => 1
+                                   'is_duplicate' => 1,
+                                   'is_error' => 'ไม่สามารถลงเวลานี้ได้'
                                ]);
                 }
 

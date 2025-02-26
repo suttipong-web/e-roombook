@@ -81,6 +81,7 @@
                             <th align="center" class="text-center">เวลา</th>
                             <th>ห้องเรียน</th>
                             <th>ผู้สอน</th>
+                            <th>หมายเหตุ</th>
                             <th width="100">จัดการ</th>
                         </tr>
                     </thead>
@@ -104,7 +105,7 @@
                                     </td>
                                     <td>{{ $rows->roomFullName }}</td>
                                     <td>{{ $rows->lecturer }}</td>
-
+                                    <td>{{ $rows->is_error }}</td>
                                     <td class="bg-light text-dark">
                                         @if ($rows->is_public)
                                            @php
@@ -120,7 +121,7 @@
                                                 สำเร็จ
                                             </button>
                                         @else
-                                        $hiddbtn =0;
+                                      
                                             <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
                                                 <i class="bi-pencil-square h6"></i></a>
                                             <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">

@@ -368,7 +368,8 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,               
-                'usertype' => $usertype
+                'usertype' => $usertype,
+                'roomtype'=> $roomData->roomTypeId
             ]
         );
 
