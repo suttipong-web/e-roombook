@@ -624,7 +624,7 @@ class ScheduleDepController extends Controller
                                     'booking_time_finish' => $row->booking_time_finish,
                                     'booking_subject' => $booking_subject,
                                     'booking_booker' => $request->booking_booker,
-                                    'booking_ofPeople' => $row->Stdamount,
+                                    'booking_ofPeople' =>  (int) ($row->Stdamount ?? 0),
                                     'booking_department' =>  $booking_department,
                                     'schedule_startdate' =>  $is_date,
                                     'schedule_enddate' => $is_date,

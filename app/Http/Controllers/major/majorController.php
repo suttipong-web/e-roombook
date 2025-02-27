@@ -127,7 +127,7 @@ class majorController extends Controller
             DATE(room_schedules.schedule_startdate) >=  DATE('" . $rows->schedule_startdate . "') AND 
             DATE(room_schedules.schedule_enddate) <= DATE('" . $rows->schedule_enddate . "')  AND   
             room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "' AND 
-            ( room_schedules.is_public =1 OR  room_schedules.is_duplicate =0 )                    
+            ( room_schedules.is_public =1 )                    
                             
             ORDER BY booking_time_start ASC
             ";
