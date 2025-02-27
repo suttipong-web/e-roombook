@@ -352,13 +352,15 @@ class HelperService
 
         // อาร์เรย์เพื่อเก็บผลลัพธ์
         $result = [];
+        if (!is_array($days)) {
+            $days = explode(',', $days); // แปลงจาก string เป็น array (ถ้าต้องการส่งค่าเป็น string)
+        }
 
         // Loop จนกระทั่งถึงวันที่สิ้นสุด
         while ($start->lte($end)) {
-            // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
-            if ($start->dayOfWeek == Carbon::TUESDAY) {
-                $result[] = $start->toDateString();
-            } elseif ($start->dayOfWeek == Carbon::FRIDAY) {
+            // ตรวจสอบว่าวันนี้เป็นวัน $days (1,4)  คือวันจันทร์ และพฤหัสบดี 
+      
+            if (in_array($start->dayOfWeek, $days)) {
                 $result[] = $start->toDateString();
             }
             // เพิ่มวันที่ทีละหนึ่งวัน

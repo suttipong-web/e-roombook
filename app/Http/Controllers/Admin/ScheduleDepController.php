@@ -148,8 +148,8 @@ class ScheduleDepController extends Controller
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
             ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('room_schedules.straff_account', $Byuser)
-            ->where('room_schedules.is_group_session', $sesid)
-
+            ->where('room_schedules.is_group_session', $sesid)           
+            ->orderBy('room_schedules.is_duplicate', 'DESC') 
             ->get();
 
         return view('admin.schedule.index')->with([
@@ -589,7 +589,7 @@ class ScheduleDepController extends Controller
                     $ChkTimeBookig = DB::table('booking_rooms')
                         ->select('booking_time_start', 'booking_time_finish')
                         ->where('booking_rooms.roomID', $roomID)
-                        ->where('booking_rooms.booking_status', '=', 2)
+                        ->where('booking_rooms.booking_status', 1)
                         ->where('booking_rooms.schedule_startdate', '>=', $is_date)
                         ->where('booking_rooms.schedule_enddate', '<=', $is_date)
                         ->get();
@@ -614,8 +614,9 @@ class ScheduleDepController extends Controller
                             $is_confirm = 0;
                         }
                     }
-
-                    if ($error) {
+                      
+                 //   if (!empty($is_date)) {
+                 if($error) {
                         //  echo "is_date=>".$is_date;
                         $no = time();
                         $bookingToken = md5(time());
@@ -656,7 +657,7 @@ class ScheduleDepController extends Controller
                         $updateData[] = [
                             'id' => $row->id,
                             'is_public' => 1,
-                            'is_public_date' => Carbon::now(),
+                            'is_public_date' => Carbon::now()
                         ];
                   
                     } else {
@@ -666,11 +667,14 @@ class ScheduleDepController extends Controller
             }
             //booking_rooms::insert($setDataBooking);
             // แบ่งข้อมูลเป็นชุดๆ ละ 100 รายการแล้วส่งเข้า Queue
-            // collect($setDataBooking)->chunk(100)->each(function ($chunk) {
-             //   dispatch(new ProcessBooking($chunk->toArray()));
-            //});
-            dispatch(new ProcessBooking($setDataBooking));
-            dispatch(new UpdateRoomSchedule($updateData));
+
+             collect($setDataBooking)->chunk(50)->each(function ($chunk) {
+              dispatch(new ProcessBooking($chunk->toArray()));
+            });
+            collect($updateData)->chunk(50)->each(function ($chunk) {
+           
+            dispatch(new UpdateRoomSchedule($chunk->toArray()));
+        });
 
             
             session()->regenerate();
