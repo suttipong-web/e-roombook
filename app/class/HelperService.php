@@ -381,8 +381,7 @@ class HelperService
             if ($chkUser->count() > 0) {
                 $groupCourse = $chkUser->courseId;
 
-                // หาวันที่  ที่ลงปุ่มได้ 
-
+                // หาวันที่  ที่ลงได้ 
                 $latestDate = DB::table('terms')
                     ->orderBy('id', 'desc') // เรียงลำดับจากมากไปน้อย
                     ->first(); // ดึงแค่ 1 รายการ
