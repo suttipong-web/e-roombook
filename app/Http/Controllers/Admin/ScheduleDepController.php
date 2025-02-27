@@ -15,6 +15,8 @@ use PhpParser\Node\Expr\FuncCall;
 use Excel;
 use Session;
 use App\class\HelperService;
+use App\Jobs\ProcessBooking;
+use App\Jobs\UpdateRoomSchedule;
 use Illuminate\Support\Str;
 
 class ScheduleDepController extends Controller
@@ -587,7 +589,7 @@ class ScheduleDepController extends Controller
                     $ChkTimeBookig = DB::table('booking_rooms')
                         ->select('booking_time_start', 'booking_time_finish')
                         ->where('booking_rooms.roomID', $roomID)
-                        ->where('booking_rooms.booking_status', '<>', 2)
+                        ->where('booking_rooms.booking_status', '=', 2)
                         ->where('booking_rooms.schedule_startdate', '>=', $is_date)
                         ->where('booking_rooms.schedule_enddate', '<=', $is_date)
                         ->get();
@@ -649,13 +651,28 @@ class ScheduleDepController extends Controller
                         //$result = booking_rooms::create($setDataBooking);  
 
                         //  UPDATE  status id complete insert table 
-                        DB::table('room_schedules')->where('id', $row->id)->update(['is_public' => 1, 'is_public_date' => Carbon::now()]);
+                        //DB::table('room_schedules')->where('id', $row->id)->update(['is_public' => 1, 'is_public_date' => Carbon::now()]);
+                  
+                        $updateData[] = [
+                            'id' => $row->id,
+                            'is_public' => 1,
+                            'is_public_date' => Carbon::now(),
+                        ];
+                  
                     } else {
                         $strerror[] = $booking_subject . " | " . $is_date . " |" . $row->booking_time_start . " - " . $row->booking_time_finish;
                     }
                 }
             }
-            booking_rooms::insert($setDataBooking);
+            //booking_rooms::insert($setDataBooking);
+            // แบ่งข้อมูลเป็นชุดๆ ละ 100 รายการแล้วส่งเข้า Queue
+            // collect($setDataBooking)->chunk(100)->each(function ($chunk) {
+             //   dispatch(new ProcessBooking($chunk->toArray()));
+            //});
+            dispatch(new ProcessBooking($setDataBooking));
+            dispatch(new UpdateRoomSchedule($updateData));
+
+            
             session()->regenerate();
         }
         // $deletedRows =  DB::table('room_schedules')              
