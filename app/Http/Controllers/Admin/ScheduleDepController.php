@@ -21,8 +21,8 @@ class ScheduleDepController extends Controller
 {
     // 
     public function index(Request $request)
-    {   
-	  $class = new HelperService();
+    {
+        $class = new HelperService();
         $sesid = $request->ses_id;
         $nowYear = (date('Y')) + 543;
         $Byuser = $request->session()->get('cmuitaccount');
@@ -42,10 +42,10 @@ class ScheduleDepController extends Controller
         //ข้อมูลห้องจองห่้องเรียน
         //echo  $sesid;
         $BookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
-            ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')            
+            ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('room_schedules.straff_account', $Byuser)
-            ->where('room_schedules.is_group_session', $sesid)      
-            ->where('room_schedules.is_public',0)               
+            ->where('room_schedules.is_group_session', $sesid)
+            ->where('room_schedules.is_public', 0)
             ->get();
 
         foreach ($BookingList as $rows) {
@@ -73,7 +73,7 @@ class ScheduleDepController extends Controller
                     ORDER BY booking_time_start ASC
                     ";
 
-         //  echo  "<br/><hr/>".$sql;
+            //  echo  "<br/><hr/>".$sql;
             $qresult = DB::select(DB::raw($sql));
             if ($qresult) {
                 foreach ($qresult as $row_chk) {
@@ -85,69 +85,69 @@ class ScheduleDepController extends Controller
                         ($bkstart < $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
                     ) {
                         //เวลาซ้ำ                        
-                        $result = DB::table('room_schedules')                           
+                        $result = DB::table('room_schedules')
                             ->where('id',  $rows->id)
                             ->update([
                                 'is_duplicate' => 1,
-								'is_error' => 'ไม่สามารถลงเวลาได้'
+                                'is_error' => 'ไม่สามารถลงเวลาได้'
                             ]);
-                    }                
-
+                    }
                 }
-            }           
+            }
 
             //ตรวจสอบในตารางการจองหลัก 
-              // ตรวจสอบในตารางจริง
-              $numofday  =  $class->getListNumOfDay($rows->schedule_repeatday);
-              //echo "<br/>".$numofday;
-                $loopdate  =$class->getDateofday($rows->schedule_startdate,$rows->schedule_enddate,$numofday);
-             // echo print_r($loopdate);                                            
-                $error =1 ;            
-               foreach ($loopdate as  $is_date) {                     
-                   //ตรวจสอบว่าจองเวลานี้ได้ไหม         
-                   $ChkTimeBookig = DB::table('booking_rooms')
-                       ->select('booking_time_start', 'booking_time_finish')
-                       ->where('booking_rooms.roomID', $rows->roomID  )
-                       ->where('booking_rooms.booking_status',1)
-                       ->where('booking_rooms.schedule_startdate', '>=',$is_date)
-                       ->where('booking_rooms.schedule_enddate', '<=', $is_date)
-                       ->get();                                
-                   // ยืนยันการจอง
-                   $is_confirm = 1; $text ="";
-                   
-                   foreach ($ChkTimeBookig as $row_chk) {
-                       
-                       $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5)); 
-                       $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5)); 
-                      // echo "<br/>".$rows->booking_time_start;
-                       if (
-                           ($rows->booking_time_start >=  $rowchkStart  && $rows->booking_time_start<  $rowchkEnd)
-                           ||
-                           ( $rows->booking_time_finish > $rowchkStart  &&  $rows->booking_time_finish <=  $rowchkEnd)
-                           ||
-                           ($rows->booking_time_start <  $rowchkStart &&  $rows->booking_time_finish >  $rowchkEnd)
-                       ) {                                      
-                           $error =0;                                   
-                       } 
-                   }
-               }
-               if(!$error) {
-                      //เวลาซ้ำ    
-                           $result = DB::table('room_schedules')                                     
-                               ->where('id', $rows->id)
-                               ->update([
-                                   'is_duplicate' => 1,
-                                   'is_error' => 'ไม่สามารถลงตารางได้'
-                               ]);
+            // ตรวจสอบในตารางจริง
+            $numofday  =  $class->getListNumOfDay($rows->schedule_repeatday);
+            //echo "<br/>".$numofday;
+            $loopdate  = $class->getDateofday($rows->schedule_startdate, $rows->schedule_enddate, $numofday);
+            // echo print_r($loopdate);                                            
+            $error = 1;
+            foreach ($loopdate as  $is_date) {
+                //ตรวจสอบว่าจองเวลานี้ได้ไหม         
+                $ChkTimeBookig = DB::table('booking_rooms')
+                    ->select('booking_time_start', 'booking_time_finish')
+                    ->where('booking_rooms.roomID', $rows->roomID)
+                    ->where('booking_rooms.booking_status', 1)
+                    ->where('booking_rooms.schedule_startdate', '>=', $is_date)
+                    ->where('booking_rooms.schedule_enddate', '<=', $is_date)
+                    ->get();
+                // ยืนยันการจอง
+                $is_confirm = 1;
+                $text = "";
+
+                foreach ($ChkTimeBookig as $row_chk) {
+
+                    $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
+                    $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
+                    // echo "<br/>".$rows->booking_time_start;
+                    if (
+                        ($rows->booking_time_start >=  $rowchkStart  && $rows->booking_time_start <  $rowchkEnd)
+                        ||
+                        ($rows->booking_time_finish > $rowchkStart  &&  $rows->booking_time_finish <=  $rowchkEnd)
+                        ||
+                        ($rows->booking_time_start <  $rowchkStart &&  $rows->booking_time_finish >  $rowchkEnd)
+                    ) {
+                        $error = 0;
+                    }
                 }
+            }
+            if (!$error) {
+                //เวลาซ้ำ    
+                $result = DB::table('room_schedules')
+                    ->where('id', $rows->id)
+                    ->update([
+                        'is_duplicate' => 1,
+                        'is_error' => 'ไม่สามารถลงตารางได้'
+                    ]);
+            }
         }
 
 
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
-            ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')          
+            ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
             ->where('room_schedules.straff_account', $Byuser)
-            ->where('room_schedules.is_group_session', $sesid) 
-           
+            ->where('room_schedules.is_group_session', $sesid)
+
             ->get();
 
         return view('admin.schedule.index')->with([
@@ -155,10 +155,10 @@ class ScheduleDepController extends Controller
             'getListRoom' => $getListRoom,
             'nowYear' => $nowYear,
             'listDays' => $getliatday,
-            'step'=>$request->step
+            'step' => $request->step
         ]);
     }
-    
+
 
     //Import file Excel to Database with call 
     public function saveImportfile(Request $request)
@@ -167,8 +167,8 @@ class ScheduleDepController extends Controller
         $ses_id = session()->getId();
         $cmuitaccount = $request->session()->get('cmuitaccount');
         Excel::import(new ScheduleImport, $request->file('fileupload'));
-       // return redirect()->back()->with('success', true);
-        return redirect()->to('/admin/schedules/updated/'.$ses_id);
+        // return redirect()->back()->with('success', true);
+        return redirect()->to('/admin/schedules/updated/' . $ses_id);
     }
     //แสดงตารางเรียน
     public function views(Request $request)
@@ -187,14 +187,13 @@ class ScheduleDepController extends Controller
     }
 
     public function delete_import(Request $request)
-    {       
-       if(!empty($request->sid)){
-        // ลบข้อมูลตาราง import
-        DB::table('room_schedules')->where('is_group_session', $request->sid)->delete();
-        // ลบข้อมูลตารางจองห้อง
-        DB::table('booking_rooms')->where('import_sid', $request->sid)->delete();
-       }
-        
+    {
+        if (!empty($request->sid)) {
+            // ลบข้อมูลตาราง import
+            DB::table('room_schedules')->where('is_group_session', $request->sid)->delete();
+            // ลบข้อมูลตารางจองห้อง
+            DB::table('booking_rooms')->where('import_sid', $request->sid)->delete();
+        }
     }
     public function fetchall(Request $request)
     {
@@ -218,11 +217,11 @@ class ScheduleDepController extends Controller
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id
             WHERE (room_schedules.straff_account = '{$Byuser}')  
-            AND  (room_schedules.is_public =1)  ";        
-        
+            AND  (room_schedules.is_public =1)  ";
+
         $sql .= " GROUP BY room_schedules.roomID   ORDER BY  room_schedules.roomID  ASC ";
         $getRoom = DB::select(DB::raw($sql));
-       //echo $sql."<br/>";
+        //echo $sql."<br/>";
         //$getRoom = roomSchedule::Join('rooms', 'rooms.id', '=', 'room_schedules.roomID')
         // ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
         //  ->where('room_schedules.is_confirm', 0)
@@ -236,49 +235,49 @@ class ScheduleDepController extends Controller
 
                 $output = "";
 
-                 ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
+                ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
                 $sc_startTime = date("Y-m-d 08:00:00");  // กำหนดเวลาเริ่มต้ม เปลี่ยนเฉพาะเลขเวลา
                 $sc_endtTime = date("Y-m-d 21:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
                 $sc_t_startTime = strtotime($sc_startTime);
                 $sc_t_endTime = strtotime($sc_endtTime);
-            
+
                 $num_dayShow = 7;  // จำนวนวันที่โชว์ 1 - 7
                 $sc_timeStep = array();
                 $sc_numCol = 0;
                 $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
-                $hour_block_width = 90;      
-       
-                    ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
-                    $uts = "";
-                    if ($request->uts) {
-                        $uts = $request->uts; // ถ้ามีส่งค่าเปลี่ยนสัปดาห์มา
-                    }
-                    // ส่วนของการกำหนดวัน สามารถนำไปประยุกต์กรณีทำตารางเวลาแบบ เลื่อนดูแต่ละสัปดาห์ได้
-                    $now_day = date("Y-m-d"); // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
-                    if (isset($uts) && $uts != "" && $uts !=0) { // เมื่อมีการเปลี่ยนสัปดาห์
-                        $now_day = date("Y-m-d", trim($uts)); // เปลี่ยนวันที่ แปลงจากค่าวันจันทร์ที่ส่งมา
-                        $now_day = date("Y-m-d", strtotime($now_day . " monday this week"));
-                    }
-                    // หาตัวบวก หรือลบ เพื่อหาวันที่ของวันจันทร์ในสัปดาห์
-                    $start_weekDay = date("Y-m-d", strtotime("monday this week")); // หาวันจันทร์ของสัปดาห์
-                    if (isset($uts) && $uts != "") { // ถ้ามีส่งค่าเปลี่ยนสัปดาห์มา
-                        $start_weekDay = $now_day; // ให้ใช้วันแรก เป็นวันที่ส่งมา
-                    }
-                    // หววันที่วันอาทิตย์ของสัปดาห์นั้นๆ
-                    $end_weekDay = date("Y-m-d", strtotime($start_weekDay . "+7 day"));
-                    $timestamp_prev = strtotime($start_weekDay . " -7 day"); // ค่าวันจันทร์ของอาทิตย์ก่อหน้า
-                    $timestamp_next = strtotime($start_weekDay . " +7 day"); // ค่าวันจันทร์ของอาทิตย์ถัดไป
+                $hour_block_width = 90;
 
-                    while ($sc_t_startTime <= $sc_t_endTime) {
-                        $sc_timeStep[$sc_numCol] = date("H:i", $sc_t_startTime);
-                        $sc_t_startTime = $sc_t_startTime + ($sc_numStep * 60);
-                        $sc_numCol++;    // ได้จำนวนคอลัมน์ที่จะแสดง
-                    }
+                ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
+                $uts = "";
+                if ($request->uts) {
+                    $uts = $request->uts; // ถ้ามีส่งค่าเปลี่ยนสัปดาห์มา
+                }
+                // ส่วนของการกำหนดวัน สามารถนำไปประยุกต์กรณีทำตารางเวลาแบบ เลื่อนดูแต่ละสัปดาห์ได้
+                $now_day = date("Y-m-d"); // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
+                if (isset($uts) && $uts != "" && $uts != 0) { // เมื่อมีการเปลี่ยนสัปดาห์
+                    $now_day = date("Y-m-d", trim($uts)); // เปลี่ยนวันที่ แปลงจากค่าวันจันทร์ที่ส่งมา
+                    $now_day = date("Y-m-d", strtotime($now_day . " monday this week"));
+                }
+                // หาตัวบวก หรือลบ เพื่อหาวันที่ของวันจันทร์ในสัปดาห์
+                $start_weekDay = date("Y-m-d", strtotime("monday this week")); // หาวันจันทร์ของสัปดาห์
+                if (isset($uts) && $uts != "") { // ถ้ามีส่งค่าเปลี่ยนสัปดาห์มา
+                    $start_weekDay = $now_day; // ให้ใช้วันแรก เป็นวันที่ส่งมา
+                }
+                // หววันที่วันอาทิตย์ของสัปดาห์นั้นๆ
+                $end_weekDay = date("Y-m-d", strtotime($start_weekDay . "+7 day"));
+                $timestamp_prev = strtotime($start_weekDay . " -7 day"); // ค่าวันจันทร์ของอาทิตย์ก่อหน้า
+                $timestamp_next = strtotime($start_weekDay . " +7 day"); // ค่าวันจันทร์ของอาทิตย์ถัดไป
+
+                while ($sc_t_startTime <= $sc_t_endTime) {
+                    $sc_timeStep[$sc_numCol] = date("H:i", $sc_t_startTime);
+                    $sc_t_startTime = $sc_t_startTime + ($sc_numStep * 60);
+                    $sc_numCol++;    // ได้จำนวนคอลัมน์ที่จะแสดง
+                }
 
 
                 ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
 
-               /* $sql = "
+                /* $sql = "
                     SELECT
                         room_schedules.*,
                         rooms.roomFullName,
@@ -302,8 +301,8 @@ class ScheduleDepController extends Controller
 
 
 
-                  ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูล ////////////////////////
-                        $sql = " SELECT booking_rooms.*,rooms.roomFullName,rooms.roomTitle,rooms.roomToken
+                ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูล ////////////////////////
+                $sql = " SELECT booking_rooms.*,rooms.roomFullName,rooms.roomTitle,rooms.roomToken
                         FROM booking_rooms
                         INNER JOIN rooms ON booking_rooms.roomID = rooms.id
                         WHERE booking_rooms.roomID = '{$tableRoom->roomID}' 
@@ -346,7 +345,7 @@ class ScheduleDepController extends Controller
                             "sec" => $row->booking_booker,
                             "room" => $row->roomFullName,
                             "isroomID" => $row->roomID,
-                             "booking_phone" => $row->booking_phone,
+                            "booking_phone" => $row->booking_phone,
                             "building" => $row->roomTitle
                         );
                     }
@@ -370,7 +369,7 @@ class ScheduleDepController extends Controller
                                     if (strtotime($start_weekDay . " +" . $i . "day") >= strtotime($row['start_date']) && strtotime($start_weekDay . " +" . $i . " day") <= strtotime($row['end_date'])) {
                                         $dayKey = date("D", strtotime($start_weekDay . " +" . $i . " day"));
                                         $data_day_schedule[$dayKey][] = [
-                                            "start_date"=>$row['start_date'],
+                                            "start_date" => $row['start_date'],
                                             "start_time" => $row['start_time'],
                                             "end_time" => $row['end_time'],
                                             "duration" => $class->getduration(strtotime($row['start_time']), strtotime($row['end_time'])),
@@ -380,7 +379,7 @@ class ScheduleDepController extends Controller
                                             "roomId" => $row['isroomID'],
                                             "sec" => $row['sec'],
                                             "depName" => $row['depName'],
-                                            "booking_phone" => $row['booking_phone'],                                    
+                                            "booking_phone" => $row['booking_phone'],
                                             'UserChkDay' => $row['repeat_day']
                                         ];
                                     }
@@ -389,16 +388,16 @@ class ScheduleDepController extends Controller
                         }
                     }
                 }
-        
+
                 ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
 
                 if ($roomIdDisplay <> $tableRoom->roomID) {
                     $roomIdDisplay = $tableRoom->roomID;
 
-        
-                    $linkPrint = '/room/print/'.  $tableRoom->roomID.'/'. (int)$uts.'/'. $tableRoom->roomTitle ;
+
+                    $linkPrint = '/room/print/' .  $tableRoom->roomID . '/' . (int)$uts . '/' . $tableRoom->roomTitle;
                     $num_dayShow_in_schedule = $num_dayShow - 1;
-          
+
                     $output .= '
 
                         <div class="wrap_schedule_control mt-5">
@@ -432,7 +431,7 @@ class ScheduleDepController extends Controller
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS mR-2" valuts =' . $timestamp_prev . ' >< Prev </button>
                                     <button type="button" class="btn btn-secondary btn-sm btnUTS " valuts =' . $timestamp_next . ' >Next > </button>
                                     <button type="button" class="btn btn-primary btn-sm btnUTS ml-2" valuts ="" >Home </button>   
-                                      <a class="btn btn-danger btn-sm btnPrint- ml-2" href='.$linkPrint.'  target="_blank"><i class="bi bi-printer"></i></a>      
+                                      <a class="btn btn-danger btn-sm btnPrint- ml-2" href=' . $linkPrint . '  target="_blank"><i class="bi bi-printer"></i></a>      
                                 </div>
                             </div>
                         </div>
@@ -488,39 +487,39 @@ class ScheduleDepController extends Controller
                         $outputBody .= '' . $inRowDay . '</div>
                                 </div>
                                 <div class="position-absolute" style="z-index: 100;">';
-                      //  $strLop = "";
-                      if (isset($data_day_schedule[$dayKeyChk]) && count($data_day_schedule[$dayKeyChk]) > 0) {
-                        foreach ($data_day_schedule[$dayKeyChk] as $row_day) {
-        
-                            $percenStr = 2.6;
-                            $scalx = 0;
-                            $difx = 0;
-        
-                            $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
-                            $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
-                            $strlen = Str::length($row_day['title']);
-                            $scaly = ($sc_width / $strlen);
-                            if (($sc_width / 60) >= 3.75) {
-                                $difx = ((int) ($sc_width / 60)) + 1;
-                                $scalx = ($sc_width / 60) - $difx;
-                                $percenStr = $percenStr + (int) $scalx;
-                            }
-        
-                            if ($scaly <= $percenStr) {
-                                $subjectTitle = Str::limit($row_day['title'], ($sc_width / $percenStr), '...');
-                            } else {
-                                $subjectTitle = $row_day['title'];
-                            }
-        
-                            $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
-                            $outputBody .= '<div class="position-absolute text-center sc-detail" 
+                        //  $strLop = "";
+                        if (isset($data_day_schedule[$dayKeyChk]) && count($data_day_schedule[$dayKeyChk]) > 0) {
+                            foreach ($data_day_schedule[$dayKeyChk] as $row_day) {
+
+                                $percenStr = 2.6;
+                                $scalx = 0;
+                                $difx = 0;
+
+                                $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);
+                                $sc_start_x = $row_day['timeblock'] * $hour_block_width + (int) $row_day['timeblock'];
+                                $strlen = Str::length($row_day['title']);
+                                $scaly = ($sc_width / $strlen);
+                                if (($sc_width / 60) >= 3.75) {
+                                    $difx = ((int) ($sc_width / 60)) + 1;
+                                    $scalx = ($sc_width / 60) - $difx;
+                                    $percenStr = $percenStr + (int) $scalx;
+                                }
+
+                                if ($scaly <= $percenStr) {
+                                    $subjectTitle = Str::limit($row_day['title'], ($sc_width / $percenStr), '...');
+                                } else {
+                                    $subjectTitle = $row_day['title'];
+                                }
+
+                                $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' .  Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
+                                $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                              detail="' . $details . '"
                                              htitle ="' . $row_day['title'] . '"
                                             style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
                                             <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . '</a></div>';
+                            }
+                            //$outputBody .= "" . $strLop;
                         }
-                        //$outputBody .= "" . $strLop;
-                    }
                         $outputBody .= ' </div></td></tr>';
                     }
                     $output .= '' . $outputBody . '</tbody></table></div></div>';
@@ -533,16 +532,18 @@ class ScheduleDepController extends Controller
         //echo $output;
         // return $output;
     }
-    
+
     // insertCorusetoTablebooking  นำข้อมูลไปลงในตาราง table จริงๆ 
 
-    public function insertCorusetoTablebooking(Request $request){
-         $class = new HelperService();
+    public function insertCorusetoTablebooking(Request $request)
+    {
+        $class = new HelperService();
         $Byuser =  $request->session()->get('cmuitaccount');
-        $strerror=[];
-        $sessionId = session()->getId();  
-         ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
-         $sql= "
+        $strerror = [];
+        $setDataBooking = [];
+        $sessionId = session()->getId();
+        ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
+        $sql = "
                     SELECT
                         room_schedules.*,
                         rooms.roomFullName,
@@ -558,145 +559,150 @@ class ScheduleDepController extends Controller
                         (room_schedules.straff_account = '{$Byuser}')    
                         AND (  room_schedules.is_group_session= '{$sessionId}' )                 
                         ORDER BY  schedule_startdate ASC  
-                    " ;
+                    ";
 
-                  
-                $resultBooking = DB::select(DB::raw($sql));
-               // echo $sql ;
-                $data_schedule = array();
-                if ($resultBooking) {
-              
-                $booking_subject ="";    
-                    foreach ($resultBooking as $row) {
-                        //echo $row->schedule_repeatday;
-                        
-                       $numofday  =  $class->getListNumOfDay($row->schedule_repeatday);
-                      //  echo "<br/>".$numofday;
-                       $loopdate  =$class->getDateofday($row->schedule_startdate,$row->schedule_enddate,$numofday);
-                       // echo print_r($loopdate);
-                        // insert 
-                        $roomID = $row->roomID;   
-                   
 
-                        $booking_subject =   $row->courseNO." ( ".$row->courseSec.") ". $row->courseTitle;
-                        $booking_department ="";                       
-                        foreach ($loopdate as  $is_date) {                          
-                            
-                            //ตรวจสอบว่าจองเวลานี้ได้ไหม         
-                            $ChkTimeBookig = DB::table('booking_rooms')
-                                ->select('booking_time_start', 'booking_time_finish')
-                                ->where('booking_rooms.roomID', $roomID )
-                                ->where('booking_rooms.booking_status', '<>', 2)
-                                ->where('booking_rooms.schedule_startdate', '>=',$is_date)
-                                ->where('booking_rooms.schedule_enddate', '<=', $is_date)
-                                ->get();
-                                
-                            // ยืนยันการจอง
-                            $is_confirm = 1; $text ="";
-                            $error = 1;
-                            foreach ($ChkTimeBookig as $row_chk) {
+        $resultBooking = DB::select(DB::raw($sql));
+        // echo $sql ;
+        $data_schedule = array();
+        if ($resultBooking) {
 
-                                $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5)); 
-                                $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5)); 
+            $booking_subject = "";
+            foreach ($resultBooking as $row) {
+                //echo $row->schedule_repeatday;
 
-                                if (
-                                    ($row->booking_time_start >=  $rowchkStart  && $row->booking_time_start<  $rowchkEnd)
-                                    ||
-                                    ( $row->booking_time_finish > $rowchkStart  &&  $row->booking_time_finish <=  $rowchkEnd)
-                                    ||
-                                    ($row->booking_time_start <  $rowchkStart &&  $row->booking_time_finish >  $rowchkEnd)
-                                ) {  
-                                    $error = 0;
-                                    $is_confirm = 0;
-                                } 
-                            }
+                $numofday  =  $class->getListNumOfDay($row->schedule_repeatday);
+                //  echo "<br/>".$numofday;
+                $loopdate  = $class->getDateofday($row->schedule_startdate, $row->schedule_enddate, $numofday);
+                // echo print_r($loopdate);
+                // insert 
+                $roomID = $row->roomID;
 
-                            if($error) {
-                              //  echo "is_date=>".$is_date;
-                            $no = time(); 
-                            $bookingToken = md5(time());                       
-                            $setDataBooking = [
-                                    'booking_no' => $no,
-                                    'bookingToken' => $bookingToken,
-                                    'roomID' => $row->roomID,
-                                    'booking_date' => $is_date,
-                                    'booking_time_start' => $row->booking_time_start,
-                                    'booking_time_finish' => $row->booking_time_finish,
-                                    'booking_subject' => $booking_subject,
-                                    'booking_booker' => $request->booking_booker,
-                                    'booking_ofPeople' =>  (int) ($row->Stdamount ?? 0),
-                                    'booking_department' =>  $booking_department,
-                                    'schedule_startdate' =>  $is_date,
-                                    'schedule_enddate' => $is_date,
-                                    'booking_phone' => '',
-                                    'booking_email' => '',
-                                    'booker_cmuaccount' => $Byuser,
-                                    'description' => '', 
-                                    'booking_type' => 'eng',
-                                    'booking_at' => Carbon::now(),
-                                    'booking_fileurl' => '',
-                                    'booking_status' => '1',
-                                    'booking_code_cancel'=>'engit',
-                                    'courseofyear'=> $row->courseofyear,
-                                    'terms'=>$row->terms,
-                                    'is_import_excel'=>'1',
-                                    'courseNo'=>$row->courseNO,
-                                    'import_sid'=>$row->is_group_session
-                                ];      
 
-                             $result = booking_rooms::create($setDataBooking);  
-                             session()->regenerate();                             
-                              //  UPDATE  status id complete insert table 
-                             DB::table('room_schedules')->where('id', $row->id)->update(['is_public' => 1 ,'is_public_date' => Carbon::now()]);        
+                $booking_subject =   $row->courseNO . " ( " . $row->courseSec . ") " . $row->courseTitle;
+                $booking_department = "";
+                foreach ($loopdate as  $is_date) {
 
-                            } else {
-                              $strerror[]=$booking_subject." | " . $is_date." |". $row->booking_time_start." - ".$row->booking_time_finish;
-                            }
+                    //ตรวจสอบว่าจองเวลานี้ได้ไหม         
+                    $ChkTimeBookig = DB::table('booking_rooms')
+                        ->select('booking_time_start', 'booking_time_finish')
+                        ->where('booking_rooms.roomID', $roomID)
+                        ->where('booking_rooms.booking_status', '<>', 2)
+                        ->where('booking_rooms.schedule_startdate', '>=', $is_date)
+                        ->where('booking_rooms.schedule_enddate', '<=', $is_date)
+                        ->get();
+
+                    // ยืนยันการจอง
+                    $is_confirm = 1;
+                    $text = "";
+                    $error = 1;
+                    foreach ($ChkTimeBookig as $row_chk) {
+
+                        $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
+                        $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
+
+                        if (
+                            ($row->booking_time_start >=  $rowchkStart  && $row->booking_time_start <  $rowchkEnd)
+                            ||
+                            ($row->booking_time_finish > $rowchkStart  &&  $row->booking_time_finish <=  $rowchkEnd)
+                            ||
+                            ($row->booking_time_start <  $rowchkStart &&  $row->booking_time_finish >  $rowchkEnd)
+                        ) {
+                            $error = 0;
+                            $is_confirm = 0;
                         }
-                     }       
                     }
-                // $deletedRows =  DB::table('room_schedules')              
-                //->where('straff_account', $Byuser)
-                //->delete();
+
+                    if ($error) {
+                        //  echo "is_date=>".$is_date;
+                        $no = time();
+                        $bookingToken = md5(time());
+                        $setDataBooking[] = [
+                            'booking_no' => $no,
+                            'bookingToken' => $bookingToken,
+                            'roomID' => $row->roomID,
+                            'booking_date' => $is_date,
+                            'booking_time_start' => $row->booking_time_start,
+                            'booking_time_finish' => $row->booking_time_finish,
+                            'booking_subject' => $booking_subject,
+                            'booking_booker' => $request->booking_booker,
+                            'booking_ofPeople' =>  (int) ($row->Stdamount ?? 0),
+                            'booking_department' =>  $booking_department,
+                            'schedule_startdate' =>  $is_date,
+                            'schedule_enddate' => $is_date,
+                            'booking_phone' => '',
+                            'booking_email' => '',
+                            'booker_cmuaccount' => $Byuser,
+                            'description' => '',
+                            'booking_type' => 'eng',
+                            'booking_at' => Carbon::now(),
+                            'booking_fileurl' => '',
+                            'booking_status' => '1',
+                            'booking_code_cancel' => 'engit',
+                            'courseofyear' => $row->courseofyear,
+                            'terms' => $row->terms,
+                            'is_import_excel' => '1',
+                            'courseNo' => $row->courseNO,
+                            'import_sid' => $row->is_group_session
+                        ];
+
+                        //$result = booking_rooms::create($setDataBooking);  
+
+                        //  UPDATE  status id complete insert table 
+                        DB::table('room_schedules')->where('id', $row->id)->update(['is_public' => 1, 'is_public_date' => Carbon::now()]);
+                    } else {
+                        $strerror[] = $booking_subject . " | " . $is_date . " |" . $row->booking_time_start . " - " . $row->booking_time_finish;
+                    }
+                }
+            }
+            booking_rooms::insert($setDataBooking);
+            session()->regenerate();
+        }
+        // $deletedRows =  DB::table('room_schedules')              
+        //->where('straff_account', $Byuser)
+        //->delete();
+     
         return view('admin.schedule.importconfirm')->with([
-                      'strerror'=> $strerror        
+            'strerror' => $strerror
         ]);
     }
 
     // ฟังก์ชันแปลงวันที่พุทธศักราชเป็นคริสต์ศักราช
-    function convertThaiDateToGregorian($thai_date) {
+    function convertThaiDateToGregorian($thai_date)
+    {
         $date_parts = explode('/', $thai_date);
         $date_parts[2] -= 543; // แปลงเป็นปีคริสต์ศักราช
         return implode('/', $date_parts);
     }
 
-function getDatebyday($startDate, $endDate,$days) {
-    // สร้าง DateTime objects สำหรับวันที่เริ่มต้นและสิ้นสุด
-    $start =   Carbon::parse($startDate);
-    $end =  Carbon::parse($endDate);
+    function getDatebyday($startDate, $endDate, $days)
+    {
+        // สร้าง DateTime objects สำหรับวันที่เริ่มต้นและสิ้นสุด
+        $start =   Carbon::parse($startDate);
+        $end =  Carbon::parse($endDate);
 
-    $days =  2;
+        $days =  2;
 
-    // อาร์เรย์เพื่อเก็บผลลัพธ์
-    $result = [];
+        // อาร์เรย์เพื่อเก็บผลลัพธ์
+        $result = [];
 
-    // Loop จนกระทั่งถึงวันที่สิ้นสุด
-    while ($start <= $end) {
-        // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
-        if ($start->format('N') == 2) {
-            $result[] = $start->format('Y-m-d');
-        } elseif ($start->format('N') == 5) {
-            $result[] = $start->format('Y-m-d');
+        // Loop จนกระทั่งถึงวันที่สิ้นสุด
+        while ($start <= $end) {
+            // ตรวจสอบว่าวันนี้เป็นวันอังคารหรือศุกร์
+            if ($start->format('N') == 2) {
+                $result[] = $start->format('Y-m-d');
+            } elseif ($start->format('N') == 5) {
+                $result[] = $start->format('Y-m-d');
+            }
+            // เพิ่มวันที่ทีละหนึ่งวัน
+            $start->modify('+1 day');
         }
-        // เพิ่มวันที่ทีละหนึ่งวัน
-        $start->modify('+1 day');
+
+        return $result;
     }
 
-    return $result;
-}
 
-
- function getListDay($days)
+    function getListDay($days)
     {
         $list = DB::table('listdays')->where('dayTitle', $days)->first();
 
@@ -886,8 +892,9 @@ function getDatebyday($startDate, $endDate,$days) {
     }
 
     //  แสดงหน้าราวการ import 
-    public function listimport(Request $request){
-        
+    public function listimport(Request $request)
+    {
+
 
         //ข้อมูลห้อง ทั้งหมด join
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
@@ -897,15 +904,15 @@ function getDatebyday($startDate, $endDate,$days) {
             ->where('is_open', '1')
             ->get();
 
-        
+
         $getliatday = DB::table('listdays')
             ->select('dayTitle', 'dayList')
             ->get();
 
-       $nowYear = (date('Y')) + 543;
-       $Byuser = $request->session()->get('cmuitaccount');
+        $nowYear = (date('Y')) + 543;
+        $Byuser = $request->session()->get('cmuitaccount');
 
-       $sql= " SELECT 
+        $sql = " SELECT 
         COUNT(courseNO) as countCourse,
         sum(is_duplicate) as countError,
         sum(is_public) as countPublic,
@@ -916,7 +923,7 @@ function getDatebyday($startDate, $endDate,$days) {
         LEFT JOIN rooms ON room_schedules.roomID = rooms.id       
         WHERE room_schedules.straff_account = '{$Byuser}'
         GROUP BY room_schedules.is_group_session        
-        " ;
+        ";
         $getBookingList = DB::select(DB::raw($sql));
 
         /*$getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
@@ -927,10 +934,9 @@ function getDatebyday($startDate, $endDate,$days) {
 
         return view('admin.schedule.listimports')->with([
             'nowYear' => $nowYear,
-            'getBookingList' => $getBookingList ,
-            'getListRoom'=>$getListRoom,
-            'listDays'=>$getliatday
+            'getBookingList' => $getBookingList,
+            'getListRoom' => $getListRoom,
+            'listDays' => $getliatday
         ]);
-
     }
 }
