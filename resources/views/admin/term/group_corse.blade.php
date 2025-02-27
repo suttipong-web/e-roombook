@@ -69,7 +69,7 @@
 <script>
     $(function() {
         $("#tableList").DataTable({
-            order: [0, 'desc']
+            
         });
         // add new  ajax request
         $("#add_form").submit(function(e) {
