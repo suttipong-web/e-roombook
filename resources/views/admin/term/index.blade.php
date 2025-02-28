@@ -29,7 +29,7 @@
             <div class="card-header">
                 <h4> <a href="#">
                         <i class="bi bi-tags"></i>
-                        จัดการตารางใช้ห้อง
+                        กำหนดการลงตารางใช้ห้อง
                     </a></h4>
             </div>
             <div class="card-body  disPlayTable">
@@ -38,8 +38,8 @@
                         <tr style="text-align: left;">
                             <th  style="text-align: left;">ปรับปรุง </th>
                             <th>รายการ </th>
-                            <th>ใช้ข้อมูลล่าสุดในการกำหนดวัน</th>
-                            <th>จัดการ</th>
+                            <th>ช่วงวันใช้ห้อง/เปิดปิดการจอง</th>
+                            <th>จัดการ </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,7 +85,7 @@
                     <input type="hidden" name="id" id="Edit_id">
                     <table class="table table-borderless">
                         <tr>
-                            <td colspan="2"> <b> รายละเอียดกำหนดการ </b>
+                            <td colspan="2"> <b> กำหนดการลงตารางใช้ห้อง </b>
                                 <hr />
                             </td>
                         </tr>
@@ -94,7 +94,7 @@
                             <td><input class="form-control3" required name="title" id="Edit_title"></td>
                         </tr>
                         <tr>
-                            <td>*ใช้ช่วงวันนี้ในการกำหนดเปิด-ปิดการจองทั่วไป (ห้องเรียน/ห้องคอมพิวเตอร์) ด้วย</td>
+                            <td>ช่วงวันใช้ห้อง/เปิดปิดการจอง</td>
                             <td>
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_start_date" name="start_date"
@@ -110,7 +110,7 @@
                         </tr>
 
                         <tr>
-                            <td colspan="2"> <b> เป็นช่วงวันของการลงข้อมูล </b>
+                            <td colspan="2"> <b> ช่วงวันที่ลงตารางการใช้ห้อง </b>
                                 <hr />
                             </td>
                         </tr>

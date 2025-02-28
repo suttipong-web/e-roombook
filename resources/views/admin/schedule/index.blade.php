@@ -17,31 +17,39 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">ระบบจัดการใช้ห้องตามตารางเรียน</h1>
     </div>
-    @if($step=="updated")
-    <div class="alert alert-success text-center" role="alert">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-</svg> บันทึกข้อมูลเรียบร้อยแล้ว
-</div>
+    @if ($step == 'updated')
+        <div class="alert alert-success text-center" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+            </svg> บันทึกข้อมูลเรียบร้อยแล้ว
+        </div>
     @endif
     <div class="card">
         <h5 class="card-header">ข้อมูลตารางเรียน </h5>
         <div class="card-body">
             <h5 class="card-title">คำอธิบาย</h5>
-            <p class="card-text">             
+            <p class="card-text">
             <ul>
                 <li>เจ้าหน้าที่หน่วยงานสามารถจัดการตารางเรียนของแต่ละเทอมได้ โดยจะแบ่งช่วงเวลาในการลงข้อมูลตามลําดับ</li>
 
-                <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel โดยกรอกข้อมูลตามรูปแบบไฟล์ตัวอย่างที่ให้นี้เท่านั้น 
+                <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel
+                    โดยกรอกข้อมูลตามรูปแบบไฟล์ตัวอย่างที่ให้นี้เท่านั้น
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download << </a>
                 </li>
-                <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว
+                <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง
+                        หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว
                     </span> </li>
-                <li> เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะ้ต้องทำการลบข้อมูลรายการนั้น แล้วทำรายการใหม่</li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาวิศวกรรมพื้นฐาน สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาภาคพิเศษ สามารถลงข้อมูลได้เป็นอันดับที่ 2 (ก่อนเปิดเทอม 4 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง)</li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง)</li>
-               
+                <li> เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะ้ต้องทำการลบข้อมูลรายการนั้น
+                    แล้วทำรายการใหม่</li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาวิศวกรรมพื้นฐาน สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาภาคพิเศษ สามารถลงข้อมูลได้เป็นอันดับที่ 2 (ก่อนเปิดเทอม 4 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง)</li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง)</li>
+
             </ul>
             </p>
 
@@ -61,20 +69,20 @@
             </div>
             <hr />
 
-            @if($getService->getUserStatusImportdata())
-            <div class="align-self-end" style="text-align: right">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
-                        class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
-                <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
-                    <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
-            </div>
-            @else
-            <div class="text-center mb-2 p-2 text-center text-danger" style="text-align: center">
-                 
-                 <div class="alert alert-danger" role="alert">
-                 ***  ยังไม่เปิดให้ลงตารางเรียน  ***
+            @if ($getService->getUserStatusImportdata())
+                <div class="align-self-end" style="text-align: right">
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
+                            class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
+                    <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
+                        <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
                 </div>
-            </div>
+            @else
+                <div class="text-center mb-2 p-2 text-center text-danger" style="text-align: center">
+
+                    <div class="alert alert-danger" role="alert">
+                        *** ยังไม่เปิดให้ลงตารางเรียน ***
+                    </div>
+                </div>
             @endif
             <div class="col-md-12   mt-3 displayTable">
 
@@ -100,7 +108,10 @@
                                 <tr class="<?php if ($rows->is_duplicate) {
                                     echo 'bg-danger text-white';
                                 } ?>">
-                                    <td> {{ $rows->updated_at }}
+                                    <td>
+                                        @if ($rows->is_import_excel)
+                                            <span class="text-success"><i class="bi bi-file-earmark-excel-fill"></i></span>
+                                        @endif {{ $rows->updated_at }}
 
                                     </td>
                                     <td>{{ $rows->courseNO }} </td>
@@ -117,43 +128,33 @@
                                     <td>{{ $rows->is_error }}</td>
                                     <td class="bg-light text-dark">
                                         @if ($rows->is_public)
-                                           @php
-                                            $hiddbtn =1;
+                                            @php
+                                                $hiddbtn = 1;
                                             @endphp
-                                            <button type="button" class="btn btn-success btn-sm">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z">
-                                                    </path>
-                                                </svg>
+                                            <span class="badge badge-success">
                                                 สำเร็จ
-                                            </button>
-                                        @else
-                                      
-                                            <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
-                                                <i class="bi-pencil-square h6"></i></a>
-                                            <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">
-                                                <i class="bi-trash h6"></i></a>
-                                            &nbsp; @if ($rows->is_import_excel)
-                                                <span class="text-success"><i
-                                                        class="bi bi-file-earmark-excel-fill"></i></span>
-                                            @endif
+                                            </span>
                                         @endif
+
+                                        <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
+                                            <i class="bi-pencil-square h6"></i></a>
+                                        <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">
+                                            <i class="bi-trash h6"></i></a>
+                                        &nbsp;
+
                                     </td>
                                 </tr>
                             @endforeach
                         @endif
                     </tbody>
                 </table>
-                @if($getService->getUserStatusImportdata())
-                <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
-                             
-                    <button type="button" id="btn-confirm-submit" class="btn btn-primary "> ยืนยันเพิ่มตารางเรียน </button>
-                 
-                </div>
+                @if ($getService->getUserStatusImportdata())
+                    <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
+                        <button type="button" id="btn-confirm-submit" sesionId = '{{ $sesionId }}'
+                            class="btn btn-primary "> ยืนยันเพิ่มตารางเรียน
+                        </button>
+                    </div>
                 @endif
-
 
             </div>
         </div>
@@ -225,7 +226,7 @@
                             value="{{ Session::get('cmuitaccount') }}">
                         <input type="hidden" name="id" id="Edit_id">
                         <div class="col-md-4 my-1">
-                            <label for="Edit_roomID" class="form-label"> เลือกห้อง </label>
+                            <label for="Edit_roomID" class="form-label"> เลือกห้อง * </label>
                             <select id="Edit_roomID" class="form-control" name="roomID" required>
                                 <option value="0">--- เลือก --- </option>
                                 <!-- ต่อฐานข้อมูล  -->
@@ -237,65 +238,59 @@
 
                         <div class="col-md-4 my-1">
                             <label for="Edit_courseNO" class="form-label">รหัสวิชา*</label>
-                            <input type="text" class="form-control" id="Edit_courseNO" name="courseNO" required
+                            <input type="text" class="form-control" id="Edit_courseNO" name="courseNO" 
                                 placeholder="รหัสวิชา " required />
                         </div>
                         <div class="col-md-4 my-1">
-                            <label for="courseTitle" class="form-label">ชื่อวิชา</label>
+                            <label for="courseTitle" class="form-label">ชื่อวิชา * </label>
                             <input type="text" class="form-control" id="Edit_courseTitle" name="courseTitle"
-                                placeholder=" ชื่อวิชา " />
+                                placeholder=" ชื่อวิชา "  required/>
                         </div>
                         <div class="col-md-4 my-1">
-                            <label for="courseSec" class="form-label"> Section </label>
+                            <label for="courseSec" class="form-label"> Section *</label>
                             <input type="text" class="form-control" id="Edit_courseSec" name="courseSec"
-                                placeholder="  Course Section " />
+                                placeholder="  Course Section " required />
                         </div>
                         <div class="col-md-4 my-1">
-                            <label for="lecturer" class="form-label">อาจารย์ผู้สอน</label>
+                            <label for="lecturer" class="form-label">อาจารย์ผู้สอน * </label>
                             <input type="text" class="form-control" id="Edit_lecturer" name="lecturer"
-                                placeholder="  อาจารย์ผู้สอน " />
+                                placeholder="  อาจารย์ผู้สอน "  required/>
                         </div>
                         <div class="col-md-4 my-1">
-                            <label for="Stdamount" class="form-label">จำนวนนักศึกษา</label>
+                            <label for="Stdamount" class="form-label">จำนวนนักศึกษา *</label>
                             <input type="text" class="form-control" id="Edit_Stdamount" name="Stdamount"
-                                placeholder="  จำนวนนักศึกษา " />
+                                placeholder="  จำนวนนักศึกษา " required />
                         </div>
 
 
                         <div class="col-md-2 my-1">
-                            <label for="Edit_courseofyear" class="form-label">ปีการศึกษา</label>
+                            <label for="Edit_courseofyear" class="form-label">ปีการศึกษา *</label>
                             <select id="Edit_courseofyear" class="form-control" name="courseofyear" required>
-                                @for ($i = date('Y') + 543; $i <= date('Y') + 543 + 1; $i++)
+                                @for ($i = date('Y') + 543 - 1; $i <= date('Y') + 543 + 1; $i++)
                                     <option value='{{ $i }}'> {{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="Edit_terms" class="form-label">เทอมการศึกษา</label>
+                            <label for="Edit_terms" class="form-label">เทอมการศึกษา *</label>
                             <select id="Edit_terms" class="form-control" name="terms" required>
                                 <option value='1'>เทอม 1 </option>
                                 <option value='2'>เทอม 2 </option>
                             </select>
                         </div>
-
-                        <div class="col-md-2 my-1">
-                            <label for="schedule_startdate" class="form-label"> วันที่เริ่มต้น* </label>
-                            <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                data-date-language="th" id="Edit_schedule_startdate" name="schedule_startdate"
-                                data-date-format="yyyy-mm-dd" required>
-
+                        <div class="col-md-4 my-1">
+                                <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน *</label>
+                                <select id="Edit_schedule_repeatday" class="form-control" name="schedule_repeatday" required>
+                                    @foreach ($listDays as $item)
+                                        <option value="{{ $item->dayTitle }}">{{ $item->dayTitle }}</option>
+                                    @endforeach
+                                    <!-- ต่อฐานข้อมูล  -->
+                                </select>
+    
                         </div>
                         <div class="col-md-2 my-1">
-                            <label for="schedule_enddate" class="form-label"> วันที่สิ้นสุด* </label>
-                            <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                data-date-language="th" id="Edit_schedule_enddate" name="schedule_enddate"
-                                data-date-format="yyyy-mm-dd" required>
-
-                        </div>
-
-                        <div class="col-md-2 my-1">
-                            <label for="booking_time_start" class="form-label"> เวลาเริ่ม* </label>
+                            <label for="booking_time_start" class="form-label"> เวลาเริ่ม * </label>
                             <select id="Edit_booking_time_start" class="form-control" name="booking_time_start" required>
                                 <option value="0">--- เลือก --- </option>
                                 @foreach ($getService->getALlTimes() as $item)
@@ -318,18 +313,8 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 mt-2 p-2">
-                            <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน </label>
-                            <select id="Edit_schedule_repeatday" class="form-control" name="schedule_repeatday" required>
-                                <option value="0">--- เลือก --- </option>
-                                @foreach ($listDays as $item)
-                                    <option value="{{ $item->dayTitle }}">{{ $item->dayList }}</option>
-                                @endforeach
-                                <!-- ต่อฐานข้อมูล  -->
-                            </select>
-
-                        </div>
-                        <div class="col-md-8 mt-2 p-2">
+                       
+                        <div class="col-md-12 mt-2 p-2">
                             <label for="Edit_description" class="form-label"> หมายเหตุ </label>
                             <input type="text" class="form-control" id="Edit_description" name="description" />
                         </div>
@@ -362,7 +347,7 @@
                         <input type="hidden" id="adminAccount" name="adminAccount"
                             value="{{ Session::get('cmuitaccount') }}">
                         <div class="col-md-4 my-1">
-                            <label for="roomID" class="form-label"> เลือกห้อง </label>
+                            <label for="roomID" class="form-label"> เลือกห้อง *</label>
                             <select id="roomID" class="form-control" name="roomID" required>
                                 <option value="0">--- เลือก --- </option>
                                 <!-- ต่อฐานข้อมูล  -->
@@ -379,58 +364,56 @@
                         </div>
 
                         <div class="col-md-4 my-1">
-                            <label for="courseTitle" class="form-label">ชื่อวิชา</label>
+                            <label for="courseTitle" class="form-label">ชื่อวิชา*</label>
                             <input type="text" class="form-control" id="courseTitle" name="courseTitle"
-                                placeholder=" ชื่อวิชา " />
+                                placeholder=" ชื่อวิชา " required />
                         </div>
                         <div class="col-md-4 my-1">
-                            <label for="courseSec" class="form-label"> Section </label>
+                            <label for="courseSec" class="form-label"> Section* </label>
                             <input type="text" class="form-control" id="courseSec" name="courseSec"
-                                placeholder="  Course Section " />
+                                placeholder="  Course Section " required />
                         </div>
 
                         <div class="col-md-4 my-1">
-                            <label for="Stdamount" class="form-label">จำนวนนักศึกษา</label>
+                            <label for="Stdamount" class="form-label">จำนวนนักศึกษา*</label>
                             <input type="text" class="form-control" id="Stdamount" name="Stdamount"
-                                placeholder="  จำนวนนักศึกษา " />
+                                placeholder="  จำนวนนักศึกษา " required />
                         </div>
                         <div class="col-md-4 my-1">
-                            <label for="lecturer" class="form-label">อาจารย์ผู้สอน</label>
+                            <label for="lecturer" class="form-label">อาจารย์ผู้สอน*</label>
                             <input type="text" class="form-control" id="lecturer" name="lecturer"
-                                placeholder="  อาจารย์ผู้สอน " />
+                                placeholder="  อาจารย์ผู้สอน " required />
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="courseofyear" class="form-label">ปีการศึกษา</label>
+                            <label for="courseofyear" class="form-label">ปีการศึกษา*</label>
                             <select id="courseofyear" class="form-control" name="courseofyear" required>
-                                @for ($i = date('Y') + 543; $i <= date('Y') + 543 + 1; $i++)
+                                @for ($i = date('Y') + 543 - 1; $i <= date('Y') + 543 + 1; $i++)
                                     <option value='{{ $i }}'> {{ $i }}</option>
                                 @endfor
                             </select>
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="terms" class="form-label">เทอมการศึกษา</label>
+                            <label for="terms" class="form-label">เทอมการศึกษา*</label>
                             <select id="terms" class="form-control" name="terms" required>
                                 <option value='1'>เทอม 1 </option>
                                 <option value='2'>เทอม 2 </option>
                             </select>
                         </div>
 
-                        <div class="col-md-2 my-1">
-                            <label for="schedule_startdate" class="form-label"> วันที่เริ่มต้น* </label>
-                            <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                data-date-language="th" id="schedule_startdate" name="schedule_startdate"
-                                data-date-format="yyyy-mm-dd" required>
-
+                        <div class="col-md-4  my-1">
+                            <label for="schedule_repeatday" class="form-label">ลงเวลาในวัน* </label>
+                            <select id="schedule_repeatday" class="form-control schedule_repeatday"
+                                name="schedule_repeatday" required>
+                            
+                                @foreach ($listDays as $item)
+                                    <option value="{{ $item->dayTitle }}">{{ $item->dayTitle }}</option>
+                                @endforeach
+                                <!-- ต่อฐานข้อมูล  -->
+                            </select>
                         </div>
-                        <div class="col-md-2 my-1">
-                            <label for="schedule_enddate" class="form-label"> วันที่สิ้นสุด* </label>
-                            <input class="form-control dateScl" type="text" data-provide="datepicker"
-                                data-date-language="th" id="schedule_enddate" name="schedule_enddate"
-                                data-date-format="yyyy-mm-dd" required>
 
-                        </div>
 
                         <div class="col-md-2 my-1">
                             <label for="booking_time_start" class="form-label"> เวลาเริ่ม* </label>
@@ -456,24 +439,8 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4 mt-2 p-2">
-                            <!-- <div class="input-group">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="booking_time_finish" class="form-label"> ลงเวลาในวันซ้ำทุกวัน </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @foreach ($getService->getAllDayName() as $k => $day_value)
-    <div class="form-check ml-3">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
-    @endforeach
-                                                                                                                                                                                                                                                                                                                                                                                                                                                               -->
-                            <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน </label>
-                            <select id="schedule_repeatday" class="form-control" name="schedule_repeatday" required>
-                                <option value="0">--- เลือก --- </option>
-                                @foreach ($listDays as $item)
-                                    <option value="{{ $item->dayTitle }}">{{ $item->dayList }}</option>
-                                @endforeach
-                                <!-- ต่อฐานข้อมูล  -->
-                            </select>
-                        </div>
-                        <div class="col-md-8 mt-2 p-2">
+
+                        <div class="col-md-12 mt-2 p-2">
                             <label for="description" class="form-label"> หมายเหตุ </label>
                             <input type="text" class="form-control" id="description" name="description" />
                         </div>
@@ -529,6 +496,7 @@
 
             //ยืนยันการลงทะเบียนตารางเรียน
             $(document).on('click', '#btn-confirm-submit', function(e) {
+                var sid = $(this).attr('sesionId');
                 Swal.fire({
                     title: 'คุณต้องการจะทำรายการนี้ ?',
                     text: " การกดยืนยันรายการจะมีผลการจองห้องทันที ",
@@ -540,7 +508,7 @@
                     cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/admin/confirmtable'
+                        window.location.href = '/admin/confirmtable/' + sid+'/admin';
                     }
                 });
             });
@@ -621,12 +589,12 @@
                             } else {
                                 InputID = '#Edit_' + key;
                                 $(InputID).val(value);
+                                console.log(InputID + "-" + value);
                             }
 
                         });
 
-                        $("#Edit_booking_time_start").val(
-                            booking_time_start);
+                        $("#Edit_booking_time_start").val(booking_time_start);
                         $("#Edit_booking_time_finish").val(booking_time_finish);
 
                         $('#editModal').modal("show");
@@ -660,7 +628,7 @@
                             ).then((result) => {
                                 $("#edit_form")[0].reset();
                                 $("#editModal").modal('hide');
-                                NewfetchData();
+                                window.location.reload(true);
                             });
 
                         } else {
@@ -710,7 +678,7 @@
                                     'ทำรายการลบข้อมูลของท่านเรียบร้อย.',
                                     'success'
                                 ).then((result) => {
-                                    NewfetchData();
+                                    window.location.reload(true);
                                 });
                             }
                         });
@@ -719,22 +687,22 @@
             });
 
 
-            function updateData (){
+            function updateData() {
                 Swal.fire(
-                                    'Success !',
-                                    'ทำรายการบันทึกข้อมูลของท่านเรียบร้อย.',
-                                    'success'
-                                ).then((result) => {
-                                  
-                                });
-                        }
+                    'Success !',
+                    'ทำรายการบันทึกข้อมูลของท่านเรียบร้อย.',
+                    'success'
+                ).then((result) => {
+
+                });
+            }
 
 
             function NewfetchData() {
                 $("#fromRef").submit();
             }
 
-      
+
         });
     </script>
 @endsection

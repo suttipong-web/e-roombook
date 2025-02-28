@@ -11,8 +11,7 @@
 <div class="row">
     <div class="container-fluid">
         <div class="d-sm-flex align-items-end justify-content-start mb-4">
-            <h4> <a href="/admin/groupCourse">กลุ่มกระบวนวิชา </a>/
-                {{$courseGroups[0]->group_title}}
+            <h4> <a href="/admin/groupCourse">จัดการผู้ลงตารางใช้ห้อง
 
             </h4>
         </div>
@@ -20,7 +19,7 @@
             <div class="card-header">
                 <h5>
                     <i class="bi bi-tags"></i>
-                    ผู้ใช้ในกลุ่มกระบวนวิชา : {{$courseGroups[0]->group_title}}
+                     กลุ่ม : {{$courseGroups[0]->group_title}}
                 </h5>
             </div>
             <div class="card-body  disPlayTable">
@@ -28,6 +27,7 @@
                 <input type="hidden" id="hinden_CID" value="{{$courseGroups[0]->id}}">
                 <div class="mb-2">
                     <div class="row text-center justify-content-center">
+                  
                         <table>
                             <tr>
                                 <td  style="width: 420px;font-weight: 600;"> ระบุชื่อ  : <select class="slcCombobox" name="assigncmuitaccount" id="assigncmuitaccount"
@@ -48,6 +48,7 @@
            
             <hr />
             <br />
+            <h3>ผู้ใช้ในกลุ่ม</h3>
             <table class="table table-sm mt-2" @if (count($ListAdmin)> 0) id="tableList" @endif>
                 <thead class="table-secondary ">
                     <tr style="text-align: left;">

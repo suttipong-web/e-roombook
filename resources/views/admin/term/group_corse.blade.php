@@ -23,7 +23,7 @@
             <div class="card-header">
                 <h4> <a href="#">
                         <i class="bi bi-tags"></i>
-                        ผู้ใช้ในกลุ่มกระบวนวิชา 
+                        จัดการผู้ใช้ลงตารางใช้ห้อง 
                     </a></h4>
             </div>
             <div class="card-body  disPlayTable">
@@ -31,9 +31,8 @@
                     <thead class="table-secondary ">
                         <tr style="text-align: left;">
                             <th  style="text-align: left;">ปรับปรุง </th>
-                            <th>กลุ่มกระบวนวิชา </th>
-                           
-                            <th></th>
+                            <th>กลุ่มกระบวนวิชา </th>                           
+                            <th>จัดการ </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,9 +150,6 @@
                             $("#btnEdit_form").text('แก้ไขข้อมูล');
                         });
                     }
-
-
-
                 }
             });
         });

@@ -15,11 +15,11 @@
 @section('body')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">ระบบจัดการใช้ห้องตามตารางเรียน</h1>
+        <h1 class="h3 mb-0 text-gray-800">ระบบจัดการใช้ห้อง</h1>
     </div>
 
     <div class="card">
-        <h5 class="card-header">ข้อมูลตารางเรียน </h5>
+        <h5 class="card-header">ข้อมูลการใช้ห้อง </h5>
         <div class="card-body">
             <h5 class="card-title">คำอธิบาย</h5>
             <p class="card-text">             
@@ -56,16 +56,14 @@
                         <path
                             d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
                     </svg>
-                    ดูรายการตารางเรียน (รูปแบบตาราง)
+                    ดูรายการตารางใช้ห้อง(รูปแบบปฏิทิน)
 
                 </a>
             </div>
             <hr />
  
             @if($getService->getUserStatusImportdata())
-            <div class="align-self-end" style="text-align: right">
-                <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
-                        class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
+            <div class="align-self-end" style="text-align: right">               
                 <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
                     <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
             </div>
@@ -102,12 +100,18 @@
                                     <td>{{ $rows->terms }}/{{ $rows->courseofyear }}</td>
                                     <td class="text-center">{{$rows->countCourse}}</td>
                                     <td class="text-center">{{$rows->countPublic}}</td>
-                                    <td class="text-center">{{$rows->countError}}</td>
+                                    <td class="text-center">
+                                        @if($rows->countError ==0) 
+
+                                            {{($rows->countCourse-$rows->countPublic)}}
+                                        @else {{$rows->countError}}
+                                        @endif
+                                    </td>
                                     <td>
-                                        @if ($rows->is_public)
-                                        <span class="badge badge-success">ส่งข้อมูลแล้ว</span>
+                                        @if ($rows->countPublic>0)
+                                        <div class="bg-success  text-center  text-white fs-4 p-1 rd-5">ส่งข้อมูลแล้ว</div>
                                         @else
-                                        <span class="badge badge-warning">ยังไม่ได้ส่งข้อมูล</span>
+                                        <div class="bg-warning fs-4  text-white  text-center  p-1 rd-5">ยังไม่ได้ส่งข้อมูล</div>
                                         @endif
                                     </td>
                                     <td class="bg-light text-dark">

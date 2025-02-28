@@ -157,7 +157,8 @@ class ScheduleDepController extends Controller
             'getListRoom' => $getListRoom,
             'nowYear' => $nowYear,
             'listDays' => $getliatday,
-            'step' => $request->step
+            'step' => $request->step,
+            'sesionId'=> $sesid
         ]);
     }
 
@@ -182,8 +183,26 @@ class ScheduleDepController extends Controller
     public function delete(Request $request)
     {
         $id = $request->id;
-        $result = roomSchedule::find($id);
+        $result = roomSchedule::find($id);        
         if ($result) {
+            //
+            $sid = $result->is_group_session;
+            $roomID = $result->roomID;
+            $courseofyear = $result->courseofyear;
+            $terms = $result->terms;
+            $courseNO = $result->courseNO;
+            $courseSec = $result->courseSec;
+
+            if($result->is_public)  {
+                // ลบข้อมูลใยคารางสอน  booking_rooms
+                DB::table('booking_rooms')
+                ->where('import_sid', $sid)
+                ->where('roomID', $roomID)         
+                ->where('courseNo', $courseNO)
+                ->where('booking_subject_sec', $courseSec)
+                ->delete();
+            }
+        // ลบข้อมูลในคารางสอน  room_schedules
             roomSchedule::destroy($id);
         }
     }
@@ -543,7 +562,8 @@ class ScheduleDepController extends Controller
         $Byuser =  $request->session()->get('cmuitaccount');
         $strerror = [];
         $setDataBooking = [];
-        $sessionId = session()->getId();
+
+        $sessionId =  $request->token;
         ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
         $sql = "
                     SELECT
@@ -646,6 +666,7 @@ class ScheduleDepController extends Controller
                             'terms' => $row->terms,
                             'is_import_excel' => '1',
                             'courseNo' => $row->courseNO,
+                            'booking_subject_sec'=> $row->courseSec,
                             'import_sid' => $row->is_group_session
                         ];
 
@@ -682,10 +703,17 @@ class ScheduleDepController extends Controller
         // $deletedRows =  DB::table('room_schedules')              
         //->where('straff_account', $Byuser)
         //->delete();
-     
+      if($request->pages=="major") {
+        return redirect()->to('/major/schedules/views/'.$sessionId);
+        return view('/major/schedules/views/'.$sessionId)->with([
+            'strerror' => $strerror
+        ]);
+        
+      }else {
         return view('admin.schedule.importconfirm')->with([
             'strerror' => $strerror
         ]);
+     }
     }
 
     // ฟังก์ชันแปลงวันที่พุทธศักราชเป็นคริสต์ศักราช
@@ -787,11 +815,15 @@ class ScheduleDepController extends Controller
 
     public function updated(Request $request)
     {
+        $class = new HelperService();
+        // วันที่ ที่กำหนดจาก Admin 
+        $latestDateSchedule = $class->getfinalBookingDate();
+     
         $result = "";
         //ตรวจสอบรหัส ID ที่จะแก้ไขก่อน 
 
-        $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
-        $p_schedule_enddate = (isset($request->schedule_enddate)) ? $request->schedule_enddate : "0000-00-00";
+       // $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
+       // $p_schedule_enddate = (isset($request->schedule_enddate)) ? $request->schedule_enddate : "0000-00-00";
         $p_schedule_starttime = (isset($request->booking_time_start)) ? $request->booking_time_start : "00:00:00";
         $p_schedule_endtime = (isset($request->booking_time_finish)) ? $request->booking_time_finish : "00:00:00";
         $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
@@ -800,7 +832,7 @@ class ScheduleDepController extends Controller
             'courseNO' => $request->courseNO,
             'courseTitle' => $request->courseTitle,
             'courseSec' => $request->courseSec,
-            'Stdamount' => $request->Stdamount,
+            'Stdamount' => (int)$request->Stdamount,
             'booking_time_start' => $p_schedule_starttime,
             'booking_time_finish' => $p_schedule_endtime,
             'roomID' => $request->roomID,
@@ -808,15 +840,36 @@ class ScheduleDepController extends Controller
             'description' => $request->description,
             'staffupdated' => Carbon::now(),
             'straff_account' => $request->adminAccount,
-            'schedule_startdate' => $p_schedule_startdate,
-            'schedule_enddate' => $p_schedule_enddate,
+            'schedule_startdate' => $latestDateSchedule->start_date,
+            'schedule_enddate' => $latestDateSchedule->end_date,
             'schedule_repeatday' => $p_schedule_repeatday,
             'courseofyear' => $request->courseofyear,
-            'terms' => $request->terms
+            'terms' => $request->terms,
+            'is_duplicate' => 0,
+            'is_public'=> 0,
+            'is_error'=>''
         ];
 
         $result = roomSchedule::find($request->id);
         if ($result) {
+
+            $sid = $result->is_group_session;
+            $roomID = $result->roomID;
+            $courseofyear = $result->courseofyear;
+            $terms = $result->terms;
+            $courseNO = $result->courseNO;
+            $courseSec = $result->courseSec;
+
+            if($result->is_public)  {
+                // ลบข้อมูลใยคารางสอน 
+                DB::table('booking_rooms')
+                ->where('import_sid', $sid)
+                ->where('roomID', $roomID)         
+                ->where('courseNo', $courseNO)
+                ->where('booking_subject_sec', $courseSec)
+                ->delete();
+            }
+
             $result->update($setData);
             return response()->json([
                 'status' => 200,
@@ -840,46 +893,6 @@ class ScheduleDepController extends Controller
         $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
 
 
-        //03/07/2024
-        //$dstart = explode('/', $p_schedule_startdate);
-        // $dend = explode('/', $p_schedule_enddate);
-
-        // $dateStart = $dstart[2] . '-' . $dstart[1] .'-'. $dstart[0];
-        //$dateEnd = $dend[2] . '-' . $dend[1].'-'.  $dend[0];
-
-
-        // $p_schedule_allday = (isset($_POST['schedule_allday']))?1:0;
-
-
-        //ตรวจสอบว่าจองเวลานี้ได้ไหม 
-        /* $ChkTimeBookig = DB::table('room_schedules')
-             ->select('booking_time_start', 'booking_time_finish')
-             ->where('room_schedules.roomID', $request->roomID)
-             ->where('room_schedules.schedule_startdate', $p_schedule_startdate )
-             ->whereIn('room_schedules.p_schedule_repeatday',$p_schedule_repeatday)
-             ->get();
-
-         // เวลาเริ่ม 
-         $bkstart = $request->booking_time_start;
-         // เวลาสิ้สสุด
-         $bkfinish = $request->booking_time_finish;
-         $error = true;
-         foreach ($ChkTimeBookig as $row_chk) {
-             if (
-                 ($bkstart >= $row_chk->booking_time_start && $bkstart < $row_chk->booking_time_finish)
-                 ||
-                 ($bkfinish > $row_chk->booking_time_start && $bkfinish <= $row_chk->booking_time_finish)
-                 ||
-                 ($bkstart < $row_chk->booking_time_start && $bkfinish > $row_chk->booking_time_finish)
-             ) {
-                 return response()->json([
-                     'status' => 208,
-                     'text' => 'มีรายการจองของวันนี้แล้ว'
-                 ]);
-                 $error = false;
-             }
-         }
-      */
         $setDataBooking = [
             'courseNO' => $request->courseNO,
             'courseTitle' => $request->courseTitle,

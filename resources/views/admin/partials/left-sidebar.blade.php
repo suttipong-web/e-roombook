@@ -37,40 +37,42 @@
     <li class="nav-item ">
         <a href="/admin/room" class="nav-link {{ $current_route == 'room' ? 'active' : '' }}">
             <i class="bi bi-hospital"></i>
-            <span>จัดการข้อมูลห้อง</span></a>
+            <span>ข้อมูลห้อง</span></a>
     </li>
 
     <li class="nav-item ">
         <a href="/admin/dashboard" class="nav-link {{ $current_route == 'dashboard' ? 'active' : '' }}">
             <i class="bi bi-hospital"></i>
-            <span>ข้อมูลการจองห้อง</span></a>
+            <span>การจองห้อง</span></a>
     </li>
+    <hr class="sidebar-divider">
 
+ 
 
     <li class="nav-item ">
         <a href="/admin/schedules" class="nav-link {{ $current_route == 'admin.schedule' ? 'active' : '' }}">
             <i class="bi bi-hospital"></i>
-            <span>จัดการตารางเรียน</span></a>
-    </li>
-
-    <li class="nav-item">
-        <a href="{{ route('users.index') }}" class="nav-link {{ $current_route == 'users.index' ? 'active' : '' }}">
-            <i class="bi bi-person-fill-gear"></i>
-            <span>จัดการผู้ใช้งาน</span></a>
+            <span>จัดการข้อมูลการใช้ห้อง</span></a>
     </li>
 
     <li class="nav-item">
         <a href="/admin/term" class="nav-link {{ $current_route == 'admin.term' ? 'active' : '' }}">
         <i class="bi bi-list-check"></i>
-            <span>กำหนดการลงตารางเรียน/สอบ</span></a>
+            <span>กำหนดช่วงลงข้อมูล</span></a>
     </li>
 
     <li class="nav-item">
         <a href="/admin/groupCourse" class="nav-link {{ $current_route == 'admin.groupCourse' ? 'active' : '' }}">
         <i class="bi bi-person-fill-gear"></i>
-            <span>จัดการผู้ใช้ลงตารางเรียน</span></a>
+            <span>จัดการกลุ่มผู้ใช้</span></a>
     </li>
 
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a href="{{ route('users.index') }}" class="nav-link {{ $current_route == 'users.index' ? 'active' : '' }}">
+            <i class="bi bi-person-fill-gear"></i>
+            <span>ผู้ใช้งานทั้งหมด</span></a>
+    </li>
     
     <div class="sidebar-heading">
         Report

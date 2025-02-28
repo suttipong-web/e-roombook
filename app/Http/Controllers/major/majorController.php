@@ -109,7 +109,7 @@ class majorController extends Controller
 
         foreach ($BookingList as $rows) {
 
-            $is_duplicate = false;
+            $is_duplicate = 0;
             //ตรวจสอบว่าวันที่ เวลา มีคนการจองก่อนหน้าหรือยัง  
             //ถ้ามีให่  update  ฟิด is_duplicate = true  ด้วย เพื่อเป้นการแจ้งเตือน 
             //ตรวจสอบว่าจองเวลานี้ได้ไหม 
@@ -150,7 +150,7 @@ class majorController extends Controller
                             ->where('id', $rows->id)
                             ->update([
                                 'is_duplicate' => 1,
-								'is_error' => 'ไม่สามารถลงเวลานี้ได้'
+								'is_error' => 'ไม่สามารถลงเวลาได้'
                             ]);
                     }
                 }
@@ -199,7 +199,7 @@ class majorController extends Controller
                                ->where('id', $rows->id)
                                ->update([
                                    'is_duplicate' => 1,
-                                   'is_error' => 'ไม่สามารถลงเวลานี้ได้'
+                                   'is_error' => 'ไม่สามารถลงตารางได้'
                                ]);
                 }
 
@@ -207,9 +207,10 @@ class majorController extends Controller
         //-- END FOR --
 
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
-        ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')          
+        ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
         ->where('room_schedules.straff_account', $Byuser)
-        ->where('room_schedules.is_group_session', $sesid)        
+        ->where('room_schedules.is_group_session', $sesid)           
+        ->orderBy('room_schedules.is_duplicate', 'DESC') 
         ->get();
 
         return view('admin.employee.schedule')->with([
@@ -217,7 +218,8 @@ class majorController extends Controller
             'getListRoom' => $getListRoom,
             'nowYear' => $nowYear,
             'listDays' => $getliatday,
-            'step'=>$request->step
+            'step'=>$request->step ,
+            'sesionId'=> $sesid
         ]);                
     }
 
