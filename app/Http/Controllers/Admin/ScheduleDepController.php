@@ -704,10 +704,10 @@ class ScheduleDepController extends Controller
         //->where('straff_account', $Byuser)
         //->delete();
       if($request->pages=="major") {
-       // return redirect()->to('/major/schedules/views/'.$sessionId);
-        return view('/major/schedules/views/'.$sessionId)->with([
-            'strerror' => $strerror
-        ]);
+        return redirect()->to('/major/schedules/views/'.$sessionId);
+       // return view('/major/schedules/views/'.$sessionId)->with([
+        //    'strerror' => $strerror
+       // ]);
         
       }else {
         return view('admin.schedule.importconfirm')->with([

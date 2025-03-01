@@ -335,6 +335,10 @@
                         @csrf
                         <input type="hidden" id="adminAccount" name="adminAccount"
                             value="{{ Session::get('cmuitaccount') }}">
+                            <input type="hidden"  name="sesionId"
+                            value="{{$sesionId}}">
+
+
                         <div class="col-md-4 my-1">
                             <label for="roomID" class="form-label"> เลือกห้อง *</label>
                             <select id="roomID" class="form-control" name="roomID" required>

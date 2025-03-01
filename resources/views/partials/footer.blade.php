@@ -43,7 +43,7 @@
                    
                     <li><i class="bi bi-chevron-right"></i>
                         <a href="/admin/" class="nav-link p-0 text-body-secondary">
-                            สำหรับผู้ดูแลระบบ
+                            สำหรับผู้ดูแลระบบ/ส่วนงาน
                         </a>
                     </li>
                     <li><i class="bi bi-chevron-right"></i>

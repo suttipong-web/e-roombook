@@ -41,49 +41,23 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-3 mt-2">
-                                    <div class="text-center">
+                                    <div class="text-center mb-3">
                                         @if (session('error'))
                                             <div class="text-danger text-center">{{ session('error') }}</div>
                                         @endif
                                         @if (session('success'))
                                             <div class="text-success text-center">{{ session('success') }}</div>
                                         @endif
-                                        <p class="login-box-msg">Sign in to Admin </p>
+                                        <p class="login-box-msg pt-5">
+                                          <h3>   ผู้ดูแลระบบและส่วนงาน  </h3>
+                                        </p>
                                     </div>
-
-                                    <form class="user" action="{{ route('postLogin') }}" method="post">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input name="email" type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                            @error('email')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="password" type="password"
-                                                class="form-control form-control-user" id="exampleInputPassword"
-                                                placeholder="Password">
-                                            @error('password')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit"
-                                            class="btn btn-primary btn-user btn-block">เข้าสู่ระบบ</button>
-                                        <hr>
-                                        <a href="{{ $urlCMUOauth }}" class="btn btn-cmuOauth btn-user btn-block">
+                                    <br/>
+                                        <a href="{{ $urlCMUOauth }}" class="btn btn-cmuOauth btn-user btn-block mt-2 btn-lg">
                                             <i class="fab fa-google fa-fw"></i> Login with CMU Account
                                         </a>
 
-                                    </form>
+                                 
                                 </div>
                             </div>
                         </div>

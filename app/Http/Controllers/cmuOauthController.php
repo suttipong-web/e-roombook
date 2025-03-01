@@ -124,7 +124,7 @@ class cmuOauthController extends Controller
                         $request->session()->put('positionName', $users["positionName"]);
                         $request->session()->put('positionName2', $users["positionName2"]);
                         $request->session()->put('dep_name',$getDepN[0]->dep_name);
-
+                        //$request->session()->put('user_type',$users["user_type"]);    
                         
                         //check Admin  
                         
@@ -140,11 +140,14 @@ class cmuOauthController extends Controller
                             return redirect()->intended('/booking')->with('success', 'Login Successfull');
                         }elseif ($page == "booking") {
                             return redirect()->intended('/booking/form/' . $roomId . '/eng/' . $roomData->roomFullName.'/'.$dates)->with('success', 'Login Successfull');
-                        } elseif ($users["user_type"]== "admin" ) {
+                        } elseif ($users["user_type"]== "admin" && $page == "admin" ) {
                             return redirect()->intended('/admin/dashboard')->with('success', 'Login Successfull');
-                        }  elseif($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean"){
+                        }  elseif(($users["user_type"]=="secretary" || $users["user_type"]=="eng" || $users["user_type"]=="deaneng" || $users["user_type"]=="dean") && $page == "admin"){
                             return redirect()->intended('/admin/stepapporve')->with('success', 'Login Successfull');
-                        }else {
+                        }elseif($users["user_type"]=="major" && $page == "admin" ){
+                            return redirect()->intended('/major')->with('success', 'Login Successfull');
+                        }
+                        else {
                             return redirect()->intended('/booking')->with('success', 'Login Successfull');
                         }
                 //}

@@ -23,7 +23,7 @@ class AutnController extends Controller
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
         $reurl =  "";
-        $state =  "admin_-_-";
+        $state =  "admin_0";
         $CMUOauth = $getService->geturlCMUOauth($state);
     
         //$signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=admin-0';

@@ -36,7 +36,7 @@ class ProfileController extends Controller
                 Session::forget('user_type');
                 Session::forget('userfullname');
                 Session::flush();        
-        
-        return redirect()->route('/admin/login/')->with('success', 'You have been successfully logged out');
+                return redirect()->intended('/admin/login')->with('success', 'You have been successfully logged out');
+       // return redirect()->route('/admin/login/')->with('success', 'You have been successfully logged out');
     }
 }
