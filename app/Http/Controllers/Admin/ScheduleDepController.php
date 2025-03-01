@@ -704,7 +704,7 @@ class ScheduleDepController extends Controller
         //->where('straff_account', $Byuser)
         //->delete();
       if($request->pages=="major") {
-        return redirect()->to('/major/schedules/views/'.$sessionId);
+       // return redirect()->to('/major/schedules/views/'.$sessionId);
         return view('/major/schedules/views/'.$sessionId)->with([
             'strerror' => $strerror
         ]);
@@ -884,20 +884,22 @@ class ScheduleDepController extends Controller
 
     public function insertSchedule(Request $request)
     {
+        $class = new HelperService();
+        // วันที่ ที่กำหนดจาก Admin 
+        $latestDateSchedule = $class->getfinalBookingDate();
 
+        $p_schedule_startdate = (isset( $latestDateSchedule->start_date)) ?  $latestDateSchedule->start_date: "0000-00-00";
+        $p_schedule_enddate = (isset($latestDateSchedule->end_date)) ? $latestDateSchedule->end_date : "0000-00-00";
 
-        $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
-        $p_schedule_enddate = (isset($request->schedule_enddate)) ? $request->schedule_enddate : "0000-00-00";
         $p_schedule_starttime = (isset($request->booking_time_start)) ? $request->booking_time_start : "00:00:00";
         $p_schedule_endtime = (isset($request->booking_time_finish)) ? $request->booking_time_finish : "00:00:00";
         $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
-
 
         $setDataBooking = [
             'courseNO' => $request->courseNO,
             'courseTitle' => $request->courseTitle,
             'courseSec' => $request->courseSec,
-            'Stdamount' => $request->Stdamount,
+            'Stdamount' => (int)$request->Stdamount,
             'booking_time_start' => $p_schedule_starttime,
             'booking_time_finish' => $p_schedule_endtime,
             'roomID' => $request->roomID,
@@ -909,7 +911,8 @@ class ScheduleDepController extends Controller
             'schedule_enddate' => $p_schedule_enddate,
             'schedule_repeatday' => $p_schedule_repeatday,
             'courseofyear' => $request->courseofyear,
-            'terms' => $request->terms
+            'terms' => $request->terms ,
+            'is_group_session' => $request->sesionId
         ];
 
         $success = roomSchedule::create($setDataBooking);

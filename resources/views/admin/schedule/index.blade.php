@@ -19,8 +19,8 @@
     </div>
     @if ($step == 'updated')
         <div class="alert alert-success text-center" role="alert">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill"
+                viewBox="0 0 16 16">
                 <path
                     d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
             </svg> บันทึกข้อมูลเรียบร้อยแล้ว
@@ -71,10 +71,10 @@
 
             @if ($getService->getUserStatusImportdata())
                 <div class="align-self-end" style="text-align: right">
-                    <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal" ><i
                             class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
-                    <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
-                        <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
+                    <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel"> 
+                    <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
                 </div>
             @else
                 <div class="text-center mb-2 p-2 text-center text-danger" style="text-align: center">
@@ -104,54 +104,54 @@
                     </thead>
                     <tbody>
                         @if (count($getBookingList) > 0)
-                            @foreach ($getBookingList as $rows)
-                                <tr class="<?php if ($rows->is_duplicate) {
-                                    echo 'bg-danger text-white';
-                                } ?>">
-                                    <td>
-                                        @if ($rows->is_import_excel)
-                                            <span class="text-success"><i class="bi bi-file-earmark-excel-fill"></i></span>
-                                        @endif {{ $rows->updated_at }}
+                                        @foreach ($getBookingList as $rows)
+                                                        <tr class="<?php        if ($rows->is_duplicate) {
+                                                echo 'bg-danger text-white';
+                                            } ?>">
+                                                            <td>
+                                                                @if ($rows->is_import_excel)
+                                                                    <span class="text-success"><i class="bi bi-file-earmark-excel-fill"></i></span>
+                                                                @endif {{ $rows->updated_at }}
 
-                                    </td>
-                                    <td>{{ $rows->courseNO }} </td>
-                                    <td>{{ $rows->courseTitle }}</td>
-                                    <td>{{ $rows->courseSec }}</td>
-                                    <td>{{ $rows->Stdamount }}</td>
-                                    <td>{{ $rows->schedule_repeatday }} </td>
-                                    <td align="center" class="text-center">{{ substr($rows->booking_time_start, 0, 5) }} -
-                                        {{ substr($rows->booking_time_finish, 0, 5) }} <br />
-                                        {{ $rows->schedule_startdate . ' - ' . $rows->schedule_enddate }}
-                                    </td>
-                                    <td>{{ $rows->roomFullName }}</td>
-                                    <td>{{ $rows->lecturer }}</td>
-                                    <td>{{ $rows->is_error }}</td>
-                                    <td class="bg-light text-dark">
-                                        @if ($rows->is_public)
-                                            @php
-                                                $hiddbtn = 1;
-                                            @endphp
-                                            <span class="badge badge-success">
-                                                สำเร็จ
-                                            </span>
-                                        @endif
+                                                            </td>
+                                                            <td>{{ $rows->courseNO }} </td>
+                                                            <td>{{ $rows->courseTitle }}</td>
+                                                            <td>{{ $rows->courseSec }}</td>
+                                                            <td>{{ $rows->Stdamount }}</td>
+                                                            <td>{{ $rows->schedule_repeatday }} </td>
+                                                            <td align="center" class="text-center">{{ substr($rows->booking_time_start, 0, 5) }} -
+                                                                {{ substr($rows->booking_time_finish, 0, 5) }} <br />
+                                                                {{ $rows->schedule_startdate . ' - ' . $rows->schedule_enddate }}
+                                                            </td>
+                                                            <td>{{ $rows->roomFullName }}</td>
+                                                            <td>{{ $rows->lecturer }}</td>
+                                                            <td>{{ $rows->is_error }}</td>
+                                                            <td class="bg-light text-dark">
+                                                                @if ($rows->is_public)
+                                                                                    @php
+                                                                                        $hiddbtn = 1;
+                                                                                    @endphp
+                                                                                    <span class="badge badge-success">
+                                                                                        สำเร็จ
+                                                                                    </span>
+                                                                @endif
 
-                                        <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
-                                            <i class="bi-pencil-square h6"></i></a>
-                                        <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">
-                                            <i class="bi-trash h6"></i></a>
-                                        &nbsp;
+                                                                <a href="#" id="{{ $rows->id }}" class="text-success mx-1 editIcon">
+                                                                    <i class="bi-pencil-square h6"></i></a>
+                                                                <a href="#" id="{{ $rows->id }}" class="text-danger mx-1 deleteIcon">
+                                                                    <i class="bi-trash h6"></i></a>
+                                                                &nbsp;
 
-                                    </td>
-                                </tr>
-                            @endforeach
+                                                            </td>
+                                                        </tr>
+                                        @endforeach
                         @endif
                     </tbody>
                 </table>
                 @if ($getService->getUserStatusImportdata())
                     <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
-                        <button type="button" id="btn-confirm-submit" sesionId = '{{ $sesionId }}'
-                            class="btn btn-primary "> ยืนยันเพิ่มตารางเรียน
+                        <button type="button" id="btn-confirm-submit" sesionId='{{ $sesionId }}' class="btn btn-primary ">
+                            ยืนยันเพิ่มตารางเรียน
                         </button>
                     </div>
                 @endif
@@ -185,8 +185,7 @@
                         </ul>
                         <hr />
                     </div>
-                    <form action="{{ url('/admin/schedule/saveImportfile') }}" method="post"
-                        enctype="multipart/form-data">
+                    <form action="{{ url('/admin/schedule/saveImportfile') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -238,13 +237,13 @@
 
                         <div class="col-md-4 my-1">
                             <label for="Edit_courseNO" class="form-label">รหัสวิชา*</label>
-                            <input type="text" class="form-control" id="Edit_courseNO" name="courseNO" 
+                            <input type="text" class="form-control" id="Edit_courseNO" name="courseNO"
                                 placeholder="รหัสวิชา " required />
                         </div>
                         <div class="col-md-4 my-1">
                             <label for="courseTitle" class="form-label">ชื่อวิชา * </label>
                             <input type="text" class="form-control" id="Edit_courseTitle" name="courseTitle"
-                                placeholder=" ชื่อวิชา "  required/>
+                                placeholder=" ชื่อวิชา " required />
                         </div>
                         <div class="col-md-4 my-1">
                             <label for="courseSec" class="form-label"> Section *</label>
@@ -254,7 +253,7 @@
                         <div class="col-md-4 my-1">
                             <label for="lecturer" class="form-label">อาจารย์ผู้สอน * </label>
                             <input type="text" class="form-control" id="Edit_lecturer" name="lecturer"
-                                placeholder="  อาจารย์ผู้สอน "  required/>
+                                placeholder="  อาจารย์ผู้สอน " required />
                         </div>
                         <div class="col-md-4 my-1">
                             <label for="Stdamount" class="form-label">จำนวนนักศึกษา *</label>
@@ -280,14 +279,14 @@
                             </select>
                         </div>
                         <div class="col-md-4 my-1">
-                                <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน *</label>
-                                <select id="Edit_schedule_repeatday" class="form-control" name="schedule_repeatday" required>
-                                    @foreach ($listDays as $item)
-                                        <option value="{{ $item->dayTitle }}">{{ $item->dayTitle }}</option>
-                                    @endforeach
-                                    <!-- ต่อฐานข้อมูล  -->
-                                </select>
-    
+                            <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน *</label>
+                            <select id="Edit_schedule_repeatday" class="form-control" name="schedule_repeatday" required>
+                                @foreach ($listDays as $item)
+                                    <option value="{{ $item->dayTitle }}">{{ $item->dayTitle }}</option>
+                                @endforeach
+                                <!-- ต่อฐานข้อมูล  -->
+                            </select>
+
                         </div>
                         <div class="col-md-2 my-1">
                             <label for="booking_time_start" class="form-label"> เวลาเริ่ม * </label>
@@ -303,8 +302,7 @@
 
                         <div class="col-md-2 my-1">
                             <label for="booking_time_finish" class="form-label"> เวลาสิ้นสุด *</label>
-                            <select id="Edit_booking_time_finish" class="form-control" name="booking_time_finish"
-                                required>
+                            <select id="Edit_booking_time_finish" class="form-control" name="booking_time_finish" required>
                                 <option value="0">--- เลือก --- </option>
                                 @foreach ($getService->getALlTimes() as $item)
                                     <option value="{{ $item }}">{{ $item }}</option>
@@ -313,7 +311,7 @@
                             </select>
                         </div>
 
-                       
+
                         <div class="col-md-12 mt-2 p-2">
                             <label for="Edit_description" class="form-label"> หมายเหตุ </label>
                             <input type="text" class="form-control" id="Edit_description" name="description" />
@@ -341,11 +339,12 @@
                     </button>
                 </div>
                 <div class="modal-body p-3 bg-light">
-                    <form action="#" id="add_booking_form" enctype="multipart/form-data"
-                        class="row g-3  m-auto allform">
+                    <form action="#" id="add_booking_form" enctype="multipart/form-data" class="row g-3  m-auto allform">
                         @csrf
                         <input type="hidden" id="adminAccount" name="adminAccount"
                             value="{{ Session::get('cmuitaccount') }}">
+                            <input type="hidden"  name="sesionId"
+                            value="{{$sesionId}}">
                         <div class="col-md-4 my-1">
                             <label for="roomID" class="form-label"> เลือกห้อง *</label>
                             <select id="roomID" class="form-control" name="roomID" required>
@@ -406,7 +405,7 @@
                             <label for="schedule_repeatday" class="form-label">ลงเวลาในวัน* </label>
                             <select id="schedule_repeatday" class="form-control schedule_repeatday"
                                 name="schedule_repeatday" required>
-                            
+
                                 @foreach ($listDays as $item)
                                     <option value="{{ $item->dayTitle }}">{{ $item->dayTitle }}</option>
                                 @endforeach
@@ -459,7 +458,7 @@
 @endsection
 @section('corescript')
     <script>
-        $(function() {
+        $(function () {
 
             $("#tableListbooking").DataTable({
                 order: [0, 'ASC']
@@ -472,30 +471,30 @@
             });
 
             // เมื่อเฃือกวันทำซ้ำ วนลูป สร้างชุดข้อมูล
-            $(document.body).on("change", ".repeatday_chk", function() {
+            $(document.body).on("change", ".repeatday_chk", function () {
                 $("#schedule_repeatday").val("");
                 var repeatday_chk = [];
-                $(".repeatday_chk:checked").each(function(k, ele) {
+                $(".repeatday_chk:checked").each(function (k, ele) {
                     repeatday_chk.push($(ele).val());
                 });
                 $("#schedule_repeatday").val(repeatday_chk.join(",")); // จะได้ค่าเปน เช่น 1,3,4
             });
 
-            $(document.body).on("change", ".repeatday_chk2", function() {
+            $(document.body).on("change", ".repeatday_chk2", function () {
                 $("#Edit_schedule_repeatday").val("");
                 var repeatday_chk2 = [];
-                $(".repeatday_chk2:checked").each(function(k, ele) {
+                $(".repeatday_chk2:checked").each(function (k, ele) {
                     repeatday_chk2.push($(ele).val());
                 });
                 $("#Edit_schedule_repeatday").val(repeatday_chk2.join(",")); // จะได้ค่าเปน เช่น 1,3,4
             });
 
-            $(".input-group-prepend").find("div").css("cursor", "pointer").click(function() {
+            $(".input-group-prepend").find("div").css("cursor", "pointer").click(function () {
                 $(this).parents(".input-group").find(":text").val("");
             });
 
             //ยืนยันการลงทะเบียนตารางเรียน
-            $(document).on('click', '#btn-confirm-submit', function(e) {
+            $(document).on('click', '#btn-confirm-submit', function (e) {
                 var sid = $(this).attr('sesionId');
                 Swal.fire({
                     title: 'คุณต้องการจะทำรายการนี้ ?',
@@ -508,13 +507,13 @@
                     cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/admin/confirmtable/' + sid+'/admin';
+                        window.location.href = '/admin/confirmtable/' + sid + '/admin';
                     }
                 });
             });
 
 
-            $("#add_booking_form").submit(function(e) {
+            $("#add_booking_form").submit(function (e) {
                 e.preventDefault();
                 const fd = new FormData(this);
                 console.log(fd);
@@ -527,7 +526,7 @@
                     contentType: false,
                     processData: false,
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
@@ -561,7 +560,7 @@
             });
 
             // if click edit  /  ajax request
-            $(document).on('click', '.editIcon', function(e) {
+            $(document).on('click', '.editIcon', function (e) {
                 e.preventDefault();
                 let id = $(this).attr('id');
                 var booking_time_start = "";
@@ -577,10 +576,10 @@
                         _token: '{{ csrf_token() }}'
                     },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         arr = $.parseJSON(response.dataRoom);
                         console.log(arr);
-                        $.each(arr, function(key, value) {
+                        $.each(arr, function (key, value) {
                             var InputID = "";
                             if (key == 'booking_time_start') {
                                 booking_time_start = value.substring(0, 5);
@@ -605,7 +604,7 @@
             });
 
             // Form update  ajax request
-            $("#edit_form").submit(function(e) {
+            $("#edit_form").submit(function (e) {
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#edit_btn").text('Updating...');
@@ -618,7 +617,7 @@
                     contentType: false,
                     processData: false,
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                         if (response.status == 200) {
                             Swal.fire(
@@ -649,7 +648,7 @@
             });
 
 
-            $(document).on('click', '.deleteIcon', function(e) {
+            $(document).on('click', '.deleteIcon', function (e) {
                 e.preventDefault();
                 let id = $(this).attr('id');
                 let csrf = '{{ csrf_token() }}';
@@ -670,7 +669,7 @@
                                 id: id,
                                 _token: csrf
                             },
-                            success: function(response) {
+                            success: function (response) {
 
                                 //console.log(response);
                                 Swal.fire(
