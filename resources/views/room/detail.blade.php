@@ -45,7 +45,7 @@
                                         <ul id="slideshow3_thumbs" class="desoslide-thumbs-vertical list-inline">
                                             <li>
                                                 <?php
-                                                $fileroomMain = 'room' . $getListRoom[0]->id . '.jpg';
+                                                $fileroomMain = $getListRoom[0]->thumbnail;
                                                 ?>
                                                 <a href="/storage/images/{{ $fileroomMain }}">
                                                     <img src="/storage/images/{{ $fileroomMain }}"
