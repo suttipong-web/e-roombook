@@ -144,10 +144,13 @@
                                             class="btn btn-primary   ml-3  btn-Booking"><i class="bi bi-vector-pen"></i>
                                             ทำรายการจอง</a>
                                     @else
-                                        <button type="button" class="btn btn-primary   ml-3  btn-Booking"
-                                            data-bs-toggle="modal" data-bs-target="#caseBooker">
-                                            <i class="bi bi-vector-pen"></i> ทำรายการจอง
-                                        </button>
+                                        <!-- เปิดให้จองแค่ห้องประชุม -->
+                                        @if ($roomTypeId == 1)
+                                            <button type="button" class="btn btn-primary   ml-3  btn-Booking"
+                                                data-bs-toggle="modal" data-bs-target="#caseBooker">
+                                                <i class="bi bi-vector-pen"></i> ทำรายการจอง
+                                            </button>
+                                        @endif
                                     @endif
 
                                 </div>
@@ -192,11 +195,11 @@
                                     <hr />
                                 </form>
                             </div>
-                            <br/>
+                            <br />
                             <div class="formSlc bg-mycustom text-start w-90 mx-3 ">
                                 <h5 class="text-danger">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-calendar-week" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
                                         <path
                                             d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
                                         <path
@@ -204,10 +207,10 @@
                                     </svg> ตรวจสอบการใช้ห้องรายวัน
                                 </h5>
                                 <hr />
-                                
+
                                 <form id="serachBookingDate" method="post" action="/booking/Searchlist">
                                     @csrf
-                               
+
                                     <div class="mb-3">
                                         <label for="search_date" class="form-label"> วันที่ </label>
                                         <input class="form-control dateScl" type="text" data-provide="datepicker"
@@ -300,7 +303,8 @@
                                 <li class="text-danger"><b>สำหรับการจองห้อง จะต้องดำเนินจอง ล่วงหน้าไม่น้อยกว่า 14
                                         วันทำการ</b></li>
                                 <li>ต้องทำการแนบเอกสารการขอใช้ห้องประกอบการทำรายการจอง </li>
-                                <li>หากคำขอใช้งานของท่านมีรายละเอียดเกี่ยวกับการชำระเงินและผลการอนุมัติ ระบบจะส่งข้อมูลไปยังอีเมลของท่าน
+                                <li>หากคำขอใช้งานของท่านมีรายละเอียดเกี่ยวกับการชำระเงินและผลการอนุมัติ
+                                    ระบบจะส่งข้อมูลไปยังอีเมลของท่าน
                                 </li>
                             </ul>
 
@@ -328,7 +332,8 @@
                             <ul>
                                 <li>คือบุคคลที่สังกัดคณะวิศวกรรมศาสตร์ มหาวิทยาลัยเชียงใหม่ </li>
                                 <li>สำหรับภาควิชา/ศูนย์ ที่สังกัดคณะฯ เมื่อทำรายการจองต้องรอการอนุมัติจากคณะฯ</li>
-                                <li>ท่านสามารถทำรายการขอใช้สถานที่ได้โดยใช้บัญชี CMU Account (xxx@cmu.ac.th) ในการเข้าสู่ระบบการจองห้อง </li>
+                                <li>ท่านสามารถทำรายการขอใช้สถานที่ได้โดยใช้บัญชี CMU Account (xxx@cmu.ac.th)
+                                    ในการเข้าสู่ระบบการจองห้อง </li>
                                 <li>ขั้นตอนนี้ไม่รวมการขอใช้ห้องสำหรับการจัดทำระบบตารางเรียนและตารางสอน</li>
                             </ul>
                             </p>

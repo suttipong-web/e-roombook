@@ -221,7 +221,8 @@ class BookingController extends Controller
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,         
                 'imgRoom' => $roomData->thumbnail,
-                'usertype' => $usertype
+                'usertype' => $usertype,
+                'roomTypeId'=>$roomData->roomTypeId
             ]
         );
     }
@@ -437,7 +438,8 @@ class BookingController extends Controller
                 'roomSlc' => $roomDataSlc,
                 'searchRoomID' => $roomID,
                 'searchDates' => $dateBooking,               
-                'usertype' => $usertype
+                'usertype' => $usertype,
+                'roomTypeId'=>$roomData->roomTypeId
             ]
         );
     }
