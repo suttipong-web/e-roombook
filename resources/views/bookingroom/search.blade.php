@@ -60,7 +60,13 @@
                                                         <tr class="text-start">
                                                             <th>ช่วงเวลาที่ใช้งาน</th>
                                                             <th>รายการ</th>
-                                                            <th>ผู้จอง</th>
+                                                            <th>
+                                                                @if ($roomTypeId > 1)
+                                                                    ผู้สอน
+                                                                @else
+                                                                    ผู้จอง
+                                                                @endif
+                                                            </th>
                                                             <th>หน่วยงาน</th>
                                                             <th>สถานะ</th>
 
@@ -139,18 +145,21 @@
                             ?>
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
-                                    @if (!empty(Session::get('cmuitaccount')))
-                                        <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
-                                            class="btn btn-primary   ml-3  btn-Booking"><i class="bi bi-vector-pen"></i>
-                                            ทำรายการจอง</a>
-                                    @else
-                                        <!-- เปิดให้จองแค่ห้องประชุม -->
-                                        @if ($roomTypeId == 1)
+                                    <!-- เปิดให้จองแค่ห้องประชุม -->
+                                    @if ($roomTypeId == 1)
+                                        @if (!empty(Session::get('cmuitaccount')))
+                                            <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
+                                                class="btn btn-primary   ml-3  btn-Booking"><i
+                                                    class="bi bi-vector-pen"></i>
+                                                ทำรายการจอง</a>
+                                        @else
                                             <button type="button" class="btn btn-primary   ml-3  btn-Booking"
                                                 data-bs-toggle="modal" data-bs-target="#caseBooker">
                                                 <i class="bi bi-vector-pen"></i> ทำรายการจอง
                                             </button>
                                         @endif
+
+
                                     @endif
 
                                 </div>

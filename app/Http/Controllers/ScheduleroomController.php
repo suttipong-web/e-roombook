@@ -16,7 +16,7 @@ class ScheduleroomController extends Controller
     {
         $class = new HelperService();
         $output = " ไม่พบรายการลงเวลาของท่าน ";
-
+        $roomTypeId ="";
         // ส่วนของตัวแปรสำหรับกำหนด
         $dayTH = array("จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์");
         $monthTH = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
@@ -30,6 +30,7 @@ class ScheduleroomController extends Controller
             $roomID = $request->getroomId;
            $dataroom = Rooms::find($roomID);
             $roomTitle = $dataroom->roomFullName;
+            $roomTypeId = $dataroom->roomTypeId;
             $tableRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
                 ->join('place', 'place.id', '=', 'rooms.placeId')
                 ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
@@ -105,6 +106,8 @@ class ScheduleroomController extends Controller
                 $day2 = "";
                 //$repeat_day = '2';
                 // $repeat_day = ($row['schedule_repeatday'] != "") ? explode(",", $row['schedule_repeatday']) : [];
+               
+               // $sec = ($roomTypeId==1) ? $row->booking_booker : $row->booking_Instructor;
                 $data_schedule[] = array(
                     "id" => $row->id,
                     "start_date" => $row->schedule_startdate,
@@ -114,11 +117,13 @@ class ScheduleroomController extends Controller
                     "repeat_day" => $repeat_day,
                     "title" => $row->booking_subject,
                     "depName" => $row->booking_department,
-                    "sec" => $row->booking_booker,
+                    "sec" =>$row->booking_booker ,
                     "room" => $row->roomFullName,
                     "isroomID" => $row->roomID,
                      "booking_phone" => $row->booking_phone,
-                    "building" => $row->roomTitle
+                    "building" => $row->roomTitle ,
+                    "Instructor"=> $row->booking_Instructor
+                  
                 );
             }
         }
@@ -151,7 +156,8 @@ class ScheduleroomController extends Controller
                                     "sec" => $row['sec'],
                                     "depName" => $row['depName'],
                                     "booking_phone" => $row['booking_phone'],                                    
-                                    'UserChkDay' => $row['repeat_day']
+                                    'UserChkDay' => $row['repeat_day'],
+                                    'Instructor'=> $row['Instructor']
                                 ];
                             }
                         }
@@ -269,13 +275,27 @@ class ScheduleroomController extends Controller
                     } else {
                         $subjectTitle = $row_day['title'];
                     }
+                    $sub2="";
+                   if($roomTypeId > 1) {
+                       $sub2 = "<br/>".$row_day['Instructor'];
+                   }
 
-                    $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
+
+                    $ownertitle = ($roomTypeId ==1) ?'ผู้ขอใช้':'ผู้สอน';
+                    if($roomTypeId == 1) {  
+                        $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
+                    }else {
+                        $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้สอน : ' . $row_day["sec"] .' <br/> '.$row_day["depName"] .' </div>';
+                    }
+
+                    
+                    
+                    
                     $outputBody .= '<div class="position-absolute text-center sc-detail" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                                    <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . '</a></div>';
+                                    <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle .$sub2. '</a></div>';
                 }
                 //$outputBody .= "" . $strLop;
             }

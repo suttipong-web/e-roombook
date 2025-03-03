@@ -234,7 +234,7 @@ class ScheduleDepController extends Controller
         // หาห้องเรียนที่ User คนนี้ได้ทำการจองไว้ 
         $sql = "
             SELECT room_schedules.roomID , 
-            rooms.roomFullName,rooms.roomTitle ,room_schedules.courseofyear,room_schedules.terms
+            rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id
             WHERE (room_schedules.straff_account = '{$Byuser}')  
@@ -249,11 +249,12 @@ class ScheduleDepController extends Controller
         // ->where('room_schedules.straff_account', $Byuser)
         //  ->get();
         $roomIdDisplay = 0;
+        $roomTypeId= 0;
         if ($getRoom) {
             //loop ตารางห้องเรียน  
             foreach ($getRoom as $tableRoom) {
 
-
+                $roomTypeId = $tableRoom->roomTypeId;
                 $output = "";
 
                 ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
@@ -367,7 +368,8 @@ class ScheduleDepController extends Controller
                             "room" => $row->roomFullName,
                             "isroomID" => $row->roomID,
                             "booking_phone" => $row->booking_phone,
-                            "building" => $row->roomTitle
+                            "building" => $row->roomTitle,
+                            "Instructor"=> $row->booking_Instructor,
                         );
                     }
                 }
@@ -401,7 +403,8 @@ class ScheduleDepController extends Controller
                                             "sec" => $row['sec'],
                                             "depName" => $row['depName'],
                                             "booking_phone" => $row['booking_phone'],
-                                            'UserChkDay' => $row['repeat_day']
+                                            'UserChkDay' => $row['repeat_day'],
+                                            'Instructor'=> $row['Instructor']
                                         ];
                                     }
                                 }
@@ -532,12 +535,17 @@ class ScheduleDepController extends Controller
                                     $subjectTitle = $row_day['title'];
                                 }
 
-                                $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' .  Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
+                                $sub2="";
+                                if($roomTypeId > 1) {
+                                    $sub2 = "<br/>".$row_day['Instructor'];
+                                }
+
+                                $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' .  Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] .'<br/> ' . $row_day["depName"] . ' </div>';
                                 $outputBody .= '<div class="position-absolute text-center sc-detail" 
-                                             detail="' . $details . '"
-                                             htitle ="' . $row_day['title'] . '"
-                                            style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                                            <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . '</a></div>';
+                                detail="' . $details . '"
+                                htitle ="' . $row_day['title'] . '"
+                               style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
+                               <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle .$sub2. '</a></div>';
                             }
                             //$outputBody .= "" . $strLop;
                         }
@@ -648,7 +656,8 @@ class ScheduleDepController extends Controller
                             'booking_time_start' => $row->booking_time_start,
                             'booking_time_finish' => $row->booking_time_finish,
                             'booking_subject' => $booking_subject,
-                            'booking_booker' => $request->booking_booker,
+                            'booking_booker' =>$row->lecturer,
+                            'booking_Instructor'=> $row->lecturer,
                             'booking_ofPeople' =>  (int) ($row->Stdamount ?? 0),
                             'booking_department' =>  $booking_department,
                             'schedule_startdate' =>  $is_date,

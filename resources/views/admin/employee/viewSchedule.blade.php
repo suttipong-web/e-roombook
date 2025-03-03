@@ -52,7 +52,7 @@
         function fetchAll($uts, $roomId) {
             var val = "";
             $.ajax({
-                url: "/major/schedules/fetchall",
+                url: "/admin/schedules/fetchall",
                 method: 'get',
                 data: {
                     uts: $uts,
@@ -69,19 +69,19 @@
             var $uts = $(this).attr('valuts');
             fetchAll($uts);
         });
+
+        $(document).on('click', '.sc-detail', function(e) {
+                var detail = $(this).attr('detail');
+                var titles = $(this).attr('htitle');
+                Swal.fire({
+                    title: "<strong>" + titles + "</strong>",
+                    icon: "info",
+                    html: detail,
+                    showCloseButton: true,
+                    focusConfirm: false
+                });
+            });
+
     </script>
 
-    <script type="text/javascript">
-        $(function() {
-            $('#select_date').datetimepicker({
-                useCurrent: false,
-                locale: 'th',
-                format: 'YYYY-MM-DD'
-            });
-            $('#select_date').on('change.datetimepicker', function(e) {
-                window.location = 'demo_schedule.php?uts=' + e.date.format("X");
-            });
-
-        });
-    </script>
 @endsection

@@ -26,7 +26,7 @@
                
             </ul>
             
-            <a href="/major/schedules/" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
+            <a href="/admin/schedules/" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-calendar2-week" viewBox="0 0 16 16">
@@ -46,6 +46,8 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 @section('corescript')
     <script>
         fetchAll('', '');
@@ -70,22 +72,19 @@
             var $uts = $(this).attr('valuts');
             fetchAll($uts);
         });
+
+        $(document).on('click', '.sc-detail', function(e) {
+                var detail = $(this).attr('detail');
+                var titles = $(this).attr('htitle');
+                Swal.fire({
+                    title: "<strong>" + titles + "</strong>",
+                    icon: "info",
+                    html: detail,
+                    showCloseButton: true,
+                    focusConfirm: false
+                });
+            });
+
     </script>
 
-    <script type="text/javascript">
-        $(function() {
-            $('#select_date').datetimepicker({
-                useCurrent: false,
-                locale: 'th',
-                format: 'YYYY-MM-DD'
-            });
-            $('#select_date').on('change.datetimepicker', function(e) {
-                window.location = 'demo_schedule.php?uts=' + e.date.format("X");
-            });
-
-
-
-
-        });
-    </script>
 @endsection

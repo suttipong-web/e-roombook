@@ -69,10 +69,8 @@ class BookingController extends Controller
 
 
     public function indexType(Request $request){
-           date_default_timezone_set('Asia/Bangkok');   
-       
-
-           
+        date_default_timezone_set('Asia/Bangkok');   
+                 
 
         $pageTitle ="";
         $searchDates  = date('d/m/Y');

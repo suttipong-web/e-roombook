@@ -120,14 +120,14 @@
                             <td> <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_group{{$row->id}}_start"
                                     name="group{{$row->id}}_start"
-                                    data-date-format="yyyy-mm-dd" required
+                                    data-date-format="yyyy-mm-dd" 
                                     placeholder="วันที่เริ่มต้น">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                                 ถึง &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_group{{$row->id}}_end" name="group{{$row->id}}_end"
-                                    data-date-format="yyyy-mm-dd" required
+                                    data-date-format="yyyy-mm-dd" 
                                     placeholder="วันที่สิ้นสุด">
                             </td>
 
