@@ -146,7 +146,7 @@
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
                                     <!-- เปิดให้จองแค่ห้องประชุม -->
-                                    @if ($roomTypeId == 1)
+                                    @if ($roomTypeId == 1  || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th'))
                                         @if (!empty(Session::get('cmuitaccount')))
                                             <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                                 class="btn btn-primary   ml-3  btn-Booking"><i
