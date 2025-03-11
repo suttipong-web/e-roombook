@@ -928,7 +928,8 @@ class ScheduleDepController extends Controller
         if ($success) {
             return response()->json([
                 'status' => 200,
-                'msg' => $setDataBooking
+                'msg' => $setDataBooking,
+                'sessionId' => $request->sesionId
             ]);
         } else {
             return response()->json([
@@ -941,6 +942,8 @@ class ScheduleDepController extends Controller
     public function listimport(Request $request)
     {
 
+
+        $sesionId  =  request()->session()->getId();
 
         //ข้อมูลห้อง ทั้งหมด join
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
@@ -982,7 +985,8 @@ class ScheduleDepController extends Controller
             'nowYear' => $nowYear,
             'getBookingList' => $getBookingList,
             'getListRoom' => $getListRoom,
-            'listDays' => $getliatday
+            'listDays' => $getliatday ,
+            'sesionId' => $sesionId
         ]);
     }
 }
