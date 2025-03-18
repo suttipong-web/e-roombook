@@ -30,7 +30,7 @@
                             <div class="card mt-0 mb-3">
                                 <div class="card-header p-2">
                                     <div class="col-md-12 p-2">
-                                        <h5 class="section_title"> กรอกแบบฟอร์มขอใช้ห้อง :
+                                        <h5 class="section_title"> 2กรอกแบบฟอร์มขอใช้ห้อง :
                                             <span class="text-primary"> {{ $RoomtitleSearch }} </span>
                                         </h5>
                                         <div class="text-danger">
@@ -65,8 +65,13 @@
                                             <label for="schedule_startdate" class="form-label">
                                                 <span style="color: blueviolet;font-weight: 700"> วันที่เริ่ม *</span>
                                             </label>
-                                            <input class="form-control 
+                                          <!--  <input class="form-control 
                                              @if($roomtype > 1) dateMaxScl @else datescl @endif                                           
+                                            " type="text" data-provide="datepicker"
+                                                data-date-language="th" value="{{ $searchDates }}"
+                                                id="schedule_startdate" name="schedule_startdate" required> -->
+                                                <input class="form-control 
+                                             dateMaxScl                                    
                                             " type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_startdate" name="schedule_startdate" required>
@@ -75,7 +80,14 @@
                                             <label for="schedule_enddate" class="form-label"> <span
                                                     style="color: blueviolet;font-weight: 700"> วันที่สิ้นสุด * </span>
                                             </label>
+                                            <!--
                                             <input class="form-control @if($roomtype > 1) dateMaxScl @else datescl @endif " type="text" data-provide="datepicker"
+                                                data-date-language="th" value="{{ $searchDates }}"
+                                                id="schedule_enddate" name="schedule_enddate" required
+                                                
+                                                                                              
+                                                > -->
+                                                <input class="dateMaxScl" type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_enddate" name="schedule_enddate" required
                                                 
@@ -381,7 +393,9 @@
                 format: 'dd/mm/yyyy', // กำหนดรูปแบบวันที่
                 language: 'th', // ใช้ภาษาไทย
                 startDate: new Date(), 
-                endDate: new Date(finalBookingDate) // เดือนใน JavaScript เริ่มจาก 0 -> พฤษภาคมคือ 4
+                endDate: new Date('2025-04-09') 
+                //endDate: new Date(finalBookingDate) // เดือนใน JavaScript เริ่มจาก 0 -> พฤษภาคมคือ 4
+
             });
 
         });
