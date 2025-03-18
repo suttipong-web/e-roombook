@@ -87,7 +87,7 @@
                                                 
                                                                                               
                                                 > -->
-                                                <input class="dateMaxScl" type="text" data-provide="datepicker"
+                                                <input class="form-control dateMaxScl" type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_enddate" name="schedule_enddate" required
                                                 
