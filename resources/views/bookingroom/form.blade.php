@@ -74,7 +74,7 @@
                                              dateMaxScl                                    
                                             " type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
-                                                id="schedule_startdate" name="schedule_startdate" required>
+                                                id="schedule_startdate" name="schedule_startdate" required readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="schedule_enddate" class="form-label"> <span
@@ -91,7 +91,7 @@
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_enddate" name="schedule_enddate" required
                                                 
-                                                                                              
+                                                readonly                                       
                                                 >
                                         </div>
 
