@@ -36,12 +36,6 @@
                         </a>
                     </li>
                     <li><i class="bi bi-chevron-right"></i>
-                        <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                            การบริจาค
-                        </a>
-                    </li>
-                  
-                       <li><i class="bi bi-chevron-right"></i>
                         <a href="/admin/" class="nav-link p-0 text-body-secondary">
                             สำหรับผู้ดูแลระบบ/ส่วนงาน
                         </a>
@@ -99,7 +93,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-        <div style="font-weight: 800"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </div>
+        <div style="font-weight: 800">Copyright © Your Website 2021 - © Copyright 2025: Faculty of Engineering, Chiang Mai University </div>
         <div class="credits" style="color: #ffffff">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you've purchased the pro version. -->

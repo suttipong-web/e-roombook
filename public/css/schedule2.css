@@ -81,6 +81,14 @@ div.table-responsive::-webkit-scrollbar {
     border: #ffffff 1px solid;
     padding: 2px;
 }
+.sc-detail-std {
+    font-size: 12px;
+    background-color: #ee82ee;
+    color: #080000;
+    border: #ffffff 1px solid;
+    padding: 2px;
+}
+
 
 .sc-detail a {
     color: #181818;

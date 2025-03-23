@@ -50,7 +50,7 @@
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>
-                            Copyright © Your Website 2021
+                            Copyright © Your Website 2021 - © Copyright 2025: Faculty of Engineering, Chiang Mai University 
                         </span>
                     </div>
                 </div>

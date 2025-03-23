@@ -34,12 +34,7 @@
                             class="nav-link p-0 text-body-secondary">
                             แผนที่มหาวิทยาลัยเชียงใหม่
                         </a>
-                    </li>
-                    <li><i class="bi bi-chevron-right"></i>
-                        <a href="https://donate.cmu.ac.th/" class="nav-link p-0 text-body-secondary">
-                            การบริจาค
-                        </a>
-                    </li>
+                    </li>                
                    
                     <li><i class="bi bi-chevron-right"></i>
                         <a href="/admin/" class="nav-link p-0 text-body-secondary">
@@ -100,7 +95,7 @@
     </div>
 
     <div class="container copyright text-center mt-4  text-dark">
-        <div style="font-weight: 800;color: black"> © Copyright 2024: Faculty of Engineering, Chiang Mai University </div>
+        <div style="font-weight: 800;color: black"> Copyright © Your Website 2021 - © Copyright 2025: Faculty of Engineering, Chiang Mai University  </div>
         <div class="credits" style="color: #f5f6f8">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you've purchased the pro version. -->

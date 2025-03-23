@@ -17,7 +17,7 @@
   <br />
   <div>
       @if (count($strerror) > 0)
-      <h3>เกิดข้อผิดพลาด มีตารางข้อมูลที่ไม่สามารถ ลงได้ เนื่องจากมีการขอใช้ห้องประชุมล่วงหน้าก่อนแล้ว </h3>
+      <h3>คำเตือน : ระบบได้ทำการบันทึกข้อมูลของท่านแล้ว แต่มีบางรายการในชุดข้อมูลนี้ ที่ไม่สามารถบันทึกข้อมูลได้ โปรดอ่านคำอธิบายด้านล่าง</h3>
       <hr>
       @foreach ($strerror as $rows)
       <div class="text-danger p-3 mb-3"> - {{ $rows }} </div>
@@ -31,9 +31,8 @@
       @endif
 
       <div class="mt-2 text-center">
-          <a class="btn btn-primary" href="/admin/schedules" role="button">จัดการตารางเรียน</a>
-          
-          <a class="btn btn-outline-success " href="/booking/2/ห้องเรียน" role="button" target="_blank"> ดูตารางเรียน </a>
+          <a class="btn btn-primary" href="/admin/schedules/view" role="button">จัดการตารางเรียน</a>
+        
       </div>
   </div>
   @endsection

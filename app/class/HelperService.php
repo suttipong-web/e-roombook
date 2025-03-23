@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 class HelperService
 {
 
-
     public static function convertDateThaiWithTime($arg, $addtime, $short)
     {
         if (!empty($arg)) {
@@ -96,6 +95,7 @@ class HelperService
         }
         return $setdate;
     }
+
     public static function getStatusTh($status)
     {
         $result = DB::table('action_status')
@@ -117,6 +117,7 @@ class HelperService
 
         return $kDayKey[$key];
     }
+
     public static function getALlTimes()
     {
         $time_day_arr = array(
@@ -144,11 +145,17 @@ class HelperService
             '18:30',
             '19:00',
             '19:30',
-            '20:00'
+            '20:00',
+            '20:00',
+            '20:30',
+            '21:00',
+            '21:30',
+            '22:00'
         );
 
         return $time_day_arr;
     }
+
     public function getFullNameCmuAcount($email)
     {
         $result = User::where('email', $email)->first();
@@ -160,6 +167,7 @@ class HelperService
         $fullNames = $prename . "  " . $result->firstname_TH . " " . $result->lastname_TH;
         return $fullNames;
     }
+
     public function  chkAddminRoomType($email)
     {
         $case = 0;
@@ -265,6 +273,8 @@ class HelperService
         curl_close($curl);
         return $response;
     }
+
+
     public function getlineTokenAdminRoom($roomID, $typeAdmin)
     {
         $ListAdmin = "";

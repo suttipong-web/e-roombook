@@ -38,7 +38,7 @@
                         <tr style="text-align: left;">
                             <th  style="text-align: left;">ปรับปรุง </th>
                             <th>รายการ </th>
-                            <th>ช่วงวันใช้ห้อง/เปิดปิดการจอง</th>
+                            <th>ช่วงเปิด-ปิดการจองห้อง</th>
                             <th>จัดการ </th>
                         </tr>
                     </thead>
@@ -94,7 +94,7 @@
                             <td><input class="form-control3" required name="title" id="Edit_title"></td>
                         </tr>
                         <tr>
-                            <td>ช่วงวันใช้ห้อง/เปิดปิดการจอง</td>
+                            <td>ช่วงเปิด-ปิดการจองห้อง</td>
                             <td>
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_start_date" name="start_date"
@@ -168,26 +168,26 @@
                     @csrf
                     <table class="table table-borderless">
                         <tr>
-                            <td colspan="2"> <b> รายละเอียดกำหนดการ </b>
+                            <td colspan="2"> <b> กำหนดช่วงวันจองห้อง </b>
                                 <hr />
                             </td>
                         </tr>
                         <tr>
                             <td>ภาคการศึกษา</td>
-                            <td><input class="form-control3" required name="title"></td>
+                            <td><input class="form-control3"  name="title"></td>
                         </tr>
                         <tr>
                             <td>ช่วงเปิด-ปิดภาคการศึกษา</td>
                             <td>
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" name="start_date"
-                                    data-date-format="yyyy-mm-dd" required>
+                                    data-date-format="yyyy-mm-dd" >
                                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                                 ถึง &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" name="end_date"
-                                    data-date-format="yyyy-mm-dd" required>
+                                    data-date-format="yyyy-mm-dd" >
 
                             </td>
                         </tr>
@@ -202,14 +202,14 @@
                             <td align="left">{{$row->group_title}}</td>
                             <td> <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_schedule_startdate" name="group{{$row->id}}_start"
-                                    data-date-format="yyyy-mm-dd" required
+                                    data-date-format="yyyy-mm-dd" 
                                     placeholder="วันที่เริ่มต้น">
                                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                                 ถึง &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_schedule_enddate" name="group{{$row->id}}_end"
-                                    data-date-format="yyyy-mm-dd" required
+                                    data-date-format="yyyy-mm-dd" 
                                     placeholder="วันที่สิ้นสุด">
                             </td>
 

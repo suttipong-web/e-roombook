@@ -225,7 +225,7 @@ class majorController extends Controller
 
     public function views(Request $request) {
           return view('admin.employee.viewSchedule')->with([
-            "TitlePage" => "แสดงรายกาาตารางเรียนของท่าน"
+            "TitlePage" => "แสดงรายการตารางเรียนของท่าน"
         ]);
     }
 
@@ -546,7 +546,7 @@ class majorController extends Controller
                             }
         
                             $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้ขอใช้ : ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
-                            $outputBody .= '<div class="position-absolute text-center sc-detail" 
+                            $outputBody .= '<div class="position-absolute text-center sc-detail-std" 
                                              detail="' . $details . '"
                                              htitle ="' . $row_day['title'] . '"
                                             style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">

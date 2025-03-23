@@ -177,7 +177,7 @@ class ScheduleDepController extends Controller
     public function views(Request $request)
     {
         return view('admin.schedule.showSchedule')->with([
-            "TitlePage" => "แสดงรายกาาตารางเรียนของท่าน"
+            "TitlePage" => "แสดงรายการตารางเรียนของท่าน"
         ]);
     }
     public function delete(Request $request)
@@ -541,7 +541,7 @@ class ScheduleDepController extends Controller
                                 }
 
                                 $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' .  Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] .'<br/> ' . $row_day["depName"] . ' </div>';
-                                $outputBody .= '<div class="position-absolute text-center sc-detail" 
+                                $outputBody .= '<div class="position-absolute text-center  sc-detail-std" 
                                 detail="' . $details . '"
                                 htitle ="' . $row_day['title'] . '"
                                style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
@@ -609,8 +609,11 @@ class ScheduleDepController extends Controller
                 $roomID = $row->roomID;
 
 
-                $booking_subject =   $row->courseNO . " ( " . $row->courseSec . ") " . $row->courseTitle;
+                $booking_subject =   $row->courseNO . "(" . $row->courseSec . ")<br/>" . $row->courseTitle;
                 $booking_department = "";
+                $subIDError ="";
+                $courseNO = $row->courseNO;
+
                 foreach ($loopdate as  $is_date) {
 
                     //ตรวจสอบว่าจองเวลานี้ได้ไหม         
@@ -626,6 +629,7 @@ class ScheduleDepController extends Controller
                     $is_confirm = 1;
                     $text = "";
                     $error = 1;
+                  
                     foreach ($ChkTimeBookig as $row_chk) {
 
                         $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
@@ -691,7 +695,13 @@ class ScheduleDepController extends Controller
                         ];
                   
                     } else {
-                        $strerror[] = $booking_subject . " | " . $is_date . " |" . $row->booking_time_start . " - " . $row->booking_time_finish;
+                     
+                        if($subIDError != $courseNO ) {
+                         
+                            $strerror[] = $booking_subject . " | " . $is_date . " |" . $row->booking_time_start . " - " . $row->booking_time_finish;
+                        }
+                        $subIDError = $courseNO  ;
+                        //$strerror[] = $booking_subject . " | " . $is_date . " |" . $row->booking_time_start . " - " . $row->booking_time_finish;
                     }
                 }
             }

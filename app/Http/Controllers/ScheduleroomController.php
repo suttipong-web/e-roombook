@@ -283,19 +283,21 @@ class ScheduleroomController extends Controller
 
                     $ownertitle = ($roomTypeId ==1) ?'ผู้ขอใช้':'ผู้สอน';
                     if($roomTypeId == 1) {  
+                        $classColorBG = "sc-detail";
                         $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] .'   ('.$row_day["booking_phone"].' ) <br/> '.$row_day["depName"] .' </div>';
                     }else {
+                        $classColorBG = "sc-detail-std";
                         $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้สอน : ' . $row_day["sec"] .' <br/> '.$row_day["depName"] .' </div>';
                     }
 
                     
                     
                     
-                    $outputBody .= '<div class="position-absolute text-center sc-detail" 
+                    $outputBody .= '<div class="position-absolute text-center '.$classColorBG.'" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                                    <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle .$sub2. '</a></div>';
+                                    <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle.$sub2. '</a></div>';
                 }
                 //$outputBody .= "" . $strLop;
             }
