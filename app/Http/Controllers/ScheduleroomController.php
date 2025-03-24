@@ -42,7 +42,7 @@ class ScheduleroomController extends Controller
 
         ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
         $sc_startTime = date("Y-m-d 08:00:00");  // กำหนดเวลาเริ่มต้ม เปลี่ยนเฉพาะเลขเวลา
-        $sc_endtTime = date("Y-m-d 21:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
+        $sc_endtTime = date("Y-m-d 22:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
         $sc_t_startTime = strtotime($sc_startTime);
         $sc_t_endTime = strtotime($sc_endtTime);
        
@@ -203,9 +203,9 @@ class ScheduleroomController extends Controller
                   <br>
                     <div class="wrap_schedule">
                             <div class="table-responsive ">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered bg-light">
                                     <thead class="thead-light">
-                                        <tr class="time_schedule">
+                                        <tr class="time_schedule ">
                                         <th class="p-0">
                                             <div class="day-head-label text-right text-end">
                                                 เวลา
@@ -225,7 +225,7 @@ class ScheduleroomController extends Controller
         }
         $output .= $timeHeardbar . '</tr>
                                     </thead>
-                                <tbody> ';
+                                <tbody  class="bg-light"> ';
         $outputBody = "";
         // วนลูปแสดงจำนวนวันตามที่กำหนด
         for ($i_day = 0; $i_day < $num_dayShow; $i_day++) {
@@ -239,13 +239,13 @@ class ScheduleroomController extends Controller
                                                 ' . $dayTH[$i_day] . '<br>' . $dayInSchedule_show . '
                                         </div>
                                     </td>
-                                    <td class="p-0 position-relative" colspan="12">
+                                    <td class="p-0 position-relative" >
                                         <div class="position-absolute">
                                             <div class="d-flex align-content-stretch" style="min-height: 60px;">';
             $inRowDay = "";
             for ($i = 1; $i < $sc_numCol; $i++) {
                 $inRowDay .= '
-                                            <div class="bg-light text-center border-right" style="width:' . $hour_block_width . 'px;margin-right: 1px;">
+                                            <div class="bg-light text-center border-right" style="width:' . $hour_block_width . 'px;margin-right: 0px;">
                                                 &nbsp;
                                             </div>';
             }
@@ -289,11 +289,9 @@ class ScheduleroomController extends Controller
                         $classColorBG = "sc-detail-std";
                         $details = '<div> วันที่ '. $class->convertDateThaiNoTime($row_day['start_date'],1).' ช่วงเวลา : ' . Str::limit($row_day['start_time'],5,''). '-' .  Str::limit($row_day['end_time'],5,'') . ' <br/> ผู้สอน : ' . $row_day["sec"] .' <br/> '.$row_day["depName"] .' </div>';
                     }
-
+          
                     
-                    
-                    
-                    $outputBody .= '<div class="position-absolute text-center '.$classColorBG.'" 
+                    $outputBody .= '<div class="position-absolute text-center clickscDetail '.$classColorBG.'" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['title'] . '"
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">

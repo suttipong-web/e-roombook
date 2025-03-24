@@ -74,7 +74,7 @@ integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="ano
             fetchAll($uts);
         });
 
-        $(document).on('click', '.sc-detail', function(e) {
+        $(document).on('click', '.sc-detail-std', function(e) {
                 var detail = $(this).attr('detail');
                 var titles = $(this).attr('htitle');
                 Swal.fire({

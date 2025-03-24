@@ -71,7 +71,7 @@
             fetchAll($uts);
         });
 
-        $(document).on('click', '.sc-detail', function(e) {
+        $(document).on('click', '.sc-detail-std', function(e) {
                 var detail = $(this).attr('detail');
                 var titles = $(this).attr('htitle');
                 Swal.fire({

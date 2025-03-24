@@ -42,7 +42,7 @@
       
 
             <div class="text-start">
-                <a href="/admin/schedules/view" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
+                <a href="/major/schedules/view" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-calendar2-week" viewBox="0 0 16 16">
@@ -625,27 +625,29 @@
             $(document).on('click', '.deleteIcon', function(e) {
                 e.preventDefault();
                 let id = $(this).attr('id');
+                console.log(id);
                 let csrf = '{{ csrf_token() }}';
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'ต้องการลบข้อมูล ?',
+                    text: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่ ?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'ยืนยันลบ',
+                    cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "{{ url('/admin/employee/delete_import') }}",
-                            method: 'delete',
+                            url: "/major/scheduletime/delete",
+                            method: 'post',
                             data: {
-                                sid: id,
+                                id: id,
                                 _token: csrf
                             },
                             success: function(response) {
 
-                                //console.log(response);
+                                console.log(response);
                                 Swal.fire(
                                     'Deleted!',
                                     'ทำรายการลบข้อมูลของท่านเรียบร้อย.',

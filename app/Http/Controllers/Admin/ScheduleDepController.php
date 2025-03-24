@@ -259,7 +259,7 @@ class ScheduleDepController extends Controller
 
                 ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
                 $sc_startTime = date("Y-m-d 08:00:00");  // กำหนดเวลาเริ่มต้ม เปลี่ยนเฉพาะเลขเวลา
-                $sc_endtTime = date("Y-m-d 21:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
+                $sc_endtTime = date("Y-m-d  22:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
                 $sc_t_startTime = strtotime($sc_startTime);
                 $sc_t_endTime = strtotime($sc_endtTime);
 
@@ -432,9 +432,9 @@ class ScheduleDepController extends Controller
                     $output .= '  <div class="col-auto text-right ml-auto">';
                     $slc = '<div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <label class="input-group-text" for="inputGroupSelect01"> ปีการศึกษา </label>
+                                                <label class="input-group-text" for="sclcourseofyear' .$tableRoom->roomID.'"> ปีการศึกษา </label>
                                             </div>
-                                        <select class="custom-select" id="sclcourseofyear">';
+                                        <select class="custom-select" id="sclcourseofyear' .$tableRoom->roomID.'">';
                     $cyear = '';
                     $terms = '';
                     //  รูปการศึกษา 
@@ -462,11 +462,11 @@ class ScheduleDepController extends Controller
                         <br>
                         <div class="wrap_schedule">
                         <div class="table-responsive ">
-                            <table class="table table-bordered">
+                            <table class="table bg-light table-borderless ">
                                 <thead class="thead-light">
-                                    <tr class="time_schedule">
-                                        <th class="p-0">
-                                            <div class="day-head-label text-right">
+                                    <tr class="time_schedule" >
+                                        <th class="p-0 border-right " style="max-width:' . $hour_block_width . 'px;">
+                                            <div class="day-head-label text-right text-end" >
                                                 เวลา
                                             </div>
                                             <div class="diagonal-cross"></div>
@@ -476,7 +476,7 @@ class ScheduleDepController extends Controller
                                         </th> ';
                     $timeHeardbar = "";
                     for ($i_time = 0; $i_time < $sc_numCol - 1; $i_time++) {
-                        $timeHeardbar .= '<th class="px-0 text-nowrap th-time">
+                        $timeHeardbar .= '<th class="px-0 text-nowrap th-time  border-right"  style="max-width:' . $hour_block_width . 'px;">
                                         <div class="time_schedule_text text-center" style="width:' . $hour_block_width . 'px;">
                                             ' . $sc_timeStep[$i_time] . ' - ' . $sc_timeStep[$i_time + 1] . '
                                         </div>   
@@ -484,7 +484,7 @@ class ScheduleDepController extends Controller
                     }
                     $output .= $timeHeardbar . '</tr>
                                     </thead>
-                                <tbody> ';
+                                <tbody > ';
                     $outputBody = "";
                     // วนลูปแสดงจำนวนวันตามที่กำหนด
                     for ($i_day = 0; $i_day < $num_dayShow; $i_day++) {
@@ -498,13 +498,13 @@ class ScheduleDepController extends Controller
                                                 ' . $dayTH[$i_day] . '<br>' . $dayInSchedule_show . '
                                         </div>
                                     </td>
-                                    <td class="p-0 position-relative" colspan="12">
+                                    <td class="p-0 position-relative" >
                                         <div class="position-absolute">
                                             <div class="d-flex align-content-stretch" style="min-height: 60px;">';
                         $inRowDay = "";
                         for ($i = 1; $i < $sc_numCol; $i++) {
                             $inRowDay .= '
-                                            <div class="bg-light text-center border-right" style="width:' . $hour_block_width . 'px;margin-right: 1px;">
+                                            <div class="bg-light- text-center  style="width:' . $hour_block_width . 'px;margin-right: 0px;">
                                                 &nbsp;
                                             </div>';
                         }

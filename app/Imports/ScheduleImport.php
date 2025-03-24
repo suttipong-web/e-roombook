@@ -27,15 +27,13 @@ class ScheduleImport implements ToModel, WithHeadingRow
            $latestTerm = $class->getfinalBookingDate();
            $start_date = $latestTerm->start_date;
            $end_date = $latestTerm->end_date;
-
-
-           
+           $start_time ="";
+           $end_time ="";
             $roomId =0;
             $is_duplicate = 0;
             $iserror = "";
             // ห่า User  Upload 
-            $cmuitaccount = Session::get('cmuitaccount');
-            
+            $cmuitaccount = Session::get('cmuitaccount');            
             $sessionId = session()->getId();           
 
             //ตรวจสอบหาอ ID ห้อง
@@ -51,6 +49,14 @@ class ScheduleImport implements ToModel, WithHeadingRow
               }
             }
 
+        // convert เวลาจาก Excel 0800 ให้เป็น 08:00    
+        $start_time = $class->convertTimeFormat($row["time_start"]);
+        $end_time = $class->convertTimeFormat($row["time_finish"]);
+
+
+      //  'booking_time_start' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($start_time)),
+      //  'booking_time_finish' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($end_time)),
+
 
         return new roomSchedule([
                     'courseNO' => $row["courseno"],
@@ -61,8 +67,8 @@ class ScheduleImport implements ToModel, WithHeadingRow
                     'roomNo' => $row["roomno"],
                     'schedule_startdate' =>$start_date,
                     'schedule_enddate' => $end_date,
-                    'booking_time_start' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row["time_start"])),
-                    'booking_time_finish' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row["time_finish"])),
+                    'booking_time_start' =>$start_time,
+                    'booking_time_finish' => $end_time,
                     'terms' => $row["terms"],
                     'schedule_repeatday' => $row["days"],
                     'courseofyear' => $row["courseofyear"],

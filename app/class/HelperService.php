@@ -420,4 +420,11 @@ class HelperService
         }
         return  $status;
     }
+
+    function convertTimeFormat($timeString) {
+          // เติมเลขศูนย์ด้านหน้าให้ครบ 4 หลัก
+    $timeString = str_pad($timeString, 4, "0", STR_PAD_LEFT);
+
+    return Carbon::createFromFormat('Hi', $timeString)->format('H:i');
+    }
 }

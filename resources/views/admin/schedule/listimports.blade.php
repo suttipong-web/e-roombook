@@ -473,13 +473,14 @@
                 let id = $(this).attr('id');
                 let csrf = '{{ csrf_token() }}';
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'ต้องการลบข้อมูล ?',
+                    text: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่ ?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'ยืนยันลบ',
+                    cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({

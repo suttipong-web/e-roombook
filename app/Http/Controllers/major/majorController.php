@@ -588,5 +588,37 @@ class majorController extends Controller
         
     }
 
+   
+    public function delete(Request $request)
+    {
+        $id = $request->id;
+        $result = roomSchedule::find($id);        
+        if ($result) {
+            //
+            $sid = $result->is_group_session;
+            $roomID = $result->roomID;
+            $courseofyear = $result->courseofyear;
+            $terms = $result->terms;
+            $courseNO = $result->courseNO;
+            $courseSec = $result->courseSec;
+            // ลบข้อมูลในคารางสอน  room_schedules
+           $t =  roomSchedule::destroy($id);
+           return response()->json(['msg' => 'yes'.$id]);
+            if($result->is_public)  {
+                // ลบข้อมูลใยคารางสอน  booking_rooms                
+                DB::table('booking_rooms')
+                ->where('import_sid', $sid)
+                ->where('roomID', $roomID)         
+                ->where('courseNo', $courseNO)
+                ->where('booking_subject_sec', $courseSec)
+                ->delete();
+            }        
+           
+        } else {
+            return response()->json(['error' => 'ไม่พบข้อมูลid='.$id]);
+        }
+    }
+
+
 
 }

@@ -42,40 +42,41 @@ div.table-responsive::-webkit-scrollbar {
 }
 
 .day_schedule {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .time_schedule_text {}
 
 .day_schedule_text {
-    width: 85px;
-    font-size: 13px;
-    padding: 10px 5px;
+    width: 90px;
+    font-size: 12px;
+    padding: 5px 5px;
 }
 
 .day-head-label {
     position: relative;
-    right: 10px;
+    right: 5px;
     top: 0;
+    max-width: 80px;
 }
 
 .time-head-label {
     position: relative;
     left: 10px;
     bottom: 0;
+    max-width: 80px;
 }
 
 .diagonal-cross {
     border-bottom: 2px solid #dee2e6;
-
     position: relative;
-    top: -20px;
-    left: 0;
+    top: -17px;
+    left: 2;
     transform: translateY(20px) translateX(5px) rotate(20deg);
 }
 
 .sc-detail {
-    font-size: 12px;
+    font-size: 11px;
     background-color: #85cb8e;
     color: #080000;
     border: #ffffff 1px solid;
@@ -93,7 +94,7 @@ div.table-responsive::-webkit-scrollbar {
 
 
 .sc-detail-std {
-    font-size: 12px;
+    font-size: 11px;
     background-color: #ee82ee;
     color: #080000;
     border: #ffffff 1px solid;
