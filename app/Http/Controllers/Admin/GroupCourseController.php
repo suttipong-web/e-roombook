@@ -26,7 +26,7 @@ class GroupCourseController extends Controller
 
         //ข้อมูลหนักงาน Select option
         $sclEmployee = DB::table('users')
-            ->select('users.*')
+            ->select('users.*')            
             ->get();
 
 
@@ -46,8 +46,8 @@ class GroupCourseController extends Controller
         department.dep_title
         FROM
         admin_group_courses
-        INNER JOIN users ON admin_group_courses.cmuitaccount = users.email
-        INNER JOIN department ON users.dep_id = department.dep_id
+        LEFT JOIN users ON admin_group_courses.cmuitaccount = users.email
+        left JOIN department ON users.dep_id = department.dep_id
         WHERE   admin_group_courses.courseId = '{$courseId}' 
         
         ";
