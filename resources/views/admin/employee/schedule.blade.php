@@ -78,45 +78,45 @@
 
                 <table class="table table-hover  table-sm " id="tableListbooking">
                     <thead class="table">
-                        <tr style="text-align: left;">
-                            <th>วันที่แก้ไขล่าสุด</th>
-                            <th>รหัสวิชา</th>
-                            <th>ชื่อวิชา</th>
-                            <th>Section</th>
-                            <th>จำนวนคน</th>
-                            <th>วัน</th>
+                        <tr style="text-align: center;">
+                            <th class="text-center">วันที่แก้ไขล่าสุด</th>
+                            <th class="text-center" >รหัสวิชา</th>
+                            <th class="text-center" >ชื่อวิชา</th>
+                            <th class="text-center" >Section</th>
+                            <th class="text-center">จำนวนคน</th>
+                            <th class="text-center">วัน</th>
                             <th align="center" class="text-center">เวลา</th>
-                            <th>ห้องเรียน</th>
-                            <th>ผู้สอน</th>
-                            <th>หมายเหตุ</th>
-                            <th width="100">จัดการ</th>
+                            <th class="text-center">ห้องเรียน</th>
+                            <th class="text-center">ผู้สอน</th>
+                            <th class="text-center">หมายเหตุ</th>
+                            <th width="100" class="text-center">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (count($getBookingList) > 0)
                             @foreach ($getBookingList as $rows)
-                                <tr class="<?php if ($rows->is_duplicate) {
-                                    echo 'bg-danger text-white';
+                                <tr class="text-center <?php if ($rows->is_duplicate) {
+                                    echo 'bg-danger text-white ';
                                 } ?>">
-                                    <td>
+                                    <td class="text-center">
                                         @if ($rows->is_import_excel)
                                             <span class="text-success"><i class="bi bi-file-earmark-excel-fill"></i></span>
                                         @endif {{ $rows->updated_at }}
 
                                     </td>
-                                    <td>{{ $rows->courseNO }} </td>
-                                    <td>{{ $rows->courseTitle }}</td>
-                                    <td>{{ $rows->courseSec }}</td>
-                                    <td>{{ $rows->Stdamount }}</td>
-                                    <td>{{ $rows->schedule_repeatday }} </td>
+                                    <td class="text-center">{{ $rows->courseNO }} </td>
+                                    <td class="text-center">{{ $rows->courseTitle }}</td>
+                                    <td class="text-center">{{ $rows->courseSec }}</td>
+                                    <td class="text-center">{{ $rows->Stdamount }}</td>
+                                    <td class="text-center">{{ $rows->schedule_repeatday }} </td>
                                     <td align="center" class="text-center">{{ substr($rows->booking_time_start, 0, 5) }} -
                                         {{ substr($rows->booking_time_finish, 0, 5) }} <br />
                                         {{ $rows->schedule_startdate . ' - ' . $rows->schedule_enddate }}
                                     </td>
-                                    <td>{{ $rows->roomFullName }}</td>
-                                    <td>{{ $rows->lecturer }}</td>
-                                    <td>{{ $rows->is_error }}</td>
-                                    <td class="bg-light text-dark">
+                                    <td class="text-center">{{ $rows->roomFullName }}</td>
+                                    <td class="text-center">{{ $rows->lecturer }}</td>
+                                    <td class="text-center">{{ $rows->is_error }}</td>
+                                    <td class="bg-light text-dark text-center">
                                         @if ($rows->is_public)
                                             @php
                                                 $hiddbtn = 1;
@@ -166,8 +166,7 @@
                     <h3> อัพโหลดข้อมูลการใช้ห้อง </h3>
                     <div>
                         <ul>
-                            <li>เจ้าหน้าที่หน่วยงานสามารถนำเข้าไฟล์ตารางการใช้ห้องได้ </li>
-                            <li>ไฟล์ที่นำเข้าต้องเป็นไฟล์ Excel เท่านั้น</li>
+                            <li>เจ้าหน้าที่หน่วยงานสามารถนำเข้าไฟล์ตารางการใช้ห้องได้ </li>                       
                             <li>ไฟล์ที่นำเข้าต้องเป็นไฟล์ EXCEL ที่อยู่ในรูปแบบที่ระบบกำหนดไว้เท่านั้น
                                 <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download  ที่นี่<< </a>
 
@@ -263,7 +262,7 @@
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="Edit_terms" class="form-label">เทอมการศึกษา *</label>
+                            <label for="Edit_terms" class="form-label">ภาคการศึกษา *</label>
                             <select id="Edit_terms" class="form-control" name="terms" required>
                                 <option value='1'>เทอม 1 </option>
                                 <option value='2'>เทอม 2 </option>
@@ -389,7 +388,7 @@
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="terms" class="form-label">เทอมการศึกษา*</label>
+                            <label for="terms" class="form-label">ภาคการศึกษา*</label>
                             <select id="terms" class="form-control" name="terms" required>
                                 <option value='1'>เทอม 1 </option>
                                 <option value='2'>เทอม 2 </option>

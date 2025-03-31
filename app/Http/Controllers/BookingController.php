@@ -612,11 +612,7 @@ class BookingController extends Controller
             // insert table Payments 
             $insert = payments::create($setDataPayment);           
         } 
-
-
-
-
-             $msgreturn ="";
+        $msgreturn ="";
 
             if ($result) {
                 $roomData = Rooms::find($request->roomID);
@@ -627,24 +623,25 @@ class BookingController extends Controller
                     }else {
                         $roomtypeName="ห้องประชุม";
                     }
+
                 // ส่ง LINE                  
                 $bookingRoom = $roomData->roomFullName;
                 $booker = $request->booking_booker;
-                $msgLine = "รายการจองใหม่ ".$txtTypeUser." %0A";
-                $msgLine .= "เรื่อง : " .$request->booking_subject. "%0A";
-                $msgLine .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "%0A";
-                $msgLine .= $roomData->roomFullName. "%0A";
-                $msgLine .= "ประเภทห้อง : ".$roomtypeName. "%0A";
-                $msgLine .= "จาก : " . $booker." ". $request->booking_department. " (". $request->booking_phone .") %0A";             
+                $msgLine = "ระบบจองห้อง : รายการจองใหม่ ".$txtTypeUser." \n";
+                $msgLine .= "เรื่อง : " .$request->booking_subject. "\n";
+                $msgLine .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "\n";
+                $msgLine .= $roomData->roomFullName. "\n";
+                $msgLine .= "ประเภทห้อง : ".$roomtypeName. "\n";
+                $msgLine .= "จาก : " . $booker." ". $request->booking_department. " (". $request->booking_phone .") \n";             
                 $msgLine .= "(จัดการ/ตรวจสอบการจองที่ https://e-roombook.eng.cmu.ac.th/admin/)";
 
 
                 $uts = 0;
-                $msgLineAdminRoom =   "รายการจองใหม่ %0A";
-                $msgLineAdminRoom .= $roomData->roomFullName. " ที่ท่านดูแลได้อนุมัติใช้งาน%0A";
-                $msgLineAdminRoom .= "เรื่อง : " .$request->booking_subject. "%0A";
-                $msgLineAdminRoom .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "%0A";
-                $msgLineAdminRoom .= "จาก : " . $booker." ". $request->booking_department. " (". $request->booking_phone .") %0A";              
+                $msgLineAdminRoom =   "ระบบจองห้อง : รายการจองใหม่ \n";
+                $msgLineAdminRoom .= $roomData->roomFullName. " ที่ท่านดูแลได้อนุมัติใช้งาน \n";
+                $msgLineAdminRoom .= "เรื่อง : " .$request->booking_subject. "\n";
+                $msgLineAdminRoom .= "วันที่ : " .$request->schedule_startdate." เวลา ". $request->booking_time_start." ถึง ".$request->schedule_enddate." เวลา ". $request->booking_time_finish. "\n";
+                $msgLineAdminRoom .= "จาก : " . $booker." ". $request->booking_department. " (". $request->booking_phone .") \n";              
                 $msgLineAdminRoom .= "(ดูตารางการใช้งานของห้อง https://e-roombook.eng.cmu.ac.th/room/print/".$request->roomID."/".$uts."/".$roomData->roomFullName.")";
 
                 //แจ้งข้อความเข้าผู้ดูแลห้อง
@@ -659,7 +656,9 @@ class BookingController extends Controller
                  // แจ้งข้อความเข้ากลุ่มผู้ดูแลห้อง 
                  //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
                  //C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi  ใช้จริง
-                 $GrouplineToken ="C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi";
+                // $GrouplineToken ="C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi";
+                
+                 $GrouplineToken = "C673d6850aaddf7ebbe8e60e1451a2c56";
                  $class->sendMessageTOline($GrouplineToken, $msgLine);
 
 

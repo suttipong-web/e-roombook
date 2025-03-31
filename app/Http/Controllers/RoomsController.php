@@ -100,7 +100,12 @@ class RoomsController extends Controller
 
     function convertArrayToComma($dataArr)
     {
+        if (!is_array($dataArr)) {
+            $val='';
+        } else {
         $val = implode(",", $dataArr);
+       
+        }
         return $val;
     }
     public function store(Request $request)

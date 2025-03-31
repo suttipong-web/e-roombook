@@ -71,7 +71,7 @@
 
                 <table class="table table-hover   " id="tableListbooking">
                     <thead class="table">
-                        <tr style="text-align: left;">
+                        <tr style="text-align: center;">
                             <th>วันเวลาที่ทำรายการ</th>
                             <th>หน่วยงาน</th>
                             <th>ภาคการศึกษา</th>
@@ -85,10 +85,10 @@
                     <tbody>
                         @if (count($getBookingList) > 0)
                             @foreach ($getBookingList as $rows)
-                                <tr>
-                                    <td> {{ $rows->updated_at }}</td>
+                                <tr >
+                                    <td class="text-center"> {{ $rows->updated_at }}</td>
                                     <td>{{ $rows->dep_title }} </td>
-                                    <td>{{ $rows->terms }}/{{ $rows->courseofyear }}</td>
+                                    <td class="text-center">{{ $rows->terms }}/{{ $rows->courseofyear }}</td>
                                     <td class="text-center">{{ $rows->countCourse }}</td>
                                     <td class="text-center">{{ $rows->countPublic }}</td>
                                     <td class="text-center">
@@ -152,8 +152,7 @@
                     <h3> อัพโหลดข้อมูลการใช้ห้อง </h3>
                     <div>
                         <ul>
-                            <li>เจ้าหน้าที่หน่วยงานสามารถนำเข้าไฟล์ตารางการใช้ห้องได้ </li>
-                            <li>ไฟล์ที่นำเข้าต้องเป็นไฟล์ Excel เท่านั้น</li>
+                            <li>เจ้าหน้าที่หน่วยงานสามารถนำเข้าไฟล์ตารางการใช้ห้องได้ </li>       
                             <li>ไฟล์ที่นำเข้าต้องเป็นไฟล์ EXCEL ที่อยู่ในรูปแบบที่ระบบกำหนดไว้เท่านั้น
                                 <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download  ที่นี่<< </a>
 
@@ -249,7 +248,7 @@
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="Edit_terms" class="form-label">เทอมการศึกษา</label>
+                            <label for="Edit_terms" class="form-label">ภาคการศึกษา</label>
                             <select id="Edit_terms" class="form-control" name="terms" required>
                                 <option value='1'>เทอม 1 </option>
                                 <option value='2'>เทอม 2 </option>
@@ -389,7 +388,7 @@
                         </div>
 
                         <div class="col-md-2 my-1">
-                            <label for="terms" class="form-label">เทอมการศึกษา*</label>
+                            <label for="terms" class="form-label">ภาคการศึกษา*</label>
                             <select id="terms" class="form-control" name="terms" required>
                                 <option value='1'>เทอม 1 </option>
                                 <option value='2'>เทอม 2 </option>

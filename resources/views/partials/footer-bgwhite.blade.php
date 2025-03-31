@@ -93,7 +93,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-        <div style="font-weight: 800">Copyright © Your Website 2021 - © Copyright 2025: Faculty of Engineering, Chiang Mai University </div>
+        <div style="font-weight: 800"> © Copyright 2025: Faculty of Engineering, Chiang Mai University </div>
         <div class="credits" style="color: #ffffff">
             <!-- All the links in the footer should remain intact. -->
             <!-- You can delete the links only if you've purchased the pro version. -->

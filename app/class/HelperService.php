@@ -144,8 +144,7 @@ class HelperService
             '18:00',
             '18:30',
             '19:00',
-            '19:30',
-            '20:00',
+            '19:30',         
             '20:00',
             '20:30',
             '21:00',
@@ -250,6 +249,7 @@ class HelperService
     // ฟังก์ชันสำหรับการส่งข้อความ
     function sendMessageTOline($access_token, $message)
     {
+       /*
         $curl = curl_init();
         curl_setopt_array(
             $curl,
@@ -270,7 +270,49 @@ class HelperService
             )
         );
         $response = curl_exec($curl);
-        curl_close($curl);
+        curl_close($curl);*/
+
+        	
+// ตั้งค่า Channel Access Token ของ LINE OA
+$channelToken = "Gt3FifuoPAiBzH+3F4aJpIQs8eazE7W5vwKbBKNaanHNBfH/WbFGauv25ocROsnTIsmGVhnCvxxgQUTveZmpmsxaA8hbOa2xVtgAA64QuKCRYqJGcK3/URRPsEYEUGT8i7tJwe6B1k25hhn7qHhQ9gdB04t89/1O/w1cDnyilFU="; // Replace with your token
+  // สร้างข้อมูล JSON สำหรับส่งไปยัง LINE Messaging API
+
+  // line Suttipong  
+  //$access_token ="Uf6d4d223182dab6b3800a56fe5c6fa62";
+
+
+  // ตุ้ U749017d55c520a23fff190085b778eb2
+ // $access_token ="U749017d55c520a23fff190085b778eb2";
+
+  $data = [
+    "to" => $access_token,  // ระบุปลายทาง (User ID หรือ Group ID)
+    "messages" => [
+        [
+            "type" => "text",
+            "text" => $message
+        ]
+    ]
+  ];
+
+// เรียกใช้งาน API ด้วย cURL
+$curl = curl_init();
+curl_setopt_array($curl, [
+    CURLOPT_URL => "https://api.line.me/v2/bot/message/push",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST => true,
+    CURLOPT_HTTPHEADER => [
+        "Content-Type: application/json",
+        "Authorization: Bearer " . $channelToken
+    ],
+    CURLOPT_POSTFIELDS => json_encode($data)
+]);
+
+// รับผลลัพธ์จาก API
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);	
+        
+
         return $response;
     }
 

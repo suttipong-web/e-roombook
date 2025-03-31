@@ -98,19 +98,19 @@
                             <td>
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_start_date" name="start_date"
-                                    data-date-format="yyyy-mm-dd" required>
+                                    data-date-format="yyyy-mm-dd" >
                                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                                 ถึง &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" id="Edit_end_date" name="end_date"
-                                    data-date-format="yyyy-mm-dd" required>
+                                    data-date-format="yyyy-mm-dd" >
 
                             </td>
                         </tr>
 
                         <tr>
-                            <td colspan="2"> <b> ช่วงวันที่ลงตารางการใช้ห้อง </b>
+                            <td colspan="2"> <b> กำหนดช่วงวันจองห้องตามกลุ่มผู้ใช้ </b>
                                 <hr />
                             </td>
                         </tr>
@@ -158,7 +158,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"> <i class="bi bi-plus-circle-fill"></i> เพิ่มข้อมูลกำหนดการลงตารางเรียน </h5>
+                <h5 class="modal-title"> <i class="bi bi-plus-circle-fill"></i> เพิ่มข้อมูลกำหนดการลงตารางใช้ห้อง </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="tr ue">&times;</span>
                 </button>
@@ -173,21 +173,21 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>ภาคการศึกษา</td>
+                            <td>รายการ </td>
                             <td><input class="form-control3"  name="title"></td>
                         </tr>
                         <tr>
-                            <td>ช่วงเปิด-ปิดภาคการศึกษา</td>
+                            <td>กำหนดช่วงวันจองห้องตามกลุ่มผู้ใช้</td>
                             <td>
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" name="start_date"
-                                    data-date-format="yyyy-mm-dd" >
+                                    data-date-format="yyyy-mm-dd"  required>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
 
                                 ถึง &nbsp;&nbsp;&nbsp;&nbsp;
                                 <input class="form-control3 dateScl" type="text" data-provide="datepicker"
                                     data-date-language="th" name="end_date"
-                                    data-date-format="yyyy-mm-dd" >
+                                    data-date-format="yyyy-mm-dd" required>
 
                             </td>
                         </tr>
@@ -272,7 +272,7 @@
 
                         Swal.fire(
                             'Error !',
-                            'ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบข้อมูลใหม่',
+                            'ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบข้อมูลใหม่ \n '+response.erroemsd,
                             'error'
                         ).then((result) => {
                             $("#txtTitle").focus();
@@ -313,7 +313,7 @@
                     } else {
                         Swal.fire(
                             'Error !',
-                            'ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบข้อมูลใหม่',
+                            'ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบข้อมูลใหม่ \n'+response.erroemsd,
                             'error'
                         ).then((result) => {
                             $("#txtTitle").focus();

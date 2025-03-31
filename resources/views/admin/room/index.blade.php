@@ -81,8 +81,8 @@
                             </button>
                         </div>
                         <div class="modal-body  bg-light">
-                            <form action="#" id="add_ROOMS_form" enctype="multipart/form-data"
-                                class="row g-3 w-100 m-auto">
+                            <form action="/admin/room/store" id="add_ROOMS_form" enctype="multipart/form-data" 
+                                class="row g-3 w-100 m-auto"  method="POST">
                                 @csrf
                                 <div class="col-6 my-2">
                                     <label for="roomTypeId" class="form-label">ประเภทห้อง</label>
