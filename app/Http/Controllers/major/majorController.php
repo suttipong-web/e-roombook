@@ -609,11 +609,9 @@ class majorController extends Controller
             $terms = $result->terms;
             $courseNO = $result->courseNO;
             $courseSec = $result->courseSec;
-            // ลบข้อมูลในคารางสอน  room_schedules
-            $t = roomSchedule::destroy($id);
-            return response()->json(['msg' => 'yes' . $id]);
+
             if ($result->is_public) {
-                // ลบข้อมูลใยคารางสอน  booking_rooms                
+                // ลบข้อมูลใยคารางสอน  booking_rooms
                 DB::table('booking_rooms')
                     ->where('import_sid', $sid)
                     ->where('roomID', $roomID)
@@ -621,7 +619,9 @@ class majorController extends Controller
                     ->where('booking_subject_sec', $courseSec)
                     ->delete();
             }
-
+            // ลบข้อมูลในคารางสอน  room_schedules
+            roomSchedule::destroy($id);
+        
         } else {
             return response()->json(['error' => 'ไม่พบข้อมูลid=' . $id]);
         }

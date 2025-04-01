@@ -638,7 +638,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "/admin/schedule/delete",
+                            url: "/major/scheduletime/delete",
                             method: 'post',
                             data: {
                                 id: id,
