@@ -453,22 +453,7 @@ class ScheduleDepController extends Controller
                     $slc = '<div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text" for="sclcourseofyear' . $tableRoom->roomID . '"> ปีการศึกษา </label>
-                                            </div>
-                                        <select class="custom-select" id="sclcourseofyear' . $tableRoom->roomID . '">';
-                    $cyear = '';
-                    $terms = '';
-                    //  รูปการศึกษา 
-                    foreach ($getRoom as $item) {
-                        if ($item->courseofyear != $cyear) {
-                            $cyear = $item->courseofyear;
-                            $terms = $item->terms;
-                            $vals = $terms . "/" . $cyear;
-                            $slc .= '<option value="' . $vals . '"> ' . $vals . '</option>';
-                        }
-                    }
-                    $slc .= '   </select> ';
-
-                    $output .= $slc . '  </div> 
+                                            </div>     
                                     </div> 
                                 <div class="col-auto text-right"> ';
                     $output .= '
