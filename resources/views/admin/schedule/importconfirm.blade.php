@@ -31,7 +31,7 @@
       @endif
 
       <div class="mt-2 text-center">
-          <a class="btn btn-primary" href="/admin/schedules/view" role="button">จัดการตารางเรียน</a>
+          <a class="btn btn-primary" href="/admin/schedules" role="button">จัดการตารางเรียน</a>
         
       </div>
   </div>

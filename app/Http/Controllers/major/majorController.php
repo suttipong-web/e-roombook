@@ -126,10 +126,12 @@ class majorController extends Controller
             room_schedules.roomID ='" . $rows->roomID . "'  AND
             DATE(room_schedules.schedule_startdate) >=  DATE('" . $rows->schedule_startdate . "') AND 
             DATE(room_schedules.schedule_enddate) <= DATE('" . $rows->schedule_enddate . "')  AND   
-            room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "' AND 
-            ( room_schedules.is_public =1 )                    
-                            
+            room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "'  
+            /*AND  ( room_schedules.is_public =1 )*/ 
+            AND     room_schedules.id <> '".$rows->id."'
+            
             ORDER BY booking_time_start ASC
+
             ";
             //echo  $sql;
             $qresult = DB::select(DB::raw($sql));
@@ -199,7 +201,7 @@ class majorController extends Controller
                                ->where('id', $rows->id)
                                ->update([
                                    'is_duplicate' => 1,
-                                   'is_error' => 'ไม่สามารถลงตารางได้'
+                                   'is_error' => 'ไม่สามารถลงเวลาได้'
                                ]);
                 }
 

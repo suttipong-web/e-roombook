@@ -76,7 +76,7 @@
 
              <div class="col-md-12   mt-3 displayTable">
 
-                <table class="table table-hover  table-sm " id="tableListbooking">
+                <table class="table table-hover  table-sm " id="tableListbooking-">
                     <thead class="table">
                         <tr style="text-align: center;">
                             <th class="text-center">วันที่แก้ไขล่าสุด</th>

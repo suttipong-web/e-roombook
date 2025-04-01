@@ -57,8 +57,7 @@
                 method: 'get',
                 data: {
                     uts: $uts,
-                    getroomId: $roomId,
-                    cmuaccount: $('#adminAccount').val(),
+                    getroomId: $roomId,                 
                     _token: '{{ csrf_token() }}',
                 },
                 success: function(response) {

@@ -69,8 +69,9 @@ class ScheduleDepController extends Controller
                     room_schedules.roomID ='" . $rows->roomID . "'  AND
                     DATE(room_schedules.schedule_startdate) >=  DATE('" . $rows->schedule_startdate . "') AND 
                     DATE(room_schedules.schedule_enddate) <= DATE('" . $rows->schedule_enddate . "')  AND   
-                    room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "' AND 
-                    ( room_schedules.is_public =1  )          
+                    room_schedules.schedule_repeatday = '" . $rows->schedule_repeatday . "' 
+                   /*  AND   ( room_schedules.is_public =1  )  */    
+                    AND     room_schedules.id <> '".$rows->id."'    
                                       
                     ORDER BY booking_time_start ASC
                     ";
@@ -139,7 +140,7 @@ class ScheduleDepController extends Controller
                     ->where('id', $rows->id)
                     ->update([
                         'is_duplicate' => 1,
-                        'is_error' => 'ไม่สามารถลงตารางได้'
+                        'is_error' => 'ไม่สามารถลงเวลาได้'
                     ]);
             }
         }
@@ -236,9 +237,14 @@ class ScheduleDepController extends Controller
             SELECT room_schedules.roomID , 
             rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
-            INNER JOIN rooms ON room_schedules.roomID = rooms.id
-            WHERE (room_schedules.straff_account = '{$Byuser}')  
-            AND  (room_schedules.is_public =1)  ";
+            INNER JOIN rooms ON room_schedules.roomID = rooms.id  ";
+        if(!empty($Byuser)) {
+            $sql .= "
+            WHERE (room_schedules.straff_account = '{$Byuser}')   
+            ";
+        }
+
+        $sql .= "  AND  (room_schedules.is_public =1)  ";
 
         $sql .= " GROUP BY room_schedules.roomID   ORDER BY  room_schedules.roomID  ASC ";
         $getRoom = DB::select(DB::raw($sql));
@@ -711,29 +717,29 @@ class ScheduleDepController extends Controller
              collect($setDataBooking)->chunk(50)->each(function ($chunk) {
               dispatch(new ProcessBooking($chunk->toArray()));
             });
-            collect($updateData)->chunk(50)->each(function ($chunk) {
-           
-            dispatch(new UpdateRoomSchedule($chunk->toArray()));
-        });
+            if (!empty($updateData)) {
 
-            
+            collect($updateData)->chunk(50)->each(function ($chunk) {           
+               dispatch(new UpdateRoomSchedule($chunk->toArray()));
+            });
+
+        }
             session()->regenerate();
         }
         // $deletedRows =  DB::table('room_schedules')              
         //->where('straff_account', $Byuser)
         //->delete();
         session()->put('errorImport', $strerror);
-      if($request->pages=="major") {
-        return redirect()->to('/major/schedules/views/'.$sessionId)->with('do', 'success');
-        /*return view('major.schedules.views.'.$sessionId)->with([
-           'strerror' => $strerror
-       ]);     */   
-       
-      }else {
-        return view('admin.schedule.importconfirm')->with([
-            'strerror' => $strerror
-        ]);
-     }
+        if($request->pages=="major") {
+            //return redirect()->to('/major/schedules/views/'.$sessionId)->with('do', 'success');
+            return view('admin.employee.importconfirm')->with([
+                'strerror' => $strerror
+            ]);        
+        }else {
+            return view('admin.schedule.importconfirm')->with([
+                'strerror' => $strerror
+            ]);
+        }
     }
 
     // ฟังก์ชันแปลงวันที่พุทธศักราชเป็นคริสต์ศักราช
