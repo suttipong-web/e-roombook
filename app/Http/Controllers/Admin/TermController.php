@@ -58,13 +58,8 @@ class TermController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
                 'start_date' => 'required|date',
-                'end_date' => 'required|date|after:start_date',
-                'group1_start' => 'required|date',
-                'group1_end' => 'required|date|after:group1_start',
-                'group2_start' => 'required|date',
-                'group2_end' => 'required|date|after:group2_start',
-                'group3_start' => 'required|date',
-                'group3_end' => 'required|date|after:group3_start'
+                'end_date' => 'required|date|after:start_date'
+               
             ]);
             $setData = [
                 'title' => $request->title,
