@@ -269,7 +269,7 @@
                             </select>
                         </div>
                         <div class="col-md-4 my-1">
-                                <label for="schedule_repeatday" class="form-label"> ลงเวลาในวัน *</label>
+                                <label for="schedule_repeatday" class="form-label"> เลือกวัน *</label>
                                 <select id="Edit_schedule_repeatday" class="form-control" name="schedule_repeatday" required>
                                     @foreach ($listDays as $item)
                                         <option value="{{ $item->dayTitle }}">{{ $item->dayTitle }}</option>
@@ -396,7 +396,7 @@
                         </div>
 
                         <div class="col-md-4  my-1">
-                            <label for="schedule_repeatday" class="form-label">ลงเวลาในวัน* </label>
+                            <label for="schedule_repeatday" class="form-label">เลือกวัน* </label>
                             <select id="schedule_repeatday" class="form-control schedule_repeatday"
                                 name="schedule_repeatday" required>
                             
