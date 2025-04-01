@@ -32,7 +32,7 @@ class UserController extends Controller
                 users
                 INNER JOIN department ON users.dep_id = department.dep_id
                 LEFT JOIN users_type_admin ON users.user_type = users_type_admin.admin_type_name
-                order by  users.dep_id ASC
+                   order by    users.last_activity DESC , users.dep_id ASC
                 ';
         $ListUser = DB::select(DB::raw($sql));
         //  if($ListAdmin){
@@ -79,7 +79,7 @@ class UserController extends Controller
             INNER JOIN department ON users.dep_id = department.dep_id
             LEFT JOIN users_type_admin ON users.user_type = users_type_admin.admin_type_name
             where  users.id  =' . $userID . '
-            order by  users.dep_id ASC
+            order by    users.last_activity DESC , users.dep_id ASC
             ';
             $ListUser = DB::select(DB::raw($sql));
             return view("admin.users.viewprofile")->with([
@@ -108,6 +108,8 @@ class UserController extends Controller
         } else {
             User::create($setData);
         }
+       
+        return redirect()->to('/admin/users?do=success');
         
     }
 }

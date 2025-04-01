@@ -221,13 +221,14 @@ class ScheduleDepController extends Controller
     {
         $class = new HelperService();
         $output = " ไม่พบรายการลงเวลาของท่าน ";
+        $Byuser ="";
         // ส่วนของตัวแปรสำหรับกำหนด
         $dayTH = array("จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์");
         $monthTH = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
         $monthTH_brev = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
         $roomId = 0;
-        $Byuser = $request->cmuaccount;
+        if(!empty($request->cmuaccount))$Byuser = $request->cmuaccount;
         if ($request->getroomId) {
             $roomId = $request->getroomId;
         }
@@ -237,14 +238,15 @@ class ScheduleDepController extends Controller
             SELECT room_schedules.roomID , 
             rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
-            INNER JOIN rooms ON room_schedules.roomID = rooms.id  ";
+            INNER JOIN rooms ON room_schedules.roomID = rooms.id  
+            WHERE  (room_schedules.is_public =1) 
+            ";
         if(!empty($Byuser)) {
             $sql .= "
-            WHERE (room_schedules.straff_account = '{$Byuser}')   
+            AND (room_schedules.straff_account = '{$Byuser}')   
             ";
         }
 
-        $sql .= "  AND  (room_schedules.is_public =1)  ";
 
         $sql .= " GROUP BY room_schedules.roomID   ORDER BY  room_schedules.roomID  ASC ";
         $getRoom = DB::select(DB::raw($sql));
@@ -335,8 +337,15 @@ class ScheduleDepController extends Controller
                         INNER JOIN rooms ON booking_rooms.roomID = rooms.id
                         WHERE booking_rooms.roomID = '{$tableRoom->roomID}' 
                         AND  booking_rooms.booking_status =1
-                        AND  booking_rooms.is_import_excel =1
-                        AND  booking_rooms.booker_cmuaccount= '{$Byuser}'
+                        AND  booking_rooms.is_import_excel =1 ";
+                      if(!empty($Byuser)) {
+                        $sql .= "
+                            AND (room_schedules.straff_account = '{$Byuser}')   
+                        ";
+                    }
+            
+
+                        $sql .= " 
                         AND (
                             (schedule_startdate  >= '" . $start_weekDay . "' AND schedule_startdate <  '" . $end_weekDay . "') OR
                             ('" . $start_weekDay . "' > schedule_startdate  AND schedule_enddate <  '" . $end_weekDay . "'  AND schedule_enddate >= '" . $start_weekDay . "' )  OR

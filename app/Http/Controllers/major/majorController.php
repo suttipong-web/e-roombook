@@ -39,7 +39,6 @@ class majorController extends Controller
             ->where('roomTypeId', '<>', '1')
             ->where('is_open', '1')
             ->get();
-
         
         $getliatday = DB::table('listdays')
             ->select('dayTitle', 'dayList')
@@ -252,7 +251,9 @@ class majorController extends Controller
             rooms.roomFullName,rooms.roomTitle ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id
+
             WHERE (room_schedules.straff_account = '{$Byuser}')  
+
             AND  (room_schedules.is_public =1)  ";        
         
         $sql .= " GROUP BY room_schedules.roomID   ORDER BY  room_schedules.roomID  ASC ";
@@ -444,7 +445,7 @@ class majorController extends Controller
                     $output .= '  <div class="col-auto text-right ml-auto">';
                     $slc = '<div class="input-group mb-3">
                                             <div class="input-group-prepend">
-                                                <label class="input-group-text" for="inputGroupSelect01"> ปีการศึกษา </label>
+                                                <label class="input-group-text" for="inputGroupSelect01"> ปีการศึกษา ห</label>
                                             </div>
                                         <select class="custom-select" id="sclcourseofyear">';
                     $cyear = '';
