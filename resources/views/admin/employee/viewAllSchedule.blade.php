@@ -1,16 +1,17 @@
 <!-- import  function service -->
 @inject('getService', 'App\class\HelperService')
-@extends('admin.main-layout')
+@extends('admin.emp-layout')
 @section('content-css')
     <link rel="stylesheet" href="/css/schedule.css">
 @endsection
 @section('body')
     <!-- Page Heading -->
     <input type="hidden" id="adminAccount" name="adminAccount" value="{{ Session::get('cmuitaccount') }}">
+   
     <div class="card">
         <h5 class="card-header"> ระบบจัดการตารางเรียน </h5>
         <div class="card-body">
-            <h5 class="card-title">คำอธิบาย</h5>
+            <h5 class="card-title text-danger">คำอธิบาย</h5>
             <p class="card-text">
             <ul>
                 <li>เจ้าหน้าที่หน่วยงานสามารถจัดการตารางการใช้ห้อง โดยจะแบ่งช่วงเวลาในการลงข้อมูลตามลําดับ</li>
@@ -26,8 +27,7 @@
                 <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 2 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
 
             </ul>
-            
-            <a href="/admin/schedules/" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
+            <a href="/major/schedules/" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-calendar2-week" viewBox="0 0 16 16">
@@ -36,7 +36,7 @@
                     <path
                         d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z" />
                 </svg>
-                จัดการข้อมูลการใช้ห้อง
+                จัดการข้อมูลตารางเรียน
             </a>
             </p>
             <hr />
@@ -46,9 +46,8 @@
             </div>
         </div>
     </div>
+    
 @endsection
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 @section('corescript')
     <script>
         fetchAll('', '');
@@ -60,7 +59,7 @@ integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="ano
                 method: 'get',
                 data: {
                     uts: $uts,
-                    getroomId: $roomId,                   
+                    getroomId: $roomId,                                      
                     _token: '{{ csrf_token() }}',
                 },
                 success: function(response) {

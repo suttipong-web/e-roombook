@@ -7,6 +7,7 @@
 @section('body')
     <!-- Page Heading -->
     <input type="hidden" id="adminAccount" name="adminAccount" value="{{ Session::get('cmuitaccount') }}">
+   
     <div class="card">
         <h5 class="card-header"> ระบบจัดการตารางเรียน </h5>
         <div class="card-body">
@@ -45,6 +46,7 @@
             </div>
         </div>
     </div>
+    
 @endsection
 @section('corescript')
     <script>
@@ -57,7 +59,8 @@
                 method: 'get',
                 data: {
                     uts: $uts,
-                    getroomId: $roomId,                 
+                    getroomId: $roomId,                   
+                    cmuaccount: $('#adminAccount').val(),
                     _token: '{{ csrf_token() }}',
                 },
                 success: function(response) {

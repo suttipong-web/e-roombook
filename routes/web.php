@@ -112,6 +112,7 @@ Route::post('/major/schedule/delete_import', [majorController::class, 'delete_im
 Route::post('/major/scheduletime/delete', [majorController::class, 'delete'])->name('delete');
 
 Route::get('/major/schedules/view', [majorController::class, 'views'])->name('major.views');
+Route::get('/major/schedules/viewall', [majorController::class, 'viewsAll'])->name('major.viewsall');
 Route::get('/major/schedules/fetchall', [majorController::class, 'fetchAll'])->name('major.fetchAll');
 Route::post('/major/schedule/saveImportfile', [majorController::class, 'saveImportfile'])->name('major.saveImportfile');
 

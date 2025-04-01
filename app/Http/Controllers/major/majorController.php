@@ -231,7 +231,15 @@ class majorController extends Controller
     public function views(Request $request)
     {
         return view('admin.employee.viewSchedule')->with([
-            "TitlePage" => "แสดงรายการตารางเรียนของท่าน"
+            "TitlePage" => "แสดงรายการตารางเรียนของท่าน",
+            
+        ]);
+    }
+    public function viewsAll(Request $request)
+    {
+        return view('admin.employee.viewAllSchedule')->with([
+            "TitlePage" => "แสดงรายการตารางเรียนรวม",
+            
         ]);
     }
 

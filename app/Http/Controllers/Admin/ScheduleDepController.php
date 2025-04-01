@@ -225,6 +225,7 @@ class ScheduleDepController extends Controller
     {
         $class = new HelperService();
         $output = " ไม่พบรายการลงเวลาของท่าน ";
+        
         $Byuser = "";
         // ส่วนของตัวแปรสำหรับกำหนด
         $dayTH = array("จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์");
@@ -232,8 +233,9 @@ class ScheduleDepController extends Controller
         $monthTH_brev = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
         $roomId = 0;
-        if (!empty($request->cmuaccount))
+        if (!empty($request->cmuaccount)){
             $Byuser = $request->cmuaccount;
+        }
         if ($request->getroomId) {
             $roomId = $request->getroomId;
         }
@@ -345,7 +347,7 @@ class ScheduleDepController extends Controller
                         AND  booking_rooms.is_import_excel =1 ";
                 if (!empty($Byuser)) {
                     $sql .= "
-                            AND (room_schedules.straff_account = '{$Byuser}')   
+                            AND (booking_rooms.booker_cmuaccount = '{$Byuser}')   
                         ";
                 }
 

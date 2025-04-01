@@ -38,9 +38,9 @@
             <span> จัดการตารางเรียน </span></a>
     </li>
     <li class="nav-item active">
-        <a href="/major/schedules/view" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
+        <a href="/major/schedules/viewall" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>
-            <span> แสดงตารางเรียน </span></a>
+            <span> แสดงตารางเรียนรวม</span></a>
     </li>
 
 
