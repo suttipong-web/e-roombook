@@ -30,7 +30,7 @@
                             <div class="card mt-0 mb-3">
                                 <div class="card-header p-2">
                                     <div class="col-md-12 p-2">
-                                        <h5 class="section_title"> 2กรอกแบบฟอร์มขอใช้ห้อง :
+                                        <h5 class="section_title"> กรอกแบบฟอร์มขอใช้ห้อง :
                                             <span class="text-primary"> {{ $RoomtitleSearch }} </span>
                                         </h5>
                                         <div class="text-danger">

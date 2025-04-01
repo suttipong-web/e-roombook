@@ -722,12 +722,13 @@ class ScheduleDepController extends Controller
         // $deletedRows =  DB::table('room_schedules')              
         //->where('straff_account', $Byuser)
         //->delete();
+        session()->put('errorImport', $strerror);
       if($request->pages=="major") {
-        return redirect()->to('/major/schedules/views/'.$sessionId);
-       // return view('/major/schedules/views/'.$sessionId)->with([
-        //    'strerror' => $strerror
-       // ]);
-        
+        return redirect()->to('/major/schedules/views/'.$sessionId)->with('do', 'success');
+        /*return view('major.schedules.views.'.$sessionId)->with([
+           'strerror' => $strerror
+       ]);     */   
+       
       }else {
         return view('admin.schedule.importconfirm')->with([
             'strerror' => $strerror

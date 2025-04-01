@@ -17,7 +17,7 @@ class HelperService
         if (!empty($arg)) {
             //2024-06-25 07:01:07
             $tempDateTime = explode(" ", $arg);
-            $tempDate = explode("-",  $tempDateTime[0]);
+            $tempDate = explode("-", $tempDateTime[0]);
             $istime = " " . substr($arg, 10, 6);
 
             if ($short) {
@@ -26,10 +26,10 @@ class HelperService
                 $thai_months = [1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม', 4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน', 7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน', 10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม',];
             }
 
-            $dates =  $tempDate[2];
-            $month = $thai_months[(int)$tempDate[1]];
+            $dates = $tempDate[2];
+            $month = $thai_months[(int) $tempDate[1]];
             $year = $tempDate[0] + 543;
-            $setdate =  $dates . " " . $month . " " . $year;
+            $setdate = $dates . " " . $month . " " . $year;
 
             if ($addtime) {
                 $setdate = $setdate . " " . $istime;
@@ -39,19 +39,19 @@ class HelperService
         }
     }
 
-    public  function  get_TimenowConvert($dt)
+    public function get_TimenowConvert($dt)
     {
 
-        $timenow =  explode(":", $dt);
-        if ((int)$timenow[1] < 10) {
-            $is_time = $timenow[0] . "0" . (int)$timenow[1];
+        $timenow = explode(":", $dt);
+        if ((int) $timenow[1] < 10) {
+            $is_time = $timenow[0] . "0" . (int) $timenow[1];
         } else {
             $is_time = $timenow[0] . $timenow[1];
         }
-        return    (int)$is_time;
+        return (int) $is_time;
     }
 
-    public static function convertDateThaiNoTime($arg,  $short)
+    public static function convertDateThaiNoTime($arg, $short)
     {
         //2024-06-25 07:01:07
         $tempinput = explode("-", $arg);
@@ -63,11 +63,11 @@ class HelperService
             $thai_months = [1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม', 4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน', 7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน', 10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม',];
         }
 
-        $dates =  $tempinput[2];
-        $month = $thai_months[(int)$tempinput[1]];
+        $dates = $tempinput[2];
+        $month = $thai_months[(int) $tempinput[1]];
         $year = $tempinput[0] + 543;
 
-        $setdate =  $dates . " " . $month . " " . $year;
+        $setdate = $dates . " " . $month . " " . $year;
         return $setdate;
     }
 
@@ -84,7 +84,7 @@ class HelperService
             $thai_months = [1 => 'มกราคม', 2 => 'กุมภาพันธ์', 3 => 'มีนาคม', 4 => 'เมษายน', 5 => 'พฤษภาคม', 6 => 'มิถุนายน', 7 => 'กรกฎาคม', 8 => 'สิงหาคม', 9 => 'กันยายน', 10 => 'ตุลาคม', 11 => 'พฤศจิกายน', 12 => 'ธันวาคม',];
         }
 
-        $date_ =  DateTime::createFromFormat('d/m/Y', $arg);
+        $date_ = DateTime::createFromFormat('d/m/Y', $arg);
         $date = Carbon::parse($date_);
         $month = $thai_months[$date->month];
         $year = $date->year + 543;
@@ -144,7 +144,7 @@ class HelperService
             '18:00',
             '18:30',
             '19:00',
-            '19:30',         
+            '19:30',
             '20:00',
             '20:30',
             '21:00',
@@ -167,12 +167,12 @@ class HelperService
         return $fullNames;
     }
 
-    public function  chkAddminRoomType($email)
+    public function chkAddminRoomType($email)
     {
         $case = 0;
         $result = User::where('email', $email)->first();
         if ($result) {
-            $case = (int)$result->is_case;
+            $case = (int) $result->is_case;
         }
         return $case;
     }
@@ -249,69 +249,41 @@ class HelperService
     // ฟังก์ชันสำหรับการส่งข้อความ
     function sendMessageTOline($access_token, $message)
     {
-       /*
+        // ตั้งค่า Channel Access Token ของ LINE OA
+        $channelToken = "Gt3FifuoPAiBzH+3F4aJpIQs8eazE7W5vwKbBKNaanHNBfH/WbFGauv25ocROsnTIsmGVhnCvxxgQUTveZmpmsxaA8hbOa2xVtgAA64QuKCRYqJGcK3/URRPsEYEUGT8i7tJwe6B1k25hhn7qHhQ9gdB04t89/1O/w1cDnyilFU="; // Replace with your token
+        // สร้างข้อมูล JSON สำหรับส่งไปยัง LINE Messaging API
+
+        // line Suttipong  
+        //$access_token ="Uf6d4d223182dab6b3800a56fe5c6fa62";
+
+        $data = [
+            "to" => $access_token,  // ระบุปลายทาง (User ID หรือ Group ID)
+            "messages" => [
+                [
+                    "type" => "text",
+                    "text" => $message
+                ]
+            ]
+        ];
+
+        // เรียกใช้งาน API ด้วย cURL
         $curl = curl_init();
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => 'https://notify-api.line.me/api/notify',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => 'message=' . $message . '',
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: Bearer ' . $access_token . '',
-                    'Content-Type: application/x-www-form-urlencoded'
-                ),
-            )
-        );
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://api.line.me/v2/bot/message/push",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+                "Authorization: Bearer " . $channelToken
+            ],
+            CURLOPT_POSTFIELDS => json_encode($data)
+        ]);
+
+        // รับผลลัพธ์จาก API
         $response = curl_exec($curl);
-        curl_close($curl);*/
+        $err = curl_error($curl);
+        curl_close($curl);
 
-        	
-// ตั้งค่า Channel Access Token ของ LINE OA
-$channelToken = "Gt3FifuoPAiBzH+3F4aJpIQs8eazE7W5vwKbBKNaanHNBfH/WbFGauv25ocROsnTIsmGVhnCvxxgQUTveZmpmsxaA8hbOa2xVtgAA64QuKCRYqJGcK3/URRPsEYEUGT8i7tJwe6B1k25hhn7qHhQ9gdB04t89/1O/w1cDnyilFU="; // Replace with your token
-  // สร้างข้อมูล JSON สำหรับส่งไปยัง LINE Messaging API
-
-  // line Suttipong  
-  //$access_token ="Uf6d4d223182dab6b3800a56fe5c6fa62";
-
-
-  // ตุ้ U749017d55c520a23fff190085b778eb2
- // $access_token ="U749017d55c520a23fff190085b778eb2";
-
-  $data = [
-    "to" => $access_token,  // ระบุปลายทาง (User ID หรือ Group ID)
-    "messages" => [
-        [
-            "type" => "text",
-            "text" => $message
-        ]
-    ]
-  ];
-
-// เรียกใช้งาน API ด้วย cURL
-$curl = curl_init();
-curl_setopt_array($curl, [
-    CURLOPT_URL => "https://api.line.me/v2/bot/message/push",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_HTTPHEADER => [
-        "Content-Type: application/json",
-        "Authorization: Bearer " . $channelToken
-    ],
-    CURLOPT_POSTFIELDS => json_encode($data)
-]);
-
-// รับผลลัพธ์จาก API
-$response = curl_exec($curl);
-$err = curl_error($curl);
-curl_close($curl);	
-        
 
         return $response;
     }
@@ -320,7 +292,7 @@ curl_close($curl);
     public function getlineTokenAdminRoom($roomID, $typeAdmin)
     {
         $ListAdmin = "";
-        if ((int)$typeAdmin == 2) {
+        if ((int) $typeAdmin == 2) {
             $sql = " 
           SELECT
             users.email,
@@ -411,7 +383,7 @@ curl_close($curl);
         // Loop จนกระทั่งถึงวันที่สิ้นสุด
         while ($start->lte($end)) {
             // ตรวจสอบว่าวันนี้เป็นวัน $days (1,4)  คือวันจันทร์ และพฤหัสบดี 
-      
+
             if (in_array($start->dayOfWeek, $days)) {
                 $result[] = $start->toDateString();
             }
@@ -430,7 +402,7 @@ curl_close($curl);
         $onStartDate = '';
         $onEndDate = '';
         $currentDate = Carbon::today();
-        $chkUser  = adminGroupCourse::where('cmuitaccount', $email)->first();
+        $chkUser = adminGroupCourse::where('cmuitaccount', $email)->first();
         if ($chkUser) {
             if ($chkUser->count() > 0) {
                 $groupCourse = $chkUser->courseId;
@@ -440,14 +412,14 @@ curl_close($curl);
                     ->orderBy('id', 'desc') // เรียงลำดับจากมากไปน้อย
                     ->first(); // ดึงแค่ 1 รายการ
                 if ($groupCourse == 1) {
-                    $onStartDate  = Carbon::parse($latestDate->group1_start);
-                    $onEndDate  = Carbon::parse($latestDate->group1_end);
+                    $onStartDate = Carbon::parse($latestDate->group1_start);
+                    $onEndDate = Carbon::parse($latestDate->group1_end);
                 } else if ($groupCourse == 2) {
-                    $onStartDate  = Carbon::parse($latestDate->group2_start);
-                    $onEndDate  = Carbon::parse($latestDate->group2_end);
+                    $onStartDate = Carbon::parse($latestDate->group2_start);
+                    $onEndDate = Carbon::parse($latestDate->group2_end);
                 } else if ($groupCourse == 3) {
-                    $onStartDate  = Carbon::parse($latestDate->group3_start);
-                    $onEndDate  = Carbon::parse($latestDate->group3_end);
+                    $onStartDate = Carbon::parse($latestDate->group3_start);
+                    $onEndDate = Carbon::parse($latestDate->group3_end);
                 } else {
                     $status = 0;
                 }
@@ -458,15 +430,16 @@ curl_close($curl);
                     $status = 0;
                     // echo "วันที่ปัจจุบันไม่อยู่ในช่วง";
                 }
-            } 
+            }
         }
-        return  $status;
+        return $status;
     }
 
-    function convertTimeFormat($timeString) {
-          // เติมเลขศูนย์ด้านหน้าให้ครบ 4 หลัก
-    $timeString = str_pad($timeString, 4, "0", STR_PAD_LEFT);
+    function convertTimeFormat($timeString)
+    {
+        // เติมเลขศูนย์ด้านหน้าให้ครบ 4 หลัก
+        $timeString = str_pad($timeString, 4, "0", STR_PAD_LEFT);
 
-    return Carbon::createFromFormat('Hi', $timeString)->format('H:i');
+        return Carbon::createFromFormat('Hi', $timeString)->format('H:i');
     }
 }
