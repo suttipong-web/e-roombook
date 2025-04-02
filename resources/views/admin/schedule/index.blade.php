@@ -92,7 +92,7 @@
                     <tbody>
                         @if (count($getBookingList) > 0)
                                         @foreach ($getBookingList as $rows)
-                                                        <tr class="text-center <?php        if ($rows->is_duplicate) {
+                                                        <tr class="text-center <?php        if ( ($rows->is_duplicate) || ($rows->is_error_room)) {
                                                 echo 'bg-danger text-white';
                                             } ?>">
                                                             <td class="text-center">
@@ -205,7 +205,7 @@
                     </button>
                 </div>
                 <div class="modal-body p-4 bg-light">
-                    <form action="#" id="edit_form" enctype="multipart/form-data" class="row g-3  m-auto allform">
+                    <form action="/admin/updateSchedule" id="edit_form" enctype="multipart/form-data" class="row g-3  m-auto allform" method="post">
                         @csrf
                         <input type="hidden" id="adminAccount" name="adminAccount"
                             value="{{ Session::get('cmuitaccount') }}">

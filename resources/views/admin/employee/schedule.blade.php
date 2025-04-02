@@ -95,7 +95,7 @@
                     <tbody>
                         @if (count($getBookingList) > 0)
                             @foreach ($getBookingList as $rows)
-                                <tr class="text-center <?php if ($rows->is_duplicate) {
+                                <tr class="text-center <?php   if ( ($rows->is_duplicate) || ($rows->is_error_room))  {
                                     echo 'bg-danger text-white ';
                                 } ?>">
                                     <td class="text-center">

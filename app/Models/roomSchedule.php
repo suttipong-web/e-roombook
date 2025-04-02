@@ -34,6 +34,8 @@ class roomSchedule extends Model
         'is_public',
         'is_public_date',
         'is_group_session',
-        'is_error'
+        'is_error',
+        'is_error_room',
+        'is_error_detail'
     ];
 }

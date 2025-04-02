@@ -48,6 +48,7 @@ class ScheduleDepController extends Controller
             ->where('room_schedules.straff_account', $Byuser)
             ->where('room_schedules.is_group_session', $sesid)
             ->where('room_schedules.is_public', 0)
+            ->where('is_error_room', 0)
             ->get();
 
         foreach ($BookingList as $rows) {
@@ -577,7 +578,6 @@ class ScheduleDepController extends Controller
         $Byuser = $request->session()->get('cmuitaccount');
         $strerror = [];
         $setDataBooking = [];
-
         $sessionId = $request->token;
         ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูบ ////////////////////////
         $sql = "
@@ -590,6 +590,7 @@ class ScheduleDepController extends Controller
                         room_schedules
                         INNER JOIN rooms ON room_schedules.roomID = rooms.id
                         WHERE                        
+                        (room_schedules.is_error_room =0)  AND 
                         (room_schedules.is_duplicate =0)  AND 
                         (room_schedules.is_public =0)  AND 
                         (room_schedules.admin_confirm= 0)  AND 
@@ -845,8 +846,10 @@ class ScheduleDepController extends Controller
         $class = new HelperService();
         // วันที่ ที่กำหนดจาก Admin 
         $latestDateSchedule = $class->getfinalBookingDate();
-
+        $is_duplicate=0;
         $result = "";
+        $is_error ="";
+        $errorRoom =0;
         //ตรวจสอบรหัส ID ที่จะแก้ไขก่อน 
 
         // $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
@@ -854,6 +857,12 @@ class ScheduleDepController extends Controller
         $p_schedule_starttime = (isset($request->booking_time_start)) ? $request->booking_time_start : "00:00:00";
         $p_schedule_endtime = (isset($request->booking_time_finish)) ? $request->booking_time_finish : "00:00:00";
         $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
+
+        $errorRoom = Rooms::find($request->roomID) ? 0 : 1;        
+
+        if( $errorRoom) {
+            $is_error ="ห้องไม่ถูกต้อง" ;
+        }
 
         $setData = [
             'courseNO' => $request->courseNO,
@@ -871,10 +880,10 @@ class ScheduleDepController extends Controller
             'schedule_enddate' => $latestDateSchedule->end_date,
             'schedule_repeatday' => $p_schedule_repeatday,
             'courseofyear' => $request->courseofyear,
-            'terms' => $request->terms,
-            'is_duplicate' => 0,
+            'terms' => $request->terms,           
             'is_public' => 0,
-            'is_error' => ''
+            'is_error' => $is_error,
+            'is_error_room'=> $errorRoom
         ];
 
         $result = roomSchedule::find($request->id);
@@ -960,9 +969,7 @@ class ScheduleDepController extends Controller
     public function listimport(Request $request)
     {
 
-
         $sesionId = request()->session()->getId();
-
         //ข้อมูลห้อง ทั้งหมด join
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
@@ -982,6 +989,7 @@ class ScheduleDepController extends Controller
         $sql = " SELECT 
         COUNT(courseNO) as countCourse,
         sum(is_duplicate) as countError,
+        sum(is_error_room) as countErrorRoom,
         sum(is_public) as countPublic,
         room_schedules.*,department.dep_title,rooms.roomFullName           
         FROM room_schedules
@@ -991,6 +999,7 @@ class ScheduleDepController extends Controller
         WHERE room_schedules.straff_account = '{$Byuser}'
         GROUP BY room_schedules.is_group_session        
         ";
+
         $getBookingList = DB::select(DB::raw($sql));
 
         /*$getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')

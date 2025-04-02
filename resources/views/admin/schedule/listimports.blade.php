@@ -93,9 +93,9 @@
                                     <td class="text-center">{{ $rows->countPublic }}</td>
                                     <td class="text-center">
                                         @if ($rows->countError == 0)
-                                            {{ $rows->countCourse - $rows->countPublic }}
+                                            {{ ($rows->countError + $rows->countErrorRoom) - $rows->countPublic }}
                                         @else
-                                            {{ $rows->countError }}
+                                            {{ $rows->countError + $rows->countErrorRoom}}
                                         @endif
                                     </td>
                                     <td>

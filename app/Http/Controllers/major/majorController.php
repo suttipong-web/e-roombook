@@ -51,6 +51,7 @@ class majorController extends Controller
         $sql = " SELECT 
         COUNT(courseNO) as countCourse,
         sum(is_duplicate) as countError,
+        sum(is_error_room) as countErrorRoom,
         sum(is_public) as countPublic,
         room_schedules.*,department.dep_title,rooms.roomFullName           
         FROM room_schedules
@@ -104,9 +105,8 @@ class majorController extends Controller
             ->where('room_schedules.straff_account', $Byuser)
             ->where('room_schedules.is_group_session', $sesid)
             ->where('room_schedules.is_public', 0)
+            ->where('is_error_room', 0)
             ->get();
-
-
 
         foreach ($BookingList as $rows) {
 
@@ -198,6 +198,7 @@ class majorController extends Controller
                     }
                 }
             }
+
             if (!$error) {
                 //เวลาซ้ำ    
                 $result = DB::table('room_schedules')

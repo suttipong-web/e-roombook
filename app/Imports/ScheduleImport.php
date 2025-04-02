@@ -31,6 +31,7 @@ class ScheduleImport implements ToModel, WithHeadingRow
            $end_time ="";
             $roomId =0;
             $is_duplicate = 0;
+            $is_error = 0;
             $iserror = "";
             // ห่า User  Upload 
             $cmuitaccount = Session::get('cmuitaccount');            
@@ -44,7 +45,7 @@ class ScheduleImport implements ToModel, WithHeadingRow
               if($getRoomID) {
                 $roomId = $getRoomID[0]->roomID;
               }else {
-                $is_duplicate = 1;
+                $is_error= 1;
                 $iserror ="ห้องไม่ถูกต้อง";
               }
             }
@@ -76,9 +77,10 @@ class ScheduleImport implements ToModel, WithHeadingRow
                     'straff_account' => $cmuitaccount,
                     'roomID'=>$roomId,
                     'is_import_excel'=>1,
-                    'is_duplicate'=> $is_duplicate,
+                    'is_duplicate'=>0,
                     'is_group_session'=>$sessionId,
-                    'is_error'=> $iserror
+                    'is_error'=> $iserror,
+                    'is_error_room'=> $is_error
             ]);
         }
     }
