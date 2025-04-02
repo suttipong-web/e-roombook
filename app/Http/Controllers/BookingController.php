@@ -232,7 +232,7 @@ class BookingController extends Controller
       
         $search_date = $class->convertDateSqlInsert($request->search_date);
     
-            //ข้อมูลห้อง Select option
+            //ข้อมูลห้อง Select option 
             $roomDataSlc = Rooms::orderby('id', 'asc')
                 ->select('id', 'roomFullName')
                  ->where('is_open', '1')
