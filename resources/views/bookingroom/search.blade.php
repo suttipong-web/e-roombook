@@ -146,7 +146,7 @@
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
                                     <!-- เปิดให้จองแค่ห้องประชุม -->
-                                    @if  ((strtotime($dateUrl) <= strtotime('2025-04-01')) || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th') || ( Session::get('cmuitaccount')=='winai.k@cmu.ac.th'))     
+                                    @if  ((strtotime($dateUrl) <= strtotime('2025-04-06')) || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th') || ( Session::get('cmuitaccount')=='winai.k@cmu.ac.th'))     
                                         @if ($roomTypeId == 1  || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th'))
                                             @if (!empty(Session::get('cmuitaccount')))
                                                 <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
