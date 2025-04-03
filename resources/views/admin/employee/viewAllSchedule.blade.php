@@ -7,7 +7,7 @@
 @section('body')
     <!-- Page Heading -->
     <input type="hidden" id="adminAccount" name="adminAccount" value="{{ Session::get('cmuitaccount') }}">
-   
+
     <div class="card">
         <h5 class="card-header"> ระบบจัดการตารางเรียน </h5>
         <div class="card-body">
@@ -16,15 +16,24 @@
             <ul>
                 <li>เจ้าหน้าที่หน่วยงานสามารถจัดการตารางการใช้ห้อง โดยจะแบ่งช่วงเวลาในการลงข้อมูลตามลําดับ</li>
 
-                <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel โดยกรอกข้อมูลตามรูปแบบไฟล์ที่กำหนดไว้เท่านั้น 
+                <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel
+                    โดยกรอกข้อมูลตามรูปแบบไฟล์ที่กำหนดไว้เท่านั้น
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download ที่นี่ << </a>
                 </li>
-                <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว 
+                <li> ไฟล์ "ชื่อห้อง" และรูปแบบ "วัน"
+                    <a href="/storage/download/RoomNo+Date.xlsx" target="_blank"> >> Download ที่นี่ << </a>
+                </li>
+                <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง
+                        หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว
                     </span> </li>
-                <li>เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะต้องทำการลบข้อมูลรายการนั้น แล้วทำรายการใหม่ </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาวิศวกรรมพื้นฐาน สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาภาคพิเศษ สามารถลงข้อมูลได้เป็นอันดับที่ 2 (ก่อนเปิดเทอม 3 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 2 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะต้องทำการลบข้อมูลรายการนั้น
+                    แล้วทำรายการใหม่ </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาวิศวกรรมพื้นฐาน สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาภาคพิเศษ สามารถลงข้อมูลได้เป็นอันดับที่ 2 (ก่อนเปิดเทอม 3 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 2 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
 
             </ul>
             <a href="/major/schedules/" class="btn btn-info  " tabindex="-1" role="button" aria-disabled="true">
@@ -46,7 +55,7 @@
             </div>
         </div>
     </div>
-    
+
 @endsection
 @section('corescript')
     <script>
@@ -59,30 +68,30 @@
                 method: 'get',
                 data: {
                     uts: $uts,
-                    getroomId: $roomId,                                      
+                    getroomId: $roomId,
                     _token: '{{ csrf_token() }}',
                 },
-                success: function(response) {
+                success: function (response) {
                     $(".showtable").html(response);
                 }
             });
         }
-        $(document).on('click', '.btnUTS', function(e) {
+        $(document).on('click', '.btnUTS', function (e) {
             var $uts = $(this).attr('valuts');
             fetchAll($uts);
         });
 
-        $(document).on('click', '.sc-detail-std', function(e) {
-                var detail = $(this).attr('detail');
-                var titles = $(this).attr('htitle');
-                Swal.fire({
-                    title: "<strong>" + titles + "</strong>",
-                    icon: "info",
-                    html: detail,
-                    showCloseButton: true,
-                    focusConfirm: false
-                });
+        $(document).on('click', '.sc-detail-std', function (e) {
+            var detail = $(this).attr('detail');
+            var titles = $(this).attr('htitle');
+            Swal.fire({
+                title: "<strong>" + titles + "</strong>",
+                icon: "info",
+                html: detail,
+                showCloseButton: true,
+                focusConfirm: false
             });
+        });
 
     </script>
 

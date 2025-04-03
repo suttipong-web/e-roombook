@@ -38,6 +38,10 @@
                     โดยกรอกข้อมูลตามรูปแบบไฟล์ที่กำหนดไว้เท่านั้น
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download ที่นี่ << </a>
                 </li>
+                <li> ไฟล์ "ชื่อห้อง" และรูปแบบ "วัน"
+                    <a href="/storage/download/RoomNo+Date.xlsx" target="_blank"> >> Download ที่นี่ << </a>
+                </li>
+           
                 <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง
                         หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว
                     </span> </li>
