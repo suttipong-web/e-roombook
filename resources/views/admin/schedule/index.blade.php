@@ -34,15 +34,21 @@
             <ul>
                 <li>เจ้าหน้าที่หน่วยงานสามารถจัดการตารางการใช้ห้อง โดยจะแบ่งช่วงเวลาในการลงข้อมูลตามลําดับ</li>
 
-                <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel โดยกรอกข้อมูลตามรูปแบบไฟล์ที่กำหนดไว้เท่านั้น 
+                <li> สามารถนำเข้าข้อมูลได้โดยการเพิ่มข้อมูลทีละรายการ หรือสามารถ Import File Excel
+                    โดยกรอกข้อมูลตามรูปแบบไฟล์ที่กำหนดไว้เท่านั้น
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download ที่นี่ << </a>
                 </li>
-                <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว 
+                <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง
+                        หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว
                     </span> </li>
-                <li>เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะต้องทำการลบข้อมูลรายการนั้น แล้วทำรายการใหม่ </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาวิศวกรรมพื้นฐาน สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาภาคพิเศษ สามารถลงข้อมูลได้เป็นอันดับที่ 2 (ก่อนเปิดเทอม 3 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
-                <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 2 อาทิตย์ หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เมื่อทำการกดยืนยันการทำรายการแล้ว จะไม่สามารถทำการแก้ไขข้อมูลได้ จะต้องทำการลบข้อมูลรายการนั้น
+                    แล้วทำรายการใหม่ </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาวิศวกรรมพื้นฐาน สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 4 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาภาคพิเศษ สามารถลงข้อมูลได้เป็นอันดับที่ 2 (ก่อนเปิดเทอม 3 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
+                <li>เจ้าหน้าที่ - กระบวนวิชาจากภาควิชาต่างๆ สามารถลงข้อมูลได้เป็นอันดับที่ 1 (ก่อนเปิดเทอม 2 อาทิตย์
+                    หรือจะแจ้งให้ทราบอีกทีภายหลัง) </li>
 
             </ul>
             </p>
@@ -63,27 +69,27 @@
             </div>
             <hr />
 
- 
-                <div class="align-self-end" style="text-align: right">
-                    <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal" ><i
-                            class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
-                    <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel"> 
+
+            <div class="align-self-end" style="text-align: right">
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#addModal"><i
+                        class="bi-plus-circle me-2"></i> เพิ่มข้อมูล</button>
+                <button class="btn btn-secondary ml-3" data-toggle="modal" data-target="#addModalExwcel">
                     <i class="bi bi-file-earmark-arrow-down"></i> Import File </button>
-                </div>
-       
+            </div>
+
             <div class="col-md-12   mt-3 displayTable">
 
                 <table class="table table-hover  table-sm " id="tableListbooking-">
                     <thead class="table">
                         <tr style="text-align: center;">
-                            <th  class="text-center">วันที่แก้ไขล่าสุด</th>
+                            <th class="text-center">วันที่แก้ไขล่าสุด</th>
                             <th class="text-center">รหัสวิชา</th>
                             <th class="text-center">ชื่อวิชา</th>
                             <th class="text-center">Section</th>
                             <th class="text-center">จำนวนคน</th>
                             <th class="text-center">วัน</th>
-                            <th  align="center" class="text-center">เวลา</th>
-                            <th class="text-center"ห้องเรียน</th>
+                            <th align="center" class="text-center">เวลา</th>
+                            <th class="text-center" ห้องเรียน</th>
                             <th class="text-center">ผู้สอน</th>
                             <th class="text-center">หมายเหตุ</th>
                             <th width="100" class="text-center">จัดการ</th>
@@ -92,7 +98,7 @@
                     <tbody>
                         @if (count($getBookingList) > 0)
                                         @foreach ($getBookingList as $rows)
-                                                        <tr class="text-center <?php        if ( ($rows->is_duplicate) || ($rows->is_error_room)) {
+                                                        <tr class="text-center <?php        if (($rows->is_duplicate) || ($rows->is_error_room)) {
                                                 echo 'bg-danger text-white';
                                             } ?>">
                                                             <td class="text-center">
@@ -112,7 +118,18 @@
                                                             </td>
                                                             <td class="text-center">{{ $rows->roomFullName }}</td>
                                                             <td class="text-center">{{ $rows->lecturer }}</td>
-                                                            <td class="text-center">{{ $rows->is_error }}</td>
+                                                            <td class="text-center">
+                                                                @if(($rows->is_duplicate) || ($rows->is_error_room))
+                                                                    <button class="btn btn-warning show-error btn-sm"
+                                                                        data-detail="{{$rows->is_error_detail}}">{{ $rows->is_error }} <svg
+                                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                                            class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
+                                                                        </svg>
+                                                                    </button>
+                                                                @endif
+                                                            </td>
                                                             <td class="bg-light text-dark text-center">
                                                                 @if ($rows->is_public)
                                                                                     @php
@@ -135,13 +152,13 @@
                         @endif
                     </tbody>
                 </table>
-                
-                    <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
-                        <button type="button" id="btn-confirm-submit" sesionId='{{ $sesionId }}' class="btn btn-primary ">
-                            ยืนยันเพิ่มตารางเรียน
-                        </button>
-                    </div>
-                
+
+                <div class="col-md-12 modal-footer   mt-2 p-3 text-end">
+                    <button type="button" id="btn-confirm-submit" sesionId='{{ $sesionId }}' class="btn btn-primary ">
+                        ยืนยันเพิ่มตารางเรียน
+                    </button>
+                </div>
+
 
             </div>
         </div>
@@ -163,9 +180,9 @@
                     <h3> อัพโหลดข้อมูลการใช้ห้อง </h3>
                     <div>
                         <ul>
-                            <li>เจ้าหน้าที่หน่วยงานสามารถนำเข้าไฟล์ตารางการใช้ห้องได้ </li>                        
+                            <li>เจ้าหน้าที่หน่วยงานสามารถนำเข้าไฟล์ตารางการใช้ห้องได้ </li>
                             <li>ไฟล์ที่นำเข้าต้องเป็นไฟล์ EXCEL ที่อยู่ในรูปแบบที่ระบบกำหนดไว้เท่านั้น
-                                <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download  ที่นี่<< </a>
+                                <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download ที่นี่<< </a>
 
                             </li>
                         </ul>
@@ -205,7 +222,8 @@
                     </button>
                 </div>
                 <div class="modal-body p-4 bg-light">
-                    <form action="/admin/updateSchedule" id="edit_form" enctype="multipart/form-data" class="row g-3  m-auto allform" method="post">
+                    <form action="/admin/updateSchedule" id="edit_form" enctype="multipart/form-data"
+                        class="row g-3  m-auto allform" method="post">
                         @csrf
                         <input type="hidden" id="adminAccount" name="adminAccount"
                             value="{{ Session::get('cmuitaccount') }}">
@@ -329,8 +347,7 @@
                         @csrf
                         <input type="hidden" id="adminAccount" name="adminAccount"
                             value="{{ Session::get('cmuitaccount') }}">
-                            <input type="hidden"  name="sesionId"
-                            value="{{$sesionId}}">
+                        <input type="hidden" name="sesionId" value="{{$sesionId}}">
                         <div class="col-md-4 my-1">
                             <label for="roomID" class="form-label"> เลือกห้อง *</label>
                             <select id="roomID" class="form-control" name="roomID" required>
@@ -645,7 +662,7 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                   confirmButtonText: 'ยืนยันลบ',
+                    confirmButtonText: 'ยืนยันลบ',
                     cancelButtonText: 'ยกเลิก'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -688,6 +705,17 @@
                 $("#fromRef").submit();
             }
 
+            $(".show-error").on("click", function () {
+                let errorDetail = $(this).data("detail"); // ดึงค่าจาก data-detail
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'พบข้อผิดพลาด',
+                    html: errorDetail || 'ไม่มีรายละเอียดเพิ่มเติม', // ถ้าไม่มีข้อความให้แสดง default
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'ปิด'
+                });
+            });
 
         });
     </script>

@@ -50,7 +50,7 @@ class ScheduleDepController extends Controller
             ->where('room_schedules.is_public', 0)
             ->where('is_error_room', 0)
             ->get();
-        $strError = "";
+
         foreach ($BookingList as $rows) {
 
             $is_duplicate = 0;
@@ -87,22 +87,27 @@ class ScheduleDepController extends Controller
             ]);
 
             $isDuplicate = false;
-
+            $strError = "";
+            $timesBlock = "";
+            $startTime_ = "";
+            $finishTime_ = "";
             foreach ($qresult as $row_chk) {
                 if (
                     ($bkstart < $row_chk->booking_time_finish && $bkfinish > $row_chk->booking_time_start)
                 ) {
-                    $strError  = "รายการวิชาที่ตรงกัน  ".$row_chk->courseNO." (".$row_chk->courseSec.")". $row_chk->booking_time_finish ."-". $row_chk->booking_time_start;
+                    $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
+                    $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
+                    $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
+                    $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->courseSec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                     $isDuplicate = true;
                     break;
-
                 }
             }
 
             DB::table('room_schedules')->where('id', $rows->id)->update([
                 'is_duplicate' => $isDuplicate ? 1 : 0,
                 'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : '',
-                'is_error_detail'=>$strError 
+                'is_error_detail' => $strError
             ]);
 
 
@@ -229,7 +234,7 @@ class ScheduleDepController extends Controller
     {
         $class = new HelperService();
         $output = " ไม่พบรายการลงเวลาของท่าน ";
-        
+
         $Byuser = "";
         // ส่วนของตัวแปรสำหรับกำหนด
         $dayTH = array("จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์");
@@ -237,7 +242,7 @@ class ScheduleDepController extends Controller
         $monthTH_brev = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
 
         $roomId = 0;
-        if (!empty($request->cmuaccount)){
+        if (!empty($request->cmuaccount)) {
             $Byuser = $request->cmuaccount;
         }
         if ($request->getroomId) {
@@ -849,10 +854,11 @@ class ScheduleDepController extends Controller
         $class = new HelperService();
         // วันที่ ที่กำหนดจาก Admin 
         $latestDateSchedule = $class->getfinalBookingDate();
-        $is_duplicate=0;
+        $is_duplicate = 0;
         $result = "";
-        $is_error ="";
-        $errorRoom =0;
+        $is_error = "";
+        $errorRoom = 0;
+        $is_error_detail = "";
         //ตรวจสอบรหัส ID ที่จะแก้ไขก่อน 
 
         // $p_schedule_startdate = (isset($request->schedule_startdate)) ? $request->schedule_startdate : "0000-00-00";
@@ -861,10 +867,11 @@ class ScheduleDepController extends Controller
         $p_schedule_endtime = (isset($request->booking_time_finish)) ? $request->booking_time_finish : "00:00:00";
         $p_schedule_repeatday = (isset($request->schedule_repeatday)) ? $request->schedule_repeatday : "";
 
-        $errorRoom = Rooms::find($request->roomID) ? 0 : 1;        
+        $errorRoom = Rooms::find($request->roomID) ? 0 : 1;
 
-        if( $errorRoom) {
-            $is_error ="ห้องไม่ถูกต้อง" ;
+        if ($errorRoom) {
+            $is_error = "ชื่อห้องไม่ถูกต้อง";
+            $is_error_detail = "ชื่อห้องที่ท่านระบุไม่ถูกต้อง โปรดทำการตรวจสอบข้อมูลของท่านอีกครั้ง";
         }
 
         $setData = [
@@ -883,10 +890,11 @@ class ScheduleDepController extends Controller
             'schedule_enddate' => $latestDateSchedule->end_date,
             'schedule_repeatday' => $p_schedule_repeatday,
             'courseofyear' => $request->courseofyear,
-            'terms' => $request->terms,           
+            'terms' => $request->terms,
             'is_public' => 0,
             'is_error' => $is_error,
-            'is_error_room'=> $errorRoom
+            'is_error_room' => $errorRoom,
+            'is_error_detail' => $is_error_detail
         ];
 
         $result = roomSchedule::find($request->id);

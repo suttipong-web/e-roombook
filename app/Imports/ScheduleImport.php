@@ -20,6 +20,7 @@ class ScheduleImport implements ToModel, WithHeadingRow
     {
         $start_date = "";
         $end_date = "";
+        $is_error_detail ="";
         $class = new HelperService();
         if (!empty($row['courseno'])) {
 
@@ -46,7 +47,8 @@ class ScheduleImport implements ToModel, WithHeadingRow
                 $roomId = $getRoomID[0]->roomID;
               }else {
                 $is_error= 1;
-                $iserror ="ห้องไม่ถูกต้อง";
+                $iserror ="ชื่อห้องไม่ถูกต้อง";
+                $is_error_detail = "ชื่อห้องที่ท่านระบุไม่ถูกต้อง โปรดทำการตรวจสอบข้อมูลของท่านอีกครั้ง";
               }
             }
 
@@ -80,7 +82,8 @@ class ScheduleImport implements ToModel, WithHeadingRow
                     'is_duplicate'=>0,
                     'is_group_session'=>$sessionId,
                     'is_error'=> $iserror,
-                    'is_error_room'=> $is_error
+                    'is_error_room'=> $is_error,
+                    'is_error_detail'=> $is_error_detail
             ]);
         }
     }

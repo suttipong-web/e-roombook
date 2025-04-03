@@ -144,11 +144,18 @@ class majorController extends Controller
             ]);
 
             $isDuplicate = false;
-
+            $strError = "";
+            $timesBlock = "";
+            $startTime_ = "";
+            $finishTime_ = "";
             foreach ($qresult as $row_chk) {
                 if (
                     ($bkstart < $row_chk->booking_time_finish && $bkfinish > $row_chk->booking_time_start)
                 ) {
+                    $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
+                    $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
+                    $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
+                    $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->courseSec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                     $isDuplicate = true;
                     break;
                 }
@@ -156,7 +163,8 @@ class majorController extends Controller
 
             DB::table('room_schedules')->where('id', $rows->id)->update([
                 'is_duplicate' => $isDuplicate ? 1 : 0,
-                'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : ''
+                'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : '' ,
+                'is_error_detail'=>$strError 
             ]);
 
 
