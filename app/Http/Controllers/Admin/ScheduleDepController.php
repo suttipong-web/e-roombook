@@ -50,7 +50,7 @@ class ScheduleDepController extends Controller
             ->where('room_schedules.is_public', 0)
             ->where('is_error_room', 0)
             ->get();
-
+        $strError = "";
         foreach ($BookingList as $rows) {
 
             $is_duplicate = 0;
@@ -92,14 +92,17 @@ class ScheduleDepController extends Controller
                 if (
                     ($bkstart < $row_chk->booking_time_finish && $bkfinish > $row_chk->booking_time_start)
                 ) {
+                    $strError  = "รายการวิชาที่ตรงกัน  ".$row_chk->courseNO." (".$row_chk->courseSec.")". $row_chk->booking_time_finish ."-". $row_chk->booking_time_start;
                     $isDuplicate = true;
                     break;
+
                 }
             }
 
             DB::table('room_schedules')->where('id', $rows->id)->update([
                 'is_duplicate' => $isDuplicate ? 1 : 0,
-                'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : ''
+                'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : '',
+                'is_error_detail'=>$strError 
             ]);
 
 
