@@ -13,6 +13,7 @@
                  <li><a href="/#about">เกี่ยวกับเรา</a></li>
                  <li><a href="/#services">บริการของเรา</a></li>
                  <li><a href="/#faq-2">คำถามที่พบบ่อย</a></li>
+                 <li><a href="/manual">คู่มือการใช้งาน</a></li>
                  <li><a href="#footer">ติดต่อเรา</a></li>
              </ul>
              <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

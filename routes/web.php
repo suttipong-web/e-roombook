@@ -38,6 +38,10 @@ Route::get('/exp', function () {
     return view('ex');
 });
 
+Route::get('/manual', function () {
+    return view('manual');
+});
+
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
@@ -63,6 +67,7 @@ Route::prefix('/profile')->group(
 );
 
 Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profile.logout');
+
 
 
 // Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
