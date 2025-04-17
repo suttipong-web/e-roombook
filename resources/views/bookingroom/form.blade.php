@@ -393,8 +393,8 @@
                 format: 'dd/mm/yyyy', // กำหนดรูปแบบวันที่
                 language: 'th', // ใช้ภาษาไทย
                 startDate: new Date(), 
-                endDate: new Date('2025-04-02') 
-                //endDate: new Date(finalBookingDate) // เดือนใน JavaScript เริ่มจาก 0 -> พฤษภาคมคือ 4
+                //endDate: new Date('2025-04-02') 
+                endDate: new Date(finalBookingDate) // เดือนใน JavaScript เริ่มจาก 0 -> พฤษภาคมคือ 4
 
             });
 

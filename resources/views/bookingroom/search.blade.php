@@ -146,7 +146,7 @@
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
                                     <!-- เปิดให้จองแค่ห้องประชุม -->
-                                    @if  ((strtotime($dateUrl) <= strtotime('2025-04-02')) || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th') || ( Session::get('cmuitaccount')=='winai.k@cmu.ac.th'))     
+                                     
                                         @if ($roomTypeId == 1  || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th'))
                                             @if (!empty(Session::get('cmuitaccount')))
                                                 <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
@@ -158,14 +158,25 @@
                                                     data-bs-toggle="modal" data-bs-target="#caseBooker">
                                                     <i class="bi bi-vector-pen"></i> ทำรายการจอง
                                                 </button>
+                                            @endif                                       
+                                        @else     
+                                          @if  ((strtotime($dateUrl) <= strtotime($getService->getendDateBooking())) || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th') || ( Session::get('cmuitaccount')=='winai.k@cmu.ac.th'))   
+                                                    @if (!empty(Session::get('cmuitaccount')))
+                                                        <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
+                                                            class="btn btn-primary   ml-3  btn-Booking"><i
+                                                                class="bi bi-vector-pen"></i>
+                                                            ทำรายการจอง</a>
+                                                    @else
+                                                        <button type="button" class="btn btn-primary   ml-3  btn-Booking"
+                                                            data-bs-toggle="modal" data-bs-target="#caseBooker">
+                                                            <i class="bi bi-vector-pen"></i> ทำรายการจอง
+                                                        </button>
+                                                    @endif   
+
+                                            @else
+                                                    <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้ </div>
                                             @endif
-
-
-                                        @endif
-                                     @else
-                                                <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้ </div>
-                                    @endif
-
+                                        @endif                 
 
                                 </div>
                             </div>
