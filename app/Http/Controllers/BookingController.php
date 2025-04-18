@@ -159,7 +159,7 @@ class BookingController extends Controller
     {
          date_default_timezone_set('Asia/Bangkok'); 
         $class = new HelperService();
-
+        $roomTypeId = 1;
         $search_date = $class->convertDateSqlInsert($request->search_date);
         
         $dateBooking = $request->search_date;
@@ -171,17 +171,22 @@ class BookingController extends Controller
 
         $roomID = (!empty($request->slcRoom)) ? $request->slcRoom : 1;
 
+
+        $roomID = $request->slcRoom;
+        $roomData = Rooms::find($roomID);
+
+        if($roomData){
+            $roomTypeId = $roomData->roomTypeId;
+        }
+
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
             ->select('id', 'roomFullName')
-            ->where('roomTypeId', '1')
+            ->where('roomTypeId', $roomTypeId )
             ->where('is_open', '1')
             ->get();
 
         //  $dateBooking = $request->search_date;
-
-        $roomID = $request->slcRoom;
-        $roomData = Rooms::find($roomID);
 
         if (!empty($roomData->thumbnail)) {
             $img = '/storage/images/' . $roomData->thumbnail;
