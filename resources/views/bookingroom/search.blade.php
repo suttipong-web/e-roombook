@@ -147,7 +147,7 @@
                                 <div class="col-md-6 justif y-content-end text-center">
                                     <!-- เปิดให้จองแค่ห้องประชุม -->
                                      
-                                        @if ($roomTypeId == 1  || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th'))
+                                        @if ($roomTypeId == 1  || ( Session::get('isAdmin')=='1')|| ( Session::get('user_type')=='admin'))
                                             @if (!empty(Session::get('cmuitaccount')))
                                                 <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                                     class="btn btn-primary   ml-3  btn-Booking"><i
@@ -160,7 +160,7 @@
                                                 </button>
                                             @endif                                       
                                         @else     
-                                          <!-- @if  ((strtotime($dateUrl) <= strtotime($getService->getendDateBooking())) || ( Session::get('cmuitaccount')=='kiattichai.b@cmu.ac.th')|| ( Session::get('cmuitaccount')=='suttipong.r@cmu.ac.th') || ( Session::get('cmuitaccount')=='winai.k@cmu.ac.th'))   
+                                           @if  ((strtotime($dateUrl) <= strtotime($getService->getendDateBooking())) || ( Session::get('isAdmin')=='1')|| ( Session::get('user_type')=='admin'))   
                                                     @if (!empty(Session::get('cmuitaccount')))
                                                         <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                                             class="btn btn-primary   ml-3  btn-Booking"><i
@@ -175,8 +175,8 @@
 
                                             @else
                                                     <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้ </div>
-                                            @endif -->
-                                            <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้ </div>
+                                            @endif 
+                                           
                                         @endif                 
 
                                 </div>
