@@ -49,7 +49,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
 integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -64,8 +63,7 @@ integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="ano
                 method: 'get',
                 data: {
                     uts: $uts,
-                    getroomId: $roomId,     
-                    cmuaccount: $('#adminAccount').val(),         
+                    getroomId: $roomId,                   
                     _token: '{{ csrf_token() }}',
                 },
                 success: function(response) {

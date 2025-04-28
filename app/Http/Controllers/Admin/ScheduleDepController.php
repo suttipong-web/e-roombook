@@ -194,6 +194,15 @@ class ScheduleDepController extends Controller
             "TitlePage" => "แสดงรายการตารางเรียนของท่าน"
         ]);
     }
+    public function viewAll(Request $request)
+    {
+        return view('admin.schedule.viewAllSchedule')->with([
+            "TitlePage" => "แสดงรายการตารางเรียนทั้งหมด"
+        ]);
+    }
+
+
+
     public function delete(Request $request)
     {
         $id = $request->id;

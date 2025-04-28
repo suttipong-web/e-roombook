@@ -206,7 +206,7 @@
 
             function fetchAll($uts) {
                 var val = "";
-                console.log('Start');
+                //console.log('Start');
                 $.ajax({
                     url: "/fetchScheduleByRoom",
                     method: 'get',

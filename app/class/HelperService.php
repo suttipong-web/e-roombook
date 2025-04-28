@@ -346,6 +346,17 @@ class HelperService
         return $latestTerm->end_date;
     }
 
+    
+    public function opentypeRoomBooking()
+    {
+        $latestTerm = DB::table('terms')
+            ->orderBy('id', 'desc') // เรียงลำดับจากมากไปน้อย
+            ->first(); // ดึงแค่ 1 รายการ
+
+        return $latestTerm->chkroomtype;
+    }
+
+
     // start_date / end_date
     public function getfinalBookingDate()
     {

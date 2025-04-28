@@ -288,6 +288,8 @@
                                                 <option value='{{ $item->id }}'
                                                     @if ($searchRoomID == $item->id) selected @endif>
                                                     {{ $item->roomFullName }}
+                                                    
+                                                    ({{$item->placeName }})
                                                 </option>
                                             @endforeach
                                         </select>

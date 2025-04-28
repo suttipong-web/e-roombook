@@ -146,7 +146,8 @@
                             <div class="row mt-3 text-center justify-content-center">
                                 <div class="col-md-6 justif y-content-end text-center">
                                     <!-- เปิดให้จองแค่ห้องประชุม -->
-                                     
+                                  
+                                   
                                         @if ($roomTypeId == 1  || ( Session::get('isAdmin')=='1')|| ( Session::get('user_type')=='admin'))
                                             @if (!empty(Session::get('cmuitaccount')))
                                                 <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
@@ -160,7 +161,16 @@
                                                 </button>
                                             @endif                                       
                                         @else     
-                                           @if  ((strtotime($dateUrl) <= strtotime($getService->getendDateBooking())) || ( Session::get('isAdmin')=='1')|| ( Session::get('user_type')=='admin'))   
+
+                                           @if  (
+                                            ((strtotime($dateUrl) <= strtotime($getService->getendDateBooking()))
+                                           && 
+                                           (in_array((string)$roomTypeId, explode(',', $getService->opentypeRoomBooking())))
+                                           ) 
+                                           || ( Session::get('isAdmin')=='1')
+                                           || ( Session::get('user_type')=='admin')
+                                           
+                                           )                                              
                                                     @if (!empty(Session::get('cmuitaccount')))
                                                         <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
                                                             class="btn btn-primary   ml-3  btn-Booking"><i
@@ -174,7 +184,7 @@
                                                     @endif   
 
                                             @else
-                                                    <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้ </div>
+                                                    <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้  </div>
                                             @endif 
                                            
                                         @endif                 
@@ -202,6 +212,7 @@
                                                 <option value='{{ $item->id }}'
                                                     @if ($searchRoomID == $item->id) selected @endif>
                                                     {{ $item->roomFullName }}
+                                                    ({{$item->placeName }})
                                                 </option>
                                             @endforeach
                                         </select>
@@ -231,12 +242,16 @@
                                         <path
                                             d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
                                     </svg> ตรวจสอบการใช้ห้องรายวัน
+                                    (รวมทุกห้อง)
                                 </h5>
                                 <hr />
 
+                               
+                                @if ($roomTypeId == 1)                             
+                               
                                 <form id="serachBookingDate" method="post" action="/booking/Searchlist">
                                     @csrf
-
+                               
                                     <div class="mb-3">
                                         <label for="search_date" class="form-label"> วันที่ </label>
                                         <input class="form-control dateScl" type="text" data-provide="datepicker"
@@ -251,6 +266,24 @@
                                     </div>
                                     <hr />
                                 </form>
+                                @else
+
+                                        
+                                <form id="serachBookingDate" method="post" action="/booking/Searchlisttable">
+                                    @csrf
+                                    <input type="hidden" name="roomTypeId"  value="{{$roomTypeId}}">
+                                    <input type="hidden" name="roomTypeId"  value="{{$roomTypeId}}">
+                                  
+                                    <div class="text-center d-flex justify-content-center">
+                                        <button type="submit" id="search_booking"
+                                            class="btn btn-light btnCheckBooking text-white">
+                                            คลิกตรวจสอบ
+                                        </button>
+                                    </div>
+                                    <hr />
+                                </form>
+
+                                @endif
                             </div>
                         </div>
                     </div>

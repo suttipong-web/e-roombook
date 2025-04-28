@@ -18,12 +18,13 @@ class BookingController extends Controller
     {
         date_default_timezone_set('Asia/Bangkok');   
         $class = new HelperService();
-
+        $roomTypeId = 1;
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
-            ->select('id', 'roomFullName')
+        ->join('place', 'place.id', '=', 'rooms.placeId')
+        ->select('rooms.*', 'place.placeName')
              ->where('is_open', '1')
-              ->where('roomTypeId', '1')
+              ->where('roomTypeId',  $roomTypeId)
             ->get();
         
        //ประเภทห้อง 
@@ -37,7 +38,7 @@ class BookingController extends Controller
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
             ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
-            ->where('roomTypeId', '1')
+            ->where('roomTypeId',  $roomTypeId)
             ->where('is_open', '1')
             ->get();
 
@@ -55,7 +56,8 @@ class BookingController extends Controller
                 'getListRoom' => $getListRoom,
                 'getroomType' => $roomType,
                 'pageTitle'=>$pageTitle,
-                'searchDates'=> $searchDates
+                'searchDates'=> $searchDates ,
+                'roomTypeId'=> $roomTypeId
                 ]
 
         );
@@ -75,13 +77,18 @@ class BookingController extends Controller
         $pageTitle ="";
         $searchDates  = date('d/m/Y');
         $typeId =  (!empty($request->typeId))? $request->typeId:'1';
-          //ข้อมูลห้อง Select option
+
+
+
+        //ข้อมูลห้อง Select option
+
         $roomDataSlc = Rooms::orderby('id', 'asc')
-              ->select('id', 'roomFullName')
+        ->join('place', 'place.id', '=', 'rooms.placeId')
+        ->select('rooms.*', 'place.placeName')
+             ->where('is_open', '1')
               ->where('roomTypeId',  $typeId)
-               ->where('is_open', '1')
-              ->get();
-        
+            ->get();
+
         $getListRoom = Rooms::join('room_type', 'room_type.id', '=', 'rooms.roomTypeId')
             ->join('place', 'place.id', '=', 'rooms.placeId')
             ->select('rooms.*', 'place.placeName', 'room_type.roomtypeName')
@@ -106,7 +113,8 @@ class BookingController extends Controller
                 'getListRoom' => $getListRoom,
                 'getroomType' => $roomType,
                 'pageTitle'=> $pageTitle,
-                 'searchDates'=> $searchDates
+                'searchDates'=> $searchDates,
+                'roomTypeId'=> $typeId                
             ]
         );      
     }
@@ -181,11 +189,11 @@ class BookingController extends Controller
 
         //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
-            ->select('id', 'roomFullName')
-            ->where('roomTypeId', $roomTypeId )
-            ->where('is_open', '1')
+        ->join('place', 'place.id', '=', 'rooms.placeId')
+        ->select('rooms.*', 'place.placeName')
+             ->where('is_open', '1')
+              ->where('roomTypeId',  $roomTypeId)
             ->get();
-
         //  $dateBooking = $request->search_date;
 
         if (!empty($roomData->thumbnail)) {
@@ -235,14 +243,18 @@ class BookingController extends Controller
         date_default_timezone_set('Asia/Bangkok'); 
         $class = new HelperService();
       
+        $roomTypeId = ($request->roomTypeId) ? $request->roomTypeId : '1';  
+
+
         $search_date = $class->convertDateSqlInsert($request->search_date);
     
-            //ข้อมูลห้อง Select option 
-            $roomDataSlc = Rooms::orderby('id', 'asc')
-                ->select('id', 'roomFullName')
-                 ->where('is_open', '1')
-                  ->where('roomTypeId', '1')
-                ->get();
+         //ข้อมูลห้อง Select option
+        $roomDataSlc = Rooms::orderby('id', 'asc')
+        ->join('place', 'place.id', '=', 'rooms.placeId')
+        ->select('rooms.*', 'place.placeName')
+             ->where('is_open', '1')
+              ->where('roomTypeId',  $roomTypeId)
+            ->get();
     
     
                 $sql= "SELECT
@@ -258,7 +270,7 @@ class BookingController extends Controller
                      
                         )
                         AND (
-                            rooms.roomTypeId =1
+                            rooms.roomTypeId ='{$roomTypeId}'
                         )
                         AND  
                         booking_status =1
@@ -280,6 +292,45 @@ class BookingController extends Controller
             );
     }
 
+    public function listallSearchTable(Request $request){
+
+        $roomID =0;
+        $getBookingList ="";
+        date_default_timezone_set('Asia/Bangkok'); 
+        $class = new HelperService();
+        $search_date ="Y-m-d";
+        if(!empty($request->search_date)){
+            $search_date = $class->convertDateSqlInsert($request->search_date);
+        }
+         //$dateTitle = $class->convertDateThaiNoTime($search_date,0) ;
+
+        $roomTypeId = $request->roomTypeId;
+    
+        //ข้อมูลห้อง Select option
+        $roomDataSlc = Rooms::orderby('id', 'asc')
+        ->join('place', 'place.id', '=', 'rooms.placeId')
+        ->select('rooms.*', 'place.placeName')
+             ->where('is_open', '1')
+              ->where('roomTypeId',  $roomTypeId)
+            ->get();
+    
+        
+
+
+                return view('/bookingroom/viewAllSchedule')->with(
+                    [
+                        'bookingall' =>$getBookingList,
+                        'dateTitle'=>$search_date,
+                        'roomSlc'=> $roomDataSlc,
+                        'searchDates' => $request->search_date, 
+                        'roomTypeId'=>$roomTypeId
+                        ]
+                );
+
+    }
+
+
+
    public function listall(Request $request){
     $roomID =0;
     date_default_timezone_set('Asia/Bangkok'); 
@@ -287,13 +338,16 @@ class BookingController extends Controller
     $datenow = date('Y-m-d');
     $dateBooking  = date('d/m/Y');
 
-        //ข้อมูลห้อง Select option
-        $roomDataSlc = Rooms::orderby('id', 'asc')
-            ->select('id', 'roomFullName')
-             ->where('is_open', '1')
-              ->where('roomTypeId', '1')
-            ->get();
+       $roomTypeId = ($request->roomTypeId) ? $request->roomTypeId : '1';
 
+     //ข้อมูลห้อง Select option
+     $roomDataSlc = Rooms::orderby('id', 'asc')
+     ->join('place', 'place.id', '=', 'rooms.placeId')
+     ->select('rooms.*', 'place.placeName')
+          ->where('is_open', '1')
+           ->where('roomTypeId',  $roomTypeId)
+         ->get();
+ 
 
             $sql= "SELECT
                     booking_rooms.*,
@@ -360,11 +414,15 @@ class BookingController extends Controller
         $formattedDate = str_replace("-", "/", $tempdateBooking);
         $dateBooking = implode("/", array_reverse(explode("/", $formattedDate)));
 
-        //Select option ข้อมูลห้อง 
+        //ข้อมูลห้อง Select option
         $roomDataSlc = Rooms::orderby('id', 'asc')
-            ->select('id', 'roomFullName')           
-            ->where('roomTypeId',$roomData->roomTypeId)
+        ->join('place', 'place.id', '=', 'rooms.placeId')
+        ->select('rooms.*', 'place.placeName')
+             ->where('is_open', '1')
+              ->where('roomTypeId',  $roomData->roomTypeId)
             ->get();
+    
+
 
         return view('/bookingroom/form')->with(
             [
@@ -426,12 +484,15 @@ class BookingController extends Controller
         $typeId =  (!empty($roomData->roomTypeId))? $request->typeId:'1';
           //ข้อมูลห้อง Select option
 
-        //Select option ข้อมูลห้อง 
-        $roomDataSlc = Rooms::orderby('id', 'asc')
-            ->select('id', 'roomFullName')           
-            ->where('roomTypeId',$roomData->roomTypeId)
-            ->where('is_open', '1')
-            ->get();
+         //ข้อมูลห้อง Select option
+         $roomDataSlc = Rooms::orderby('id', 'asc')
+         ->join('place', 'place.id', '=', 'rooms.placeId')
+         ->select('rooms.*', 'place.placeName')
+              ->where('is_open', '1')
+               ->where('roomTypeId',  $roomData->roomTypeId)
+             ->get();
+     
+ 
 
         return view('/bookingroom/search')->with(
             [

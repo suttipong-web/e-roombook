@@ -18,10 +18,21 @@ class TermController extends Controller
         // 
         $courseGroups = DB::table('course_group')->orderBy('id')->get();
         $listAllTerms = Terms::all();
+
+         //ประเภทห้อง 
+         $roomType = DB::table('room_type')
+         ->select('id', 'roomtypeName')
+         ->where('id', '<>', 1) 
+         ->get();
+
+
         return view('admin.term.index')->with([
             'listAllTerms' => $listAllTerms,
-            'courseGroups' => $courseGroups
+            'courseGroups' => $courseGroups ,
+            'roomType' => $roomType
         ]);
+
+
     }
  
     public function getTermEdit(Request $request)
@@ -61,6 +72,7 @@ class TermController extends Controller
                 'end_date' => 'required|date|after:start_date'
                
             ]);
+            $chkroomtype =  $this->convertArrayToComma($request->chkroomtype);   
             $setData = [
                 'title' => $request->title,
                 'start_date' => $request->start_date,
@@ -70,13 +82,15 @@ class TermController extends Controller
                 'group2_start' => $request->group2_start,
                 'group2_end' => $request->group2_end,
                 'group3_start' => $request->group3_start,
-                'group3_end' => $request->group3_end
+                'group3_end' => $request->group3_end ,
+                'chkroomtype' => $chkroomtype
             ];
 
 
 
             $result = Terms::find($request->id);
 
+          
 
             //$result = Terms::update($setData);
             $chk = $result->update($setData);
@@ -108,6 +122,7 @@ class TermController extends Controller
                 'start_date' => 'required|date',
                 'end_date' => 'required|date|after:start_date'               
             ]);
+            $chkroomtype =  $this->convertArrayToComma($request->chkroomtype);  
             $setData = [
                 'title' => $request->title,
                 'start_date' => $request->start_date,
@@ -117,7 +132,8 @@ class TermController extends Controller
                 'group2_start' => $request->group2_start,
                 'group2_end' => $request->group2_end,
                 'group3_start' => $request->group3_start,
-                'group3_end' => $request->group3_end
+                'group3_end' => $request->group3_end,
+                'chkroomtype' => $chkroomtype
             ];
 
             $insert = Terms::create($setData);
@@ -138,5 +154,16 @@ class TermController extends Controller
                 'error' => 'ERROR'
             ]);
         }
+    }
+    
+    function convertArrayToComma($dataArr)
+    {
+        if (!is_array($dataArr)) {
+            $val='';
+        } else {
+        $val = implode(",", $dataArr);
+       
+        }
+        return $val;
     }
 }

@@ -21,6 +21,7 @@ class Terms extends Model
         'group2_start',
         'group2_end',
         'group3_start',
-        'group3_end'        
+        'group3_end',
+        'chkroomtype'
      ];
 }

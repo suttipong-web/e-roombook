@@ -45,6 +45,7 @@
             <i class="bi bi-hospital"></i>
             <span>การจองห้อง</span></a>
     </li>
+   
     <hr class="sidebar-divider">
 
  
@@ -53,6 +54,11 @@
         <a href="/admin/schedules" class="nav-link {{ $current_route == 'admin.schedule' ? 'active' : '' }}">
             <i class="bi bi-hospital"></i>
             <span>จัดการข้อมูลการใช้ห้อง</span></a>
+    </li>
+    <li class="nav-item active">
+        <a href="/admin/schedules/viewAll" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
+            <i class="bi bi-list-check"></i>
+            <span> แสดงตารางเรียนรวม</span></a>
     </li>
 
     <li class="nav-item">

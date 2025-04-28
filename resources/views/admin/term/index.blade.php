@@ -108,6 +108,18 @@
 
                             </td>
                         </tr>
+                        <tr>
+                            <td>เปิด/ปิด การจองห้องประเภท </td>
+                            <td>
+                                @foreach ( $roomType as $listroomType )
+                                <input type="checkbox" name="chkroomtype[]" id="Edit{{$listroomType->id}}"  class="chkroomtype" value="{{$listroomType->id}}" >
+                                    <label for="{{$listroomType->id}}"  >{{$listroomType->roomtypeName}} &nbsp;&nbsp;</label>
+                                @endforeach                              
+                              <div>หมายเหตุ: หากไม่ถูกเลือก หมายความว่าไม่เปิดให้ประเภทห้องนี้จองได้ </div>
+                            </td>
+                        </tr>
+
+
 
                         <tr>
                             <td colspan="2"> <b> กำหนดช่วงวันจองห้องตามกลุ่มผู้ใช้ </b>
@@ -191,6 +203,18 @@
 
                             </td>
                         </tr>
+
+                        <tr>
+                            <td>เปิด/ปิด การจองห้องประเภท  </td>
+                            <td>
+                                @foreach ( $roomType as $listroomType )
+                                <input type="checkbox" name="chkroomtype[]" id="{{$listroomType->id}}" checked value="{{$listroomType->id}}" >
+                                    <label for="{{$listroomType->id}}"  >{{$listroomType->roomtypeName}} &nbsp;&nbsp;</label>
+                                @endforeach                              
+                              <div>หมายเหตุ: หากไม่ถูกเลือก หมายความว่าไม่เปิดให้ประเภทห้องนี้จองได้ </div>
+                            </td>
+                        </tr>
+
 
                         <tr>
                             <td colspan="2"> <b> ช่วงวันที่ลงตารางสอน </b>
@@ -386,12 +410,30 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                   // console.log(response);
+                  
                     arr = $.parseJSON(response.dataTerm);
+                    console.log(arr);
                     $.each(arr, function(key, value) {
                         $InputID = '#Edit_' + key;
                         $($InputID).val(value);
+                        console.log(key + " : " + value);
+                         if (key == 'chkroomtype') {
+                                $('input[type="checkbox"].chkroomtype').prop(
+                                    'checked', false);
+                                if ($.trim(value) !== "") {
+                                    var selectedValues = value.split(','); // ["1", "2", "3"]
+                                    // ใช้ $.each() เพื่อวนลูปผ่านอาร์เรย์และตั้งค่า checkbox ที่มีค่าในอาร์เรย์นั้น
+                                    $.each(selectedValues, function(index, vals) {
+                                        $('input[name="chkroomtype[]"][value="' +
+                                            vals + '"]').prop('checked',
+                                            true);
+                                    });
+                                }
+
+                         }
+
                     });
+
                     $('#editModal').modal("show");
 
                 }

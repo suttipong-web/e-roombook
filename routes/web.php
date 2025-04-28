@@ -50,6 +50,8 @@ Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('
 
 Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchScheduleByRoom'])->name('fetchScheduleByRoom');
 
+Route::get('/fetchScheduleAll', [ScheduleroomController::class, 'fetchScheduleAll'])->name('fetchScheduleAll');
+
 Route::prefix('/room')->group(
     function () {
         Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
@@ -75,7 +77,8 @@ Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
         Route::get('/listall', [BookingController::class, 'listall'])->name('listall');     
-        Route::post('/Searchlist', [BookingController::class, 'listallSearch'])->name('listallSearch');         
+        Route::post('/Searchlist', [BookingController::class, 'listallSearch'])->name('listallSearch'); 
+        Route::post('/Searchlisttable', [BookingController::class, 'listallSearchTable'])->name('listallSearchTable');                 
         Route::get('/listall/roomId/', [BookingController::class, 'listall'])->name('listallByRoom');
         Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
         Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');
@@ -128,6 +131,7 @@ Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSched
 Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
 Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');
 Route::get('/admin/schedules/view', [ScheduleDepController::class, 'views'])->name('views');
+Route::get('/admin/schedules/viewAll', [ScheduleDepController::class, 'viewAll'])->name('viewAll');
 Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
 Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
 Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');

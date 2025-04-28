@@ -45,7 +45,8 @@
                                         <select name="slcRoom" id="slcRoom" class="form-select ">
                                             @if ($roomSlc)
                                                 @foreach ($roomSlc as $item)
-                                                    <option value='{{ $item->id }}'> {{ $item->roomFullName }}
+                                                    <option value='{{ $item->id }}'> {{ $item->roomFullName }} ({{$item->placeName }})
+                                                       
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -76,9 +77,12 @@
                                         <path
                                             d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
                                     </svg> ตรวจสอบการใช้ห้องรายวัน
+
+                                    (รวมทุกห้อง)
                                 </h5>
                                 <hr />
-                                
+                                @if ($roomTypeId == 1)                             
+                               
                                 <form id="serachBookingDate" method="post" action="/booking/Searchlist">
                                     @csrf
                                
@@ -96,6 +100,24 @@
                                     </div>
                                     <hr />
                                 </form>
+                                @else
+
+                                        
+                                <form id="serachBookingDate" method="post" action="/booking/Searchlisttable">
+                                    @csrf
+                                    <input type="hidden" name="roomTypeId"  value="{{$roomTypeId}}">
+                                  
+                                    <div class="text-center d-flex justify-content-center">
+                                        <button type="submit" id="search_booking"
+                                            class="btn btn-light btnCheckBooking text-white">
+                                            คลิกตรวจสอบ
+                                        </button>
+                                    </div>
+                                    <hr />
+                                </form>
+
+                                @endif
+
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-9">
