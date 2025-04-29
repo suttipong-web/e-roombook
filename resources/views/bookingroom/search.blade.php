@@ -147,7 +147,7 @@
                                 <div class="col-md-6 justif y-content-end text-center">
                                     <!-- เปิดให้จองแค่ห้องประชุม -->
                                   
-                                   
+                                    
                                         @if ($roomTypeId == 1  || ( Session::get('isAdmin')=='1')|| ( Session::get('user_type')=='admin'))
                                             @if (!empty(Session::get('cmuitaccount')))
                                                 <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
@@ -161,32 +161,39 @@
                                                 </button>
                                             @endif                                       
                                         @else     
+                                            <!--- ตรวจสอบว่าอยู่ในช่วงที่เปิดค่าให้จองหรือไหม ? 
+                                                // (in_array((string)$roomTypeId, explode(',', $getService->opentypeRoomBooking())))
+                                                
+                                                --->
+                                         
+                                            @if($getService->isBookingAvailable($searchDates))  
+                                                    @php
+                                                     $StepchkTime = $getService->canBookByDate($searchDates,$getService->getfinalBookingDate());                                                    
+                                                    @endphp                                                
+                                                    @if  ((!$StepchkTime) 
+                                                            || ( Session::get('isAdmin')=='1')
+                                                            || ( Session::get('user_type')=='admin')
+                                                            
+                                                            )                                              
+                                                            @if (!empty(Session::get('cmuitaccount')))
+                                                                <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
+                                                                    class="btn btn-primary   ml-3  btn-Booking"><i
+                                                                        class="bi bi-vector-pen"></i>
+                                                                    ทำรายการจอง</a>
+                                                            @else
+                                                                <button type="button" class="btn btn-primary   ml-3  btn-Booking"
+                                                                    data-bs-toggle="modal" data-bs-target="#caseBooker">
+                                                                    <i class="bi bi-vector-pen"></i> ทำรายการจอง
+                                                                </button>
+                                                            @endif   
 
-                                           @if  (
-                                            ((strtotime($dateUrl) <= strtotime($getService->getendDateBooking()))
-                                           && 
-                                           (in_array((string)$roomTypeId, explode(',', $getService->opentypeRoomBooking())))
-                                           ) 
-                                           || ( Session::get('isAdmin')=='1')
-                                           || ( Session::get('user_type')=='admin')
-                                           
-                                           )                                              
-                                                    @if (!empty(Session::get('cmuitaccount')))
-                                                        <a href="/booking/form/{{ $searchRoomID }}/eng/{{ $RoomtitleSearch }}/{{ $dateUrl }}"
-                                                            class="btn btn-primary   ml-3  btn-Booking"><i
-                                                                class="bi bi-vector-pen"></i>
-                                                            ทำรายการจอง</a>
                                                     @else
-                                                        <button type="button" class="btn btn-primary   ml-3  btn-Booking"
-                                                            data-bs-toggle="modal" data-bs-target="#caseBooker">
-                                                            <i class="bi bi-vector-pen"></i> ทำรายการจอง
-                                                        </button>
-                                                    @endif   
-
+                                                            <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้  </div>
+                                                    @endif                                          
                                             @else
-                                                    <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้  </div>
-                                            @endif 
-                                           
+                                                 <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้  </div>
+                                            @endif  
+
                                         @endif                 
 
                                 </div>

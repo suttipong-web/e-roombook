@@ -46,6 +46,11 @@
             <span>การจองห้อง</span></a>
     </li>
    
+    <li class="nav-item active">
+        <a href="/admin/schedules/config" class="nav-link {{ $current_route == 'admin.schedule.config' ? 'active' : '' }}">
+            <i class="bi bi-list-check"></i>
+            <span> กำหนดค่าการจองห้อง </span></a>
+    </li>
     <hr class="sidebar-divider">
 
  
@@ -56,7 +61,7 @@
             <span>จัดการข้อมูลการใช้ห้อง</span></a>
     </li>
     <li class="nav-item active">
-        <a href="/admin/schedules/viewAll" class="nav-link {{ $current_route == 'report.index' ? 'active' : '' }}">
+        <a href="/admin/schedules/viewAll" class="nav-link {{ $current_route == 'admin.schedule.viewAll' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>
             <span> แสดงตารางเรียนรวม</span></a>
     </li>

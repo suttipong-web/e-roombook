@@ -369,7 +369,7 @@ class BookingController extends Controller
                     booking_rooms.roomID ASC,
                     booking_rooms.booking_time_start ASC
                     ";
-         $getBookingList = DB::select(DB::raw($sql));
+        $getBookingList = DB::select(DB::raw($sql));
         $dateTitle = $class->convertDateThaiNoTime($datenow,0) ;
 
      return view('/room/listAll')->with(

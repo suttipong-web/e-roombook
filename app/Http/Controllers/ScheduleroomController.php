@@ -239,7 +239,7 @@ class ScheduleroomController extends Controller
                                                 ' . $dayTH[$i_day] . '<br>' . $dayInSchedule_show . '
                                         </div>
                                     </td>
-                                    <td class="p-0 position-relative" >
+                                    <td class="p-0 position-relative bg-light" >
                                         <div class="position-absolute">
                                             <div class="d-flex align-content-stretch" style="min-height: 60px;">';
             $inRowDay = "";
@@ -364,7 +364,7 @@ class ScheduleroomController extends Controller
                     $uts = $request->uts; // ถ้ามีส่งค่าเปลี่ยนสัปดาห์มา
                 }
                 // ส่วนของการกำหนดวัน สามารถนำไปประยุกต์กรณีทำตารางเวลาแบบ เลื่อนดูแต่ละสัปดาห์ได้
-                $now_day =$searchDate; // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
+                $now_day =date("Y-m-d");; // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
                 if (isset($uts) && $uts != "" && $uts != 0) { // เมื่อมีการเปลี่ยนสัปดาห์
                     $now_day = date("Y-m-d", trim($uts)); // เปลี่ยนวันที่ แปลงจากค่าวันจันทร์ที่ส่งมา
                     $now_day = date("Y-m-d", strtotime($now_day . " monday this week"));
@@ -483,7 +483,7 @@ class ScheduleroomController extends Controller
                     $linkPrint = '/room/print/' . $tableRoom->roomID . '/' . (int) $uts . '/' . $tableRoom->roomTitle;
                     $num_dayShow_in_schedule = $num_dayShow - 1;
 
-                    $output .= '
+                    $output = '
 
                         <div class="wrap_schedule_control mt-5">
                             <div class="d-flex">
@@ -508,21 +508,21 @@ class ScheduleroomController extends Controller
                         <br>
                         <div class="wrap_schedule">
                         <div class="table-responsive ">
-                            <table class="table bg-light table-borderless ">
+                            <table class="table table-borderless bg-light ">
                                 <thead class="thead-light">
                                     <tr class="time_schedule" >
-                                        <th class="p-0 border-right " style="max-width:' . $hour_block_width . 'px;">
+                                        <th class="p-0 " style="width:' . $hour_block_width . 'px;">
                                             <div class="day-head-label text-right text-end" >
                                                 เวลา
                                             </div>
                                             <div class="diagonal-cross"></div>
-                                            <div class="time-head-label text-left">
+                                            <div class="time-head-label text-left text-start">
                                                 วัน
                                             </div>
                                         </th> ';
                     $timeHeardbar = "";
                     for ($i_time = 0; $i_time < $sc_numCol - 1; $i_time++) {
-                        $timeHeardbar .= '<th class="px-0 text-nowrap th-time  border-right"  style="max-width:' . $hour_block_width . 'px;">
+                        $timeHeardbar .= '<th class="px-0 text-nowrap th-time  "  style="width:' . $hour_block_width . 'px;">
                                         <div class="time_schedule_text text-center" style="width:' . $hour_block_width . 'px;">
                                             ' . $sc_timeStep[$i_time] . ' - ' . $sc_timeStep[$i_time + 1] . '
                                         </div>   
@@ -544,19 +544,19 @@ class ScheduleroomController extends Controller
                                                 ' . $dayTH[$i_day] . '<br>' . $dayInSchedule_show . '
                                         </div>
                                     </td>
-                                    <td class="p-0 position-relative" >
-                                        <div class="position-absolute">
-                                            <div class="d-flex align-content-stretch" style="min-height: 60px;">';
+                                    <td class="p-0 position-relative bg-light" >
+                                        <div class="position-absolute ">
+                                            <div class="d-flex align-content-stretch bg-light" style="min-height: 60px;">';
                         $inRowDay = "";
                         for ($i = 1; $i < $sc_numCol; $i++) {
                             $inRowDay .= '
-                                            <div class="bg-light- text-center  style="width:' . $hour_block_width . 'px;margin-right: 0px;">
+                                            <div class="bg-light text-center  style="width:' . $hour_block_width . 'px;margin-right: 0px;">
                                                 &nbsp;
                                             </div>';
                         }
                         $outputBody .= '' . $inRowDay . '</div>
                                 </div>
-                                <div class="position-absolute" style="z-index: 100;">';
+                                <div class="position-absolute " style="z-index: 100;">';
                         //  $strLop = "";
                         if (isset($data_day_schedule[$dayKeyChk]) && count($data_day_schedule[$dayKeyChk]) > 0) {
                             foreach ($data_day_schedule[$dayKeyChk] as $row_day) {
@@ -585,9 +585,18 @@ class ScheduleroomController extends Controller
                                 if ($roomTypeId > 1) {
                                     $sub2 = "<br/>" . $row_day['Instructor'];
                                 }
+                                
+                    $ownertitle = ($roomTypeId == 1) ? 'ผู้ขอใช้' : 'ผู้สอน';
+                    if ($roomTypeId == 1) {
+                        $classColorBG = "sc-detail";
+                        $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
+                    } else {
+                        $classColorBG = "sc-detail-std";
+                        $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
+                    }
 
                                 $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . '<br/> ' . $row_day["depName"] . ' </div>';
-                                $outputBody .= '<div class="position-absolute text-center  sc-detail-std" 
+                                $outputBody .= '<div class="position-absolute text-center  clickscDetail ' . $classColorBG . '" 
                                 detail="' . $details . '"
                                 htitle ="' . $row_day['title'] . '"
                                style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">

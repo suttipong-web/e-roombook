@@ -131,6 +131,9 @@ Route::post('/admin/insertSchedule', [ScheduleDepController::class, 'insertSched
 Route::get('/admin/editSchedule', [ScheduleDepController::class, 'editSchedule'])->name('editSchedule');
 Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])->name('updatedSchedule');
 Route::get('/admin/schedules/view', [ScheduleDepController::class, 'views'])->name('views');
+Route::get('/admin/schedules/config', [ScheduleDepController::class, 'configroom'])->name('configroom');
+Route::post('/admin/schedules/configroom/edit', [ScheduleDepController::class, 'updateConfigRoom'])->name('updateConfigRoom');
+
 Route::get('/admin/schedules/viewAll', [ScheduleDepController::class, 'viewAll'])->name('viewAll');
 Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
 Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Imports\ScheduleImport;
 use App\Models\booking_rooms;
+use App\Models\jop_booking;
 use App\Models\Listday;
 use App\Models\Rooms;
 use App\Models\roomSchedule;
@@ -1036,4 +1037,64 @@ class ScheduleDepController extends Controller
             'sesionId' => $sesionId
         ]);
     }
+
+    public function  configroom(Request $request){
+
+   
+        $dataConfig = DB::table('jop_booking')->first();
+
+        //ประเภทห้อง 
+             $roomType = DB::table('room_type')
+             ->select('id', 'roomtypeName')         
+             ->get();
+        
+        return view('admin.schedule.confixroom')->with([
+            'roomType' => $roomType,
+            'dataConfig' => $dataConfig
+        ]);
+    }
+
+    public function updateConfigRoom(Request $request)
+    {
+        $class = new HelperService();
+        $chkroomtype =  $class->convertArrayToComma($request->chkroom);   
+
+        $setData = [
+            'chkroom' => $chkroomtype,
+            'datestart' => $request->datestart,
+            'endstart' => $request->endstart
+        ];
+
+        $result = jop_booking::find($request->id);
+        if($result ) {
+          $updated =   $result->update($setData);       
+        }
+      /* if ($updated) {
+            return response()->json([
+                'status' => 200,
+                'msg' => 'บันทึกข้อมูลเรียบร้อย'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'msg' => 'ไม่สามารถบันทึกข้อมูลได้'
+            ]);
+        } */
+
+        //ประเภทห้อง 
+        $roomType = DB::table('room_type')->select('id','roomtypeName')->get();
+        $dataConfig = DB::table('jop_booking')->first();    
+           
+        return view('admin.schedule.confixroom')->with([
+            'roomType' => $roomType,
+            'dataConfig' => $dataConfig,
+            'updated'=> true
+        ]);
+        
+    }
+
+
+
+
+
 }

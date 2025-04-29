@@ -340,13 +340,11 @@ class HelperService
 
     public function getendDateBooking()
     {
-        $latestTerm = DB::table('terms')
-            ->orderBy('id', 'desc') // เรียงลำดับจากมากไปน้อย
-            ->first(); // ดึงแค่ 1 รายการ
-        return $latestTerm->end_date;
+         $dataConfig = DB::table('jop_booking')->first();
+        return $dataConfig->endstart;
     }
 
-    
+
     public function opentypeRoomBooking()
     {
         $latestTerm = DB::table('terms')
@@ -365,6 +363,58 @@ class HelperService
             ->first(); // ดึงแค่ 1 รายการ
         return $latestTerm;
     }
+
+
+    // start_date / end_date
+    public function isBookingAvailable($searchDate = null)
+    {
+        $dataConfig = DB::table('jop_booking')->first();
+
+        if (!$dataConfig) {
+            return false; // หากไม่มีข้อมูลในตาราง
+        }
+        $startDate = Carbon::parse($dataConfig->datestart)->toDateString();
+        $endDate = Carbon::parse($dataConfig->endstart)->toDateString();
+    
+        // ถ้ามีวันที่ค้นหาเข้ามา
+        if ($searchDate) {
+            try {
+                // แปลงรูปแบบ d/m/Y → Y-m-d
+                $search = Carbon::createFromFormat('d/m/Y', $searchDate)->toDateString();
+            } catch (\Exception $e) {
+                return false; // รูปแบบวันที่ผิด
+            }
+        } else {
+            // ถ้าไม่มี searchDate ให้ใช้วันที่ปัจจุบัน
+            $search = Carbon::now()->toDateString();
+        }
+    
+        // เปรียบเทียบแบบไม่เอาเวลา
+        return $search >= $startDate && $search <= $endDate;
+    }
+
+
+    // / เช็คสิทธิช่วงเวลาการจองการจองห้อง
+    public function canBookByDate($searchDates, $dateConfig)
+    {
+        $start_date = $dateConfig->start_date; // ควรเป็นรูปแบบ Y-m-d
+        $end_date = $dateConfig->end_date;
+    
+        try {
+   // แปลง searchDate จาก d/m/Y → Y-m-d
+   $searchDate = Carbon::createFromFormat('d/m/Y', $searchDates)->toDateString();
+
+   // แปลงช่วงวันเริ่มต้น/สิ้นสุด (ตัดเวลาออก)
+   $startDate = Carbon::parse($start_date)->toDateString();
+   $endDate = Carbon::parse($end_date)->toDateString();
+
+   // เปรียบเทียบแบบตัดเวลา
+   return $searchDate >= $startDate && $searchDate <= $endDate;
+        } catch (\Exception $e) {
+            return false; // ถ้ารูปแบบไม่ถูกต้อง
+        }
+    }
+
 
     function getListNumOfDay($days)
     {
@@ -452,5 +502,17 @@ class HelperService
         $timeString = str_pad($timeString, 4, "0", STR_PAD_LEFT);
 
         return Carbon::createFromFormat('Hi', $timeString)->format('H:i');
+    }
+
+
+    function convertArrayToComma($dataArr)
+    {
+        if (!is_array($dataArr)) {
+            $val = '';
+        } else {
+            $val = implode(",", $dataArr);
+
+        }
+        return $val;
     }
 }

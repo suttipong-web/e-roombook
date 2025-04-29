@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/vendor/magic/magic.min.css">
     <link rel="stylesheet" href="/css/vendor/animate/animate.min.css">
     <link rel="stylesheet" href="/css/jquery.desoslide.css">
-    <link rel="stylesheet" href="/css/style.css">
+    
     <link rel="stylesheet" href="/css/schedule.css">
     @includeIf('partials.headtag')
 </head>
@@ -60,7 +60,7 @@
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
                                             aria-labelledby="home-tab" tabindex="0">
-                                            <div class="showtable">
+                                            <div class="showtables " >
 
                                                
 
@@ -110,7 +110,7 @@
                     _token: '{{ csrf_token() }}',
                 },
                 success: function (response) {
-                    $(".showtable").html(response);
+                    $(".showtables").html(response);
                 }
             });
         }

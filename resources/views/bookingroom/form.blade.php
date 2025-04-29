@@ -65,16 +65,16 @@
                                             <label for="schedule_startdate" class="form-label">
                                                 <span style="color: blueviolet;font-weight: 700"> วันที่เริ่ม *</span>
                                             </label>
-                                          <!--  <input class="form-control 
+                                            <!--  <input class="form-control 
                                              @if($roomtype > 1) dateMaxScl @else datescl @endif                                           
                                             " type="text" data-provide="datepicker"
                                                 data-date-language="th" value="{{ $searchDates }}"
                                                 id="schedule_startdate" name="schedule_startdate" required> -->
-                                                <input class="form-control 
+                                            <input class="form-control 
                                              dateMaxScl                                    
-                                            " type="text" data-provide="datepicker"
-                                                data-date-language="th" value="{{ $searchDates }}"
-                                                id="schedule_startdate" name="schedule_startdate" required readonly>
+                                            " type="text" data-provide="datepicker" data-date-language="th"
+                                                value="{{ $searchDates }}" id="schedule_startdate"
+                                                name="schedule_startdate" required readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="schedule_enddate" class="form-label"> <span
@@ -87,12 +87,9 @@
                                                 
                                                                                               
                                                 > -->
-                                                <input class="form-control dateMaxScl" type="text" data-provide="datepicker"
-                                                data-date-language="th" value="{{ $searchDates }}"
-                                                id="schedule_enddate" name="schedule_enddate" required
-                                                
-                                                readonly                                       
-                                                >
+                                            <input class="form-control dateMaxScl" type="text" data-provide="datepicker"
+                                                data-date-language="th" value="{{ $searchDates }}" id="schedule_enddate"
+                                                name="schedule_enddate" required readonly>
                                         </div>
 
                                         <div class="col-md-6 ">
@@ -156,8 +153,8 @@
                                         <div class="col-md-4">
                                             <label for="booking_ofPeople" class="form-label">จำนวนผู้ใช้ *</label>
                                             <input type="number" class="form-control" id="booking_ofPeople"
-                                                name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน "
-                                                max="999" maxlength="3" required />
+                                                name="booking_ofPeople" placeholder=" จำนวนที่เข้าใช้งาน " max="999"
+                                                maxlength="3" required />
                                         </div>
 
                                         <div class="col-md-4">
@@ -177,7 +174,9 @@
                                         <div class="col-12">
                                             <label for="description" class="form-label">
                                                 ระบุรายละเอียดเพิ่มเติม </label>
-                                            <textarea class="form-control" placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description" name="description"></textarea>
+                                            <textarea class="form-control"
+                                                placeholder="ระบุรายละเอียดการขอใช้เพิ่มเติม " id="description"
+                                                name="description"></textarea>
                                         </div>
                                         @if ($usertype == 'eng')
                                             <div class="text-primary">
@@ -228,13 +227,13 @@
                                                     name="taxpayer_receipt" />
                                             </div>
                                             <!--
-                                                <div class="col-md-6">
-                                                    <label for="email_receipt" class="form-label">
-                                                        Email ในการรับใบเสร็จและใบเสนอราคา
-                                                    </label>
-                                                    <input type="text" class="form-control" id="email_receipt"
-                                                        name="email_receipt" />
-                                                </div>-->
+                                                            <div class="col-md-6">
+                                                                <label for="email_receipt" class="form-label">
+                                                                    Email ในการรับใบเสร็จและใบเสนอราคา
+                                                                </label>
+                                                                <input type="text" class="form-control" id="email_receipt"
+                                                                    name="email_receipt" />
+                                                            </div>-->
                                             <div class="col-md-12 mb-3">
                                                 <label for="address_receipt" class="form-label">
                                                     ที่อยู่
@@ -255,13 +254,43 @@
                                             โปรดตรวจสอบข้อมูลของท่านให้เรียบร้อย ก่อนทำการยืนยันรายการจองห้อง
                                         </div>
 
+                                        <!--- ตรวจสอบว่าอยู่ในช่วงที่เปิดค่าให้จองหรือไหม ? --->
+                                        @php
+                                        $StepchkTime = $getService->canBookByDate($searchDates,$getService->getfinalBookingDate());   
+                                        @endphp
+
+                                        @if ($roomtype > 1)
+
+                                        @if($getService->isBookingAvailable($searchDates))
+                                            @if ((!$StepchkTime)                                       
+
+                                            || ( Session::get('isAdmin')=='1')
+                                            || ( Session::get('user_type')=='admin')
+
+                                            )
+
                                         <div class="text-center  justify-content-center  mb-3  ">
                                             <button type="submit" class="btn btn-danger btn-Booking btn-lg ">
                                                 &nbsp;&nbsp;&nbsp; <i class="bi bi-vector-pen"></i> ทำรายการจอง
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                             </button>
                                         </div>
-
+                                        @else
+                                        <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้
+                                        </div>
+                                        @endif
+                                        @else
+                                        <div class="text-center text-bg-danger"> ไม่สามารถทำรายการจองในวันที่นี้ได้
+                                        </div>
+                                        @endif
+                                        @else
+                                        <div class="text-center  justify-content-center  mb-3  ">
+                                            <button type="submit" class="btn btn-danger btn-Booking btn-lg ">
+                                                &nbsp;&nbsp;&nbsp; <i class="bi bi-vector-pen"></i> ทำรายการจอง
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                            </button>
+                                        </div>
+                                        @endif
                                     </form>
                                 </div>
                                 <br />
@@ -278,19 +307,18 @@
                                 <hr />
                                 <form id="serachBookingDate" method="post" action="/booking/search">
                                     @csrf
-                                    <input type="hidden" name="booking_type" id="booking_type"
-                                        value="{{ $usertype }}">
+                                    <input type="hidden" name="booking_type" id="booking_type" value="{{ $usertype }}">
                                     <div class="mb-3">
                                         <label for="formGroupExampleInput" class="form-label"> เลือกห้อง </label>
                                         <select name="slcRoom" id="slcRoom" class="form-select " required>
                                             <option value="0">-- เลือก --</option>
                                             @foreach ($roomSlc as $item)
-                                                <option value='{{ $item->id }}'
-                                                    @if ($searchRoomID == $item->id) selected @endif>
-                                                    {{ $item->roomFullName }}
-                                                    
-                                                    ({{$item->placeName }})
-                                                </option>
+                                            <option value='{{ $item->id }}' @if ($searchRoomID==$item->id) selected
+                                                @endif>
+                                                {{ $item->roomFullName }}
+
+                                                ({{$item->placeName }})
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -298,10 +326,7 @@
                                         <label for="search_date" class="form-label"> วันที่ </label>
                                         <input class="form-control dateScl" type="text" data-provide="datepicker"
                                             data-date-language="th" value="{{ $searchDates }}" id="search_date"
-                                            name="search_date" required
-                                            
-                                            
-                                            >
+                                            name="search_date" required>
                                     </div>
                                     <div class="text-center d-flex justify-content-center">
                                         <button type="submit" id="search_booking "
@@ -313,6 +338,7 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -324,11 +350,11 @@
     @includeIf('partials.footer')
     @includeIf('partials.incJS')
     <script>
-        $(function() {
+        $(function () {
 
             //Add Data เพิ่มการจอง ใหม่
             // add new  ajax request
-            $("#add_booking_form").submit(function(e) {
+            $("#add_booking_form").submit(function (e) {
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#add_btn").text('Adding...');
@@ -340,7 +366,7 @@
                     contentType: false,
                     processData: false,
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
@@ -391,10 +417,10 @@
             //หาค่าวันล่าสุดที่สามารถเข้าจองได้ 
             let finalBookingDate = "{{ $getService->getendDateBooking() }}";
             $('.dateMaxScl').datepicker({
-              //  27/02/2025
+                //  27/02/2025
                 format: 'dd/mm/yyyy', // กำหนดรูปแบบวันที่
                 language: 'th', // ใช้ภาษาไทย
-                startDate: new Date(), 
+                startDate: new Date(),
                 //endDate: new Date('2025-04-02') 
                 endDate: new Date(finalBookingDate) // เดือนใน JavaScript เริ่มจาก 0 -> พฤษภาคมคือ 4
 
