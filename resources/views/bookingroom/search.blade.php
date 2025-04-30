@@ -170,7 +170,7 @@
                                                     @php
                                                      $StepchkTime = $getService->canBookByDate($searchDates,$getService->getfinalBookingDate());                                                    
                                                     @endphp      
-                                                StepchkTime =>    {{ $StepchkTime }}                                          
+                                                                        
                                                     @if  ((!$StepchkTime) 
                                                             || ( Session::get('isAdmin')=='1')
                                                             || ( Session::get('user_type')=='admin')
