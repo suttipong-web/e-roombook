@@ -30,7 +30,7 @@
                     <a href="/storage/download/schedule.xlsx" target="_blank"> >> Download ที่นี่ << </a>
                 </li>
                 <li> ไฟล์ "ชื่อห้อง" และรูปแบบ "วัน"
-                    <a href="/storage/download/RoomNo+Date.xlsx" target="_blank"> >> Download ที่นี่ << </a>
+                    <a href="https://docs.google.com/spreadsheets/d/11bcRZtluhOF1tEp9LFUM0CedwuMm-tJW/edit?usp=sharing&ouid=117190688247688266889&rtpof=true&sd=true" target="_blank"> >> Download ที่นี่ << </a>
                 </li>
                 <li><span class="bg-danger text-white ">** หากรายการไหนขึ้นไฮไลท์สีแดง หมายถึงรายการนั้นไม่สามารถบันทึกข้อมูลได้ เนื่องจากมีรายการใช้ห้อง/วันเวลา นั้นอยู่แล้ว 
                     </span> </li>

@@ -260,23 +260,30 @@ class ScheduleDepController extends Controller
         }
 
         // หาห้องเรียนที่ User คนนี้ได้ทำการจองไว้ 
-        $sql = "
+
+       
+        if (!empty($Byuser)) {
+            $sql = "
             SELECT room_schedules.roomID , 
             rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId ,room_schedules.courseofyear,room_schedules.terms
             FROM room_schedules
             INNER JOIN rooms ON room_schedules.roomID = rooms.id  
             WHERE  (room_schedules.is_public =1) 
             ";
-        if (!empty($Byuser)) {
             $sql .= "
             AND (room_schedules.straff_account = '{$Byuser}')   
+            ";
+        } else{
+            $sql = "
+            SELECT rooms.id as roomID ,rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId FROM rooms          
+            WHERE  (rooms.is_open =1) 
             ";
         }
 
 
-        $sql .= " GROUP BY room_schedules.roomID   ORDER BY  room_schedules.roomID  ASC ";
+        $sql .= " GROUP BY  rooms.id  ORDER BY   rooms.id ASC ";
         $getRoom = DB::select(DB::raw($sql));
-        //echo $sql."<br/>";
+        echo $sql."<br/>";
         //$getRoom = roomSchedule::Join('rooms', 'rooms.id', '=', 'room_schedules.roomID')
         // ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
         //  ->where('room_schedules.is_confirm', 0)
