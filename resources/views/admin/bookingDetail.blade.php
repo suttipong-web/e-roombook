@@ -199,149 +199,9 @@
                         </div>
                     </div>
                     <hr />
-                    @if (($getStatus == 'approved' || $getStatus == 'Newinbox') && $detailBooking[0]->booking_subject == 0)
-                        <div id="accordion">
-                            <h3> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h3>
-                            <div>
-                                <form id="payment_form" class="row g-3 m-auto  setFn" method="post"
-                                    action="/admin/payment/setdata" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="col-12">
-                                        <h5 class="setFn">กำหนดราคาสำหรับการขอใช้สถานที่</h5>
-                                        <hr>
-                                        <div class="form-row mb-3">
-                                            <div class="form-group col-md-12 mb-3">
-                                                <label for="totalAmount"> ระบุราคา *</label>
-                                                <input type="number" style="padding: 7px;" placeholder="ระบุราคา"
-                                                    id="totalAmount" name="totalAmount"
-                                                    value="{{ $detailBooking[0]->totalAmount }}" required
-                                                    @if ($detailBooking[0]->payment_status) @disabled(true) @endif></input>
-                                            </div>
-                                        </div>
-
-                                        <h5 class="mt-3 setFn">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน </h5>
-                                        <hr>
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="customerName">ชื่อที่แสดงในใบเสร็จรับเงิน *</label>
-                                                <input type="text" class="form-control" id="customerName"
-                                                    name="customerName" value="{{ $detailBooking[0]->customerName }}"
-                                                    required>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="customerTaxid">เลขประจำตัวประชาชน/เลขผู้เสียภาษี *</label>
-                                                <input type="text" class="form-control" id="customerTaxid"
-                                                    name="customerTaxid" value="{{ $detailBooking[0]->customerTaxid }}"
-                                                    required>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="customerEmail">Email *</label>
-                                                <input type="email" class="form-control" id="customerEmail"
-                                                    name="customerEmail" value="{{ $detailBooking[0]->customerEmail }}"
-                                                    required>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="customerAddress">ที่อยู่ *</label>
-                                                <input type="text" class="form-control" id="customerAddress"
-                                                    name="customerAddress"
-                                                    value="{{ $detailBooking[0]->customerAddress }}" required>
-                                            </div>
-                                        </div>
-
-                                        <br />
-                                        <div class="form-row">
-                                            <div class="text-primary form-group col-md-12">
-                                                <h5 class="setFn">แนบเอกสารเพิ่มเติม/ใบเสนอราคา (ไฟล์ pdf เท่านั้น) *
-                                                </h5>
-                                                <hr>
-                                            </div>
-                                            <div class="form-group col-md-12">
-                                                <label for="formFile" class="form-label">แนบไฟล์ </label>
-                                                <input class="form-control" type="file" id="formFile1"
-                                                    accept="application/pdf" name="addfile1">
-                                                <br />
-                                                <input class="form-control" type="file" id="formFile2"
-                                                    accept="application/pdf" name="addfile2">
-
-                                            </div>
-                                        </div>
-                                        <hr />
-
-
-                                        <div class="col-12 mt-3 text-center justify-content-center">
-                                            <input type="hidden" id="hinden_bookingID" name="hinden_bookingID"
-                                                value="{{ $detailBooking[0]->id }}">
-                                            <input type="hidden" id="hinden_paymentid" name="hinden_paymentid"
-                                                value="{{ $detailBooking[0]->paymentid }}">
-                                            @if ($getStatus != 'approved')
-                                                <button type="submit" name="submitPayment" id="submitPayment"
-                                                    class=" btn btn-primary">
-                                                    <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระเงิน
-
-                                                </button>
-                                            @endif
-
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                            <h3>ตั้งค่า กำหนดผู้ปฏิบัติงาน</h3>
-                            <div>
-                                <div class="col-12">
-                                    <div class="justify-content-center  w-75  setFn">
-                                        <div class=" d-flex ">
-                                            <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
-                                            <div class="ml-3 mr-3" style="width: 380px;">
-                                                <select class=" slcCombobox" name="assignCmu" id="assignEmp">
-                                                    <option value="">--- เลือก --</option>
-                                                    @foreach ($sclEmployee as $rows)
-                                                        @if (!empty($rows->firstname_TH))
-                                                            @php
-                                                                $fullname =
-                                                                    $rows->firstname_TH . ' ' . $rows->lastname_TH;
-                                                            @endphp
-                                                        @endif
-                                                        <option value="{{ $rows->cmuitaccount }}">{{ $fullname }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="text-start ml- " align="left">
-                                                <button type="button" class="btn btn-secondary btnAddEmp ">
-                                                    <i class="bi bi-plus-circle-fill"></i> เพิ่ม
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dispaly_listAssign mt-5">
-
-                                        <table class="table table-sm  setFn" id="empbyEach">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>ขื่อ นามสกุล</th>
-                                                    <th>หน่วยงาน</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="Trresponse">
-
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    @endif
+                 
+                      
+                 
 
                     <form id="approve_booking_form" class="row g-3 m-auto" method="post" action="#"
                         enctype="multipart/form-data">
@@ -493,6 +353,154 @@
                         </div>
 
                     </form>
+
+                    <hr/>
+                    <h3 class="text-center">กำหนดราคาในการขอใช้ห้องและ ผู้ปฏิบัติงาน</h3>
+                    <div id="accordion">
+                        <h3> ตั้งค่า : กำหนดราคาสำหรับการขอใช้สถานที่ </h3>
+                        <div>
+                            <form id="payment_form" class="row g-3 m-auto  setFn" method="post"
+                                action="/admin/payment/setdata" enctype="multipart/form-data">
+                                @csrf
+                                <div class="col-12">
+                                    <h5 class="setFn">กำหนดราคาสำหรับการขอใช้สถานที่</h5>
+                                    <hr>
+                                    <div class="form-row mb-3">
+                                        <div class="form-group col-md-12 mb-3">
+                                            <label for="totalAmount"> ระบุราคา *</label>
+                                            <input type="number" style="padding: 7px;" placeholder="ระบุราคา"
+                                                id="totalAmount" name="totalAmount"
+                                                value="{{ $detailBooking[0]->totalAmount }}" required
+                                                @if ($detailBooking[0]->payment_status) @disabled(true) @endif></input>
+                                        </div>
+                                    </div>
+
+                                    <h5 class="mt-3 setFn">ข้อมูลที่ใช้ออกใบเสร็จรับเงิน </h5>
+                                    <hr>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="customerName">ชื่อที่แสดงในใบเสร็จรับเงิน *</label>
+                                            <input type="text" class="form-control" id="customerName"
+                                                name="customerName" value="{{ $detailBooking[0]->customerName }}"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="customerTaxid">เลขประจำตัวประชาชน/เลขผู้เสียภาษี *</label>
+                                            <input type="text" class="form-control" id="customerTaxid"
+                                                name="customerTaxid" value="{{ $detailBooking[0]->customerTaxid }}"
+                                                required>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="customerEmail">Email *</label>
+                                            <input type="email" class="form-control" id="customerEmail"
+                                                name="customerEmail" value="{{ $detailBooking[0]->customerEmail }}"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="customerAddress">ที่อยู่ *</label>
+                                            <input type="text" class="form-control" id="customerAddress"
+                                                name="customerAddress"
+                                                value="{{ $detailBooking[0]->customerAddress }}" required>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <div class="form-row">
+                                        <div class="text-primary form-group col-md-12">
+                                            <h5 class="setFn">แนบเอกสารเพิ่มเติม/ใบเสนอราคา (ไฟล์ pdf เท่านั้น) *
+                                            </h5>
+                                            <hr>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="formFile" class="form-label">แนบไฟล์ </label>
+                                            <input class="form-control" type="file" id="formFile1"
+                                                accept="application/pdf" name="addfile1">
+                                            <br />
+                                            <input class="form-control" type="file" id="formFile2"
+                                                accept="application/pdf" name="addfile2">
+
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
+                                    <div class="col-12 mt-3 text-center justify-content-center">
+                                        <input type="hidden" id="hinden_bookingID" name="hinden_bookingID"
+                                            value="{{ $detailBooking[0]->id }}">
+                                        <input type="hidden" id="hinden_paymentid" name="hinden_paymentid"
+                                            value="{{ $detailBooking[0]->paymentid }}">
+                                        <!-- @if ($getStatus != 'approved')
+                                            <button type="submit" name="submitPayment" id="submitPayment"
+                                                class=" btn btn-primary">
+                                                <i class="bi bi-floppy"></i> บันทึกข้อมูลการชำระเงิน
+
+                                            </button>
+                                        @endif -->
+
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <h3>ตั้งค่า กำหนดผู้ปฏิบัติงาน</h3>
+                        <div>
+                            <div class="col-12">
+                                <div class="justify-content-center  w-75  setFn">
+                                    <div class=" d-flex ">
+                                        <div>ค้าหาด้วยชื่อผู้ปฏิบัติงาน </div>
+                                        <div class="ml-3 mr-3" style="width: 380px;">
+                                            <select class=" slcCombobox" name="assignCmu" id="assignEmp">
+                                                <option value="">--- เลือก --</option>
+                                                @foreach ($sclEmployee as $rows)
+                                                    @if (!empty($rows->firstname_TH))
+                                                        @php
+                                                            $fullname =
+                                                                $rows->firstname_TH . ' ' . $rows->lastname_TH;
+                                                        @endphp
+                                                    @endif
+                                                    <option value="{{ $rows->cmuitaccount }}">{{ $fullname }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="text-start ml- " align="left">
+                                            <button type="button" class="btn btn-secondary btnAddEmp ">
+                                                <i class="bi bi-plus-circle-fill"></i> เพิ่ม
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dispaly_listAssign mt-5">
+
+                                    <table class="table table-sm  setFn" id="empbyEach">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>ขื่อ นามสกุล</th>
+                                                <th>หน่วยงาน</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="Trresponse">
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
                     <div class="text-center m-3"><a
                             href="/print/form/booking/{{ $detailBooking[0]->id }}/{{ $detailBooking[0]->bookingToken }}"
                             class="btn btn-primary" target="_blank"><i class="bi bi-printer"></i>
