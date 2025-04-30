@@ -165,7 +165,7 @@
                                                 // (in_array((string)$roomTypeId, explode(',', $getService->opentypeRoomBooking())))
                                                 
                                                 --->
-                                         
+                                                isBookingAvailable => {{$getService->isBookingAvailable($searchDates)}}
                                             @if($getService->isBookingAvailable($searchDates))  
                                                     @php
                                                      $StepchkTime = $getService->canBookByDate($searchDates,$getService->getfinalBookingDate());                                                    
