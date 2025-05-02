@@ -29,6 +29,11 @@ class ManageBookingController extends Controller
             ->select('tbl_members.*')
             ->get();
 
+
+
+
+
+
         $getStatus = $request->getStatus;
         if ($request->bookingID) {
             $bookingId = $request->bookingID;
@@ -37,6 +42,22 @@ class ManageBookingController extends Controller
                 ->update([
                     'is_read' => 1
                 ]);
+
+        // เพิ่มข้อมมูลผู้ดูแลห้อง
+     /*   $sclEmployee = DB::table('tbl_members')
+        ->select('tbl_members.*')
+        ->get();
+*/
+
+        $setData = [
+            'cmuitaccount' => $request->cmuitaccount,
+            'bookingID' => $request->bookingId,
+            'is_read' => 0
+        ];
+        $insert = booking_assign::create($setData);     
+
+
+
 
             //  $this->setAuthPayment($bookingId);
             // Return รายละเอียดการจอง 
