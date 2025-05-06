@@ -49,7 +49,7 @@
             </a>
             </p>
             <hr />
-            <h4> {{ $TitlePage }} </h4>
+            <h4> {{ $TitlePage }} </h4>            
             <div class="col-md-12 showtable">
 
             </div>

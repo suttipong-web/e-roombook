@@ -306,7 +306,7 @@ class HelperService
             $ListAdmin = DB::select(DB::raw($sql));
         } else {
             $sql = " 
-        SELECT
+             SELECT
             admin_roooms.adminroom_type_id,
             admin_roooms.cmuitaccount,
             users.lineToken

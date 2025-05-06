@@ -41,7 +41,7 @@
         width: 93%;
         border: 1px solid;
         margin: 30px auto;
-        min-height: 500px;
+        min-height: 1065px;
         padding-bottom: 50px;
         padding-top: 30px;
         padding-left: 30px;
@@ -131,11 +131,9 @@
                                                 @else
                                                     {{ $prename = $rowEmp->prename_TH }}
                                                 @endif
-
                                                 @if (!empty($rowEmp->firstname_TH))
-                                                    {{ $prename . $rowEmp->firstname_TH . ' ' . $rowEmp->lastname_TH }}
+                                                    {{ $rowEmp->firstname_TH . ' ' . $rowEmp->lastname_TH }}
                                                 @endif
-
                                             </td>
                                             <td>
                                                 @if (!empty($rowEmp->dep_name))
@@ -156,7 +154,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == 'approved' || $detailBooking[0]->dean_appove_status) checked @endif class="fs-5">
+                        <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == 'approved' || $detailBooking[0]->booking_status) checked @endif class="fs-5">
                             อนุญาต</div>
                         <div> <input type="checkbox" @if ($detailBooking[0]->booking_AdminAction == 'canceled' || $detailBooking[0]->dean_appove_status == 2) checked @endif class="fs-5">
                             ไม่อนุัมติ </div>

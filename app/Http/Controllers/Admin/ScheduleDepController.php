@@ -275,29 +275,30 @@ class ScheduleDepController extends Controller
             ";
         } else{
             $sql = "
-            SELECT rooms.id as roomID ,rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId FROM rooms          
-            WHERE  (rooms.is_open =1) 
+            SELECT rooms.id as roomID ,rooms.roomFullName,rooms.roomTitle,rooms.roomTypeId 
+            FROM rooms          
+            WHERE  (rooms.is_open =1)  AND  rooms.roomTypeId <> 1
             ";
         }
 
-
         $sql .= " GROUP BY  rooms.id  ORDER BY   rooms.id ASC ";
         $getRoom = DB::select(DB::raw($sql));
-        echo $sql."<br/>";
+       // echo $sql."<br/>";
         //$getRoom = roomSchedule::Join('rooms', 'rooms.id', '=', 'room_schedules.roomID')
         // ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
         //  ->where('room_schedules.is_confirm', 0)
         // ->where('room_schedules.straff_account', $Byuser)
         //  ->get();
+
         $roomIdDisplay = 0;
         $roomTypeId = 0;
+
         if ($getRoom) {
             //loop ตารางห้องเรียน  
             foreach ($getRoom as $tableRoom) {
 
                 $roomTypeId = $tableRoom->roomTypeId;
                 $output = "";
-
                 ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
                 $sc_startTime = date("Y-m-d 08:00:00");  // กำหนดเวลาเริ่มต้ม เปลี่ยนเฉพาะเลขเวลา
                 $sc_endtTime = date("Y-m-d  22:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
@@ -642,7 +643,7 @@ class ScheduleDepController extends Controller
                 $roomID = $row->roomID;
 
 
-                $booking_subject = $row->courseNO . "(" . $row->courseSec . ")<br/>" . $row->courseTitle;
+                $booking_subject = $row->courseNO . "(" . $row->courseSec . ") \n" . $row->courseTitle;
                 $booking_department = "";
                 $subIDError = "";
                 $courseNO = $row->courseNO;
@@ -713,7 +714,7 @@ class ScheduleDepController extends Controller
                             'is_import_excel' => '1',
                             'courseNo' => $row->courseNO,
                             'booking_subject_sec' => $row->courseSec,
-                            'import_sid' => $row->is_group_session
+                            'import_sid' => $row->is_group_session 
                         ];
 
                         //$result = booking_rooms::create($setDataBooking);  

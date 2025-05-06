@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\booking_assign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\booking_rooms;
@@ -511,14 +512,13 @@ class BookingController extends Controller
     public function insertBooking(Request $request)
     {
         $class = new HelperService();
-
         $error = false;
         $fileName = '';
         $is_confirm = 0;
         //วันที่ 
         $schedule_startdate = $class->convertDateSqlInsert($request->schedule_startdate);
         $schedule_enddate = $class->convertDateSqlInsert($request->schedule_enddate);
-
+        $lastInsertedId = 0;
         // ตรวจสอบวันที่                 
         $startDate = Carbon::parse($schedule_startdate); // The start date
         $endDate = Carbon::parse($schedule_enddate); // The end date        
@@ -536,7 +536,6 @@ class BookingController extends Controller
 
         $bkstart  =  str_replace(':', '', substr($bkstart_, 0, 5));
         $bkfinish  =  str_replace(':', '', substr($bkfinish_, 0, 5));
-
 
         $startTime = Carbon::parse($bkstart);
         $endTime = Carbon::parse($bkfinish);
@@ -716,15 +715,25 @@ class BookingController extends Controller
                     // lop หากมี Admin หลายคน                
                     foreach ($tokenUSer as $admins) {
                         $class->sendMessageTOline($admins->lineToken, $msgLineAdminRoom);
+
+                        // เพิ่มผู้ดูแลห้องเข้าไปในรายการ                         
+                         $setData = [
+                            'cmuitaccount' =>$admins->cmuitaccount,
+                            'bookingID' =>$lastInsertedId,
+                            'is_read' => 0
+                         ];
+                          $insert = booking_assign::create($setData);     
+
                     }
                 }
 
+             
                  // แจ้งข้อความเข้ากลุ่มผู้ดูแลห้อง 
                  //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
                  //C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi  ใช้จริง
                 // $GrouplineToken ="C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi";
                 
-                 $GrouplineToken = "C673d6850aaddf7ebbe8e60e1451a2c56";
+                 $GrouplineToken = "mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX";
                  $class->sendMessageTOline($GrouplineToken, $msgLine);
 
 

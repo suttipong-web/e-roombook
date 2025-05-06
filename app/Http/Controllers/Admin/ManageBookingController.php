@@ -49,13 +49,13 @@ class ManageBookingController extends Controller
         ->get();
 */
 
-        $setData = [
+        /*$setData = [
             'cmuitaccount' => $request->cmuitaccount,
             'bookingID' => $request->bookingId,
             'is_read' => 0
         ];
         $insert = booking_assign::create($setData);     
-
+*/
 
 
 
@@ -169,12 +169,12 @@ class ManageBookingController extends Controller
                 ->get();
             $sql = "SELECT
             booking_assigns.*,
-            tbl_members.*,
+            users.*,
             department.dep_name
             FROM
             booking_assigns
-            INNER JOIN tbl_members ON booking_assigns.cmuitaccount = tbl_members.cmuitaccount
-            left JOIN department ON tbl_members.dep_id = department.dep_id
+            INNER JOIN users ON booking_assigns.cmuitaccount = users.email
+            left JOIN department ON users.dep_id = department.dep_id
             Where booking_assigns.bookingID='{$bookingId}'
             ";
             $ListEmployee = DB::select(DB::raw($sql));

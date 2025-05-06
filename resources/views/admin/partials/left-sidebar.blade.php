@@ -26,39 +26,26 @@
     <li class="nav-item active">
         <a href="{{ route('dashboard') }}" class="nav-link {{ $current_route == 'dashboard' ? 'active' : '' }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Dashboard </span></a>
     </li>
+
+
+        
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
     <div class="sidebar-heading">
-        <h5> ระบบจัดการ </h5>
+        <h5> จองห้อง </h5>
     </div>
     <li class="nav-item ">
-        <a href="/admin/room" class="nav-link {{ $current_route == 'room' ? 'active' : '' }}">
-            <i class="bi bi-hospital"></i>
-            <span>ข้อมูลห้อง</span></a>
-    </li>
-
-    <li class="nav-item ">
         <a href="/admin/dashboard" class="nav-link {{ $current_route == 'dashboard' ? 'active' : '' }}">
-            <i class="bi bi-hospital"></i>
-            <span>การจองห้อง</span></a>
-    </li>
-   
-    <li class="nav-item active">
-        <a href="/admin/schedules/config" class="nav-link {{ $current_route == 'admin.schedule.config' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>
-            <span> กำหนดค่าการจองห้อง </span></a>
+            <span>จองห้องรายวัน</span></a>
     </li>
-    <hr class="sidebar-divider">
-
- 
-
     <li class="nav-item ">
         <a href="/admin/schedules" class="nav-link {{ $current_route == 'admin.schedule' ? 'active' : '' }}">
-            <i class="bi bi-hospital"></i>
-            <span>จัดการข้อมูลการใช้ห้อง</span></a>
+            <i class="bi bi-list-check"></i>
+            <span>จอง/ลงตารางเรียน</span></a>
     </li>
     <li class="nav-item active">
         <a href="/admin/schedules/viewAll" class="nav-link {{ $current_route == 'admin.schedule.viewAll' ? 'active' : '' }}">
@@ -66,17 +53,35 @@
             <span> แสดงตารางเรียนรวม</span></a>
     </li>
 
-    <li class="nav-item">
-        <a href="/admin/term" class="nav-link {{ $current_route == 'admin.term' ? 'active' : '' }}">
-        <i class="bi bi-list-check"></i>
-            <span>กำหนดช่วงลงข้อมูล</span></a>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        <h5> จัดการข้อมูล </h5>
+    </div>
+    <li class="nav-item active">
+        <a href="/admin/schedules/config" class="nav-link {{ $current_route == 'admin.schedule.config' ? 'active' : '' }}">
+            <i class="bi bi-list-check"></i>
+            <span style="font-size: 12.5px"> กำหนดค่าการจองห้อง (ภาพรวม) </span></a>
     </li>
-
+    <li class="nav-item">
+        <a href="/admin/term" class="nav-link {{ $current_route == 'admin.term' ? 'active' : '' }}" >
+        <i class="bi bi-list-check"></i>
+            <span style="font-size: 12.5px">กำหนดช่วงลงข้อมูลตารางเรียน</span></a>
+    </li>
+    
     <li class="nav-item">
         <a href="/admin/groupCourse" class="nav-link {{ $current_route == 'admin.groupCourse' ? 'active' : '' }}">
         <i class="bi bi-person-fill-gear"></i>
-            <span>จัดการกลุ่มผู้ใช้</span></a>
+            <span>จัดการกลุ่มผู้ใช้งาน</span></a>
     </li>
+    <li class="nav-item ">
+        <a href="/admin/room" class="nav-link {{ $current_route == 'room' ? 'active' : '' }}">
+            <i class="bi bi-hospital"></i>
+            <span>ข้อมูลห้อง</span></a>
+    </li>
+ 
+     
 
     <hr class="sidebar-divider">
     <li class="nav-item">
