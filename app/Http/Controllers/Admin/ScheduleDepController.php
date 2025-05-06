@@ -162,7 +162,7 @@ class ScheduleDepController extends Controller
 
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
             ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('room_schedules.straff_account', $Byuser)
+           /* ->where('room_schedules.straff_account', $Byuser)*/
             ->where('room_schedules.is_group_session', $sesid)
             ->orderBy('room_schedules.is_duplicate', 'DESC')
             ->get();
@@ -1020,12 +1020,15 @@ class ScheduleDepController extends Controller
         sum(is_duplicate) as countError,
         sum(is_error_room) as countErrorRoom,
         sum(is_public) as countPublic,
-        room_schedules.*,department.dep_title,rooms.roomFullName           
+        room_schedules.*,department.dep_title,rooms.roomFullName ,
+        CONCAT(users.prename_TH, users.firstname_TH, ' ', users.lastname_TH) AS owner_fullname  
         FROM room_schedules
         INNER JOIN users ON room_schedules.straff_account = users.email
         INNER JOIN department ON users.dep_id = department.dep_id
         LEFT JOIN rooms ON room_schedules.roomID = rooms.id       
-        WHERE room_schedules.straff_account = '{$Byuser}'
+        WHERE room_schedules.is_public =1  OR 
+             room_schedules.straff_account = '{$Byuser}'
+         
         GROUP BY room_schedules.is_group_session        
         ";
 

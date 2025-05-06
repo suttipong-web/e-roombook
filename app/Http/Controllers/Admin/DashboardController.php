@@ -35,13 +35,16 @@ class DashboardController extends Controller
             ->where(function ($query) {
                     $query->where('booking_rooms.booking_status', 0)
                     ->orWhere('booking_rooms.is_read', 0); // เงื่อนไข OR
+                    
              })
             ->get();
         }else {
              $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
             ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('booking_rooms.booking_status', '0')           
+            ->where('booking_rooms.booking_status', '0')  
+            ->where('booking_rooms.is_import_excel', '0')              
             ->orWhere('booking_rooms.is_read', '0')
+    
             ->get();
         }
 
@@ -95,9 +98,10 @@ class DashboardController extends Controller
                 $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('rooms.roomTypeId', 2) // เงื่อนไข roomTypeId = 1
+                ->where('booking_rooms.is_import_excel', 0)  // เงื่อนไข is_import_excel = 0
                 ->where(function ($query) {
                         $query->where('booking_rooms.booking_status', 0)
-                            ->orWhere('booking_rooms.is_read', 0); // เงื่อนไข OR
+                            ->orWhere('booking_rooms.is_read', 0);// เงื่อนไข OR                         
                     })
                ->get();
 
@@ -105,8 +109,11 @@ class DashboardController extends Controller
                 // ALL LIST  Admin
             $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-               ->where('booking_status', '0')                    	
-               ->orWhere('booking_rooms.is_read', '0')
+                ->where('booking_rooms.is_import_excel', '0')   
+                ->where(function ($query) {
+                $query->where('booking_rooms.booking_status', 0)
+                    ->orWhere('booking_rooms.is_read', 0);// เงื่อนไข OR                         
+             })            
                ->get();
             }
                    
@@ -149,22 +156,23 @@ class DashboardController extends Controller
               if($caseAdmin == 1 || $caseAdmin == 2 ){
                  $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')    
-                ->where('rooms.roomTypeId', $caseAdmin)           
+                ->where('rooms.roomTypeId', $caseAdmin)   
+                ->where('booking_rooms.is_import_excel', 0)          
                 ->where(function($query) {
                     $query->where('dean_appove_status', 1)                          
                           ->orWhere('booking_AdminAction', 'approved')
-                          ->orWhere('booking_status', '1');
-
+                          ->orWhere('booking_status', '1') ;                      
                 })
                 ->get();
               }else {
                 $ResultBookingNew = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                     ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')               
                     ->where(function($query) {
-                    $query->where('dean_appove_status', 1)
+                    $query->where('dean_appove_status', 1)                          
                           ->orWhere('booking_AdminAction', 'approved')
-                          ->orWhere('booking_status', '1');
+                          ->orWhere('booking_status', '1') ;                         
                 })
+                ->where('is_import_excel', 0)
                 ->get();
               }
             $titlesCard = "รายการขอใช้ห้องที่ทำการอนมุัติ";
@@ -189,7 +197,8 @@ class DashboardController extends Controller
         if($caseAdmin == 1 || $caseAdmin == 2 ){
             $Count = booking_rooms:: join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
               ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail') 
-              ->where('rooms.roomTypeId', $caseAdmin)           
+              ->where('rooms.roomTypeId', $caseAdmin)       
+                 
               ->where(function($query) {
                     $query->where('booking_rooms.booking_status', 0)                          
                           ->orWhere('booking_rooms.is_read', 0);
@@ -246,7 +255,8 @@ class DashboardController extends Controller
          if($caseAdmin == 1 || $caseAdmin == 2 ){
      $Count = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
         ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail') 
-              ->where('rooms.roomTypeId', $caseAdmin)        
+            ->where('rooms.roomTypeId', $caseAdmin)   
+            ->where('booking_rooms.is_import_excel', 0)     
             ->where(function($query) {
                         $query->where('booking_rooms.booking_AdminAction', '=', 'approved')                         
                             ->orWhere('booking_rooms.dean_appove_status', 0)
@@ -256,6 +266,7 @@ class DashboardController extends Controller
          }else {
         $Count = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
         ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail') 
+        ->where('booking_rooms.is_import_excel', 0)     
         ->where(function($query) {
                     $query->where('booking_rooms.booking_AdminAction', '=', 'approved')                         
                           ->orWhere('booking_rooms.dean_appove_status', 0)

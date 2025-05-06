@@ -57,6 +57,7 @@
                                                     <th width="12%" style="text-align: center;"> รายละเอียด </th>
                                                     <th width="9%" style="text-align: center;"> สถานะการจอง </th>
                                                     <th width="8%" style="text-align: center;"></th>
+                                                    <th width="8%" style="text-align: center;"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -106,6 +107,12 @@
                                                                         CANCEL<i class="bi bi-x-circle-fill"></i>
                                                                     </a>
                                                                 @endif
+                                                            </td>
+                                                            <td> 
+                                                                <a
+                            href="/print/form/booking/{{ $rows->id }}/{{ $rows->bookingToken }}"
+                            class="btn btn-primary btn-sm" target="_blank"><i class="bi bi-printer"></i></a>
+
                                                             </td>
 
                                                         </tr>

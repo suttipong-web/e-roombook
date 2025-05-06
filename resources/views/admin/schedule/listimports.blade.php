@@ -90,7 +90,9 @@
                             @foreach ($getBookingList as $rows)
                                 <tr >
                                     <td class="text-center"> {{ $rows->updated_at }}</td>
-                                    <td>{{ $rows->dep_title }} </td>
+                                    <td> {{ $rows->dep_title }} <br/> ({{ $rows->owner_fullname}})
+                                        
+                                    </td>
                                     <td class="text-center">{{ $rows->terms }}/{{ $rows->courseofyear }}</td>
                                     <td class="text-center">{{ $rows->countCourse }}</td>
                                     <td class="text-center">{{ $rows->countPublic }}</td>

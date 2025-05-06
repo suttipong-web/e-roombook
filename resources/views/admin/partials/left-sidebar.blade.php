@@ -1,5 +1,6 @@
 @php
     $current_route = request()->route()->getName();
+   //  $caseAdmin = (int)($getService->chkAddminRoomType($request->session()->get('cmuitaccount')));
 @endphp
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -21,7 +22,6 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a href="{{ route('dashboard') }}" class="nav-link {{ $current_route == 'dashboard' ? 'active' : '' }}">
@@ -40,13 +40,15 @@
     <li class="nav-item ">
         <a href="/admin/dashboard" class="nav-link {{ $current_route == 'dashboard' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>
-            <span>จองห้องรายวัน</span></a>
+            <span>จองห้องรายวัน (ทั่วไป)</span></a>
     </li>
+
     <li class="nav-item ">
         <a href="/admin/schedules" class="nav-link {{ $current_route == 'admin.schedule' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>
             <span>จอง/ลงตารางเรียน</span></a>
     </li>
+
     <li class="nav-item active">
         <a href="/admin/schedules/viewAll" class="nav-link {{ $current_route == 'admin.schedule.viewAll' ? 'active' : '' }}">
             <i class="bi bi-list-check"></i>

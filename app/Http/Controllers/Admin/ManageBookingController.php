@@ -161,12 +161,14 @@ class ManageBookingController extends Controller
     }
     public function printFormBooking(Request $request)
     {
+        $class = new HelperService();
         if ($request->bookingID) {
             $bookingId = $request->bookingID;
             $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
                 ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_rooms.id', $bookingId)
                 ->get();
+
             $sql = "SELECT
             booking_assigns.*,
             users.*,
@@ -178,6 +180,39 @@ class ManageBookingController extends Controller
             Where booking_assigns.bookingID='{$bookingId}'
             ";
             $ListEmployee = DB::select(DB::raw($sql));
+            if (empty($ListEmployee)) {
+                //แจ้งข้อความเข้าผู้ดูแลห้อง
+                $getUSer = $class->getlineTokenAdminRoom($ResultBooking[0]->roomID, 1);
+                if ($getUSer) {
+                     // lop หากมี Admin หลายคน                
+                     foreach ($getUSer as $admins) {           
+ 
+                         // เพิ่มผู้ดูแลห้องเข้าไปในรายการ                         
+                          $setData = [
+                             'cmuitaccount' =>$admins->cmuitaccount,
+                             'bookingID' =>$bookingId ,
+                             'is_read' => 0
+                          ];
+                           $insert = booking_assign::create($setData);     
+ 
+                     }
+                 } 
+                 $ListEmployee ="";              
+            }
+
+            $sql = "SELECT
+            booking_assigns.*,
+            users.*,
+            department.dep_name
+            FROM
+            booking_assigns
+            INNER JOIN users ON booking_assigns.cmuitaccount = users.email
+            left JOIN department ON users.dep_id = department.dep_id
+            Where booking_assigns.bookingID='{$bookingId}'
+            ";
+            $ListEmployee = DB::select(DB::raw($sql));
+
+
             return view('printformbooking')->with([
                 'detailBooking' => $ResultBooking,
                 'ListEmployee' => $ListEmployee
