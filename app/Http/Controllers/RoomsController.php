@@ -459,4 +459,20 @@ class RoomsController extends Controller
         ]);
     }
 
+    public function displayTvSciNet_table (Request $request)
+    {    
+         date_default_timezone_set('Asia/Bangkok');   
+         $class = new HelperService();
+
+         if ($request->roomId) {
+            $roomID =$request->roomId;
+            $dataroom = Rooms::find($roomID);
+         }
+
+        return view("/room/displayTvSciNet_table")->with([
+            'dataroom' => $dataroom ,
+            'getust' => $request->uts
+        ]);
+    }
+
 }

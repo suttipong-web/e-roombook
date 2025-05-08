@@ -730,9 +730,7 @@ class BookingController extends Controller
              
                  // แจ้งข้อความเข้ากลุ่มผู้ดูแลห้อง 
                  //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
-                 //C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi  ใช้จริง
-                
-                // $GrouplineToken ="C9QQrrWUvNzwZ0GT3VhtRjvUKsPBJ72vzZjsGLpKRfi";
+             
                  //C673d6850aaddf7ebbe8e60e1451a2c56 ใช้จริง 7/5/68
                 
                  $GrouplineToken = "C673d6850aaddf7ebbe8e60e1451a2c56";

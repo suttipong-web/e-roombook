@@ -371,7 +371,7 @@ class ScheduleDepController extends Controller
                         INNER JOIN rooms ON booking_rooms.roomID = rooms.id
                         WHERE booking_rooms.roomID = '{$tableRoom->roomID}' 
                         AND  booking_rooms.booking_status =1
-                        AND  booking_rooms.is_import_excel =1 ";
+                        /*AND  booking_rooms.is_import_excel =1 */";
                 if (!empty($Byuser)) {
                     $sql .= "
                             AND (booking_rooms.booker_cmuaccount = '{$Byuser}')   
