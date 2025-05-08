@@ -31,7 +31,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 // TV SciNet
-Route::get('/scinet/{roomId}', [RoomsController::class, 'displayTvSciNet'])->name('displayTvSciNet');
+Route::get('/scinet/{roomId}/{roomtitles}', [RoomsController::class, 'displayTvSciNet'])->name('displayTvSciNet');
 
 Route::get('/scinet_table/{roomId}/{roomtitles}', [RoomsController::class, 'displayTvSciNet_table'])->name('displayTvSciNet_table');
 
