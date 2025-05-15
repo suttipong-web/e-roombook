@@ -77,7 +77,8 @@ div.table-responsive::-webkit-scrollbar {
 
 .sc-detail {
     font-size: 11px;
-    background-color: #85cb8e;
+    /*background-color: #85cb8e;*/
+    background-color: #00FA9A;
     color: #080000;
     border: #ffffff 1px solid;
     padding: 2px;
@@ -95,7 +96,7 @@ div.table-responsive::-webkit-scrollbar {
 
 .sc-detail-std {
     font-size: 11px;
-    background-color: #ee82ee;
+    background-color: #00FFFF;
     color: #080000;
     border: #ffffff 1px solid;
     padding: 2px;

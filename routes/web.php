@@ -18,7 +18,6 @@ use App\Http\Controllers\Admin\stepApporveController;
 use App\Http\Controllers\Admin\TermController;
 use App\Http\Controllers\cmuOauthController;
 use App\Http\Controllers\engApporveController;
-
 use App\Http\Controllers\major\majorController;
 use App\Http\Controllers\profile\profileController as ProfileProfileController;
 use App\Http\Controllers\ScheduleroomController;
@@ -47,8 +46,6 @@ Route::get('/manual', function () {
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
-
-
 
 Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchScheduleByRoom'])->name('fetchScheduleByRoom');
 

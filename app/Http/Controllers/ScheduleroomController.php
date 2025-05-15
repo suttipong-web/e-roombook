@@ -122,7 +122,8 @@ class ScheduleroomController extends Controller
                     "isroomID" => $row->roomID,
                     "booking_phone" => $row->booking_phone,
                     "building" => $row->roomTitle,
-                    "Instructor" => $row->booking_Instructor
+                    "Instructor" => $row->booking_Instructor ,
+                    "is_import_excel" => $row->is_import_excel
 
                 );
             }
@@ -157,7 +158,8 @@ class ScheduleroomController extends Controller
                                     "depName" => $row['depName'],
                                     "booking_phone" => $row['booking_phone'],
                                     'UserChkDay' => $row['repeat_day'],
-                                    'Instructor' => $row['Instructor']
+                                    'Instructor' => $row['Instructor'] ,
+                                    'is_import_excel' => $row['is_import_excel']
                                 ];
                             }
                         }
@@ -283,13 +285,18 @@ class ScheduleroomController extends Controller
 
                     $ownertitle = ($roomTypeId == 1) ? 'ผู้ขอใช้' : 'ผู้สอน';
                     if ($roomTypeId == 1) {
-                        $classColorBG = "sc-detail";
+                        //$classColorBG = "sc-detail";
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
                     } else {
-                        $classColorBG = "sc-detail-std";
+                       // $classColorBG = "sc-detail-std";
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
                     }
 
+                    if ($row_day['is_import_excel'] == 1) {
+                        $classColorBG = "sc-detail-std";
+                    }else {
+                        $classColorBG = "sc-detail";
+                    }
 
                     $outputBody .= '<div class="position-absolute text-center clickscDetail ' . $classColorBG . '" 
                                      detail="' . $details . '"
@@ -431,6 +438,7 @@ class ScheduleroomController extends Controller
                             "booking_phone" => $row->booking_phone,
                             "building" => $row->roomTitle,
                             "Instructor" => $row->booking_Instructor,
+                            "is_import_excel" => $row->is_import_excel
                         );
                     }
                 }
@@ -465,7 +473,8 @@ class ScheduleroomController extends Controller
                                             "depName" => $row['depName'],
                                             "booking_phone" => $row['booking_phone'],
                                             'UserChkDay' => $row['repeat_day'],
-                                            'Instructor' => $row['Instructor']
+                                            'Instructor' => $row['Instructor'],
+                                            'is_import_excel' => $row['is_import_excel']
                                         ];
                                     }
                                 }
@@ -588,13 +597,16 @@ class ScheduleroomController extends Controller
                                 
                     $ownertitle = ($roomTypeId == 1) ? 'ผู้ขอใช้' : 'ผู้สอน';
                     if ($roomTypeId == 1) {
-                        $classColorBG = "sc-detail";
+                       // $classColorBG = "sc-detail";
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
                     } else {
-                        $classColorBG = "sc-detail-std";
+                       // $classColorBG = "sc-detail-std";
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
                     }
-
+                      $classColorBG = "sc-detail";
+                                if ($row_day['is_import_excel'] == 1) {
+                                    $classColorBG = "sc-detail-std";
+                                }
                                 $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . '<br/> ' . $row_day["depName"] . ' </div>';
                                 $outputBody .= '<div class="position-absolute text-center  clickscDetail ' . $classColorBG . '" 
                                 detail="' . $details . '"

@@ -419,6 +419,7 @@ class ScheduleDepController extends Controller
                             "booking_phone" => $row->booking_phone,
                             "building" => $row->roomTitle,
                             "Instructor" => $row->booking_Instructor,
+                            "is_import_excel" => $row->is_import_excel
                         );
                     }
                 }
@@ -453,7 +454,8 @@ class ScheduleDepController extends Controller
                                             "depName" => $row['depName'],
                                             "booking_phone" => $row['booking_phone'],
                                             'UserChkDay' => $row['repeat_day'],
-                                            'Instructor' => $row['Instructor']
+                                            'Instructor' => $row['Instructor'],
+                                            'is_import_excel' => $row['is_import_excel']
                                         ];
                                     }
                                 }
@@ -572,10 +574,18 @@ class ScheduleDepController extends Controller
                                 $sub2 = "";
                                 if ($roomTypeId > 1) {
                                     $sub2 = "<br/>" . $row_day['Instructor'];
+                                }   
+
+                                $classColorBG = "sc-detail";
+                                if ($row_day['is_import_excel'] == 1) {
+                                    $classColorBG = "sc-detail-std";
                                 }
 
+
+
+
                                 $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . '<br/> ' . $row_day["depName"] . ' </div>';
-                                $outputBody .= '<div class="position-absolute text-center  sc-detail-std" 
+                                $outputBody .= '<div class="position-absolute text-center  ' . $classColorBG . '" 
                                 detail="' . $details . '"
                                 htitle ="' . $row_day['title'] . '"
                                style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
