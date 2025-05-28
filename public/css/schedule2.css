@@ -45,7 +45,9 @@ div.table-responsive::-webkit-scrollbar {
     font-size: 10px;
 }
 
-.time_schedule_text {}
+.time_schedule_text {
+    
+}
 
 .day_schedule_text {
     width: 85px;
@@ -83,7 +85,6 @@ div.table-responsive::-webkit-scrollbar {
     padding: 2px;
 }
 
-
 .sc-detail a {
     color: #181818;
     font-size: 11px;
@@ -104,7 +105,6 @@ div.table-responsive::-webkit-scrollbar {
     border: #ffffff 1px solid;
     padding: 2px;
 }
-
 
 .sc-detail-std a {
     color: #181818;
