@@ -76,9 +76,9 @@ class ScheduleDepController extends Controller
                         )
                     )
                     AND room_schedules.schedule_repeatday = ?
-                    AND room_schedules.id <> ?
                     AND room_schedules.terms = ?
-                    AND room_schedules.courseofyear = ?      
+                    AND room_schedules.courseofyear = ?     
+                    AND room_schedules.id <> ?       
                     ORDER BY booking_time_start ASC";
 
             $qresult = DB::select($sql, [
@@ -86,9 +86,9 @@ class ScheduleDepController extends Controller
                 $rows->schedule_startdate,
                 $rows->schedule_enddate,
                 $rows->schedule_repeatday,
-                $rows->id,
                 $rows->terms,
-                $rows->courseofyear
+                $rows->courseofyear,
+                $rows->id        
             ]);
 
             $isDuplicate = false;
@@ -132,7 +132,7 @@ class ScheduleDepController extends Controller
                     ->where('booking_rooms.schedule_startdate', '>=', $is_date)
                     ->where('booking_rooms.schedule_enddate', '<=', $is_date)
                     ->where('booking_rooms.courseofyear', '=', $rows->courseofyear)
-                    ->where('booking_rooms.	terms', '=', $rows->terms)
+                    ->where('booking_rooms.terms', '=', $rows->terms)
                     ->get();
                 // ยืนยันการจอง
                 $is_confirm = 1;
