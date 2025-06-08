@@ -185,7 +185,7 @@ class majorController extends Controller
             foreach ($loopdate as $is_date) {
                 //ตรวจสอบว่าจองเวลานี้ได้ไหม         
                 $ChkTimeBookig = DB::table('booking_rooms')
-                    ->select('booking_time_start', 'booking_time_finish')
+                    ->select('booking_time_start', 'booking_time_finish' ,'courseNO', 'courseSec')
                     ->where('booking_rooms.roomID', $rows->roomID)
                     ->where('booking_rooms.booking_status', 1)
                     ->where('booking_rooms.schedule_startdate', '>=', $is_date)
