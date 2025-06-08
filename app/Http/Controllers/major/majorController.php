@@ -196,20 +196,25 @@ class majorController extends Controller
                 // ยืนยันการจอง
                 $is_confirm = 1;
                 $text = "";
+                     $reqStart = str_replace(':', '', substr($rows->booking_time_start, 0, 5));
+                    $reqEnd = str_replace(':', '', substr($rows->booking_time_finish, 0, 5));
 
-                foreach ($ChkTimeBookig as $row_chk) {
+                    foreach ($ChkTimeBookig as $row_chk) {
+                        $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
+                        $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
 
-                    $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
-                    $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
-                    // echo "<br/>".$rows->booking_time_start;
-                    if (
-                        ($rows->booking_time_start >= $rowchkStart && $rows->booking_time_start < $rowchkEnd)
-                        ||
-                        ($rows->booking_time_finish > $rowchkStart && $rows->booking_time_finish <= $rowchkEnd)
-                        ||
-                        ($rows->booking_time_start < $rowchkStart && $rows->booking_time_finish > $rowchkEnd)
-                    ) {
+                        if (
+                            ($reqStart >= $rowchkStart && $reqStart < $rowchkEnd)
+                            ||
+                            ($reqEnd > $rowchkStart && $reqEnd <= $rowchkEnd)
+                            ||
+                            ($reqStart < $rowchkStart && $reqEnd > $rowchkEnd)
+                        ) { 
                         $error = 0;
+                         $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
+                         $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
+                         $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
+
                          $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->booking_subject_sec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                     }
                 }
