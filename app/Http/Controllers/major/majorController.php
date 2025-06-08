@@ -185,7 +185,7 @@ class majorController extends Controller
             foreach ($loopdate as $is_date) {
                 //ตรวจสอบว่าจองเวลานี้ได้ไหม         
                 $ChkTimeBookig = DB::table('booking_rooms')
-                    ->select('booking_time_start', 'booking_time_finish' ,'courseNO', 'courseSec')
+                    ->select('booking_time_start', 'booking_time_finish' ,'courseNO', 'booking_subject_sec')
                     ->where('booking_rooms.roomID', $rows->roomID)
                     ->where('booking_rooms.booking_status', 1)
                     ->where('booking_rooms.schedule_startdate', '>=', $is_date)
@@ -210,7 +210,7 @@ class majorController extends Controller
                         ($rows->booking_time_start < $rowchkStart && $rows->booking_time_finish > $rowchkEnd)
                     ) {
                         $error = 0;
-                         $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->courseSec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
+                         $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->booking_subject_sec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                     }
                 }
             }
