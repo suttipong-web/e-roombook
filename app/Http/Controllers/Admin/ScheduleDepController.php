@@ -126,7 +126,7 @@ class ScheduleDepController extends Controller
             foreach ($loopdate as $is_date) {
                 //ตรวจสอบว่าจองเวลานี้ได้ไหม         
                 $ChkTimeBookig = DB::table('booking_rooms')
-                    ->select('booking_time_start', 'booking_time_finish')
+                    ->select('booking_time_start', 'booking_time_finish', 'courseNO', 'booking_subject_sec')
                     ->where('booking_rooms.roomID', $rows->roomID)
                     ->where('booking_rooms.booking_status', 1)
                     ->where('booking_rooms.schedule_startdate', '>=', $is_date)
@@ -138,19 +138,28 @@ class ScheduleDepController extends Controller
                 $is_confirm = 1;
                 $text = "";
 
+                     $reqStart = str_replace(':', '', substr($rows->booking_time_start, 0, 5));
+                    $reqEnd = str_replace(':', '', substr($rows->booking_time_finish, 0, 5));
+
                 foreach ($ChkTimeBookig as $row_chk) {
 
                     $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
                     $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
                     // echo "<br/>".$rows->booking_time_start;
-                    if (
-                        ($rows->booking_time_start >= $rowchkStart && $rows->booking_time_start < $rowchkEnd)
-                        ||
-                        ($rows->booking_time_finish > $rowchkStart && $rows->booking_time_finish <= $rowchkEnd)
-                        ||
-                        ($rows->booking_time_start < $rowchkStart && $rows->booking_time_finish > $rowchkEnd)
-                    ) {
+                    
+                        if (
+                            ($reqStart >= $rowchkStart && $reqStart < $rowchkEnd)
+                            ||
+                            ($reqEnd > $rowchkStart && $reqEnd <= $rowchkEnd)
+                            ||
+                            ($reqStart < $rowchkStart && $reqEnd > $rowchkEnd)
+                        ) {
                         $error = 0;
+                         $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
+                         $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
+                         $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
+
+                         $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->booking_subject_sec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                     }
                 }
             }
@@ -668,13 +677,13 @@ class ScheduleDepController extends Controller
 
                     //ตรวจสอบว่าจองเวลานี้ได้ไหม         
                     $ChkTimeBookig = DB::table('booking_rooms')
-                        ->select('booking_time_start', 'booking_time_finish')
+                        ->select('booking_time_start', 'booking_time_finish', 'courseNO', 'booking_subject_sec')
                         ->where('booking_rooms.roomID', $roomID)
                         ->where('booking_rooms.booking_status', 1)
                         ->where('booking_rooms.schedule_startdate', '>=', $is_date)
                         ->where('booking_rooms.schedule_enddate', '<=', $is_date)
-                        ->where('booking_rooms.courseofyear', '=', $row->courseofyear)
-                        ->where('booking_rooms.	terms', '=', $row->terms)
+                        ->where('booking_rooms.courseofyear',  $row->courseofyear)
+                        ->where('booking_rooms.terms', $row->terms)
                         ->get();
 
                     // ยืนยันการจอง
@@ -682,20 +691,27 @@ class ScheduleDepController extends Controller
                     $text = "";
                     $error = 1;
 
+                      $reqStart = str_replace(':', '', substr($row->booking_time_start, 0, 5));
+                    $reqEnd = str_replace(':', '', substr($row->booking_time_finish, 0, 5));
                     foreach ($ChkTimeBookig as $row_chk) {
 
                         $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
                         $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
 
                         if (
-                            ($row->booking_time_start >= $rowchkStart && $row->booking_time_start < $rowchkEnd)
+                            ($reqStart >= $rowchkStart && $reqStart < $rowchkEnd)
                             ||
-                            ($row->booking_time_finish > $rowchkStart && $row->booking_time_finish <= $rowchkEnd)
+                            ($reqEnd > $rowchkStart && $reqEnd <= $rowchkEnd)
                             ||
-                            ($row->booking_time_start < $rowchkStart && $row->booking_time_finish > $rowchkEnd)
-                        ) {
+                            ($reqStart < $rowchkStart && $reqEnd > $rowchkEnd)
+                        ){
                             $error = 0;
                             $is_confirm = 0;
+                                                     $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
+                         $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
+                         $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
+
+                         $strError = "<b>ห้อง : " . $row->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->booking_subject_sec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                         }
                     }
 
@@ -754,6 +770,15 @@ class ScheduleDepController extends Controller
                         }
                         $subIDError = $courseNO;
                         //$strerror[] = $booking_subject . " | " . $is_date . " |" . $row->booking_time_start . " - " . $row->booking_time_finish;
+                        //เวลาซ้ำ    
+                $result = DB::table('room_schedules')
+                    ->where('id', $row->id)
+                    ->update([
+                        'is_duplicate' => 1,
+                        'is_error' => 'ไม่สามารถลงเวลาได้' ,
+                        'is_error_detail'=>$strError 
+                    ]);
+                    
                     }
                 }
             }
