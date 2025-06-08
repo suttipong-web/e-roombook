@@ -210,6 +210,7 @@ class majorController extends Controller
                         ($rows->booking_time_start < $rowchkStart && $rows->booking_time_finish > $rowchkEnd)
                     ) {
                         $error = 0;
+                         $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->courseSec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
                     }
                 }
             }
@@ -220,7 +221,8 @@ class majorController extends Controller
                     ->where('id', $rows->id)
                     ->update([
                         'is_duplicate' => 1,
-                        'is_error' => 'ไม่สามารถลงเวลาได้'
+                        'is_error' => 'ไม่สามารถลงเวลาได้' ,
+                        'is_error_detail'=>$strError 
                     ]);
             }
 
