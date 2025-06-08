@@ -133,8 +133,8 @@ class majorController extends Controller
                 )
                 AND room_schedules.schedule_repeatday = ?
                 AND room_schedules.id <> ?
-                AND room_schedules.terms <> ?
-                AND room_schedules.courseofyear <> ?                
+                AND room_schedules.terms = ?
+                AND room_schedules.courseofyear  = ?                
                 ORDER BY booking_time_start ASC";
 
             $qresult = DB::select($sql, [
