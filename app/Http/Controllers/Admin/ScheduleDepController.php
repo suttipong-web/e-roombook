@@ -1069,8 +1069,8 @@ class ScheduleDepController extends Controller
         INNER JOIN users ON room_schedules.straff_account = users.email
         INNER JOIN department ON users.dep_id = department.dep_id
         LEFT JOIN rooms ON room_schedules.roomID = rooms.id       
-        WHERE room_schedules.is_public =1  OR 
-             room_schedules.straff_account = '{$Byuser}'
+       /* WHERE room_schedules.is_public =1  OR 
+             room_schedules.straff_account = '{$Byuser}'*/
          
         GROUP BY room_schedules.is_group_session        
         ";
