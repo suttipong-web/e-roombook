@@ -454,6 +454,10 @@ class HelperService
         return $result;
     }
 
+function isTimeConflict($start1, $end1, $start2, $end2) {
+    return ($start1 < $end2) && ($end1 > $start2);
+}
+
     //function เช็คสิทธิการลงข้อมูล 
     function getUserStatusImportdata()
     {

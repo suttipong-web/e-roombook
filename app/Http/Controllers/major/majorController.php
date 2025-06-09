@@ -99,140 +99,94 @@ class majorController extends Controller
             ->where('is_open', '1')
             ->get();
 
-        //ข้อมูลห้องจองห่้องเรียน
-        $BookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
-            ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
-            ->where('room_schedules.straff_account', $Byuser)
-            ->where('room_schedules.is_group_session', $sesid)
-            ->where('room_schedules.is_public', 0)
-            ->where('is_error_room', 0)
-            ->get();
+      
+            $BookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
+    ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+    ->where('room_schedules.straff_account', $Byuser)
+    ->where('room_schedules.is_group_session', $sesid)
+    ->where('room_schedules.is_public', 0)
+    ->where('is_error_room', 0)
+    ->get();
 
-        foreach ($BookingList as $rows) {
+            foreach ($BookingList as $rows) {
+                $isDuplicate = false;
+                $strError = "";
 
-            $is_duplicate = 0;
-            //ตรวจสอบว่าวันที่ เวลา มีคนการจองก่อนหน้าหรือยัง  
-            //ถ้ามีให่  update  ฟิด is_duplicate = true  ด้วย เพื่อเป้นการแจ้งเตือน 
-            //ตรวจสอบว่าจองเวลานี้ได้ไหม 
+                $bkstart = Carbon::createFromFormat('H:i:s', $rows->booking_time_start);
+                $bkfinish = Carbon::createFromFormat('H:i:s', $rows->booking_time_finish);
 
-            //'schedule_startdate', 'schedule_enddate', 'booking_time_start', 'booking_time_finish'
-            $bkstartdate = $rows->schedule_startdate;
-            $bkwnddate = $rows->schedule_enddate;
-            // เวลาเริ่ม จบ  
-            $bkstart = $rows->booking_time_start;
-            $bkfinish = $rows->booking_time_finish;
+                $qresult = DB::select("
+                    SELECT room_schedules.* FROM room_schedules WHERE
+                        roomID = ? AND
+                        DATE(schedule_startdate) <= DATE(?) AND
+                        DATE(schedule_enddate) >= DATE(?) AND
+                        schedule_repeatday = ? AND
+                        terms = ? AND
+                        courseofyear = ? AND
+                        id <> ?
+                    ORDER BY booking_time_start ASC
+                ", [
+                    $rows->roomID,
+                    $rows->schedule_startdate,
+                    $rows->schedule_enddate,
+                    $rows->schedule_repeatday,
+                    $rows->terms,
+                    $rows->courseofyear,
+                    $rows->id
+                ]);
 
-            // ตรวจสอบหาวัน /เวลานี้ว่ามีรายการจองหรือไม่
-            $sql = "SELECT * FROM `room_schedules` WHERE
-                room_schedules.roomID = ?
-                AND (
-                    (
-                        DATE(room_schedules.schedule_startdate) <= DATE(?)
-                        AND DATE(room_schedules.schedule_enddate) >= DATE(?)
-                    )
-                )
-                AND room_schedules.schedule_repeatday = ?
-                AND room_schedules.terms = ?
-                AND room_schedules.courseofyear  = ? 
-                AND room_schedules.id <> ?
-                       
-                ORDER BY booking_time_start ASC";
+                foreach ($qresult as $row_chk) {
+                    $chk_start = Carbon::createFromFormat('H:i:s', $row_chk->booking_time_start);
+                    $chk_finish = Carbon::createFromFormat('H:i:s', $row_chk->booking_time_finish);
 
-            $qresult = DB::select($sql, [
-                $rows->roomID,
-                $rows->schedule_startdate,
-                $rows->schedule_enddate,
-                $rows->schedule_repeatday,
-                $rows->terms,
-                $rows->courseofyear,  
-                $rows->id                       
-            ]);
-
-            $isDuplicate = false;
-            $strError = "";
-            $timesBlock = "";
-            $startTime_ = "";
-            $finishTime_ = "";
-            foreach ($qresult as $row_chk) {
-                if (
-                    ($bkstart < $row_chk->booking_time_finish && $bkfinish > $row_chk->booking_time_start)
-                ) {
-                    $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
-                    $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
-                    $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
-                    $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->courseSec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
-                    $isDuplicate = true;
-                    break;
+                    if ($class->isTimeConflict($bkstart, $bkfinish, $chk_start, $chk_finish)) {
+                        $timesBlock = $chk_start->format('H:i') . " - " . $chk_finish->format('H:i') . " น.";
+                        $strError = "<b>ห้อง : {$rows->roomFullName}<br>ช่วงเวลา : {$timesBlock}<br>ถูกจองแล้วโดย: รหัสวิชา {$row_chk->courseNO} ({$row_chk->courseSec})<br/>โปรดแก้ไขรายการจองของท่าน</b>";
+                        $isDuplicate = true;
+                        break;
+                    }
                 }
-            }
 
-            DB::table('room_schedules')->where('id', $rows->id)->update([
-                'is_duplicate' => $isDuplicate ? 1 : 0,
-                'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : '' ,
-                'is_error_detail'=>$strError 
-            ]);
+                DB::table('room_schedules')->where('id', $rows->id)->update([
+                    'is_duplicate' => $isDuplicate ? 1 : 0,
+                    'is_error' => $isDuplicate ? 'ไม่สามารถลงเวลาได้' : '',
+                    'is_error_detail' => $strError
+                ]);
 
+                // ตรวจสอบกับ booking_rooms
+                $numofday = $class->getListNumOfDay($rows->schedule_repeatday);
+                $loopdate = $class->getDateofday($rows->schedule_startdate, $rows->schedule_enddate, $numofday);
 
+                foreach ($loopdate as $is_date) {
+                    $ChkTimeBooking = DB::table('booking_rooms')
+                        ->select('booking_rooms.*')
+                        ->where('roomID', $rows->roomID)
+                        ->where('booking_status', 1)
+                        ->where('schedule_startdate', '<=', $is_date)
+                        ->where('schedule_enddate', '>=', $is_date)
+                        ->where('courseofyear', $rows->courseofyear)
+                        ->where('terms', $rows->terms)
+                        ->get();
 
-            //ตรวจสอบในตารางการจองหลัก 
-            // ตรวจสอบในตารางจริง
+                    foreach ($ChkTimeBooking as $row_chk) {
+                        $chk_start = Carbon::createFromFormat('H:i:s', $row_chk->booking_time_start);
+                        $chk_finish = Carbon::createFromFormat('H:i:s', $row_chk->booking_time_finish);
 
-            $numofday = $class->getListNumOfDay($rows->schedule_repeatday);
-            // echo "<br/>".$rows->schedule_repeatday;
-            $loopdate = $class->getDateofday($rows->schedule_startdate, $rows->schedule_enddate, $numofday);
-            // echo print_r($loopdate);                                            
-            $error = 1;
-            foreach ($loopdate as $is_date) {
-                //ตรวจสอบว่าจองเวลานี้ได้ไหม         
-                $ChkTimeBookig = DB::table('booking_rooms')
-                    ->select('booking_time_start', 'booking_time_finish' ,'courseNO', 'booking_subject_sec')
-                    ->where('booking_rooms.roomID', $rows->roomID)
-                    ->where('booking_rooms.booking_status', 1)
-                    ->where('booking_rooms.schedule_startdate', '>=', $is_date)
-                    ->where('booking_rooms.schedule_enddate', '<=', $is_date)
-                    ->where('booking_rooms.courseofyear', $rows->courseofyear)
-                    ->where('booking_rooms.terms', $rows->terms)
-                    ->get();
-                // ยืนยันการจอง
-                $is_confirm = 1;
-                $text = "";
-                     $reqStart = str_replace(':', '', substr($rows->booking_time_start, 0, 5));
-                    $reqEnd = str_replace(':', '', substr($rows->booking_time_finish, 0, 5));
+                        if ($class->isTimeConflict($bkstart, $bkfinish, $chk_start, $chk_finish)) {
+                            $timesBlock = $chk_start->format('H:i') . " - " . $chk_finish->format('H:i') . " น.";
+                            $strError = "<b>ห้อง : {$rows->roomFullName}<br>ช่วงเวลา : {$timesBlock}<br>ถูกจองแล้วโดย: รหัสวิชา {$row_chk->courseNo} ({$row_chk->booking_subject_sec})<br/>โปรดแก้ไขรายการจองของท่าน</b>";
 
-                    foreach ($ChkTimeBookig as $row_chk) {
-                        $rowchkStart = str_replace(':', '', substr($row_chk->booking_time_start, 0, 5));
-                        $rowchkEnd = str_replace(':', '', substr($row_chk->booking_time_finish, 0, 5));
-
-                        if (
-                            ($reqStart >= $rowchkStart && $reqStart < $rowchkEnd)
-                            ||
-                            ($reqEnd > $rowchkStart && $reqEnd <= $rowchkEnd)
-                            ||
-                            ($reqStart < $rowchkStart && $reqEnd > $rowchkEnd)
-                        ) { 
-                        $error = 0;
-                         $startTime_ = Carbon::parse($row_chk->booking_time_start)->format('H:i'); // แปลงเป็น 14:00
-                         $finishTime_ = Carbon::parse($row_chk->booking_time_finish)->format('H:i'); // แปลงเป็น 16:00
-                         $timesBlock = $startTime_ . " - " . $finishTime_ . " น.";
-
-                         $strError = "<b>ห้อง : " . $rows->roomFullName . "<br>ช่วงเวลา : " . $timesBlock . " <br> ถูกจองแล้วโดย: รหัสวิชา " . $row_chk->courseNO . " (" . $row_chk->booking_subject_sec . ") <br/>โปรดแก้ไขรายการจองของท่าน</b>";
+                            DB::table('room_schedules')->where('id', $rows->id)->update([
+                                'is_duplicate' => 1,
+                                'is_error' => 'ไม่สามารถลงเวลาได้',
+                                'is_error_detail' => $strError
+                            ]);
+                        break 2; // ออกจาก 2 วนลูป
+                        }
                     }
                 }
             }
-
-            if (!$error) {
-                //เวลาซ้ำ    
-                $result = DB::table('room_schedules')
-                    ->where('id', $rows->id)
-                    ->update([
-                        'is_duplicate' => 1,
-                        'is_error' => 'ไม่สามารถลงเวลาได้' ,
-                        'is_error_detail'=>$strError 
-                    ]);
-            }
-
-        }
-        //-- END FOR --
+               //-- END FOR --
 
         $getBookingList = roomSchedule::leftJoin('rooms', 'rooms.id', '=', 'room_schedules.roomID')
             ->select('room_schedules.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
