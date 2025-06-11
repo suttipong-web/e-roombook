@@ -409,7 +409,7 @@ class ScheduleDepController extends Controller
 
                 $data_schedule = array();
                 $resultBooking = DB::select(DB::raw($sql));
-
+                $titles = "";
                 $data_schedule = array();
                 if ($resultBooking) {
                     foreach ($resultBooking as $row) {
@@ -419,6 +419,13 @@ class ScheduleDepController extends Controller
                         $day2 = "";
                         //$repeat_day = '2';
                         // $repeat_day = ($row['schedule_repeatday'] != "") ? explode(",", $row['schedule_repeatday']) : [];
+                        if($row->is_import_excel){
+                        
+                        $titles = $row->courseNo. " (" . $row->booking_subject_sec . ") ";
+                        } else {
+                        $titles = $row->booking_subject;
+                        }
+
                         $data_schedule[] = array(
                             "id" => $row->id,
                             "start_date" => $row->schedule_startdate,
@@ -426,7 +433,7 @@ class ScheduleDepController extends Controller
                             "start_time" => $row->booking_time_start,
                             "end_time" => $row->booking_time_finish,
                             "repeat_day" => $repeat_day,
-                            "title" => $row->booking_subject,
+                            "title" =>$titles,
                             "depName" => $row->booking_department,
                             "sec" => $row->booking_booker,
                             "room" => $row->roomFullName,
@@ -434,7 +441,8 @@ class ScheduleDepController extends Controller
                             "booking_phone" => $row->booking_phone,
                             "building" => $row->roomTitle,
                             "Instructor" => $row->booking_Instructor,
-                            "is_import_excel" => $row->is_import_excel
+                            "is_import_excel" => $row->is_import_excel,
+                            'booking_subject' => $row->booking_subject
                         );
                     }
                 }
@@ -470,7 +478,8 @@ class ScheduleDepController extends Controller
                                             "booking_phone" => $row['booking_phone'],
                                             'UserChkDay' => $row['repeat_day'],
                                             'Instructor' => $row['Instructor'],
-                                            'is_import_excel' => $row['is_import_excel']
+                                            'is_import_excel' => $row['is_import_excel'],
+                                            'booking_subject' => $row['booking_subject']
                                         ];
                                     }
                                 }
@@ -602,9 +611,9 @@ class ScheduleDepController extends Controller
                                 $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . '<br/> ' . $row_day["depName"] . ' </div>';
                                 $outputBody .= '<div class="position-absolute text-center  ' . $classColorBG . '" 
                                 detail="' . $details . '"
-                                htitle ="' . $row_day['title'] . '"
-                               style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                               <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . $sub2 . '</a></div>';
+                                htitle ="' . $row_day['booking_subject'] . '"
+                               style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 56px;">
+                               <a href="#" title ="' . $row_day['booking_subject'] . '" >' . $subjectTitle . $sub2 . '</a></div>';
                             }
                             //$outputBody .= "" . $strLop;
                         }

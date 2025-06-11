@@ -96,7 +96,7 @@ class ScheduleroomController extends Controller
                     ";
 
         $resultBooking = DB::select(DB::raw($sql));
-
+         $titles ="";                   
         $data_schedule = array();
         if ($resultBooking) {
             foreach ($resultBooking as $row) {
@@ -108,6 +108,15 @@ class ScheduleroomController extends Controller
                 // $repeat_day = ($row['schedule_repeatday'] != "") ? explode(",", $row['schedule_repeatday']) : [];
 
                 // $sec = ($roomTypeId==1) ? $row->booking_booker : $row->booking_Instructor;
+
+                if ($row->is_import_excel) {
+
+                    $titles = $row->courseNo . " (" . $row->booking_subject_sec . ") ";
+                } else {
+                    $titles = $row->booking_subject;
+                }
+
+
                 $data_schedule[] = array(
                     "id" => $row->id,
                     "start_date" => $row->schedule_startdate,
@@ -115,15 +124,16 @@ class ScheduleroomController extends Controller
                     "start_time" => $row->booking_time_start,
                     "end_time" => $row->booking_time_finish,
                     "repeat_day" => $repeat_day,
-                    "title" => $row->booking_subject,
+                    "title" => $titles,
                     "depName" => $row->booking_department,
                     "sec" => $row->booking_booker,
                     "room" => $row->roomFullName,
                     "isroomID" => $row->roomID,
                     "booking_phone" => $row->booking_phone,
                     "building" => $row->roomTitle,
-                    "Instructor" => $row->booking_Instructor ,
-                    "is_import_excel" => $row->is_import_excel
+                    "Instructor" => $row->booking_Instructor,
+                    "is_import_excel" => $row->is_import_excel,
+                    'booking_subject' => $row->booking_subject
 
                 );
             }
@@ -158,8 +168,9 @@ class ScheduleroomController extends Controller
                                     "depName" => $row['depName'],
                                     "booking_phone" => $row['booking_phone'],
                                     'UserChkDay' => $row['repeat_day'],
-                                    'Instructor' => $row['Instructor'] ,
-                                    'is_import_excel' => $row['is_import_excel']
+                                    'Instructor' => $row['Instructor'],
+                                    'is_import_excel' => $row['is_import_excel'],
+                                    'booking_subject' => $row['booking_subject']
                                 ];
                             }
                         }
@@ -272,6 +283,7 @@ class ScheduleroomController extends Controller
                         $percenStr = $percenStr + (int) $scalx;
                     }
 
+
                     if ($scaly <= $percenStr) {
                         $subjectTitle = Str::limit($row_day['title'], ($sc_width / $percenStr), '...');
                     } else {
@@ -283,26 +295,28 @@ class ScheduleroomController extends Controller
                     }
 
 
+
+
                     $ownertitle = ($roomTypeId == 1) ? 'ผู้ขอใช้' : 'ผู้สอน';
                     if ($roomTypeId == 1) {
                         //$classColorBG = "sc-detail";
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
                     } else {
-                       // $classColorBG = "sc-detail-std";
+                        // $classColorBG = "sc-detail-std";
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
                     }
 
                     if ($row_day['is_import_excel'] == 1) {
                         $classColorBG = "sc-detail-std";
-                    }else {
+                    } else {
                         $classColorBG = "sc-detail";
                     }
-
+                    //$Htitle = 
                     $outputBody .= '<div class="position-absolute text-center clickscDetail ' . $classColorBG . '" 
                                      detail="' . $details . '"
-                                     htitle ="' . $row_day['title'] . '"
-                                    style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                                    <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . $sub2 . '</a></div>';
+                                     htitle ="' . $row_day['booking_subject'] . '"
+                                    style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 56px;">
+                                    <a href="#" title ="' . $row_day['booking_subject'] . '" >' . $subjectTitle . $sub2 . '</a></div>';
                 }
                 //$outputBody .= "" . $strLop;
             }
@@ -318,7 +332,7 @@ class ScheduleroomController extends Controller
     {
         $class = new HelperService();
         $output = " ไม่พบรายการลงเวลาของท่าน ";
-        $searchDate=  $request->dateSearch;
+        $searchDate = $request->dateSearch;
         $roomTypeId = ($request->roomTypeId) ? $request->roomTypeId : 2;
 
         $Byuser = "";
@@ -344,16 +358,16 @@ class ScheduleroomController extends Controller
 
         $sql .= "  ORDER BY  roomID  ASC ";
         $getRoom = DB::select(DB::raw($sql));
- 
+
         $roomIdDisplay = 0;
         $roomTypeId = 0;
         if ($getRoom) {
             //loop ตารางห้องเรียน  
             foreach ($getRoom as $tableRoom) {
-                
+
                 $roomTypeId = $tableRoom->roomTypeId;
                 $output = "";
-                                ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
+                ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
                 $sc_startTime = date("Y-m-d 08:00:00");  // กำหนดเวลาเริ่มต้ม เปลี่ยนเฉพาะเลขเวลา
                 $sc_endtTime = date("Y-m-d  22:00:00");  // กำหนดเวลาสื้นสุด เปลี่ยนเฉพาะเลขเวลา
                 $sc_t_startTime = strtotime($sc_startTime);
@@ -371,7 +385,8 @@ class ScheduleroomController extends Controller
                     $uts = $request->uts; // ถ้ามีส่งค่าเปลี่ยนสัปดาห์มา
                 }
                 // ส่วนของการกำหนดวัน สามารถนำไปประยุกต์กรณีทำตารางเวลาแบบ เลื่อนดูแต่ละสัปดาห์ได้
-                $now_day =date("Y-m-d");; // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
+                $now_day = date("Y-m-d");
+                ; // วันปัจจุบัน ให้แสดงตารางที่มีวันปัจจุบัน เมื่อแสดงครั้งแรก
                 if (isset($uts) && $uts != "" && $uts != 0) { // เมื่อมีการเปลี่ยนสัปดาห์
                     $now_day = date("Y-m-d", trim($uts)); // เปลี่ยนวันที่ แปลงจากค่าวันจันทร์ที่ส่งมา
                     $now_day = date("Y-m-d", strtotime($now_day . " monday this week"));
@@ -392,7 +407,7 @@ class ScheduleroomController extends Controller
                     $sc_numCol++;    // ได้จำนวนคอลัมน์ที่จะแสดง
                 }
 
- 
+
                 ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูล ////////////////////////
                 $sql = " SELECT booking_rooms.*,rooms.roomFullName,rooms.roomTitle,rooms.roomToken
                         FROM booking_rooms
@@ -415,6 +430,7 @@ class ScheduleroomController extends Controller
                 $resultBooking = DB::select(DB::raw($sql));
 
                 $data_schedule = array();
+                $titles ="";
                 if ($resultBooking) {
                     foreach ($resultBooking as $row) {
                         $carbonDate = Carbon::parse($row->schedule_startdate);
@@ -423,6 +439,11 @@ class ScheduleroomController extends Controller
                         $day2 = "";
                         //$repeat_day = '2';
                         // $repeat_day = ($row['schedule_repeatday'] != "") ? explode(",", $row['schedule_repeatday']) : [];
+                        if ($row->is_import_excel) {
+                            $titles = $row->courseNo . " (" . $row->booking_subject_sec . ") ";
+                        } else {
+                            $titles = $row->booking_subject;
+                        }
                         $data_schedule[] = array(
                             "id" => $row->id,
                             "start_date" => $row->schedule_startdate,
@@ -430,7 +451,7 @@ class ScheduleroomController extends Controller
                             "start_time" => $row->booking_time_start,
                             "end_time" => $row->booking_time_finish,
                             "repeat_day" => $repeat_day,
-                            "title" => $row->booking_subject,
+                            "title" => $titles,
                             "depName" => $row->booking_department,
                             "sec" => $row->booking_booker,
                             "room" => $row->roomFullName,
@@ -438,7 +459,8 @@ class ScheduleroomController extends Controller
                             "booking_phone" => $row->booking_phone,
                             "building" => $row->roomTitle,
                             "Instructor" => $row->booking_Instructor,
-                            "is_import_excel" => $row->is_import_excel
+                            "is_import_excel" => $row->is_import_excel,
+                            'booking_subject' => $row->booking_subject
                         );
                     }
                 }
@@ -474,7 +496,8 @@ class ScheduleroomController extends Controller
                                             "booking_phone" => $row['booking_phone'],
                                             'UserChkDay' => $row['repeat_day'],
                                             'Instructor' => $row['Instructor'],
-                                            'is_import_excel' => $row['is_import_excel']
+                                            'is_import_excel' => $row['is_import_excel'] ,
+                                            'booking_subject' => $row['booking_subject']
                                         ];
                                     }
                                 }
@@ -594,25 +617,25 @@ class ScheduleroomController extends Controller
                                 if ($roomTypeId > 1) {
                                     $sub2 = "<br/>" . $row_day['Instructor'];
                                 }
-                                
-                    $ownertitle = ($roomTypeId == 1) ? 'ผู้ขอใช้' : 'ผู้สอน';
-                    if ($roomTypeId == 1) {
-                       // $classColorBG = "sc-detail";
-                        $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
-                    } else {
-                       // $classColorBG = "sc-detail-std";
-                        $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
-                    }
-                      $classColorBG = "sc-detail";
+
+                                $ownertitle = ($roomTypeId == 1) ? 'ผู้ขอใช้' : 'ผู้สอน';
+                                if ($roomTypeId == 1) {
+                                    // $classColorBG = "sc-detail";
+                                    $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
+                                } else {
+                                    // $classColorBG = "sc-detail-std";
+                                    $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
+                                }
+                                $classColorBG = "sc-detail";
                                 if ($row_day['is_import_excel'] == 1) {
                                     $classColorBG = "sc-detail-std";
                                 }
                                 $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . '<br/> ' . $row_day["depName"] . ' </div>';
                                 $outputBody .= '<div class="position-absolute text-center  clickscDetail ' . $classColorBG . '" 
                                 detail="' . $details . '"
-                                htitle ="' . $row_day['title'] . '"
-                               style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
-                               <a href="#" title ="' . $row_day['title'] . '" >' . $subjectTitle . $sub2 . '</a></div>';
+                                htitle ="' . $row_day['booking_subject'] . '"
+                               style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;min-height: 56px;">
+                               <a href="#" title ="' . $row_day['booking_subject'] . '" >' . $subjectTitle . $sub2 . '</a></div>';
                             }
                             //$outputBody .= "" . $strLop;
                         }
