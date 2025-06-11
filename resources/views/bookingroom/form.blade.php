@@ -369,6 +369,7 @@
                 e.preventDefault();
                 const fd = new FormData(this);
                 $("#add_btn").text('Adding...');
+                 //alert(0);
                 $.ajax({
                     url: "/booking/insertBooking",
                     method: 'post',
@@ -378,7 +379,7 @@
                     processData: false,
                     dataType: 'json',
                     success: function (response) {
-                        console.log(response);
+                       // console.log(response);
                         if (response.status == 200) {
                             Swal.fire({
                                 title: 'Booking Successful',
