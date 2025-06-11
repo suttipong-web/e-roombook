@@ -55,7 +55,7 @@ Route::prefix('/room')->group(
     function () {
         Route::get('/{roomId}/{roomTitle}', [RoomsController::class, 'detail'])->name('detail');
         Route::get('/print/{roomId}/{uts}/{roomTitle}', [RoomsController::class, 'print_schedule'])->name('print_schedule');
-       
+
     }
 );
 
@@ -70,14 +70,13 @@ Route::prefix('/profile')->group(
 Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profile.logout');
 
 
-
 // Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
 Route::prefix('/booking')->group(
     function () {
         Route::get('/', [BookingController::class, 'index']);
-        Route::get('/listall', [BookingController::class, 'listall'])->name('listall');     
-        Route::post('/Searchlist', [BookingController::class, 'listallSearch'])->name('listallSearch'); 
-        Route::post('/Searchlisttable', [BookingController::class, 'listallSearchTable'])->name('listallSearchTable');                 
+        Route::get('/listall', [BookingController::class, 'listall'])->name('listall');
+        Route::post('/Searchlist', [BookingController::class, 'listallSearch'])->name('listallSearch');
+        Route::post('/Searchlisttable', [BookingController::class, 'listallSearchTable'])->name('listallSearchTable');
         Route::get('/listall/roomId/', [BookingController::class, 'listall'])->name('listallByRoom');
         Route::get('/{typeId}/{typeTitle}', [BookingController::class, 'indexType'])->name('indexType');
         Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancelBooking');
@@ -85,7 +84,7 @@ Route::prefix('/booking')->group(
         Route::post('/search', [BookingController::class, 'search'])->name('search');
         Route::get('/search', [BookingController::class, 'linksearch'])->name('get.search');
         Route::get('/check/{roomID}/{usertype}/{roomName}', [BookingController::class, 'check'])->name('check');
-        Route::get('/form/{roomID}/{usertype}/{roomName}/{datesearch}', [BookingController::class, 'setform'])->name('setform');      
+        Route::get('/form/{roomID}/{usertype}/{roomName}/{datesearch}', [BookingController::class, 'setform'])->name('setform');
         Route::post('/insertBooking', [BookingController::class, 'insertBooking'])->name('insertBooking');
     }
 );
@@ -117,7 +116,6 @@ Route::get('/major/schedules', [majorController::class, 'listimport'])->name('ma
 Route::get('/major/schedules/{step}/{ses_id}', [majorController::class, 'schedules'])->name('major.schedules');
 Route::post('/major/schedule/delete_import', [majorController::class, 'delete_import'])->name('delete_import');
 Route::post('/major/scheduletime/delete', [majorController::class, 'delete'])->name('delete');
-
 Route::get('/major/schedules/view', [majorController::class, 'views'])->name('major.views');
 Route::get('/major/schedules/viewall', [majorController::class, 'viewsAll'])->name('major.viewsall');
 Route::get('/major/schedules/fetchall', [majorController::class, 'fetchAll'])->name('major.fetchAll');
@@ -132,14 +130,10 @@ Route::post('/admin/updateSchedule', [ScheduleDepController::class, 'updated'])-
 Route::get('/admin/schedules/view', [ScheduleDepController::class, 'views'])->name('views');
 Route::get('/admin/schedules/config', [ScheduleDepController::class, 'configroom'])->name('configroom');
 Route::post('/admin/schedules/configroom/edit', [ScheduleDepController::class, 'updateConfigRoom'])->name('updateConfigRoom');
-
 Route::get('/admin/schedules/viewAll', [ScheduleDepController::class, 'viewAll'])->name('viewAll');
 Route::get('/admin/schedules/fetchall', [ScheduleDepController::class, 'fetchAll'])->name('fetchAll');
 Route::delete('/admin/schedule/delete', [ScheduleDepController::class, 'delete'])->name('delete');
 Route::post('/admin/schedule/saveImportfile', [ScheduleDepController::class, 'saveImportfile'])->name('saveImportfile');
-
-
-
 
 Route::get('/print/form/booking/{bookingID}/{tokens}', [ManageBookingController::class, 'printFormBooking'])->name('printFormBooking');
 Route::group(['middleware' => ['admin_auth']], function () {
@@ -149,9 +143,9 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/admin/user/viewprifile/{userId}', [UserController::class, 'viewprifile'])->name('users.viewprifile');
     Route::post('/admin/user/save', [UserController::class, 'saved'])->name('users.saved');
-   
+
     Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
-    
+
     //Route  ระบบจัดการห้อง RoomsController
     Route::get('/admin', [DashboardController::class, 'adminindex'])->name('้adminindex');
     Route::get('/admin/room/', [RoomsController::class, 'index']);
@@ -166,7 +160,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::delete('/admin/room/delete/admin', [RoomsController::class, 'deleteAdmin'])->name('deleteAdmin');
 
     Route::get('/admin/room/AddAdminRoom', [RoomsController::class, 'addAdmin'])->name('addAdmin');
-    
+
     Route::post('/admin/room/update', [RoomsController::class, 'update'])->name('update');
 
     Route::get('/admin/bookingDetail/{getStatus}/{bookingID}/{token}', [ManageBookingController::class, 'mbookingDetail'])->name('mbookingDetail');
@@ -178,7 +172,7 @@ Route::group(['middleware' => ['admin_auth']], function () {
 
     Route::post('/admin/payment/setdata', [ManageBookingController::class, 'setdataPayment'])->name('setdataPayment');
     Route::post('/admin/approveBooking', [ManageBookingController::class, 'approveBooking'])->name('approveBooking');
-       
+
     Route::get('/admin/report/bookinglist', [ReportController::class, 'bookinglist'])->name('bookinglist');
     Route::get('/admin/report', [ReportController::class, 'index'])->name('index');
     Route::get('/admin/report/bookingtable', [ReportController::class, 'bookingtable'])->name('bookingtable');
@@ -195,12 +189,12 @@ Route::group(['middleware' => ['admin_auth']], function () {
     Route::get('/admin/term/getDataedit', [TermController::class, 'getTermEdit'])->name('getTermEdit');
 
     // หนดผู้ใช้งานลงตารางเรียน
-    Route::get('/admin/groupCourse', [GroupCourseController ::class, 'index']);
-    Route::get('/admin/groupCourse/assign/{id}/{group_title}', [GroupCourseController ::class, 'assigngroup']);
+    Route::get('/admin/groupCourse', [GroupCourseController::class, 'index']);
+    Route::get('/admin/groupCourse/assign/{id}/{group_title}', [GroupCourseController::class, 'assigngroup']);
     Route::post('/admin/groupCourse/AddAdmin', [GroupCourseController::class, 'AddAdmin'])->name('AddAdmin');
     Route::delete('/admin/groupCourse/delete', [GroupCourseController::class, 'deleteAdmin']);
-    
-    
+
+
 });
 
 

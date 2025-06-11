@@ -559,10 +559,11 @@ class BookingController extends Controller
             if (!$request->hasFile('pdf')) {
                 return response()->json([
                     'status' => 209,
-                    'errortext' => 'บุคคลภายนอกต้องทำการแนบไฟล์ เพื่อขอใช้สถานที่และต้องเป็นเอกสาร ชนิดไฟล์ .pdf เท่านั้น'
+                    'errortext' => 'บุคคลภายนอกต้องทำการแนบไฟล์ เพื่อขอใช้สถานที่และต้องเป็นเอกสารชนิดไฟล์ .pdf เท่านั้น'
                 ]);
             }
         }
+
         // Handle the file upload
         if ($request->hasFile('pdf')) {
             $file = $request->file('pdf');
@@ -782,7 +783,6 @@ class BookingController extends Controller
                     }
                 }
 
-
                 // แจ้งข้อความเข้ากลุ่มผู้ดูแลห้อง 
                 //mMb96Ki0GrXKg21z4XARen0Hf32PL3imHuvOsxRFKCX Aod
 
@@ -833,7 +833,7 @@ class BookingController extends Controller
                 ]);
             }
         }
-
+        
         return "No data found to delete.";
     }
 
