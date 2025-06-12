@@ -40,14 +40,18 @@ class ScheduleImport implements ToModel, WithHeadingRow
 
             //ตรวจสอบหาอ ID ห้อง
            if(!empty($row["roomno"])){
-              $sql=" SELECT rooms.id as roomID FROM rooms WHERE 
-              (rooms.roomTitle='".$row["roomno"]."' ) LIMIT 1";
+              $sql=" SELECT rooms.id as roomID FROM rooms
+               WHERE 
+              (rooms.roomTitle='".$row["roomno"]."' ) 
+              AND  is_open =1
+              
+              LIMIT 1";
               $getRoomID = DB::select(DB::raw($sql));
               if($getRoomID) {
                 $roomId = $getRoomID[0]->roomID;
               }else {
                 $is_error= 1;
-                $iserror ="ชื่อห้องไม่ถูกต้อง";
+                $iserror ="ห้องไม่ถูกต้อง";
                 $is_error_detail = "ชื่อห้องที่ท่านระบุไม่ถูกต้อง โปรดทำการตรวจสอบข้อมูลของท่านอีกครั้ง";
               }
             }

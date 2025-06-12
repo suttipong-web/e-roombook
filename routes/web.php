@@ -46,9 +46,7 @@ Route::get('/manual', function () {
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');
-
 Route::get('/fetchScheduleByRoom', [ScheduleroomController::class, 'fetchScheduleByRoom'])->name('fetchScheduleByRoom');
-
 Route::get('/fetchScheduleAll', [ScheduleroomController::class, 'fetchScheduleAll'])->name('fetchScheduleAll');
 
 Route::prefix('/room')->group(
@@ -59,8 +57,6 @@ Route::prefix('/room')->group(
     }
 );
 
-
-
 Route::prefix('/profile')->group(
     function () {
         Route::get('/', [ProfileProfileController::class, 'index'])->name('profile.index');
@@ -68,7 +64,6 @@ Route::prefix('/profile')->group(
 );
 
 Route::get('/logout', [ProfileProfileController::class, 'logout'])->name('profile.logout');
-
 
 // Route  ระบบจองห้อง โดยผู้ใช้ทั่วไป .
 Route::prefix('/booking')->group(
