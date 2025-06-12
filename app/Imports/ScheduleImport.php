@@ -41,7 +41,7 @@ class ScheduleImport implements ToModel, WithHeadingRow
             //ตรวจสอบหาอ ID ห้อง
            if(!empty($row["roomno"])){
               $sql=" SELECT rooms.id as roomID FROM rooms WHERE 
-              (rooms.roomTitle='".$row["roomno"]."' OR   rooms.roomTitle like '%".$row["roomno"]."%' ) LIMIT 1";
+              (rooms.roomTitle='".$row["roomno"]."' ) LIMIT 1";
               $getRoomID = DB::select(DB::raw($sql));
               if($getRoomID) {
                 $roomId = $getRoomID[0]->roomID;

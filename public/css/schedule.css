@@ -42,7 +42,7 @@ div.table-responsive::-webkit-scrollbar {
 }
 
 .day_schedule {
-    font-size: 11px;
+    font-size: 1px;
 }
 
 .time_schedule_text {}
@@ -57,14 +57,14 @@ div.table-responsive::-webkit-scrollbar {
     position: relative;
     right: 5px;
     top: 0;
-    max-width: 80px;
+    width: 85px;
 }
 
 .time-head-label {
     position: relative;
     left: 10px;
     bottom: 0;
-    max-width: 80px;
+   width: 85px;
 }
 
 .diagonal-cross {

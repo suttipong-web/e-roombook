@@ -215,8 +215,8 @@ class ScheduleroomController extends Controller
                         </div>            
                   <br>
                     <div class="wrap_schedule">
-                            <div class="table-responsive ">
-                                <table class="table table-bordered bg-light">
+                            <div class="table-responsive">
+                                <table class="table table-bordered bg-light" style="width: 1260px;">
                                     <thead class="thead-light">
                                         <tr class="time_schedule ">
                                         <th class="p-0">

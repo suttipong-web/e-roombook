@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/vendor/animate/animate.min.css">
     <link rel="stylesheet" href="/css/jquery.desoslide.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/schedule_print.css">
+    <link rel="stylesheet" href="/css/schedule.css">
     @includeIf('partials.headtag')
     <style type="text/css">
         @media print {
@@ -87,10 +87,10 @@
                     data: {
                         uts: $uts,
                         getroomId: $("#hinden_roomID").val(),
-                        hindenBtnBooking: false,
-                        hindenPrint: false,
-                        pagePrint: false,
-                        hindenBtnALL: true,
+                       hindenBtnBooking: true,
+                       /* hindenPrint: false,
+                       /* pagePrint: false,
+                        hindenBtnALL: false,*/
                         
                         _token: '{{ csrf_token() }}'
                     },
@@ -119,18 +119,20 @@
                     focusConfirm: false
                 });
             });
-
-            $(document).on('click', '.sc-detail-std', function (e) {
-            var detail = $(this).attr('detail');
-            var titles = $(this).attr('htitle');
-            Swal.fire({
-                title: "<strong>" + titles + "</strong>",
-                icon: "info",
-                html: detail,
-                showCloseButton: true,
-                focusConfirm: false
+            
+            $(document).on('click', '.sc-detail-std', function(e) {
+                var detail = $(this).attr('detail');
+                var titles = $(this).attr('htitle');
+                Swal.fire({
+                    title: "<strong>" + titles + "</strong>",
+                    icon: "info",
+                    html: detail,
+                    showCloseButton: true,
+                    focusConfirm: false
+                });
             });
-        });
+
+
             $(document).on('click', '.btnPrint', function(e) {
                    //Print the window.
                 $(".wrap_schedule_control").css("display", "none");

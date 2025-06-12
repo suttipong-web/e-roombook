@@ -38,8 +38,9 @@
         }
 
         .showtable {
-            width: 99%;
+            width: 1200px;
             margin: 5px auto;
+            text-align: center;
 
         }
     </style>
@@ -48,7 +49,7 @@
 <body>
 
     <input type="hidden" id="hinden_roomID" value="{{ $dataroom->id }}">
-    <div class="container-fluid-">
+    <div class="container">
 
         <h3 class="text-center">{{ $dataroom->roomFullName }}</h3>
         <hr>

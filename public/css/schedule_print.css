@@ -51,9 +51,9 @@ div.table-responsive::-webkit-scrollbar {
 }
 
 .day_schedule_text {
-    width: 60px;
-    font-size: 11px;
-    padding: 10px 5px;
+    width: 90px;
+    font-size: 12px;
+    padding: 5px 5px;
 }
 
 .day-head-label {
@@ -97,7 +97,7 @@ div.table-responsive::-webkit-scrollbar {
     font-weight: 500;
 }
 .sc-detail-std {
-    font-size: 11px;
+    font-size: 12px;
     background-color: #ee82ee;
     color: #080000;
     border: #ffffff 1px solid;
@@ -108,10 +108,10 @@ div.table-responsive::-webkit-scrollbar {
 
 .sc-detail-std a {
     color: #181818;
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
 }.sc-detail-std a:hover {
     color: #db1111;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
 }
