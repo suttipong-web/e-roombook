@@ -43,7 +43,7 @@ class ScheduleImport implements ToModel, WithHeadingRow
               $sql=" SELECT rooms.id as roomID FROM rooms
                WHERE 
               (rooms.roomTitle='".$row["roomno"]."' ) 
-              AND  is_open =1
+              AND  rooms.is_open =1
               
               LIMIT 1";
               $getRoomID = DB::select(DB::raw($sql));
