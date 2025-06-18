@@ -60,10 +60,8 @@ class ScheduleImport implements ToModel, WithHeadingRow
         $start_time = $class->convertTimeFormat($row["time_start"]);
         $end_time = $class->convertTimeFormat($row["time_finish"]);
 
-
       //  'booking_time_start' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($start_time)),
       //  'booking_time_finish' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($end_time)),
-
 
         return new roomSchedule([
                     'courseNO' => $row["courseno"],

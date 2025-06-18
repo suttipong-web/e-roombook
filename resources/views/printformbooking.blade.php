@@ -66,7 +66,8 @@
                 </h6>
             </div>
             <div style="text-align: right;margin-top: 30px;">
-                วันที่ {{ $getService->convertDateThai($detailBooking[0]->admin_action_date, false, false) }}
+               
+                วันที่  {{ $getService->convertDateThai($detailBooking[0]->admin_action_date,false, false) }}
             </div>
 
             <table>
@@ -76,7 +77,7 @@
                 </tr>
                 <tr>
                     <td>เรียน &nbsp;&nbsp;</td>
-                    <td>หัวหน้างานบริหารทั่วไป</td>
+                    <td>{{$subjectdoc}}</td>
                 </tr>
                 <tr>
                     <td>&nbsp;&nbsp;</td>
@@ -91,10 +92,10 @@
                 <tr>
                     <td colspan="2">
                         <div style="text-align: left;text-justify:auto ;">
-                            ขอใช้ในวันที่
-                            &nbsp;&nbsp;{{ $getService->convertDateThai($detailBooking[0]->schedule_startdate, false, false) }}
-                            &nbsp;&nbsp;&nbsp; ถึงวันที่ &nbsp;&nbsp;
-                            {{ $getService->convertDateThai($detailBooking[0]->schedule_enddate, false, false) }}
+                            ขอใช้ในวันที่ 
+                         
+                            &nbsp;&nbsp;{{ $getService->convertDateThaiNoTime($detailBooking[0]->schedule_startdate, false) }}
+                            &nbsp;&nbsp;ถึงวันที่ &nbsp;&nbsp;{{ $getService->convertDateThaiNoTime($detailBooking[0]->schedule_enddate, false) }}
                             &nbsp;&nbsp;ตั้งแต่เวลา&nbsp;{{ Str::limit($detailBooking[0]->booking_time_start, 5, '') }}
                             น. &nbsp; ถึงเวลา
                             {{ Str::limit($detailBooking[0]->booking_time_finish, 5, '') }} น.

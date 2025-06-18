@@ -165,9 +165,17 @@ class ManageBookingController extends Controller
         if ($request->bookingID) {
             $bookingId = $request->bookingID;
             $ResultBooking = booking_rooms::join('rooms', 'rooms.id', '=', 'booking_rooms.roomID')
-                ->select('booking_rooms.*', 'rooms.roomFullName', 'rooms.roomSize', 'rooms.roomDetail')
+                ->select('booking_rooms.*', 'rooms.roomFullName','rooms.roomTypeId', 'rooms.roomSize', 'rooms.roomDetail')
                 ->where('booking_rooms.id', $bookingId)
                 ->get();
+if($ResultBooking[0]->roomTypeId == 1){
+    $subjectdoc ="หัวหน้างานบริหารทั่วไป"   ;
+}else {
+   $subjectdoc ="รองคณบดี (ผู้ช่วยศาสตราจารย์ ดร.พฤษภ์ บุญมา)"   ; 
+}
+    //ห้องประชุม
+   
+
 
             $sql = "SELECT
             booking_assigns.*,
@@ -186,8 +194,7 @@ class ManageBookingController extends Controller
                 if ($getUSer) {
                      // lop หากมี Admin หลายคน                
                      foreach ($getUSer as $admins) {           
- 
-                         // เพิ่มผู้ดูแลห้องเข้าไปในรายการ                         
+                          // เพิ่มผู้ดูแลห้องเข้าไปในรายการ                         
                           $setData = [
                              'cmuitaccount' =>$admins->cmuitaccount,
                              'bookingID' =>$bookingId ,
@@ -215,7 +222,8 @@ class ManageBookingController extends Controller
 
             return view('printformbooking')->with([
                 'detailBooking' => $ResultBooking,
-                'ListEmployee' => $ListEmployee
+                'ListEmployee' => $ListEmployee,
+                'subjectdoc' => $subjectdoc,
             ]);
         }
         return view('printformbooking')->with([
