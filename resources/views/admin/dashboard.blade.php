@@ -162,6 +162,7 @@
                                 <th></th>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             @if (count($getBookingList) > 0)
                                 @foreach ($getBookingList as $rows)
