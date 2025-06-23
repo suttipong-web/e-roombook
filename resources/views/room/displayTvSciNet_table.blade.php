@@ -29,7 +29,7 @@
 
             .showtable {
                 width: 100%;
-                margin: 5px auto;
+               
 
             }
         }
@@ -56,7 +56,7 @@
             
                 background-color: #000;
                 height: 730px;
-                border: 2px solid #fff
+                
             }
     </style>
 </head>
