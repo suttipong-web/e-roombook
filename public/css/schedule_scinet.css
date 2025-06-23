@@ -33,45 +33,48 @@ div.table-responsive::-webkit-scrollbar {
 .wrap_schedule {
     cursor: pointer;
     margin: 0 auto;
-    width: 1800px;
     overflow-x: hidden
 }
 
 .time_schedule {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .day_schedule {
     font-size: 1px;
 }
 
-.time_schedule_text {}
+.time_schedule_text {
+
+     min-height:30px;
+}
 
 .day_schedule_text {
-    width: 90px;
-    font-size: 12px;
-    padding: 5px 5px;
+    width:100px;
+    font-size: 15px;
+    padding: 5px 2px;
+    min-height: 80px;
 }
 
 .day-head-label {
     position: relative;
     right: 5px;
     top: 0;
-    width: 85px;
+    width: 80px;
 }
 
 .time-head-label {
     position: relative;
     left: 10px;
     bottom: 0;
-   width: 85px;
+   width: 80px;
 }
 
 .diagonal-cross {
     border-bottom: 2px solid #dee2e6;
     position: relative;
     top: -17px;
-    left: 2;
+    left: 0;
     transform: translateY(20px) translateX(5px) rotate(20deg);
 }
 
@@ -95,28 +98,30 @@ div.table-responsive::-webkit-scrollbar {
     font-weight: 500;
 }
 .sc-detail-std {
-    font-size: 13px;
+    font-size: 16px;
     background-color: #00FFFF;
     color: #080000;
     border: #ffffff 1px solid;
-    padding: 3px;
-    max-height: 59px;
+    padding: 12px 0px;
+
     overflow: hidden;
 }
 
 .sc-detail-std a {
     color: #181818;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 500;
+        min-height: 70px;
+        margin-top: 5px;
 }
 .sc-detail-std a:hover {
     color: #db1111;
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .wrap_schedule table  {
-    width: 1800px;
+    width: 1980px;
     margin: 10px auto;
     overflow: hidden;
 

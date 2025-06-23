@@ -35,7 +35,7 @@
         }
 
         .showtable {
-            width: 99%;
+            width: 100%;
             margin: 5px auto;
 
         }
@@ -55,6 +55,8 @@
         body ,html {
             
                 background-color: #000;
+                height: 730px;
+                border: 2px solid #fff
             }
     </style>
 </head>
@@ -68,7 +70,7 @@
             <br/>
             <h2 style="text-align: center">ตารางการใช้ห้อง : {{ $dataroom->roomFullName }} </h2>
         
-            <div class="showtable">
+            <div class="showtable" >
 
             </div>
         </div>

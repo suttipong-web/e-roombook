@@ -784,7 +784,7 @@ class ScheduleroomController extends Controller
         $sc_timeStep = array();
         $sc_numCol = 0;
         $sc_numStep = "60"; // ช่วงช่องว่างเวลา หน่ายนาที 60 นาที = 1 ชั่วโมง
-        $hour_block_width = 90;
+        $hour_block_width = 120;
         
 
         ////////////////////// ส่วนของการจัดการตารางเวลา /////////////////////
@@ -824,12 +824,13 @@ class ScheduleroomController extends Controller
         // เพิ่มช่วงสุดท้าย
         $sc_timeStep[$sc_numCol] = date("H:i", $sc_t_endTime);
 
+
         $sc_numCol = count($sc_timeStep); // เช่น 08:00 - 22:00 => 14 ช่อง
 
-        $target_table_width = 1900;       // ตารางเต็มจอที่ต้องการ
-        $left_col_width = 90;            // คอลัมน์แรกที่แสดง "วัน"
+        $target_table_width = 1980;       // ตารางเต็มจอที่ต้องการ
+        $left_col_width = 110;            // คอลัมน์แรกที่แสดง "วัน"
         $hour_block_width = floor(($target_table_width - $left_col_width) / $sc_numCol); // ช่องต่อ block
-
+        
 
         ///////////////// ส่วนของข้อมูล ที่ดึงจากฐานข้อมูล ////////////////////////
         $sql = " SELECT booking_rooms.*,rooms.roomFullName,rooms.roomTitle
@@ -968,10 +969,10 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                
                     <div class="wrap_schedule">
                   <div class="table-responsive-" >
-                    <table class="table table-bordered bg-light" style="width:99%;">
+                    <table class="table table-bordered bg-light" style="width: 1800px;" >
                                                 <thead class="thead-light">
                                     <tr class="time_schedule" >
-                                        <th class="p-0 border-right " style="max-width:100px;">
+                                        <th class="p-0 border-right "  style="max-width: 110px;">
                                             <div class="day-head-label text-right text-end" >
                                                 เวลา
                                             </div>
@@ -1006,13 +1007,13 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
             $dayInSchedule_show = $class->thai_date_short(strtotime($start_weekDay . " +" . $i_day . " day"));
             $outputBody .= '<tr>
                                     <td class="p-0 text-center table-active">
-                                        <div class="day_schedule_text text-nowrap" style="min-height: 60px;">
+                                        <div class="day_schedule_text text-nowrap" >
                                                 ' . $dayTH[$i_day] . '<br>' . $dayInSchedule_show . '
                                         </div>
                                     </td>
                                     <td class="p-0 position-relative bg-light" >
                                         <div class="position-absolute">
-                                            <div class="d-flex align-content-stretch" style="min-height: 60px;">';
+                                            <div class="d-flex align-content-stretch" >';
             $inRowDay = "";
             for ($i = 1; $i < $sc_numCol; $i++) {
                 $inRowDay .= '
@@ -1030,7 +1031,7 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     $percenStr = 2.6;
                     $scalx = 0;
                     $difx = 0;
-
+                  $sc_start_x =0;
                     $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);                   
                     
                     // เวลาที่เป็นจุดเริ่มต้น เช่น 08:00
@@ -1047,7 +1048,7 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     $sc_start_x = (($diff_minutes / $sc_numStep) * $hour_block_width);
 
                     if ($start_time_this >= strtotime("14:00")) {
-                      $sc_start_x  = $sc_start_x +16;
+                      $sc_start_x  = $sc_start_x +10;
                     }
 
                     $strlen = Str::length($row_day['title']);
@@ -1090,7 +1091,7 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     $outputBody .= '<div class="position-absolute text-center clickscDetail ' . $classColorBG . '" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['booking_subject'] . '"
-                                    style="width: ' . $sc_width . 'px;margin-right: 0px;margin-left:' . $sc_start_x . 'px;min-height: 60px;">
+                                    style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;">
                                     <a href="#" title ="' . $row_day['booking_subject'] . '" >' . $subjectTitle . $sub2 .'</a></div>';
                 }
                 //$outputBody .= "" . $strLop;
