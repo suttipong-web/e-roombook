@@ -118,7 +118,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-12 p-3 " id="popshowtable">
+                <div class="row" id="popshowtable">
                     <h5>ตารางการใช้ห้อง ( Room Availability)</h5>
                     <div class="row">
 

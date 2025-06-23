@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/vendor/animate/animate.min.css">
     <link rel="stylesheet" href="/css/jquery.desoslide.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/schedule.css">
+    <link rel="stylesheet" href="/css/schedule_scinet.css">
     @includeIf('partials.headtag')
     <style type="text/css">
         @media print {
@@ -44,9 +44,9 @@
             color: #fff;
             font-size: 16px;
         }
-        .mainTv h4 {
+        .mainTv h2 {
             color: #fff;
-            font-size: 20px;
+           
             text-align: center;
         }
         .bg-black {
@@ -66,8 +66,8 @@
 
         <div class="p-2 bg-black" id="popshowtable">
             <br/>
-            <h4 style="text-align: center">ตารางการใช้ห้อง : {{ $dataroom->roomFullName }} </h4>
-            <hr/>
+            <h2 style="text-align: center">ตารางการใช้ห้อง : {{ $dataroom->roomFullName }} </h2>
+        
             <div class="showtable">
 
             </div>
@@ -82,16 +82,15 @@
                 var val = "";
                 //console.log('Start');
                 $.ajax({
-                    url: "/fetchScheduleByRoom",
+                    url: "/fetchScheduleByRoom_scinet",
                     method: 'get',
                     data: {
                         uts: $uts,
                         getroomId: $("#hinden_roomID").val(),
-                       hindenBtnBooking: true,
-                       /* hindenPrint: false,
-                       /* pagePrint: false,
-                        hindenBtnALL: false,*/
-                        
+                        hindenBtnBooking: false,
+                        hindenPrint: false,
+                        pagePrint: false,
+                        hindenBtnALL: false,                      
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

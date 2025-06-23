@@ -33,6 +33,7 @@ Route::get('/', function () {
 Route::get('/scinet/{roomId}/{roomtitles}', [RoomsController::class, 'displayTvSciNet'])->name('displayTvSciNet');
 
 Route::get('/scinet_table/{roomId}/{roomtitles}', [RoomsController::class, 'displayTvSciNet_table'])->name('displayTvSciNet_table');
+Route::get('/fetchScheduleByRoom_scinet', [ScheduleroomController::class, 'fetchScheduleByRoomscinet'])->name('fetchScheduleByRoomscinet');
 
 // Simple Page
 Route::get('/exp', function () {

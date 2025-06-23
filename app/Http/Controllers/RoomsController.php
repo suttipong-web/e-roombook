@@ -442,6 +442,18 @@ class RoomsController extends Controller
 
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
                
     public function print_schedule (Request $request)
     {    
@@ -474,5 +486,8 @@ class RoomsController extends Controller
             'getust' => $request->uts
         ]);
     }
+   
+
+
 
 }

@@ -44,7 +44,7 @@
             </p>
             <hr />
             <h4> {{ $TitlePage }} </h4>
-            <div class="col-md-12 showtable">
+            <div class=" showtable"  style="width: 1300px">
 
             </div>
         </div>
