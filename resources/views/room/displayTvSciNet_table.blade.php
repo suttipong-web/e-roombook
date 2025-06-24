@@ -36,7 +36,8 @@
 
         .showtable {
             width: 100%;
-            margin: 5px auto;
+            margin: 1px auto;
+              overflow: hidden;
 
         }
         .mainTv {
@@ -56,6 +57,7 @@
             
                 background-color: #000;
                 height: 730px;
+                overflow: hidden;
                 
             }
     </style>
@@ -67,7 +69,7 @@
     <div class="container-fluid- mainTv" >
 
         <div class="p-2 bg-black" id="popshowtable">
-            <br/>
+            
             <h2 style="text-align: center">ตารางการใช้ห้อง : {{ $dataroom->roomFullName }} </h2>
         
             <div class="showtable" >

@@ -934,7 +934,7 @@ class ScheduleroomController extends Controller
 
         $linkPrint = '/room/print/' . $roomID . '/' . (int) $uts . '/' . $roomTitle;
         $num_dayShow_in_schedule = $num_dayShow - 1;
-        $output = '<div class="wrap_schedule_control mt-1">
+        $output = '<div class="wrap_schedule_control mt-0">
                         <div class="d-flex  justify-content-start">';
 
         if (!$request->hindenBtnALL) {

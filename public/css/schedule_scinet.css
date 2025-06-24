@@ -13,7 +13,6 @@ div.table-responsive::-webkit-scrollbar {
     width: 0px;
     height: 0px;
 }
-
 ::-webkit-scrollbar-thumb {
     background: #CACACA;
     border: 0px none #CACACA;
@@ -53,21 +52,21 @@ div.table-responsive::-webkit-scrollbar {
     width:100px;
     font-size: 15px;
     padding: 5px 2px;
-    min-height: 80px;
+    min-height: 78px;
 }
 
 .day-head-label {
     position: relative;
     right: 5px;
     top: 0;
-    width: 80px;
+    width: 78px;
 }
 
 .time-head-label {
     position: relative;
     left: 10px;
     bottom: 0;
-   width: 80px;
+   width: 78px;
 }
 
 .diagonal-cross {
