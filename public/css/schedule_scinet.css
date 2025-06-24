@@ -53,14 +53,14 @@ div.table-responsive::-webkit-scrollbar {
     width:100px;
     font-size: 15px;
     padding: 5px 2px;
-    min-height: 80px;
+    min-height: 75px;
 }
 
 .day-head-label {
     position: relative;
     right: 5px;
     top: 0;
-    width: 80px;
+    width: 75px;
 }
 
 .time-head-label {
@@ -110,19 +110,18 @@ div.table-responsive::-webkit-scrollbar {
 .sc-detail-std a {
     color: #181818;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
         min-height: 70px;
         margin-top: 5px;
 }
 .sc-detail-std a:hover {
     color: #db1111;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .wrap_schedule table  {
     width: 1980px;
     margin: 10px auto;
-    overflow: hidden;
-
+ overflow-y: hidden;
 }

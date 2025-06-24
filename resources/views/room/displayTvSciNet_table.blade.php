@@ -37,6 +37,7 @@
         .showtable {
             width: 100%;
             margin: 5px auto;
+            overflow-y: hidden;
 
         }
         .mainTv {
@@ -56,6 +57,7 @@
             
                 background-color: #000;
                 height: 730px;
+                overflow-y: hidden;
                 
             }
     </style>
