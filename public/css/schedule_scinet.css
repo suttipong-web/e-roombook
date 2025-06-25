@@ -53,21 +53,21 @@ div.table-responsive::-webkit-scrollbar {
     width:100px;
     font-size: 15px;
     padding: 5px 2px;
-    min-height: 81px;
+    min-height: 76px;
 }
 
 .day-head-label {
     position: relative;
     right: 5px;
     top: 0;
-    width: 81px;
+       width:100px;
 }
 
 .time-head-label {
     position: relative;
     left: 10px;
     bottom: 0;
-   width: 81px;
+       width:100px;
 }
 
 .diagonal-cross {
@@ -79,18 +79,19 @@ div.table-responsive::-webkit-scrollbar {
 }
 
 .sc-detail {
-    font-size: 11px;
+    font-size: 16px;
     /*background-color: #85cb8e;*/
     background-color: #00FA9A;
     color: #080000;
     border: #ffffff 1px solid;
     padding: 3px;
-    max-height: 56px;
+    max-height: 76px;
+    min-height: 76px;
     overflow: hidden;
 }
 .sc-detail a {
     color: #181818;
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 500;
 }.sc-detail a:hover {
     color: #db1111;
@@ -99,25 +100,26 @@ div.table-responsive::-webkit-scrollbar {
 }
 .sc-detail-std {
     font-size: 16px;
-    background-color: #00FFFF;
+    background-color: #6dd1d1;
     color: #080000;
     border: #ffffff 1px solid;
-    padding: 12px 0px;
-
+    padding: 2px 2px;
+     min-height: 76px;
+    max-height: 76px;
     overflow: hidden;
 }
 
 .sc-detail-std a {
     color: #181818;
     font-size: 16px;
-    font-weight: 600;
-        min-height: 70px;
+    font-weight: 500;
+      
         margin-top: 5px;
 }
 .sc-detail-std a:hover {
     color: #db1111;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .wrap_schedule table  {

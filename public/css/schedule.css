@@ -81,8 +81,9 @@ div.table-responsive::-webkit-scrollbar {
     background-color: #00FA9A;
     color: #080000;
     border: #ffffff 1px solid;
-      padding: 5px;
-    max-height: 56px;
+      padding: 5px 4px;
+    max-height: 57px;
+    min-height: 57px;
     overflow: hidden;
 }
 .sc-detail a {
@@ -101,8 +102,9 @@ div.table-responsive::-webkit-scrollbar {
     background-color: #00FFFF;
     color: #080000;
     border: #ffffff 1px solid;
-    padding: 5px;
+    padding: 4px 2px;
     max-height: 57px;
+    min-height: 57px;
     overflow: hidden;
 }
 

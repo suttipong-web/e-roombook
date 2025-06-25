@@ -165,12 +165,11 @@
                                                 // (in_array((string)$roomTypeId, explode(',', $getService->opentypeRoomBooking())))
                                                 
                                                 --->
-                                         
+                                           
                                             @if($getService->isBookingAvailable($searchDates))  
                                                     @php
                                                      $StepchkTime = $getService->canBookByDate($searchDates,$getService->getfinalBookingDate());                                                    
-                                                    @endphp      
-                                                                        
+                                                    @endphp                                                                          
                                                     @if  ((!$StepchkTime) 
                                                             || ( Session::get('isAdmin')=='1')
                                                             || ( Session::get('user_type')=='admin')

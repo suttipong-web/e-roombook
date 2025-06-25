@@ -268,7 +268,7 @@
                                             @php
                                             $StepchkTime = $getService->canBookByDate($searchDates,$getService->getfinalBookingDate());   
                                             @endphp
-
+                                        
                                             @if ($roomtype > 1)
 
                                             @if($getService->isBookingAvailable($searchDates))

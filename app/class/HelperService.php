@@ -398,7 +398,7 @@ class HelperService
     public function canBookByDate($searchDates, $dateConfig)
     {
         $start_date = $dateConfig->start_date; // ควรเป็นรูปแบบ Y-m-d
-        $end_date = $dateConfig->end_date;
+        $end_date = $dateConfig->group3_end;
     
         try {
    // แปลง searchDate จาก d/m/Y → Y-m-d
