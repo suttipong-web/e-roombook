@@ -46,6 +46,7 @@
                     <li><i class="bi bi-chevron-right"></i>
                         <?php 
                           $dates = date("Y-m-d");
+                          
                           $CMUOauth_ = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM&redirect_uri=https://e-roombook.eng.cmu.ac.th/callback_booking&scope=cmuitaccount.basicinfo&state=bookingindex_1'.$dates;    
                         ?>
                         <a href="{{ $CMUOauth_ }}" class="nav-link p-0 text-body-secondary">

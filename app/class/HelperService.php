@@ -519,4 +519,42 @@ function isTimeConflict($start1, $end1, $start2, $end2) {
         }
         return $val;
     }
+
+    function getURLMsEntraId($page,$param){
+
+         $MSconfig = array(
+            "AUTH_URL" => "https://login.microsoftonline.com/cf81f1df-de59-4c29-91da-a2dfd04aa751/oauth2/v2.0/authorize",
+            "TOKEN_URL" => "https://login.microsoftonline.com/cf81f1df-de59-4c29-91da-a2dfd04aa751/oauth2/v2.0/token",
+            "CALLBACK_URL" => "https://e-roombook.eng.cmu.ac.th/callbackms",
+            "CLIENT_ID" => env('CLIENT_ID'),
+            "CLIENT_SECRET" => env('CLIENT_SECRET'),
+            "SCOPE" => "api://cmu/Mis.Account.Read.Me.Basicinfo",
+            "BASICINFO_URL" => "api://cmu/Mis.Account.Read.Me.Basicinfo",
+            "LOGOUT_URL" => 'https://e-roombook.eng.cmu.ac.th'
+        );
+        $vars = array(
+            '$auth_url' => $MSconfig['AUTH_URL'],
+            '$client_id' => $MSconfig['CLIENT_ID'],
+            '$redirect_uri' => $MSconfig['CALLBACK_URL'],
+            '$scope' => $MSconfig['SCOPE']
+        );
+
+        $url_template = '$auth_url?client_id=$client_id&response_type=code&redirect_uri=$redirect_uri&scope=$scope';
+        $urlToMsEntraId = strtr($url_template, $vars);  
+
+        $dates = date('Y-m-d');
+        if($page = "admin"){
+            //callback_booking&amp;scope=cmuitaccount.basicinfo&amp;state=admin_0
+            $urlToMsEntraId .="&state=admin_0";
+        }else if($page=="booking") {
+          //state=booking_19_2025-06-27
+             $urlToMsEntraId .="&state=booking_".$param;
+        }else if($page=="booking") {
+              //state=bookingindex_12025-06-26
+            $urlToMsEntraId .="&state=bookingindex_1".$dates;
+        }        
+        
+        return $urlToMsEntraId ;
+    }
+
 }

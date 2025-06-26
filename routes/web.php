@@ -44,6 +44,8 @@ Route::get('/manual', function () {
     return view('manual');
 });
 
+Route::get('/callbackms', [cmuOauthController::class, 'callbackms'])->name('callbackms');
+
 //callback form cmuoauth
 Route::get('/callback_cmuoauth', [AutnController::class, 'authorization_code'])->name('authorization_code');
 Route::get('/callback_booking', [cmuOauthController::class, 'callback'])->name('callback');

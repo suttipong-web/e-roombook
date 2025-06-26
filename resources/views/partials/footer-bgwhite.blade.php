@@ -1,16 +1,17 @@
 <footer id="footer" class="footer">
     <div class="container footer-top">
         <div class="row gy-4">
-                   <div class="col-lg-4 col-md-6 footer-about">
+            <div class="col-lg-4 col-md-6 footer-about">
                 <a href="index.html" class="d-flex align-items-center">
                     <span class="sitename">คณะวิศวกรรมศาสตร์</span>
                 </a>
-                 <div class="footer-contact pt-2 text-dark" style="font-size: 14px;">
-                    <div> มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว  </div>
+                <div class="footer-contact pt-2 text-dark" style="font-size: 14px;">
+                    <div> มหาวิทยาลัยเชียงใหม่ 239 ถนนห้วยแก้ว </div>
                     <div>ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</div>
                     <div class="mt-2"><strong>โทรศัพท์</strong></div>
-                    <div > <span>ห้องประชุม (งานบริหารทั่วไป ) โทรศัพท์ 0-539-44171 </span></div>
-                    <div class="mt-2"> <span>ห้องเรียนและห้องคอมพิวเจตอร์ (งานพัฒนาเทคโนโลยี ฯ) <br/>โทรศัพท์ 0-539-44120 </span></div>
+                    <div> <span>ห้องประชุม (งานบริหารทั่วไป ) โทรศัพท์ 0-539-44171 </span></div>
+                    <div class="mt-2"> <span>ห้องเรียนและห้องคอมพิวเจตอร์ (งานพัฒนาเทคโนโลยี ฯ) <br />โทรศัพท์
+                            0-539-44120 </span></div>
                     <div class="mt-2"><strong>โทรสาร:</strong> <span>0-539-44120</span></div>
                     <div><strong>อีเมล:</strong> <span>webmaster@eng.cmu.ac.th</span></div>
                 </div>
@@ -18,9 +19,8 @@
             <div class="col-lg-2 col-md-3 footer-links">
                 <h4>บริการสำคัญ</h4>
                 <ul>
-                <li><i class="bi bi-chevron-right"></i>
-                        <a href=" /booking/listall"
-                            class="nav-link p-0 text-body-secondary">
+                    <li><i class="bi bi-chevron-right"></i>
+                        <a href=" /booking/listall" class="nav-link p-0 text-body-secondary">
                             รายการจองห้องประชุม
                         </a>
                     </li>
@@ -45,11 +45,16 @@
                     <li><i class="bi bi-chevron-right"></i>
                         <?php 
                           $dates = date("Y-m-d");
-                          $CMUOauth_ = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM&redirect_uri=https://e-roombook.eng.cmu.ac.th/callback_booking&scope=cmuitaccount.basicinfo&state=bookingindex_1'.$dates;    
+$CMUOauth_ = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=nP2KgMxA05UV7VAq4uhQMDGN2xNfqhpjNbzZeQqM&redirect_uri=https://e-roombook.eng.cmu.ac.th/callback_booking&scope=cmuitaccount.basicinfo&state=bookingindex_1' . $dates;    
                         ?>
                         <a href="{{ $CMUOauth_ }}" class="nav-link p-0 text-body-secondary">
                             สำหรับบุคคลภายในคณะฯ
                         </a>
+                    </li>
+                    @php
+                            $getURL =  $getService->getURLMsEntraId('bookingindex','-')
+                    @endphp
+                    <li> <a href="{{$getURL}}">....</a> </li>
                 </ul>
             </div>
 

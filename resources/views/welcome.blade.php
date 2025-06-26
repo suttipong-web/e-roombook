@@ -1,3 +1,4 @@
+@inject('getService', 'App\class\HelperService')
 <!DOCTYPE html>
 <html lang="en">
 
