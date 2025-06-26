@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\class\HelperService;
 use Illuminate\Http\Request;
 use App\Models\Rooms;
 use App\Models\User;
