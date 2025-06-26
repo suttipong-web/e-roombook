@@ -18,7 +18,7 @@ class AutnController extends Controller
     {
         $getService = new HelperService();
         // get CMU APIKEY clientID,clientSecret
-        $cmuKey = DB::table('tbl_apikey')
+       /* $cmuKey = DB::table('tbl_apikey')
             ->select('clientID', 'clientSecret', 'redirect_uri')
             ->where('apiweb', '=', 'cmuoauth')
             ->first();
@@ -27,10 +27,12 @@ class AutnController extends Controller
         $CMUOauth = $getService->geturlCMUOauth($state);
     
         //$signwithCmu = 'https://oauth.cmu.ac.th/v1/Authorize.aspx?response_type=code&client_id=' . $cmuKey->clientID . '&redirect_uri=' . $cmuKey->redirect_uri . '&scope=cmuitaccount.basicinfo&state=admin-0';
-       
+       */
+        $getURL = $getService->getURLMsEntraId('admin', '-');
+
         return view('admin.auth.login')->with(
             [
-                'urlCMUOauth' =>  $CMUOauth ,
+                'urlCMUOauth' =>  $getURL ,
             ]
         );
     }

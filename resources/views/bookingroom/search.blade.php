@@ -391,9 +391,10 @@
                                 <?php
                                 $state = 'booking_' . $searchRoomID . '_' . $dateUrl;
                                 $CMUOauth = $getService->geturlCMUOauth($state);
-                                
+                                //$getURLMs = $getService->get
+                                $getURLMs = $getService->getURLMsEntraId('booking',$searchRoomID . '_' . $dateUrl )
                                 ?>
-                                <a href="{{ $CMUOauth }}" class=" btn text-white btn-primary" tabindex="-1" role="button"
+                                <a href="{{ $getURLMs }}" class=" btn text-white btn-primary" tabindex="-1" role="button"
                                     aria-disabled="true">
                                     <h5 class="mb-1 text-white"> <!--<i class="bi bi-gear-wide text-white"></i>-->
                                         บุคคลภายในคณะฯ 

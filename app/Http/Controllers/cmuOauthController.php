@@ -174,7 +174,6 @@ class cmuOauthController extends Controller
         $class = new HelperService();
         $roomId = 0;
 
-
         if (!empty($request->state)) {
             $state = $request->state;
             $temp = explode('_', $state);
