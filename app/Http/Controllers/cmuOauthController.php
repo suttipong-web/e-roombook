@@ -223,18 +223,19 @@ class cmuOauthController extends Controller
             $ch = curl_init();
             curl_setopt_array($ch, $options);
             $response = curl_exec($ch);
+            $json = json_decode($response, true);
             curl_close($ch);
             if (curl_errno($ch)) {
                 return view('admin.auth.error')->with([
                     'displayError' => true
                 ]);
             } else {
-                if (empty($callback_dataAuthCode['access_token'])) {
+                if (empty($json['access_token'])) {
                     return view('admin.auth.error')->with([
                         'displayError' => true
                     ]);
                 }
-                $json = json_decode($response, true);
+                
                 $access_token = $json["access_token"];
                 $curl2 = curl_init();
                 curl_setopt_array($curl2, [
