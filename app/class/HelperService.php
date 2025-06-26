@@ -549,7 +549,7 @@ function isTimeConflict($start1, $end1, $start2, $end2) {
         }else if($page=="booking") {
           //state=booking_19_2025-06-27
              $urlToMsEntraId .="&state=booking_".$param;
-        }else if($page=="booking") {
+        }else{
               //state=bookingindex_12025-06-26
             $urlToMsEntraId .="&state=bookingindex_1".$dates;
         }                
