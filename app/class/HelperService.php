@@ -543,7 +543,7 @@ function isTimeConflict($start1, $end1, $start2, $end2) {
         $urlToMsEntraId = strtr($url_template, $vars);  
 
         $dates = date('Y-m-d');
-        if($page = "admin"){
+        if($page == "admin"){
             //callback_booking&amp;scope=cmuitaccount.basicinfo&amp;state=admin_0
             $urlToMsEntraId .="&state=admin_0";
         }else if($page=="booking") {
@@ -552,8 +552,7 @@ function isTimeConflict($start1, $end1, $start2, $end2) {
         }else if($page=="booking") {
               //state=bookingindex_12025-06-26
             $urlToMsEntraId .="&state=bookingindex_1".$dates;
-        }        
-        
+        }                
         return $urlToMsEntraId ;
     }
 
