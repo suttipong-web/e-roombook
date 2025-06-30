@@ -1031,7 +1031,7 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     $percenStr = 2.6;
                     $scalx = 0;
                     $difx = 0;
-                  $sc_start_x =0;
+                    $sc_start_x =0;
                     $sc_width = ($row_day['duration'] / 60) * ($hour_block_width / $sc_numStep);                   
                     
                     // เวลาที่เป็นจุดเริ่มต้น เช่น 08:00
@@ -1079,7 +1079,7 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                         $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/>  ผู้ขอใช้: ' . $row_day["sec"] . '   (' . $row_day["booking_phone"] . ' ) <br/> ' . $row_day["depName"] . ' </div>';
                     } else {
                         // $classColorBG = "sc-detail-std";
-                        $details = '<div> วันที่ ' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
+                        $details = '<div> วันที่ '.$row_day['start_date'].'-' . $class->convertDateThaiNoTime($row_day['start_date'], 1) . ' ช่วงเวลา : ' . Str::limit($row_day['start_time'], 5, '') . '-' . Str::limit($row_day['end_time'], 5, '') . ' <br/> ผู้สอน : ' . $row_day["sec"] . ' <br/> ' . $row_day["depName"] . ' </div>';
                     }
 
                     if ($row_day['is_import_excel'] == 1) {
@@ -1089,25 +1089,28 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     }
   
                     
-                    $now = Carbon::now(); // เช่น 2025-06-30 15:30:00
-                    $start = Carbon::createFromFormat('H:i:s', $row_day['start_time']);
-                    $end = Carbon::createFromFormat('H:i:s', $row_day['end_time']);
+                $now = Carbon::now();
+                $todays = $now->format('Y-m-d');
+              
+                $isNows = 0 ;
+                   // $row_day['start_date'] = '2025-07-01';                   
+                 if (Carbon::parse($row_day['start_date'])->format('Y-m-d') === $todays) {
+                     
+                    // ตรวจสอบเวลา
+                  
+                        $start = Carbon::createFromFormat('Y-m-d H:i:s', $row_day['start_date'] . ' ' . $row_day['start_time']);
+                        $end = Carbon::createFromFormat('Y-m-d H:i:s', $row_day['start_date']. ' ' . $row_day['end_time']);
+                        
+                        $isNows = 0;
+                        if ($now->between($start, $end)) {
+                            $classColorBG = "sc-detail-between";
+                            $isNows = 1;
+                        }
 
-                    // กำหนดวันที่วันนี้ให้ start และ end ด้วย (เพื่อให้เปรียบเทียบแบบ datetime)
-                    $start->setDate($now->year, $now->month, $now->day);
-                    $end->setDate($now->year, $now->month, $now->day);
+                  
+                   }
 
-
-                    // ตรวจสอบว่าอยู่ในช่วงเวลาไหม
-
-                    $isNows = 0 ;
-                    if ($now->between($start, $end)) {
-                        // ตอนนี้อยู่ในช่วงเวลา
-                        $classColorBG ="sc-detail-between";
-                        $isNows =1 ;
-                    }
-
-
+                   
                     //$Htitle = 
                    
                     if($isNows) {
