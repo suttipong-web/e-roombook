@@ -36,30 +36,49 @@
 
         .showtable {
             width: 100%;
-            margin: 5px auto;
+            margin: 0px auto;
             overflow-y: hidden;
 
         }
-        .mainTv {
-            background-color: #000;
-            color: #fff;
-            font-size: 16px;
-        }
-        .mainTv h2 {
-            color: #fff;
+    
+        .mainTv h1 {
+            color: #141313;      
            
             text-align: center;
         }
         .bg-black {
-            background-color: #000;
+           /* background-color: #000;*/
         }
-        body ,html {
-            
-                background-color: #000;
-                height: 730px;
+        body ,html {            
+               background-color: #000;
+              /*  height: 730px;*/
                 overflow-y: hidden;
                 
             }
+            .mainTv {
+           /* background-color: #000;*/
+            color: #fff;
+            font-size: 16px;
+            width: 1920px;
+            height: 1080px;
+           /* border: 1px solid red;*/
+            background-image: url("{{ asset('theme_1/img/bgscinet.jpg') }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        #popshowtable {
+            padding-top: 125px;
+            color: #000;
+        }
+        .showtable table{
+            /*background-color: #ead7c1*/
+            border: 1px solid rgb(243, 241, 241);
+        }
+      .showtable table tr,
+.showtable table td {
+    border: none;
+}
     </style>
 </head>
 
@@ -68,10 +87,10 @@
     <input type="hidden" id="hinden_roomID" value="{{ $dataroom->id }}">
     <div class="container-fluid- mainTv" >
 
-        <div class="p-2 bg-black" id="popshowtable">
+        <div id="popshowtable">
             <br/>
-            <h2 style="text-align: center">ตารางการใช้ห้อง : {{ $dataroom->roomFullName }} </h2>
-        
+            <h1 style="text-align: center">ตารางการใช้ห้อง : {{ $dataroom->roomFullName }} </h1>
+        <br/>
             <div class="showtable" >
 
             </div>

@@ -112,7 +112,7 @@ a:hover {
 .table-bordered>tfoot>tr>th,
 .table-bordered>thead>tr>td,
 .table-bordered>thead>tr>th {
-    border: 2px solid #e7e9ec
+   /* border: 2px solid #e7e9ec*/
 }
 
 .section-breadcrumb {

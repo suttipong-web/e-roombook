@@ -254,7 +254,6 @@ class cmuOauthController extends Controller
                 $basic_info = curl_exec($curl2);
                 $err = curl_error($curl2);
                 curl_close($curl2);
-
                 $cmuitaccount = json_decode($basic_info, true);
 
                 if (!empty($cmuitaccount["cmuitaccount"])) {

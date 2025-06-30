@@ -1047,9 +1047,9 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     // คำนวณตำแหน่งซ้าย
                     $sc_start_x = (($diff_minutes / $sc_numStep) * $hour_block_width);
 
-                    if ($start_time_this >= strtotime("14:00")) {
-                      $sc_start_x  = $sc_start_x +10;
-                    }
+                    //if ($start_time_this >= strtotime("14:00")) {
+                      $sc_start_x  = $sc_start_x +5;
+                   // }
 
                     $strlen = Str::length($row_day['title']);
                     $scaly = ($sc_width / $strlen);
