@@ -109,9 +109,30 @@ div.table-responsive::-webkit-scrollbar {
     color: #faf8f8;
     font-size: 17px;
     font-weight: 400;
-      
-        margin-top: 5px;
+    margin-top: 5px;
 }
+
+.sc-detail-between {
+    font-size: 16px;
+    background-color: #b73137;      
+    border: #f3f3f3 1px solid;
+    padding: 2px 2px;
+     min-height: 76px;
+    max-height: 76px;
+    overflow: hidden;
+}
+.sc-detail-between a {
+    color: #faf8f8;
+    font-size: 17px;
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+.sc-detail-between  a:hover {
+    color: #f7d9d9;
+    font-weight: 500;
+}
+
 .sc-detail-std a:hover {
     color: #f7d9d9;
     font-weight: 500;

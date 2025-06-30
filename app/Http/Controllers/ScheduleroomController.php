@@ -1087,12 +1087,48 @@ $minWidth = ($sc_numCol * $hour_block_width + 90);
                     } else {
                         $classColorBG = "sc-detail";
                     }
+  
+                    
+                    $now = Carbon::now(); // เช่น 2025-06-30 15:30:00
+                    $start = Carbon::createFromFormat('H:i:s', $row_day['start_time']);
+                    $end = Carbon::createFromFormat('H:i:s', $row_day['end_time']);
+
+                    // กำหนดวันที่วันนี้ให้ start และ end ด้วย (เพื่อให้เปรียบเทียบแบบ datetime)
+                    $start->setDate($now->year, $now->month, $now->day);
+                    $end->setDate($now->year, $now->month, $now->day);
+
+
+                    // ตรวจสอบว่าอยู่ในช่วงเวลาไหม
+
+                    $isNows = 0 ;
+                    if ($now->between($start, $end)) {
+                        // ตอนนี้อยู่ในช่วงเวลา
+                        $classColorBG ="sc-detail-between";
+                        $isNows =1 ;
+                    }
+
+
                     //$Htitle = 
-                    $outputBody .= '<div class="position-absolute text-center clickscDetail ' . $classColorBG . '" 
+                   
+                    if($isNows) {
+                         $outputBody .= '<div class="position-absolute text-center clickscDetail ' . $classColorBG . '" 
                                      detail="' . $details . '"
                                      htitle ="' . $row_day['booking_subject'] . '"
                                     style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;">
-                                    <a href="#" title ="' . $row_day['booking_subject'] . '" >' . $subjectTitle . $sub2 .'</a></div>';
+                                    <a href="#" title ="' . $row_day['booking_subject'] . '" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+  <circle cx="8" cy="8" r="8"></circle></svg> ' . $subjectTitle . $sub2 .'</a>
+                                                                
+                                    </div>';
+
+                    } else {
+ $outputBody .= '<div class="position-absolute text-center clickscDetail ' . $classColorBG . '" 
+                                     detail="' . $details . '"
+                                     htitle ="' . $row_day['booking_subject'] . '"
+                                    style="width: ' . $sc_width . 'px;margin-right: 1px;margin-left:' . $sc_start_x . 'px;">
+                                    <a href="#" title ="' . $row_day['booking_subject'] . '" >' . $subjectTitle . $sub2 .'</a></div>'; 
+                    }
+
+                
                 }
                 //$outputBody .= "" . $strLop;
             }
